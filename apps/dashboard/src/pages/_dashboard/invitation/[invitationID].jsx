@@ -5,9 +5,9 @@ import Link from 'next/link';
 import asyncImport from '@/lib/asyncImportScript';
 import Image from 'next/image';
 import {getSession} from 'next-auth/react';
-import Invitation from '@/components/signin/invitation';
-import Footer from '@/components/miniFooter';
-import dateHandler from '@/lib/handleDate';
+import Invitation from '@/components/dashboard/signin/invitation';
+import Footer from '@/components/dashboard/miniFooter';
+import {getGMTDate} from '@lettercms/utils/lib/handleDate';
 import getInvitation from '@/lib/mongo/getInvitation';
 
 class InvitationPage extends Component {
@@ -78,7 +78,7 @@ class InvitationPage extends Component {
             <Invitation email={email}/>
           </div>
           <div id='invitation-notice'>
-            <span>Esta invitación caduca el: {dateHandler.getGMTDate(expiresAt)}</span>
+            <span>Esta invitación caduca el: {getGMTDate(expiresAt)}</span>
           </div>
         </div>
       </div>

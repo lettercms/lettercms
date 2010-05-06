@@ -1,7 +1,7 @@
 import {createContext, useContext, useEffect, useState} from 'react';
 import sdk from '@lettercms/sdk';
 import Router from 'next/router';
-import Consent from '@/components/cookieConsent';
+import Consent from '@/components/client/cookieConsent';
 import Cookie from 'js-cookie';
 
 
