@@ -7,9 +7,7 @@ on:
 
 jobs:
   build:
-    environment: 
-      name: staging
-      url: https://lettercms-preview.vercel.app
+    environment: preview
 
     name: Build and Test
     timeout-minutes: 15
