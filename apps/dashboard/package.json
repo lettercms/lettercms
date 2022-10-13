@@ -11,7 +11,7 @@
     "start": "set NODE_ENV=production&& next start --port $PORT",
     "start:dev": "set NODE_ENV=development&& next dev  --port $PORT",
     "compile": "set NODE_ENV=production&& node src/compile && next build",
-    "build": "vercel pull --scope lettercms -y -t $VERCEL_TOKEN && vercel build",
+    "build": "vercel pull --scope lettercms -y -t $VERCEL_TOKEN && vercel build -t $VERCEL_TOKEN",
     "lint": "next lint",
     "vercel-build": "next build",
     "deploy": "vercel --prebuilt -t $VERCEL_TOKEN",

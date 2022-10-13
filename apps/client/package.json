@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "next dev --port 3002",
-    "build": "vercel pull --scope lettercms -y -t $VERCEL_TOKEN && vercel build",
+    "build": "vercel pull --scope lettercms -y -t $VERCEL_TOKEN && vercel build -t $VERCEL_TOKEN",
     "start": "node index",
     "compile": "node src/compile && next build src/",
     "lint": "next lint",
