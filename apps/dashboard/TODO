@@ -1,0 +1,38 @@
+- Email Tracking
+- Email Marketing
+- A/B Testing
+- Añadir Twitter UI en Social Tab
+- Agregar exportacion de datos
+- Posts Versioning
+- Versioning Stats
+- Adsense integration
+- Gestion de Lluvia de ideas.
+- Añadir soporte para grupos de Facebook
+- Añadir soporte de Usuarios de Facebook
+- Añadir autorenovacion de token de usuario
+- Gestion de E-Books
+
+- Añadir Feed parsing con el siguiente script
+
+const got = require("got");
+const parser = require("fast-xml-parser");
+
+(async function main() {
+  const buffer = await got("https://hacks.mozilla.org/feed/", {
+    responseType: "buffer",
+    resolveBodyOnly: true,
+    timeout: 5000,
+    retry: 5,
+  });
+  var feed = parser.parse(buffer.toString());
+  for (const item of feed.rss.channel.item) {
+    console.log({ title: item.title, url: item.link });
+    break;
+  }
+})();
+
+
+- Migrate XML2JS to fast-xml-parser
+- Create XML API to import XML
+
+- Añadir filtros a las busquedas de Unsplash

@@ -1,0 +1,5 @@
+.npmrc
+.gitlab-ci.yml
+emails
+**/node_modules/**
+*.log

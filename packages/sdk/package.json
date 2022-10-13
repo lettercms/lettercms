@@ -1,0 +1,35 @@
+{
+  "name": "@lettercms/sdk",
+  "version": "0.0.14",
+  "private": false,
+  "main": "index.js",
+  "license": "MIT",
+  "types": "types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/lettercms/sdk.git"
+  },
+  "scripts": {
+    "build": "rimraf ./cjs && tsc --outDir ./cjs -m commonjs -t ES2017",
+    "deploy:canary": "node ../../scripts/release-canary && npm publish --tag canary",
+    "build-dist": "webpack",
+    "build-cjs": "rimraf ./cjs && tsc --outDir ./cjs -m commonjs -t ES2017",
+    "build-esm": "rimraf ./esm && tsc --outDir ./esm -m ESNext -t ESNEXT"
+  },
+  "dependencies": {
+    "form-data": "^3.0.0",
+    "isomorphic-unfetch": "^3.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.19.0",
+    "@babel/preset-env": "^7.19.0",
+    "@tsconfig/recommended": "^1.0.1",
+    "babel-loader": "^8.2.5",
+    "rimraf": "^3.0.2",
+    "terser-webpack-plugin": "^5.3.6",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.8.3",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  }
+}

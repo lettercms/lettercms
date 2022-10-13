@@ -1,0 +1,44 @@
+{
+  "name": "@lettercms/client",
+  "license": "Apache",
+  "version": "0.1.0",
+  "engines": {
+    "yarn": ">= 1.22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/lettercms/client.git"
+  },
+  "scripts": {
+    "dev": "next dev --port 3002",
+    "build": "vercel pull --scope lettercms -y -t $VERCEL_TOKEN && vercel build",
+    "start": "node index",
+    "compile": "node src/compile && next build src/",
+    "lint": "next lint",
+    "test": "jest --runInBand --detectOpenHandles",
+    "vercel-build": "next build",
+    "deploy": "vercel --prebuilt -t $VERCEL_TOKEN",
+    "set-alias": "vercel -t $VERCEL_TOKEN alias set client-davidsdevel-lettercms.vercel.app davidsdevel.lettercms.vercel.app"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "@lettercms/models": "*",
+    "@lettercms/sdk": "*",
+    "@lettercms/ui": "*",
+    "@sentry/nextjs": "^7.11.1",
+    "feed": "^4.2.2",
+    "js-cookie": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "next": "12.2.5",
+    "next-transpile-modules": "^9.0.0",
+    "next-seo": "^5.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "redux": "^4.2.0",
+    "swr": "^1.3.0"
+  },
+  "devDependencies": {
+    "@lettercms/eslint-config": "*",
+    "vercel": "^28.4.5"
+  }
+}

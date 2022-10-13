@@ -1,0 +1,23 @@
+{
+  "name": "@lettercms/admin",
+  "version": "0.0.2",
+  "main": "index.js",
+  "types": "index.d.js",
+  "license": "MIT",
+  "scripts": {
+    "release:canary": "node ../../scripts/release-canary --cwd ./",
+    "release": "node ../../scripts/release --cwd ./",
+    "publish:canary": "node ../../scripts/publish --cwd ./ --tag canary",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "isomorphic-unfetch": "^3.1.0"
+  },
+  "devDependencies": {
+    "@lettercms/eslint-config": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/lettercms/admin.git"
+  }
+}

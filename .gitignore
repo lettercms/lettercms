@@ -1,0 +1,40 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+**/node_modules
+
+# testing
+**/coverage
+
+# dists
+**/.next/
+**/public/firebase-messaging-sw.js
+**/public/offline-sw.js
+**/public/messaging.js
+**/dist
+**/.vercel/**
+packages/sdk/cjs
+packages/sdk/esm
+packages/sdk/types
+
+**/public/editor/*
+**/public/awesome/*
+
+# misc
+**/.DS_Store
+**/.npmrc
+**/.turbo
+**/*.tsbuildinfo
+**/.sentryclirc
+**/sentry.properties
+
+**/.env*
+
+# debug
+**/*.log*
+
+#database
+**/*.db
+
+# Vercel
+.now

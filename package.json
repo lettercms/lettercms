@@ -1,0 +1,36 @@
+{
+  "name": "lettercms",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": {
+    "nohoist": [
+      "**/next",
+      "**/next/**",
+      "**/react",
+      "**/react/**",
+      "**/react-dom",
+      "**/react-dom/**"
+    ],
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "deploy": "turbo run deploy",
+    "dev": "turbo run dev --parallel --filter=dashboard --filter=client --filter=api --filter=cdn",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "turbo": "^1.4.6",
+    "@lettercms/eslint-config": "*",
+    "prettier": "^2.7.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {},
+  "packageManager": "yarn@1.22.19"
+}

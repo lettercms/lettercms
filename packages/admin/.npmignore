@@ -1,0 +1,5 @@
+**/node_modules/**
+.npmrc
+test.js
+.gitlab-ci.yml
+*.log

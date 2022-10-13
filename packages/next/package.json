@@ -1,0 +1,16 @@
+{
+  "name": "@lettercms/next",
+  "version": "0.0.0",
+  "main": "./index.tsx",
+  "types": "./index.tsx",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint *.ts*"
+  },
+  "dependencies": {
+    "@lettercms/sdk": "*"
+  },
+  "devDependencies": {
+    "@lettercms/eslint-config": "*"
+  }
+}

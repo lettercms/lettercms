@@ -1,0 +1,100 @@
+#version: 2.1
+#orbs:
+#  path-filtering: circleci/path-filtering@0.0.2
+
+# This allows you to use CircleCI's dynamic configuration feature
+#setup: true
+
+#workflows:
+#  run-filter:
+#    jobs:
+#      - path-filtering/filter:
+          # Compare files on main
+#          base-revision: main
+          # 3-column space-separated table for mapping; `path-to-test parameter-to-set value-for-parameter` for each row
+#          mapping: |
+#            apps/client/.*                  run-client true
+#            apps/dashboard/.*               run-dashboard true
+#            apps/api/.*                     run-api true
+#          config-path: ".circleci/dynamic_config.yml"
+
+version: 2.1
+orbs:
+  node: circleci/node@4.1     # Used for the Frontend tests
+
+jobs:
+  deploy-client:
+    docker:
+      - image: cimg/node:lts
+    working_directory: ~/lettercms
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: false
+      - run:
+          name: Install Vercel
+          command: yarn add -D -W vercel
+      - run:
+          name: Build SDK
+          command: yarn workspace @lettercms/sdk build
+      - run:
+          name: Build Client
+          command: yarn workspace @lettercms/client build
+      - run:
+          name: Deploy Client
+          command: yarn workspace @lettercms/client deploy
+
+  deploy-dashboard:
+    docker:
+      - image: cimg/node:lts
+    working_directory: ~/lettercms
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: false
+      - run:
+          name: Install Vercel
+          command: yarn add -D -W vercel
+      - run:
+          name: Build SDK
+          command: yarn workspace @lettercms/sdk build
+      - run:
+          name: Build Dashboard
+          command: yarn workspace @lettercms/dashboard build
+      - run:
+          name: Deploy Dashboard
+          command: yarn workspace @lettercms/dashboard deploy
+
+  deploy-api:
+    docker:
+      - image: cimg/node:lts
+    working_directory: ~/lettercms
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: false
+      - run:
+          name: Install Vercel
+          command: yarn add -D -W vercel
+      - run:
+          name: Build API
+          command: yarn workspace @lettercms/api build
+      - run:
+          name: Deploy API
+          command: yarn workspace @lettercms/api deploy
+
+workflows:
+  preview:
+    jobs:
+      - deploy-api:
+          context:
+            - LetterCMS
+      - deploy-client:
+          context:
+            - LetterCMS
+      - deploy-dashboard:
+          context:
+            - LetterCMS

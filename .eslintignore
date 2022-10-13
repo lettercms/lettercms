@@ -1,0 +1,7 @@
+*.css
+
+**/testing/**
+**/public/**
+**/dist/**
+**/.next/**
+**/_next/**

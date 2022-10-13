@@ -1,0 +1,29 @@
+{
+  "name": "@lettercms/utils",
+  "private": false,
+  "version": "1.0.19",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "deploy-canary": "prerelease && npm publish --tag canary",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "@lettercms/models": "*",
+    "@sentry/nextjs": "^7.11.1"
+  },
+  "devDependencies": {
+    "@lettercms/eslint-config": "*",
+    "dotenv": "^16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/lettercms/utils.git"
+  },
+  "author": "David's Devel <davidsdevel@gmail.com>",
+  "bugs": {
+    "url": "https://gitlab.com/lettercms/utils/issues"
+  },
+  "description": ""
+}

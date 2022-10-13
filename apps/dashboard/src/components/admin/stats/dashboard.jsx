@@ -1,0 +1,132 @@
+﻿import dynamic from 'next/dynamic';
+import Base from './base';
+import GeneralPanel from './general';
+import Card from './statsSingleCard';
+import Circle from './circleChart';
+import Image from 'next/image';
+
+const Load = () => <div>
+  <span>
+    <img alt='Spinner' src='/assets/spinner-black.svg' style={{animation: 'rotation linear .6s infinite', width: 75}}/>
+  </span>
+</div>;
+
+const LineChart = dynamic(() => import('./lineChart'), {
+  loading: Load,
+  ssr: false
+});
+const BarChart = dynamic(() => import('./barChart'), {
+  loading: Load,
+  ssr: false
+});
+const PieChart = dynamic(() => import('./pieChart'), {
+  loading: Load,
+  ssr: false
+});
+
+const sortObject = obj =>
+  Object.entries(obj).map((e) =>
+    ({
+      vistas: e[1],
+      name: e[0]
+    })
+  )
+  .sort((a, b) => a.vistas > b.vistas ? -1 : +1);
+
+const StatsDashboard = ({data: {referrers, views, os, browsers, countries, days, dates, hours}, general, onChange}) => {
+  const changeTime = id => {
+    const now = Date.now();
+    let newDate;
+
+    if(id === '1')
+      newDate = now - (1000 * 60 * 60 * 24 * 7);
+    if(id === '2')
+      newDate = now - (1000 * 60 * 60 * 24 * 30);
+    if(id === '3')
+      newDate = now - (1000 * 60 * 60 * 24 * 90);
+    if(id === '4')
+      newDate = now - (1000 * 60 * 60 * 24 * 180);
+    if(id === '5')
+      newDate = 'historic';
+
+    onChange(newDate);
+  };
+
+  return <div>
+      <div id='select-container'>
+        <select onChange={({target: {value}}) => changeTime(value)}>
+          <option value='1'>Ultimos 7 dias</option>
+          <option value='2' default>Ultimo mes</option>
+          <option value='3'>Ultimos 3 meses</option>
+          <option value='4'>Ultimos 6 meses</option>
+          <option value='5'>Desde la creacion del blog</option>
+        </select>
+      </div>
+    <div id='stats-dashboard'>
+      <Base rows={2} title='Vistas Totales' principal>
+        <GeneralPanel value={general.totalViews}/>
+      </Base>
+      <Base rows={2} title='Rebotes'>
+        <GeneralPanel value={general.bounces}/>
+      </Base>
+      <Base rows={3} title='Taza de Rebote'>
+        <GeneralPanel value={general.bounceRate} percent/>
+      </Base>
+      <Base rows={3} title='Comentarios'>
+        <GeneralPanel value={general.totalComments}/>
+      </Base>
+      <Base rows={3} title='Subscriptores'>
+        <GeneralPanel value={general.subscriptors}/>
+      </Base>
+      <Base rows={1} title='Vistas'>
+        <LineChart data={dates}/>
+      </Base>
+      <Base rows={1} title='Horas'>
+        <BarChart data={hours} dataKey="time"/>
+      </Base>
+      <Base rows={1} title='Días'>
+        <BarChart data={days} dataKey="days"/>
+      </Base>
+      <Base rows={3} title='Países'>
+        <PieChart data={countries}/>
+      </Base>
+      <Base rows={3} title='Navegadores'>
+        <PieChart data={browsers}/>
+      </Base>
+      <Base rows={3} title='Sistema Operativo'>
+        <PieChart data={os}/>
+      </Base>
+    {/*
+      <Base rows={2} title='Origen'>
+        <PieChart data={general.origins}/>
+      </Base>
+    */}
+    </div>
+    <span className="title">Más Visto</span>
+    <Card {...general.mostViewed} subdomain={general.subdomain}/>
+    <span className="title">Más Comentado</span>
+    <Card {...general.mostCommented} subdomain={general.subdomain}/>
+    <span className="title">Entradas</span>
+    <BarChart data={sortObject(views)} layout='vertical'/>
+    <span className="title">Origenes</span>
+    <BarChart data={sortObject(referrers)} layout='vertical'/>
+    <style jsx>{`
+      #stats-dashboard {
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;  
+      }
+      #select-container {
+        padding: 1rem 25px 0;
+        width: 100%;
+        display: flex;
+        justify-content: end;
+      }
+      #select-container select {
+        width: 200px;
+      }
+    `}</style>
+  </div>;
+};
+
+export default StatsDashboard;

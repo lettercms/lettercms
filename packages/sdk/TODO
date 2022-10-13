@@ -1,0 +1,28 @@
+Add "@types/next"
+Add "@types/isomorphic-unfetch"
+
+invitations.delete();
+
+comments.single(id, data);
+comments.create(data);
+comments.like(id);
+comments.dislike(id)
+comments.report(id, reason);
+
+GET /api/comment //Get All
+POST /api/comment //Post Comment
+GET /api/comment/:id //Get Single
+POST /api/comment/:id //Respond
+PATCH /api/comment/:id //Like, Dislike, Report
+DELETE /api/comment/:id //Delete
+
+
+stats.all();
+GET /api/post/:sub
+
+images.upload()
+
+//Stats para cada posts
+stats.single(url);
+GET /api/post/:sub/:url
+

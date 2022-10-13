@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        timeout-minutes: 5
+        with:
+          node-version: 14
+          cache: 'yarn'
+
+      - name: Add Vercel
+        run: yarn add -D -W vercel
+
+      - name: Build SDK
+        run: yarn workspace @lettercms/sdk build
+
+      - name: Build Client
+        run: yarn workspace @lettercms/client build
+
+      - name: Deploy Client
+        run: yarn workspace @lettercms/client deploy
+

@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "target": "ES3",
+    "declaration": true,
+    "outDir": "./types",
+    "rootDir": "./src", 
+    "composite": true,
+    "removeComments": true,
+    "downlevelIteration": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}

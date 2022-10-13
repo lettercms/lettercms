@@ -1,0 +1,15 @@
+.header {
+  margin: 8rem 1% 2rem;
+  padding: 0 2.5% 0;
+  color: white !important;
+}
+.header h1, .header h2 {
+  color: white !important;
+}
+.header h1 {
+  font-size: 1.5rem;
+}
+.header h2 {
+  font-size: 1rem;
+  line-height: 1rem;
+}

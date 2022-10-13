@@ -1,0 +1,26 @@
+export async function getStaticProps () {
+  // `getStaticProps` is executed on the server side.
+  const article = await getArticleFromAPI()
+  return {
+    props: {
+      fallback: {
+        '/api/article': article
+      }
+    }
+  }
+}
+
+function Article() {
+  // `data` will always be available as it's in `fallback`.
+  const { data } = useSWR('/api/article', fetcher)
+  return <h1>{data.title}</h1>
+}
+
+export default function Page({ fallback }) {
+  // SWR hooks inside the `SWRConfig` boundary will use those values.
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Article />
+    </SWRConfig>
+  )
+}

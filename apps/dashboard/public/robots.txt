@@ -1,0 +1,11 @@
+User-agent: *
+
+Disallow: /privacidad
+Disallow: /terminos
+Disallow: /dashboard
+Disallow: /search
+Disallow: /dashboard/*
+
+Allow: /
+Allow: /blog
+Allow: /blog/*

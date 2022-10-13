@@ -1,0 +1,12 @@
+src
+**/node_modules/**
+webpack.config.js
+tsconfig.json
+tsconfig.webpack.json
+TODO
+.npmrc
+test.js
+.gitlab-ci.yml
+
+*.log
+*.tsbuildinfo
