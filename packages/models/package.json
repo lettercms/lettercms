@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/lettercms/lettercms#readme",
   "dependencies": {
-    "@lettercms/utils": "*",
     "jsonwebtoken": "^8.5.1",
     "xml-js": "^1.6.11",
     "mongoose": "^5.13.15"
