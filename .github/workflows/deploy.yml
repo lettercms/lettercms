@@ -1,4 +1,4 @@
-name: CI
+name: Build and Deploy
 
 on:
   push:
@@ -7,29 +7,35 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     environment: 
       name: staging
       url: https://lettercms-preview.vercel.app
+
+    name: Build and Test
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+
+    env:
+     TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+     TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+ 
     steps:
-      - uses: actions/checkout@v3
-      
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        timeout-minutes: 5
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+ 
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
         with:
           node-version: 16
           cache: 'yarn'
-
-      - name: Add Vercel
-        run: yarn add -D -W vercel
-
-      - name: Build SDK
-        run: yarn workspace @lettercms/sdk build
-
-      - name: Build Client
-        run: yarn workspace @lettercms/client build
-
-      - name: Deploy Client
-        run: yarn workspace @lettercms/client deploy
-
+ 
+      - name: Install dependencies
+        run: yarn
+ 
+      - name: Build
+        run: yarn build
+ 
+      - name: Test
+        run: yarn deploy
