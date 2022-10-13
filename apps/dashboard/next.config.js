@@ -7,7 +7,6 @@ const withTM = require("next-transpile-modules")([
   "@lettercms/admin"
 ]);
 
-const {env} = process;
 const isDev = process.env.NODE_ENV !== 'production';
 
 const appConfig = withTM({
@@ -20,8 +19,12 @@ const appConfig = withTM({
   },
   poweredByHeader: false,
   env: {
-    ...env,
-    ASSETS_BASE: isDev ? 'http://localhost:3003' : 'https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public'
+    PAYPAL_PRODUCTION_CLIENT: process.env.PAYPAL_PRODUCTION_CLIENT,
+    PAYPAL_PRODUCTION: process.env.PAYPAL_PRODUCTION_CLIENT,
+    FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID,
+    TRACK_TOKEN: process.env.TRACK_TOKEN,
+    LETTER_ACCESS_TOKEN: process.env.LETTER_ACCESS_TOKEN,
+    ASSETS_BASE: isDev ? 'http://localhost:3003' : 'https://cdn.jsdelivr.net/gh/lettercms/lettercms/apps/cdn/public'
   },
   images: {
     domains: [

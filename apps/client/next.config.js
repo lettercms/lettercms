@@ -8,7 +8,6 @@ const withTM = require("next-transpile-modules")([
   '@lettercms/eslint-config'
 ]);
 
-const {env} = process;
 const isDev = process.env.NODE_ENV !== 'production';
 
 const cfg = withTM({
@@ -21,8 +20,7 @@ const cfg = withTM({
   },
   poweredByHeader: false,
   env: {
-    ...env,
-    ASSETS_BASE: isDev ? 'http://localhost:3003' : 'https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public'
+    ASSETS_BASE: isDev ? 'http://localhost:3003' : 'https://cdn.jsdelivr.net/gh/lettercms/lettercms/apps/cdn/public'
   },
   sentry: {
     hideSourceMaps: true,
