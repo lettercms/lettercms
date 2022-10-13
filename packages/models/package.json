@@ -28,6 +28,5 @@
   },
   "devDependencies": {
     "@lettercms/eslint-config": "*"
-  },
-  "description": ""
+  }
 }
