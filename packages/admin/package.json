@@ -2,8 +2,8 @@
   "name": "@lettercms/admin",
   "version": "0.0.2",
   "main": "index.js",
-  "types": "index.d.js",
-  "license": "MIT",
+  "types": "index.d.ts",
+  "license": "Apache-2.0",
   "scripts": {
     "release:canary": "node ../../scripts/release-canary --cwd ./",
     "release": "node ../../scripts/release --cwd ./",
@@ -16,8 +16,8 @@
   "devDependencies": {
     "@lettercms/eslint-config": "*"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://gitlab.com/lettercms/admin.git"
-  }
+  "engines": {
+    "yarn": ">=1.22",
+    "node": ">=16"
+  },
 }

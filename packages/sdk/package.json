@@ -3,11 +3,15 @@
   "version": "0.0.14",
   "private": false,
   "main": "index.js",
-  "license": "MIT",
+  "engines": {
+    "yarn": ">= 1.22",
+    "node": ">=16"
+  },
+  "license": "Apache-2.0",
   "types": "types/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/lettercms/sdk.git"
+    "url": "git+https://github.com/lettercms/lettercms.git"
   },
   "scripts": {
     "build": "rimraf ./cjs && tsc --outDir ./cjs -m commonjs -t ES2017",

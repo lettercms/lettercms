@@ -1,7 +1,11 @@
 {
   "name": "@lettercms/api",
+  "license": "Apache-2.0",
   "version": "1.0.0",
-  "main": "index.js",
+  "engines": {
+    "yarn": ">= 1.22",
+    "node": ">=16"
+  },
   "scripts": {
     "dev": "next dev --port 3009",
     "test": "jest --detectOpenHandles",
@@ -11,12 +15,7 @@
     "vercel-build": "next build",
     "deploy": "vercel --prebuilt -t $VERCEL_TOKEN"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://gitlab.com/lettercms/api.git"
-  },
   "author": "David's Devel <davidsdevel@gmail.com>",
-  "license": "Apache",
   "devDependencies": {
     "@lettercms/eslint-config": "*",
     "dotenv": "^16.0.0",
@@ -36,6 +35,5 @@
     "next-transpile-modules": "^9.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
-  },
-  "description": ""
+  }
 }

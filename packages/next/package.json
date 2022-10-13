@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "main": "./index.tsx",
   "types": "./index.tsx",
-  "license": "MIT",
+  "license": "Apache-2.0",
+  "engines": {
+    "yarn": ">= 1.22",
+    "node": ">=16"
+  },
   "scripts": {
     "lint": "eslint *.ts*"
   },

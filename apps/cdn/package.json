@@ -1,9 +1,10 @@
 {
-  "name": "@lettercms/client",
-  "license": "Apache",
+  "name": "@lettercms/cdn",
+  "license": "Apache-2.0",
   "version": "0.1.0",
   "engines": {
-    "yarn": ">= 1.22"
+    "yarn": ">=1.22",
+    "node": ">=16"
   },
   "repository": {
     "type": "git",

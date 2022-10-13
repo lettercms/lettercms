@@ -3,7 +3,7 @@
   "private": false,
   "version": "1.0.19",
   "main": "index.js",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "deploy-canary": "prerelease && npm publish --tag canary",
     "lint": "eslint ."
@@ -19,11 +19,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/lettercms/utils.git"
+    "url": "git+https://github.com/lettercms/lettercms.git"
   },
   "author": "David's Devel <davidsdevel@gmail.com>",
   "bugs": {
-    "url": "https://gitlab.com/lettercms/utils/issues"
+    "url": "https://github.com/lettercms/lettercms/issues"
   },
   "description": ""
 }

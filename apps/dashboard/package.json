@@ -1,6 +1,6 @@
 {
   "name": "@lettercms/dashboard",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "version": "0.0.1",
   "engines": {
     "yarn": "^1.22",
@@ -17,7 +17,6 @@
     "deploy": "vercel --prebuilt -t $VERCEL_TOKEN",
     "set-alias": "vercel -t $VERCEL_TOKEN alias set dashboard-davidsdevel-lettercms.vercel.app lettercms-preview.vercel.app"
   },
-  "main": "index.js",
   "dependencies": {
     "@lettercms/admin": "*",
     "@lettercms/models": "*",

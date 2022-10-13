@@ -1,13 +1,10 @@
 {
   "name": "@lettercms/client",
-  "license": "Apache",
+  "license": "Apache-2.0",
   "version": "0.1.0",
   "engines": {
-    "yarn": ">= 1.22"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://gitlab.com/lettercms/client.git"
+    "yarn": ">= 1.22",
+    "node": ">=16"
   },
   "scripts": {
     "dev": "next dev --port 3002",
@@ -20,7 +17,6 @@
     "deploy": "vercel --prebuilt -t $VERCEL_TOKEN",
     "set-alias": "vercel -t $VERCEL_TOKEN alias set client-davidsdevel-lettercms.vercel.app davidsdevel.lettercms.vercel.app"
   },
-  "main": "index.js",
   "dependencies": {
     "@lettercms/models": "*",
     "@lettercms/sdk": "*",
