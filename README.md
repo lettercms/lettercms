@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://lettercms.vercel.app">
-    <img src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/lettercms-logo-standalone.png" height="96">
+    <img src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/lettercms-logo-standalone.png" height="180">
     <h3 align="center">LetterCMS</h3>
   </a>
 </p>
@@ -11,23 +11,23 @@ LetterCMS is a CMS focused on improving content creation and integrating a built
 
 ## Built With
 
-* [NextJS](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Vercel](https://maven.apache.org/) - Serverless Platform
-* [MongoDB](https://maven.apache.org/) - Database
-* [CKEditor](https://maven.apache.org/) - WYSIWYG Editor
-* [GrapesJS](https://maven.apache.org/) - Drag and Drop editor
-* [Unsplash API](https://maven.apache.org/) - Photo Stock
-* [Firebase](https://maven.apache.org/) - File Storage
-* [Sentry](https://maven.apache.org/) - Error Management
-* [Brain.JS](https://maven.apache.org/) - Machine Learning Engine
+* [NextJS](https://nextjs.org) - The web framework used
+* [Vercel](https://vercel.com) - Serverless Platform
+* [MongoDB](https://www.mongodb.com) - Database
+* [CKEditor](https://ckeditor.com) - WYSIWYG Editor
+* [GrapesJS](https://grapesjs.com) - Drag and Drop editor
+* [Unsplash API](https://unsplash.com/) - Photo Stock
+* [Firebase](https://firebase.google.com/) - File Storage
+* [Sentry](https://sentry.io) - Error Management
+* [Brain.JS](https://brain.js.org) - Machine Learning Engine
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](https://github.com/lettercms/lettercms) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/lettercms/lettercms/tags). 
 
 ## Authors
 
