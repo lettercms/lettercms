@@ -104,7 +104,7 @@ jobs:
         run: echo "vercel_url=$(vercel --prebuilt -t $VERCEL_TOKEN)" >> $GITHUB_ENV
 
       - name: Set alias
-        run: echo "vercel_alias=$(vercel alias set ${{ env.vercel_url }} lettercms-client-${{ github.ref_name }}.vercel.app -t $VERCEL_TOKEN)" >> $GITHUB_ENV
+        run: vercel alias set ${{ env.vercel_url }} lettercms-client-${{ github.ref_name }}.vercel.app --scope lettercms -t $VERCEL_TOKEN
 
   deploy-api:
     environment:
@@ -145,7 +145,7 @@ jobs:
         run: echo "vercel_url=$(vercel --prebuilt -t $VERCEL_TOKEN)" >> $GITHUB_ENV
 
       - name: Set alias
-        run: echo "vercel_alias=$(vercel alias set ${{ env.vercel_url }} lettercms-api-${{ github.ref_name }}.vercel.app -t $VERCEL_TOKEN)" >> $GITHUB_ENV
+        run: vercel alias set ${{ env.vercel_url }} lettercms-api-${{ github.ref_name }}.vercel.app --scope lettercms -t $VERCEL_TOKEN
 
 
   deploy-dashboard:
@@ -187,4 +187,4 @@ jobs:
         run: echo "vercel_url=$(vercel --prebuilt -t $VERCEL_TOKEN)" >> $GITHUB_ENV
 
       - name: Set alias
-        run: vercel alias set ${{ env.vercel_url }} lettercms-dashboard-${{ github.ref_name }}.vercel.app -t $VERCEL_TOKEN
+        run: vercel alias set ${{ env.vercel_url }} lettercms-dashboard-${{ github.ref_name }}.vercel.app --scope lettercms -t $VERCEL_TOKEN
