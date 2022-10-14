@@ -5,43 +5,42 @@ on:
     branches:
       - main
 
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+  FB_APP_ID: ${{ secrets.FB_APP_ID }}
+  FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
+  FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
+  FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
+  JWT_AUTH: ${{ secrets.JWT_AUTH }}
+  NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+  NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
+  NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
+  NEXT_PUBLIC_FIREBASE_DATABASE_URL: ${{ secrets.NEXT_PUBLIC_FIREBASE_DATABASE_URL }}
+  NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
+  NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
+  NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+  SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+  SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+  SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+  SENDINBLUE_API_KEY: ${{ secrets.SENDINBLUE_API_KEY }}
+  UNSPLASH_KEY: ${{ secrets.UNSPLASH_KEY }}
+
 jobs:
   build:
-    environment: preview
-
     name: Build and Test
+    environment: preview
     timeout-minutes: 15
     runs-on: ubuntu-latest
-
     env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
-      FB_APP_ID: ${{ secrets.FB_APP_ID }}
-      FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
-      FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
-      FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
-      JWT_AUTH: ${{ secrets.JWT_AUTH }}
-      NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
-      NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
-      NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
-      NEXT_PUBLIC_FIREBASE_DATABASE_URL: ${{ secrets.NEXT_PUBLIC_FIREBASE_DATABASE_URL }}
-      NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
-      NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
-      NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
-      PROJECT_ID: ${{ secrets.PROJECT_ID }}
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-      SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-      SENDINBLUE_API_KEY: ${{ secrets.SENDINBLUE_API_KEY }}
-      UNSPLASH_KEY: ${{ secrets.UNSPLASH_KEY }}
       MONGO_URL: ${{ secrets.MONGO_URL }}
       NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
       PAYPAL_PRODUCTION_CLIENT: ${{ secrets.PAYPAL_PRODUCTION_CLIENT }}
       PAYPAL_PRODUCTION_SECRET: ${{ secrets.PAYPAL_PRODUCTION_SECRET }}
- 
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -55,10 +54,112 @@ jobs:
           cache: 'yarn'
  
       - name: Install dependencies
-        run: yarn
+        run: yarn install --frozen-lockfile --network-timeout 1000000
  
       - name: Build
         run: yarn build
- 
-      - name: Test
-        run: yarn deploy
+
+      - uses: actions/cache@v3
+        with:
+          key: ${{ github.sha }}-${{ github.run_number }}
+          path: ./*
+
+  deploy-client:
+    environment: preview
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      MONGO_URL: ${{ secrets.MONGO_URL }}
+      NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+      PAYPAL_PRODUCTION_CLIENT: ${{ secrets.PAYPAL_PRODUCTION_CLIENT }}
+      PAYPAL_PRODUCTION_SECRET: ${{ secrets.PAYPAL_PRODUCTION_SECRET }}
+
+    steps:
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          check-latest: true
+
+      - uses: actions/cache@v3
+        id: restore-build
+        with:
+          path: ./*
+          key: ${{ github.sha }}-${{ github.run_number }}
+
+      - name: Vercel Pull
+        run: vercel pull --cwd apps/client --scope lettercms -y -t $VERCEL_TOKEN
+      
+      - name: Vercel Build 
+        run: vercel build --cwd apps/client -t $VERCEL_TOKEN
+
+      - name: Vercel Deploy
+        run: vercel --prebuilt --cwd apps/client -t $VERCEL_TOKEN
+
+  deploy-api:
+    environment: preview
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      MONGO_URL: ${{ secrets.MONGO_URL }}
+      NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+      PAYPAL_PRODUCTION_CLIENT: ${{ secrets.PAYPAL_PRODUCTION_CLIENT }}
+      PAYPAL_PRODUCTION_SECRET: ${{ secrets.PAYPAL_PRODUCTION_SECRET }}
+
+    steps:
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          check-latest: true
+
+      - uses: actions/cache@v3
+        id: restore-build
+        with:
+          path: ./*
+          key: ${{ github.sha }}-${{ github.run_number }}
+
+      - name: Vercel Pull
+        run: vercel pull --cwd apps/api --scope lettercms -y -t $VERCEL_TOKEN
+      
+      - name: Vercel Build 
+        run: vercel build --cwd apps/api -t $VERCEL_TOKEN
+
+      - name: Vercel Deploy
+        run: vercel --prebuilt --cwd apps/api -t $VERCEL_TOKEN
+
+  deploy-dashboard:
+    environment:
+      name: preview
+      url: ${{ steps.vercel_deploy.outputs.vercel_url }}
+
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      MONGO_URL: ${{ secrets.MONGO_URL }}
+      NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+      PAYPAL_PRODUCTION_CLIENT: ${{ secrets.PAYPAL_PRODUCTION_CLIENT }}
+      PAYPAL_PRODUCTION_SECRET: ${{ secrets.PAYPAL_PRODUCTION_SECRET }}
+
+    steps:
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          check-latest: true
+
+      - uses: actions/cache@v3
+        id: restore-build
+        with:
+          path: ./*
+          key: ${{ github.sha }}-${{ github.run_number }}
+
+      - name: Vercel Pull
+        run: vercel pull --cwd apps/dashboard --scope lettercms -y -t $VERCEL_TOKEN
+      
+      - name: Vercel Build 
+        run: vercel build --cwd apps/dashboard -t $VERCEL_TOKEN
+
+      - name: Vercel Deploy
+        id: vercel_deploy
+        run: echo "::set-output name=vercel_url::$(vercel --prebuilt --cwd apps/dashboard -t $VERCEL_TOKEN)"
