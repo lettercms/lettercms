@@ -6,6 +6,7 @@
 </p>
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+[![Build and Deploy](https://github.com/lettercms/lettercms/actions/workflows/deploy.yml/badge.svg)](https://github.com/lettercms/lettercms/actions/workflows/deploy.yml)
 
 LetterCMS is a CMS focused on improving content creation and integrating a built-in way to deliver content via Facebook, Instagram, Twitter, Linkedin, Email, push notifications and more, trying to perform the best user experience through a fast loading site, image compression, lazy load and offline strategies. Deliver the right content to the right users, with a built-in recommendation system based on content filtering and machine learning models to improve session time and conversion rate.
 
