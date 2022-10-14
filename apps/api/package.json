@@ -12,8 +12,7 @@
     "coverage": "yarn test --coverage",
     "build": "next build",
     "vercel-build": "echo Done",
-    "lint": "next lint",
-    "vercel-build": "next build"
+    "lint": "next lint"
   },
   "author": "David's Devel <davidsdevel@gmail.com>",
   "devDependencies": {
