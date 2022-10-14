@@ -116,7 +116,7 @@ jobs:
         run: vercel pull --environment=preview -y -t $VERCEL_TOKEN
 
       - name: Build SDK
-        run: yarn workspace @lettercms/sdk build
+        run: yarn workspace @lettercms/sdk --verbose build
 
       - name: Vercel Build 
         run: vercel  build -t $VERCEL_TOKEN
@@ -167,7 +167,7 @@ jobs:
         run: vercel pull --environment=preview -y -t $VERCEL_TOKEN
 
       - name: Build SDK
-        run: yarn workspace @lettercms/sdk build
+        run: yarn workspace @lettercms/sdk --verbose build
       
       - name: Vercel Build 
         run: vercel  build -t $VERCEL_TOKEN
