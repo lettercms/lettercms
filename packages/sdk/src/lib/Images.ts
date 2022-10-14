@@ -1,6 +1,6 @@
 import { LetterProperties } from "../index";
 import { RequestOptions, ListResponseMessage } from "../types";
-import fetch from "isomorphic-unfetch";
+import fetch from "isomorphic-fetch";
 
 class Images {
   parent: LetterProperties;
@@ -19,17 +19,20 @@ class Images {
 
     body.append("file", file);
 
-    const res = await fetch(`${this.parent.endpoint}/api/image`, {
+    const opts: RequestInit = {
       method: "POST",
+      //@ts-ignore
       headers: {
         Authorization: this.parent.accessToken,
       },
-      body,
-    });
+      body
+    }
+
+    const res = await fetch(`${this.parent.endpoint}/api/image`, opts);
 
     return res.json();
   }
-  async delete(id): Promise<any> {
+  async delete(id: string): Promise<any> {
     return this.parent.createRequest(`/image/${id}`, "DELETE");
   }
 }

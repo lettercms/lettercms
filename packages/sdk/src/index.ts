@@ -112,6 +112,10 @@ class LetterSDK {
   }
 }
 
+declare module globalThis {
+  var letterSDK: LetterSDK;
+}
+
 if (!("letterSDK" in globalThis)) {
   globalThis.letterSDK = new LetterSDK();
 }
@@ -137,5 +141,7 @@ export interface TempLetterMethods {
   reports: Reports;
   stats: Stats;
 }
+
+
 
 export default sdk;

@@ -1,13 +1,5 @@
 { 
-  "compilerOptions": {
-    "declaration": false,
-    "rootDir": "./src",
-    "composite": false,
-    "removeComments": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["@types"]
-  }
+
+  "extends": "@tsconfig/recommended",
+  "include": ["src/**/*"]
 }

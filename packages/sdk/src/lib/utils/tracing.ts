@@ -9,8 +9,9 @@ interface Router {
 interface Next {
   router: Router;
 }
+
 interface NewWindow extends Window {
-  next?: Next;
+  next: Next;
   referrer?: string;
 }
 
@@ -23,13 +24,14 @@ class Tracing {
     return "LetterTracing" in sessionStorage;
   }
   routes(): Array<string> {
-    const routesJSON = sessionStorage.getItem("LetterTracing");
+    const routesJSON = sessionStorage.getItem("LetterTracing") as string;
     const routes: Array<string> = JSON.parse(routesJSON);
 
     return routes;
   }
 
   public init(): void {
+    //@ts-ignore
     const newWindow: NewWindow = window;
 
     //TODO: do realtime tracking
@@ -51,11 +53,12 @@ class Tracing {
     this.addRoute(pathname);
 
     //Set router handler by Framework
-    if ("next" in window)
+    if ("next" in newWindow) {
       newWindow.next.router.events.on(
         "routeChangeComplete",
         (route: string): void => this.addRoute(route.slice(1))
       );
+    }
 
     //Send data on session end
     window.onunload = (): Promise<object> => {
@@ -63,9 +66,8 @@ class Tracing {
 
       const sessionTime = (end - start) / 1000; //Session time in seconds
 
-      const routes: object = JSON.parse(
-        sessionStorage.getItem("LetterTracing")
-      );
+      const tracingString = sessionStorage.getItem("LetterTracing") as string;
+      const routes: object = JSON.parse(tracingString);
 
       return this.parent.createRequest("/stat/session", "POST", {
         sessionTime,

@@ -6,6 +6,8 @@ import {
   AccountRequestOptions,
 } from "../../types";
 
+import type {Letter} from '../../index';
+
 type Request = RequestOptions | PostRequestOptions | AccountRequestOptions;
 
 interface Headers {
@@ -14,19 +16,21 @@ interface Headers {
 
 interface ToQuery {
   [key: string]: string | Array<string>;
-  fields?: Array<string> | string;
 }
 
 async function createRequest(
+  this: Letter,
   path: string,
   method?: string | Request,
   data?: Request
 ): Promise<object> {
+
   if (!this.accessToken) throw new Error("Access Token is not Set");
 
   const hasNotMethod = typeof method === "object" && !data;
 
-  const dataParam: Request | string = hasNotMethod ? method : data;
+  const dataParam = hasNotMethod ? method : data;
+
   const methodParam = hasNotMethod ? "GET" : method;
 
   const isGet = methodParam === "GET";

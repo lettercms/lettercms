@@ -1,29 +1,33 @@
 import { CMS } from "../../types";
 import fetch from "isomorphic-fetch";
-import Form from 'form-data';
+
+import type {Letter} from '../../index';
 
 interface Headers {
   [key: string]: string;
 }
 
-async function importRequest(cms: CMS, data: Array<object>): Promise<object> {
-  let headers: Headers = {
-    Authorization: this.accessToken,
-  };
-
+async function importRequest(
+  this: Letter,
+  cms: CMS,
+  data: Array<object>
+): Promise<object> {
+  
   try {
-    let Form;
-    if (typeof window === "undefined")
-      FormData = Form;
-    else
-      FormData = window.FormData;
+
+    if (globalThis.process)
+      throw new Error('Method must be use in browser envs');
+
+    let headers: Headers = {
+      Authorization: this.accessToken as string,
+    };
 
     const fd = new FormData();
 
     fd.append("cms", cms);
     fd.append("data", JSON.stringify(data));
 
-    const res = await fetch(`${this.endpoints.post}/api/post/import`, {
+    const res = await fetch(`${this.endpoint}/api/post/import`, {
       mode: "cors",
       credentials: "include",
       method: "POST",
