@@ -1,1 +1,1 @@
-export * as default from './lib';
+export * from './lib';
