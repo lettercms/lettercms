@@ -33,7 +33,107 @@ env:
 
 
 jobs:
-  build:
+  prepare:
+    name: Build and Test
+    environment: preview/api
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    env:
+      MONGO_URL: ${{ secrets.MONGO_URL }}
+      NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+      PAYPAL_PRODUCTION_CLIENT: ${{ secrets.PAYPAL_PRODUCTION_CLIENT }}
+      PAYPAL_PRODUCTION_SECRET: ${{ secrets.PAYPAL_PRODUCTION_SECRET }}
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+ 
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'yarn'
+ 
+      - name: Install dependencies
+        run: yarn install --network-timeout 1000000
+
+      - uses: actions/cache@v3
+        with:
+          key: ${{ github.sha }}-${{ github.run_number }}
+          path: ./*
+
+  build-api:
+    name: Build and Test
+    environment: preview/api
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    env:
+      MONGO_URL: ${{ secrets.MONGO_URL }}
+      NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+      PAYPAL_PRODUCTION_CLIENT: ${{ secrets.PAYPAL_PRODUCTION_CLIENT }}
+      PAYPAL_PRODUCTION_SECRET: ${{ secrets.PAYPAL_PRODUCTION_SECRET }}
+
+    steps:
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          check-latest: true
+
+      - uses: actions/cache@v3
+        id: restore-build
+        with:
+          path: ./*
+          key: ${{ github.sha }}-${{ github.run_number }}
+ 
+      - name: Install dependencies
+        run: yarn install --network-timeout 1000000
+ 
+      - name: Build
+        run: yarn build
+
+      - uses: actions/cache@v3
+        with:
+          key: ${{ github.sha }}-${{ github.run_number }}
+          path: ./*
+
+  build-dashboard:
+    name: Build and Test
+    environment: preview/api
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    env:
+      MONGO_URL: ${{ secrets.MONGO_URL }}
+      NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+      PAYPAL_PRODUCTION_CLIENT: ${{ secrets.PAYPAL_PRODUCTION_CLIENT }}
+      PAYPAL_PRODUCTION_SECRET: ${{ secrets.PAYPAL_PRODUCTION_SECRET }}
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+ 
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'yarn'
+ 
+      - name: Install dependencies
+        run: yarn install --network-timeout 1000000
+ 
+      - name: Build
+        run: yarn build
+
+      - uses: actions/cache@v3
+        with:
+          key: ${{ github.sha }}-${{ github.run_number }}
+          path: ./*
+
+  build-client:
     name: Build and Test
     environment: preview/api
     timeout-minutes: 15
@@ -146,7 +246,6 @@ jobs:
 
       - name: Set alias
         run: vercel alias set ${{ env.vercel_url }} lettercms-api-${{ github.ref_name }}.vercel.app --scope lettercms -t $VERCEL_TOKEN
-
 
   deploy-dashboard:
     environment:
