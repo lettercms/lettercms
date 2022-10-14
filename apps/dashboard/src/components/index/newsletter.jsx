@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import Input from '../input';
-import admin from '@lettercms/admin';
+import * as admin from '@lettercms/admin';
 
 export default class Newsletter extends Component {
   state = {
@@ -14,7 +14,8 @@ export default class Newsletter extends Component {
     e.preventDefault();
 
     try {
-      await admin.createSubscritor(this.state.email);
+      //await admin.createSubscritor(this.state.email);
+      console.log('Done')
     } catch(err) {
       alert('Error al suscribirse');
       throw err;

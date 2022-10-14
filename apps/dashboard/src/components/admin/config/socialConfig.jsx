@@ -1,6 +1,6 @@
 ﻿import {Component} from 'react';
 import sdk from '@lettercms/sdk';
-import admin from '@lettercms/admin';
+import * as admin from '@lettercms/admin';
 import ModalBase from '../../modalBase';
 import Template from './selectAccountTemplate';
 

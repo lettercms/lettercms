@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import Template from '../config/selectAccountTemplate';
 import ModalBase from '../../modalBase';
 import sdk from '@lettercms/sdk';
-import admin from '@lettercms/admin';
+import * as admin from '@lettercms/admin';
 
 const updateAccounts = async (type, cb) => {
   try {

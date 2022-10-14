@@ -1,7 +1,7 @@
 import connect from '@lettercms/utils/lib/connection';
 import posts from '@lettercms/models/posts';
 import blogs from '@lettercms/models/blogs';
-import {Ratings} from '@lettercms/models/blogs';
+import {Ratings} from '@lettercms/models/users';
 import {find as findPosts} from '@lettercms/utils/lib/findHelpers/posts';
 import {find as findRecommendations} from '@lettercms/utils/lib/findHelpers/recommendations';
 import Card from '@/components/blog/card';
