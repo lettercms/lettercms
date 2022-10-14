@@ -88,13 +88,13 @@ jobs:
           key: ${{ github.sha }}-${{ github.run_number }}
 
       - name: Vercel Pull
-        run: vercel pull --cwd apps/client --scope lettercms -y -t $VERCEL_TOKEN
+        run: vercel pull --cwd ./apps/client --scope lettercms -y -t $VERCEL_TOKEN
       
       - name: Vercel Build 
-        run: vercel build --cwd apps/client -t $VERCEL_TOKEN
+        run: vercel build --cwd ./apps/client -t $VERCEL_TOKEN
 
       - name: Vercel Deploy
-        run: vercel --prebuilt --cwd apps/client -t $VERCEL_TOKEN
+        run: vercel --prebuilt --cwd ./apps/client -t $VERCEL_TOKEN
 
   deploy-api:
     environment: preview
@@ -120,13 +120,13 @@ jobs:
           key: ${{ github.sha }}-${{ github.run_number }}
 
       - name: Vercel Pull
-        run: vercel pull --cwd apps/api --scope lettercms -y -t $VERCEL_TOKEN
+        run: vercel pull --cwd ./apps/api --scope lettercms -y -t $VERCEL_TOKEN
       
       - name: Vercel Build 
-        run: vercel build --cwd apps/api -t $VERCEL_TOKEN
+        run: vercel build --cwd ./apps/api -t $VERCEL_TOKEN
 
       - name: Vercel Deploy
-        run: vercel --prebuilt --cwd apps/api -t $VERCEL_TOKEN
+        run: vercel --prebuilt --cwd ./apps/api -t $VERCEL_TOKEN
 
   deploy-dashboard:
     environment:
@@ -155,11 +155,11 @@ jobs:
           key: ${{ github.sha }}-${{ github.run_number }}
 
       - name: Vercel Pull
-        run: vercel pull --cwd apps/dashboard --scope lettercms -y -t $VERCEL_TOKEN
+        run: vercel pull --cwd ./apps/dashboard --scope lettercms -y -t $VERCEL_TOKEN
       
       - name: Vercel Build 
-        run: vercel build --cwd apps/dashboard -t $VERCEL_TOKEN
+        run: vercel build --cwd ./apps/dashboard -t $VERCEL_TOKEN
 
       - name: Vercel Deploy
         id: vercel_deploy
-        run: echo "::set-output name=vercel_url::$(vercel --prebuilt --cwd apps/dashboard -t $VERCEL_TOKEN)"
+        run: echo "::set-output name=vercel_url::$(vercel --prebuilt --cwd ./apps/dashboard -t $VERCEL_TOKEN)"
