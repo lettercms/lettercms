@@ -13,7 +13,7 @@
 **/public/messaging.js
 **/dist
 **/.vercel/**
-packages/sdk/cjs
+#packages/sdk/cjs
 packages/sdk/esm
 packages/sdk/types
 
