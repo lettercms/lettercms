@@ -3,7 +3,7 @@ import sdk from '@lettercms/sdk';
 import ImageUploader from '@/lib/ImageHandler';
 import {createRoot} from 'react-dom/client';
 import CustomPanel from './customPanel';
-import pluginsOpts from './editor.config';
+import pluginsOpts from './plugins.config';
 import {EventEmitter} from 'events';
 
 /*

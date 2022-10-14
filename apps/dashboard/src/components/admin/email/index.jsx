@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Load from '../logoLoad';
+import Load from '../../logoLoad';
 import dynamic from 'next/dynamic';
 import Card from '../posts/card';
 import Top from '../top';
