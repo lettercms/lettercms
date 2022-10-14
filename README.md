@@ -11,15 +11,15 @@ LetterCMS is a CMS focused on improving content creation and integrating a built
 
 ## Built With
 
-* [NextJS](https://nextjs.org) - The web framework used
-* [Vercel](https://vercel.com) - Serverless Platform
-* [MongoDB](https://www.mongodb.com) - Database
-* [CKEditor](https://ckeditor.com) - WYSIWYG Editor
-* [GrapesJS](https://grapesjs.com) - Drag and Drop editor
-* [Unsplash API](https://unsplash.com/) - Photo Stock
-* [Firebase](https://firebase.google.com/) - File Storage
-* [Sentry](https://sentry.io) - Error Management
-* [Brain.JS](https://brain.js.org) - Machine Learning Engine
+- [NextJS](https://nextjs.org) - The web framework used
+- [Vercel](https://vercel.com) - Serverless Platform
+- [MongoDB](https://www.mongodb.com) - Database
+- [CKEditor](https://ckeditor.com) - WYSIWYG Editor
+- [GrapesJS](https://grapesjs.com) - Drag and Drop editor
+- [Unsplash API](https://unsplash.com/) - Photo Stock
+- [Firebase](https://firebase.google.com/) - File Storage
+- [Sentry](https://sentry.io) - Error Management
+- [Brain.JS](https://brain.js.org) - Machine Learning Engine
 
 ## Contributing
 
@@ -27,11 +27,11 @@ Please read [CONTRIBUTING.md](https://github.com/lettercms/lettercms) for detail
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/lettercms/lettercms/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/lettercms/lettercms/tags).
 
 ## Authors
 
-* **David González** - *Initial work* - [David's Devel](https://github.com/davidsdevel)
+- **David González** - _Initial work_ - [David's Devel](https://github.com/davidsdevel)
 
 See also the list of [contributors](https://github.com/lettercms/lettercms/contributors) who participated in this project.
 
