@@ -20,10 +20,11 @@ if (!cached) {
 }
 
 const opts = {
-  bufferCommands: false,
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  createIndexes: true
+  useFindAndModify: false,
+  bufferCommands: false,
+  useCreateIndex: true
 };
 
 export default async function dbConnect() {
