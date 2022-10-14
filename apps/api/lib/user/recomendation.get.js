@@ -1,11 +1,8 @@
-
 import postModel from '@lettercms/models/posts';
 import blogs from '@lettercms/models/blogs';
 import {Ratings, Users} from '@lettercms/models/users';
-
 import {find as findRecommendations} from '@lettercms/utils/lib/findHelpers/recommendations';
 import {find as findPosts} from '@lettercms/utils/lib/findHelpers/posts';
-
 import {isValidObjectId} from 'mongoose';
 
 export default async function() {

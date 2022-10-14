@@ -2,6 +2,7 @@
   "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
     "build": {
+      "cache": false,
       "outputs": ["dist/**", "cjs/**", "esm/**"]
     },
     "@lettercms/client#build": {
@@ -15,10 +16,6 @@
         "@lettercms/sdk#build"
       ],
       "outputs": [".next/**", ".vercel/**"]
-    },
-    "deploy": {
-      "cache": false,
-      "outputs": []
     },
 
     "dev": {
