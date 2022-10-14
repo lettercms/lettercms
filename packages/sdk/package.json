@@ -14,7 +14,7 @@
     "url": "git+https://github.com/lettercms/lettercms.git"
   },
   "scripts": {
-    "build": "rimraf ./cjs && tsc --outDir ./cjs -m commonjs -t ES2017",
+    "build": "tsc --outDir ./cjs -m commonjs -t ES2017",
     "deploy:canary": "node ../../scripts/release-canary && npm publish --tag canary",
     "build-dist": "webpack",
     "build-cjs": "rimraf ./cjs && tsc --outDir ./cjs -m commonjs -t ES2017",

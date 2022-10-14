@@ -1,2 +1,2 @@
-export * from './Facebook';
-export * from './Instagram';
+export * as Facebook from './Facebook';
+export * as Instagram from './Instagram';
