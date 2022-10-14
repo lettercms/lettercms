@@ -12,8 +12,7 @@
     "start": "node index",
     "compile": "node src/compile && next build src/",
     "lint": "next lint",
-    "test": "jest --runInBand --detectOpenHandles",
-    "vercel-build": "echo Done"
+    "test": "jest --runInBand --detectOpenHandles"
   },
   "dependencies": {
     "@lettercms/models": "*",

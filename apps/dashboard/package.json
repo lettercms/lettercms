@@ -12,8 +12,7 @@
     "start:dev": "set NODE_ENV=development&& next dev  --port $PORT",
     "compile": "set NODE_ENV=production&& node src/compile && next build",
     "build": "next build",
-    "lint": "next lint",
-    "vercel-build": "echo Done"
+    "lint": "next lint"
   },
   "dependencies": {
     "@lettercms/admin": "*",
