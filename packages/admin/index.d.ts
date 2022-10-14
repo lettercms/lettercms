@@ -1,4 +1,3 @@
-
 export declare class Admin {
   accessToken: string;
   _request: typeof Function;

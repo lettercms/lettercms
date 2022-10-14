@@ -1,33 +1,31 @@
-import {CMS} from '../../types';
-import fetch from 'isomorphic-unfetch';
+import { CMS } from "../../types";
+import fetch from "isomorphic-unfetch";
 
 interface Headers {
-  [key:string]: string;
+  [key: string]: string;
 }
 
 async function importRequest(cms: CMS, data: Array<object>): Promise<object> {
   let headers: Headers = {
-    Authorization: this.accessToken
+    Authorization: this.accessToken,
   };
 
   try {
     let Form;
-    if (typeof window === 'undefined')
-      Form = require('form-data');
-    else 
-      Form = window.FormData;
+    if (typeof window === "undefined") Form = require("form-data");
+    else Form = window.FormData;
 
     const fd = new Form();
 
-    fd.append('cms', cms);
-    fd.append('data', JSON.stringify(data));
+    fd.append("cms", cms);
+    fd.append("data", JSON.stringify(data));
 
     const res = await fetch(`${this.endpoints.post}/api/post/import`, {
-      mode:'cors',
-      credentials: 'include',
-      method: 'POST',
+      mode: "cors",
+      credentials: "include",
+      method: "POST",
       headers,
-      body: fd
+      body: fd,
     });
 
     if (!res.ok) {
@@ -38,7 +36,7 @@ async function importRequest(cms: CMS, data: Array<object>): Promise<object> {
     const resData: object = await res.json();
 
     return Promise.resolve(resData);
-  } catch(err) {
+  } catch (err) {
     return Promise.reject(err);
   }
 }

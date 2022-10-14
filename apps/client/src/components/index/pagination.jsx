@@ -31,5 +31,3 @@ export default function Pagination({prev, next, page}){
     </style>
   </div>
 }
-
-export default Pagination;

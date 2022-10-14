@@ -1,4 +1,4 @@
-import {LetterProperties} from '../../index';
+import { LetterProperties } from "../../index";
 
 interface Events {
   on: Function;
@@ -11,7 +11,7 @@ interface Next {
 }
 interface NewWindow extends Window {
   next?: Next;
-  referrer?: string
+  referrer?: string;
 }
 
 class Tracing {
@@ -19,40 +19,43 @@ class Tracing {
   constructor(parent: LetterProperties) {
     this.parent = parent;
   }
-  existsRoutes(): boolean  {
-    return 'LetterTracing' in sessionStorage;
+  existsRoutes(): boolean {
+    return "LetterTracing" in sessionStorage;
   }
   routes(): Array<string> {
-    const routesJSON = sessionStorage.getItem('LetterTracing');
+    const routesJSON = sessionStorage.getItem("LetterTracing");
     const routes: Array<string> = JSON.parse(routesJSON);
 
     return routes;
   }
-  
-  public init(): void {
 
+  public init(): void {
     const newWindow: NewWindow = window;
 
     //TODO: do realtime tracking
 
     if (!this.existsRoutes()) {
-      this.parent.createRequest('/stat/session', 'POST', {
-        action: 'start'
+      this.parent.createRequest("/stat/session", "POST", {
+        action: "start",
       });
 
-      sessionStorage.setItem('LetterTracing', '[]');
+      sessionStorage.setItem("LetterTracing", "[]");
     }
 
     const start = Date.now(); //Get
 
-    const pathname = location.pathname === '/' ? '/' : location.pathname.slice(1);
+    const pathname =
+      location.pathname === "/" ? "/" : location.pathname.slice(1);
 
     //Save initial Route
     this.addRoute(pathname);
 
     //Set router handler by Framework
-    if ('next' in window)
-      newWindow.next.router.events.on('routeChangeComplete', (route: string): void => this.addRoute(route.slice(1)));
+    if ("next" in window)
+      newWindow.next.router.events.on(
+        "routeChangeComplete",
+        (route: string): void => this.addRoute(route.slice(1))
+      );
 
     //Send data on session end
     window.onunload = (): Promise<object> => {
@@ -60,22 +63,24 @@ class Tracing {
 
       const sessionTime = (end - start) / 1000; //Session time in seconds
 
-      const routes: object = JSON.parse(sessionStorage.getItem('LetterTracing'));
+      const routes: object = JSON.parse(
+        sessionStorage.getItem("LetterTracing")
+      );
 
-      return this.parent.createRequest('/stat/session', 'POST', {
+      return this.parent.createRequest("/stat/session", "POST", {
         sessionTime,
         routes,
-        action: 'end',
-        referrer: newWindow.referrer
+        action: "end",
+        referrer: newWindow.referrer,
       });
-    }
+    };
   }
   public addRoute(route: string): void {
     const routes = this.routes();
 
     routes.push(route);
 
-    sessionStorage.setItem('LetterTracing', JSON.stringify(routes));
+    sessionStorage.setItem("LetterTracing", JSON.stringify(routes));
   }
 }
 

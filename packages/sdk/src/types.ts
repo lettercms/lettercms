@@ -1,17 +1,17 @@
 //Lists
 interface Cursor {
-  before: string,
-  after?: string
+  before: string;
+  after?: string;
 }
 
 interface CursorPagination {
-  cursors: Cursor,
-  next: string,
-  prev?: string
+  cursors: Cursor;
+  next: string;
+  prev?: string;
 }
 interface OffsetPagination {
-  page: string,
-  total: string
+  page: string;
+  total: string;
 }
 
 export interface ListResponseMessage<T> {
@@ -20,23 +20,23 @@ export interface ListResponseMessage<T> {
 }
 
 interface Request {
-  fields?: Array<string>,
-  limit?: number,
-  page?: number,
-  before?: string,
-  after?: string,
-  sort?: string,
+  fields?: Array<string>;
+  limit?: number;
+  page?: number;
+  before?: string;
+  after?: string;
+  sort?: string;
 }
 interface PostRequest extends Request {
-  status?: string
+  status?: string;
 }
 interface AccountRequest extends Request {
-  role?: 'admin' | 'collaborator' | 'single'
+  role?: "admin" | "collaborator" | "single";
 }
 
 export interface LoginResponse {
-  accessToken: string,
-  id: string
+  accessToken: string;
+  id: string;
 }
 
 export type RequestOptions = Array<string> | Request;
@@ -46,4 +46,4 @@ export type AccountRequestOptions = Array<string> | AccountRequest;
 export type AccessToken = string | undefined;
 export type Subdomain = string | undefined;
 
-export type CMS = 'wordpress' | 'blogger';
+export type CMS = "wordpress" | "blogger";

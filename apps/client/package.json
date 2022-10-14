@@ -8,14 +8,12 @@
   },
   "scripts": {
     "dev": "next dev --port 3002",
-    "build": "vercel pull --scope lettercms -y -t $VERCEL_TOKEN && vercel build -t $VERCEL_TOKEN",
+    "build": "next build",
     "start": "node index",
     "compile": "node src/compile && next build src/",
     "lint": "next lint",
     "test": "jest --runInBand --detectOpenHandles",
-    "vercel-build": "next build",
-    "deploy": "vercel --prebuilt -t $VERCEL_TOKEN",
-    "set-alias": "vercel -t $VERCEL_TOKEN alias set client-davidsdevel-lettercms.vercel.app davidsdevel.lettercms.vercel.app"
+    "vercel-build": "echo Done"
   },
   "dependencies": {
     "@lettercms/models": "*",

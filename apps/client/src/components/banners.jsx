@@ -16,9 +16,3 @@ export default function Banners({ length })  {
 	}
   </aside>
 };
-
-Banners.propTypes = {
-  length: number,
-};
-
-export default Banners;

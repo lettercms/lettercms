@@ -1,5 +1,5 @@
-import {PagesResponse} from './socialTypes';
-import {LetterProperties} from '../../index'
+import { PagesResponse } from "./socialTypes";
+import { LetterProperties } from "../../index";
 
 class Base<feed, post> {
   url: string;
@@ -15,19 +15,19 @@ class Base<feed, post> {
     return this.parent.createRequest(`/social/${this.url}/${id}`, options);
   }
   publish(message: string, options?): Promise<string> {
-    return this.parent.createRequest(`/social/${this.url}/publish`, 'POST', {
+    return this.parent.createRequest(`/social/${this.url}/publish`, "POST", {
       message,
-      ...options
+      ...options,
     });
   }
   update(id: string, message: string, options?): Promise<void> {
-    return this.parent.createRequest(`/social/${this.url}/${id}`, 'PATCH', {
+    return this.parent.createRequest(`/social/${this.url}/${id}`, "PATCH", {
       message,
-      ...options
+      ...options,
     });
   }
   delete(id: string): Promise<void> {
-    return this.parent.createRequest(`/social/${this.url}/${id}`, 'DELETE');
+    return this.parent.createRequest(`/social/${this.url}/${id}`, "DELETE");
   }
 }
 

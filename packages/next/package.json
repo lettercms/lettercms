@@ -15,6 +15,7 @@
     "@lettercms/sdk": "*"
   },
   "devDependencies": {
-    "@lettercms/eslint-config": "*"
+    "@lettercms/eslint-config": "*",
+    "eslint": "^8.22.0"
   }
 }

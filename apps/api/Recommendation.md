@@ -11,7 +11,7 @@ Para esto se van a hacer uso de 2 factores importantes.
 Factor discreto, que se obtiene al dividir la cantidad de vistas de dicho post entre la cantidad de vistas total en dicha sesion multiplicado por 5.
 
 ```js
-const discreteFactor = (postView / totalViews) * 5; 
+const discreteFactor = (postView / totalViews) * 5;
 ```
 
 la cual da como resultado un valor entre 0 y 5.
@@ -44,6 +44,7 @@ Para usuarios se recibira el siguiente esquema a travez de una peticion **GET**:
 // GET /api/recommendation/<uid>?limit=10&sort=desc&page=1
 
 ```
+
 Retornara como respuesta un Objeto con los posts ordenados desde el mas recomendado hasta el menos recomendado para dicho usuario.
 
 ### Posts

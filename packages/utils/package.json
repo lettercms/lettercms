@@ -15,7 +15,8 @@
   },
   "devDependencies": {
     "@lettercms/eslint-config": "*",
-    "dotenv": "^16.0.0"
+    "dotenv": "^16.0.0",
+    "eslint": "^8.22.0"
   },
   "repository": {
     "type": "git",

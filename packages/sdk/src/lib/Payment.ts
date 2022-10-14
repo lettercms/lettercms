@@ -1,39 +1,39 @@
-import {LetterProperties} from '../index';
+import { LetterProperties } from "../index";
 
 interface Usage {
-  used: number
-  available: number
+  used: number;
+  available: number;
 }
 
 interface UsageResponse {
   posts: {
-    versioning: Usage
-  },
+    versioning: Usage;
+  };
   files: {
-    storage: Usage
-    upload: Usage
-  },
-  pages: Usage
+    storage: Usage;
+    upload: Usage;
+  };
+  pages: Usage;
   social: {
-    schedule: Usage
-    instagramPosts: Usage
-    accounts: number
-  },
+    schedule: Usage;
+    instagramPosts: Usage;
+    accounts: number;
+  };
   accounts: {
-    collaborators: number,
-    single: number
-  },
+    collaborators: number;
+    single: number;
+  };
   ab: {
-    tests: Usage
-  },
+    tests: Usage;
+  };
   stats: {
-    realtimeEnabled: number,
-    reports: number
-  },
+    realtimeEnabled: number;
+    reports: number;
+  };
   emails: {
-    campaigns: number
-  }
-};
+    campaigns: number;
+  };
+}
 
 class Payment {
   parent: LetterProperties;
@@ -41,7 +41,7 @@ class Payment {
     this.parent = parent;
   }
   usage(): Promise<UsageResponse> {
-    return this.parent.createRequest('/usage');
+    return this.parent.createRequest("/usage");
   }
 }
 

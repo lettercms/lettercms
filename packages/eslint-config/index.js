@@ -1,5 +1,10 @@
 module.exports = {
-  extends: ["next"],
+  extends: ["next", "turbo", "prettier"],
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
   rules: {
     "semi": ["warn", "always"],
     "quotes": ["warn", "single"],

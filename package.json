@@ -2,20 +2,10 @@
   "name": "lettercms",
   "version": "0.0.0",
   "private": true,
-  "workspaces": {
-    "nohoist": [
-      "**/next",
-      "**/next/**",
-      "**/react",
-      "**/react/**",
-      "**/react-dom",
-      "**/react-dom/**"
-    ],
-    "packages": [
-      "apps/*",
-      "packages/*"
-    ]
-  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "build": "turbo run build",
     "deploy": "turbo run deploy",

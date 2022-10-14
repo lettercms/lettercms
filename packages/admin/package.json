@@ -14,7 +14,8 @@
     "isomorphic-unfetch": "^3.1.0"
   },
   "devDependencies": {
-    "@lettercms/eslint-config": "*"
+    "@lettercms/eslint-config": "*",
+    "eslint": "^8.22.0"
   },
   "engines": {
     "yarn": ">=1.22",

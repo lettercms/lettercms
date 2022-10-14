@@ -1,33 +1,40 @@
-import toQuery from './objectToQueryString';
-import fetch from 'isomorphic-unfetch';
-import {RequestOptions, PostRequestOptions, AccountRequestOptions} from '../../types';
+import toQuery from "./objectToQueryString";
+import fetch from "isomorphic-unfetch";
+import {
+  RequestOptions,
+  PostRequestOptions,
+  AccountRequestOptions,
+} from "../../types";
 
 type Request = RequestOptions | PostRequestOptions | AccountRequestOptions;
 
 interface Headers {
-  [key:string]: string;
+  [key: string]: string;
 }
 
 interface ToQuery {
-  [key: string]: string |  Array<string>
-  fields?: Array<string> | string
+  [key: string]: string | Array<string>;
+  fields?: Array<string> | string;
 }
 
-async function createRequest(path: string, method?: string | Request, data?: Request): Promise<object> {
-  if (!this.accessToken)
-    throw new Error('Access Token is not Set');
+async function createRequest(
+  path: string,
+  method?: string | Request,
+  data?: Request
+): Promise<object> {
+  if (!this.accessToken) throw new Error("Access Token is not Set");
 
-  const hasNotMethod = typeof method === 'object' && !data;
+  const hasNotMethod = typeof method === "object" && !data;
 
   const dataParam: Request | string = hasNotMethod ? method : data;
-  const methodParam = hasNotMethod ? 'GET' : method;
-  
-  const isGet = methodParam === 'GET';
+  const methodParam = hasNotMethod ? "GET" : method;
 
-  let query = '';
+  const isGet = methodParam === "GET";
+
+  let query = "";
 
   let headers: Headers = {
-    Authorization: this.accessToken
+    Authorization: this.accessToken,
   };
 
   let newData: ToQuery = {};
@@ -35,32 +42,34 @@ async function createRequest(path: string, method?: string | Request, data?: Req
   if (isGet && !!dataParam) {
     if (Array.isArray(dataParam))
       newData = {
-        fields: dataParam.join(',')
+        fields: dataParam.join(","),
       };
     else {
       newData = dataParam as ToQuery;
 
       if (newData.fields)
-        newData.fields = typeof newData.fields === 'string' ? newData.fields : newData.fields.join(',');
+        newData.fields =
+          typeof newData.fields === "string"
+            ? newData.fields
+            : newData.fields.join(",");
     }
 
     query = toQuery(newData);
   }
 
-  if (!isGet)
-    headers['Content-Type'] = 'application/json';
+  if (!isGet) headers["Content-Type"] = "application/json";
 
   try {
     const res = await fetch(`${this.endpoint}/api${path}${query}`, {
       method: methodParam as string,
       headers,
-      mode:'cors',
-      credentials: 'include',
-      body: !isGet && !!data ? JSON.stringify(data) : undefined
+      mode: "cors",
+      credentials: "include",
+      body: !isGet && !!data ? JSON.stringify(data) : undefined,
     });
 
     return res.json() as Promise<object>;
-  } catch(err) {
+  } catch (err) {
     return Promise.reject(err);
   }
 }

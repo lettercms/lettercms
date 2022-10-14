@@ -1,4 +1,4 @@
-import {LetterProperties} from '../index';
+import { LetterProperties } from "../index";
 
 class Reports {
   parent: LetterProperties;
