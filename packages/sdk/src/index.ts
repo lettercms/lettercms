@@ -18,7 +18,7 @@ import Users from "./lib/Users";
 import { AccessToken, Subdomain, LoginResponse } from "./types";
 
 const devEndpoint = "http://localhost:3009";
-const prodEndpoint = "https://api-davidsdevel-lettercms.vercel.app";
+const prodEndpoint = process.env.LETTERCMS_ENDPOINT as string;
 
 const isDev = process.env.NODE_ENV !== "production";
 
