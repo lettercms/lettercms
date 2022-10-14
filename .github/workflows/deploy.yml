@@ -33,43 +33,11 @@ env:
 
 
 jobs:
-  prepare:
-    name: Build and Test
-    environment: preview/api
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
-    env:
-      MONGO_URL: ${{ secrets.MONGO_URL }}
-      NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
-      PAYPAL_PRODUCTION_CLIENT: ${{ secrets.PAYPAL_PRODUCTION_CLIENT }}
-      PAYPAL_PRODUCTION_SECRET: ${{ secrets.PAYPAL_PRODUCTION_SECRET }}
-
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
- 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
-          cache: 'yarn'
- 
-      - name: Install dependencies
-        run: yarn install --network-timeout 1000000
-
-      - uses: actions/cache@v3
-        with:
-          key: ${{ github.sha }}-${{ github.run_number }}
-          path: ./*
-
   deploy-api:
     environment:
       name: preview/api
       url: https://lettercms-api-${{ github.ref_name }}.vercel.app
     runs-on: ubuntu-latest
-    needs: prepare
     env:
       MONGO_URL: ${{ secrets.MONGO_URL }}
       NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
@@ -78,17 +46,17 @@ jobs:
       VERCEL_PROJECT_ID: ${{secrets.API_PROJECT_ID}}
 
     steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
       - name: Setup node
         uses: actions/setup-node@v3
         with:
           node-version: 16
           check-latest: true
-
-      - uses: actions/cache@v3
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ github.sha }}-${{ github.run_number }}
+          cache: 'yarn'
 
       - uses: actions/cache@v3
         id: restore-build
@@ -118,7 +86,6 @@ jobs:
       name: preview/client
       url: https://lettercms-client-${{ github.ref_name }}.vercel.app
     runs-on: ubuntu-latest
-    needs: prepare
     env:
       MONGO_URL: ${{ secrets.MONGO_URL }}
       NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
@@ -127,17 +94,17 @@ jobs:
       VERCEL_PROJECT_ID: ${{secrets.CLIENT_PROJECT_ID}}
 
     steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
       - name: Setup node
         uses: actions/setup-node@v3
         with:
           node-version: 16
           check-latest: true
-
-      - uses: actions/cache@v3
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ github.sha }}-${{ github.run_number }}
+          cache: 'yarn'
 
       - uses: actions/cache@v3
         id: restore-build
@@ -167,7 +134,6 @@ jobs:
       name: preview/dashboard
       url: https://lettercms-dashboard-${{ github.ref_name }}.vercel.app
     runs-on: ubuntu-latest
-    needs: prepare
     env:
       MONGO_URL: ${{ secrets.MONGO_URL }}
       NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
@@ -176,17 +142,17 @@ jobs:
       VERCEL_PROJECT_ID: ${{secrets.DASHBOARD_PROJECT_ID}}
 
     steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
       - name: Setup node
         uses: actions/setup-node@v3
         with:
           node-version: 16
           check-latest: true
-
-      - uses: actions/cache@v3
-        id: restore-build
-        with:
-          path: ./*
-          key: ${{ github.sha }}-${{ github.run_number }}
+          cache: 'yarn'
 
       - uses: actions/cache@v3
         id: restore-build
