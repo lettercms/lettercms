@@ -22,12 +22,14 @@
   },
   "dependencies": {
     "form-data": "^3.0.0",
-    "isomorphic-unfetch": "^3.1.0"
+    "isomorphic-fetch": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",
     "@babel/preset-env": "^7.19.0",
     "@tsconfig/recommended": "^1.0.1",
+    "@types/isomorphic-fetch": "^0.0.36",
+    "@types/node": "^18.8.5",
     "babel-loader": "^8.2.5",
     "rimraf": "^3.0.2",
     "terser-webpack-plugin": "^5.3.6",

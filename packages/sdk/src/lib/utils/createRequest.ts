@@ -1,5 +1,5 @@
 import toQuery from "./objectToQueryString";
-import fetch from "isomorphic-unfetch";
+import fetch from "isomorphic-fetch";
 import {
   RequestOptions,
   PostRequestOptions,

@@ -1,5 +1,5 @@
 import toQuery from "./objectToQueryString";
-import fetch from "isomorphic-unfetch";
+import fetch from "isomorphic-fetch";
 
 const stagingEndpoint = "https://lettercms-api-staging.herokuapp.com";
 

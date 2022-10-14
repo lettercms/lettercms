@@ -1,5 +1,6 @@
 import { CMS } from "../../types";
-import fetch from "isomorphic-unfetch";
+import fetch from "isomorphic-fetch";
+import Form from 'form-data';
 
 interface Headers {
   [key: string]: string;
@@ -12,10 +13,12 @@ async function importRequest(cms: CMS, data: Array<object>): Promise<object> {
 
   try {
     let Form;
-    if (typeof window === "undefined") Form = require("form-data");
-    else Form = window.FormData;
+    if (typeof window === "undefined")
+      FormData = Form;
+    else
+      FormData = window.FormData;
 
-    const fd = new Form();
+    const fd = new FormData();
 
     fd.append("cms", cms);
     fd.append("data", JSON.stringify(data));
