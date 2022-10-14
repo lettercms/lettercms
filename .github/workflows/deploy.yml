@@ -87,16 +87,17 @@ jobs:
           path: ./*
           key: ${{ github.sha }}-${{ github.run_number }}
 
-      - run: cd apps/client
       - name: Vercel Pull
-        run: vercel pull --environment=preview --cwd ./apps/client --scope lettercms -y -t $VERCEL_TOKEN
+        run: vercel --cwd ./apps/client pull --environment=preview --scope lettercms -y -t $VERCEL_TOKEN
       
+      - run: ls
+
       - name: Vercel Build 
-        run: vercel build -t $VERCEL_TOKEN
+        run: vercel --cwd ./apps/client build -t $VERCEL_TOKEN
 
       - run: cd ../..
       - name: Vercel Deploy
-        run: vercel --prebuilt --cwd ./apps/client -t $VERCEL_TOKEN
+        run: vercel --cwd ./apps/client --prebuilt -t $VERCEL_TOKEN
 
   deploy-api:
     environment: preview
@@ -123,14 +124,16 @@ jobs:
 
       - run: cd apps/api
       - name: Vercel Pull
-        run: vercel pull --environment=preview --cwd ./apps/api --scope lettercms -y -t $VERCEL_TOKEN
+        run: vercel --cwd ./apps/api pull --environment=preview --scope lettercms -y -t $VERCEL_TOKEN
+      
+      - run: ls
       
       - name: Vercel Build 
-        run: vercel build -t $VERCEL_TOKEN
+        run: vercel --cwd ./apps/api build -t $VERCEL_TOKEN
 
       - run: cd ../..
       - name: Vercel Deploy
-        run: vercel --prebuilt --cwd ./apps/api -t $VERCEL_TOKEN
+        run: vercel --cwd ./apps/api --prebuilt -t $VERCEL_TOKEN
 
   deploy-dashboard:
     environment:
@@ -160,12 +163,14 @@ jobs:
 
       - run: cd apps/dashboard
       - name: Vercel Pull
-        run: vercel pull --environment=preview --cwd ./apps/dashboard --scope lettercms -y -t $VERCEL_TOKEN
+        run: vercel --cwd ./apps/dashboard pull --environment=preview --scope lettercms -y -t $VERCEL_TOKEN
+      
+      - run: ls
       
       - name: Vercel Build 
-        run: vercel build -t $VERCEL_TOKEN
+        run: vercel --cwd ./apps/dashboard build -t $VERCEL_TOKEN
 
       - run: cd ../..
       - name: Vercel Deploy
         id: vercel_deploy
-        run: echo "::set-output name=vercel_url::$(vercel --prebuilt --cwd ./apps/dashboard -t $VERCEL_TOKEN)"
+        run: echo "::set-output name=vercel_url::$(vercel --cwd ./apps/dashboard --prebuilt -t $VERCEL_TOKEN)"
