@@ -25,7 +25,7 @@ env:
   VERCEL_ORG_ID: ${{secrets.VERCEL_ORG_ID}}
 
 
-jobs:  # JOB to run change detection
+jobs:
   changes:
     runs-on: ubuntu-latest
     # Set job outputs to values from filter step
@@ -39,27 +39,27 @@ jobs:  # JOB to run change detection
         with:
           fetch-depth: 2
 
-    - uses: dorny/paths-filter@v2
-      id: filter
-      with:
-        filters: |
-          api:
-            - 'apps/api/**'
-            - 'packages/models/**'
-            - 'packages/utils/**'
-            - 'packages/ui/**'
-          client:
-            - 'apps/client/**'
-            - 'packages/models/**'
-            - 'packages/sdk/**'
-            - 'packages/ui/**'
-          dashboard:
-            - 'apps/dashboard/**'
-            - 'packages/admin/**'
-            - 'packages/models/**'
-            - 'packages/sdk/**'
-            - 'packages/utils/**'
-            - 'packages/ui/**'
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            api:
+              - 'apps/api/**'
+              - 'packages/models/**'
+              - 'packages/utils/**'
+              - 'packages/ui/**'
+            client:
+              - 'apps/client/**'
+              - 'packages/models/**'
+              - 'packages/sdk/**'
+              - 'packages/ui/**'
+            dashboard:
+              - 'apps/dashboard/**'
+              - 'packages/admin/**'
+              - 'packages/models/**'
+              - 'packages/sdk/**'
+              - 'packages/utils/**'
+              - 'packages/ui/**'
 
   deploy-api:
     needs: changes
