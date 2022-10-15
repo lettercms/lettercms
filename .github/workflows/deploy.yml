@@ -25,8 +25,45 @@ env:
   VERCEL_ORG_ID: ${{secrets.VERCEL_ORG_ID}}
 
 
-jobs:
+jobs:  # JOB to run change detection
+  changes:
+    runs-on: ubuntu-latest
+    # Set job outputs to values from filter step
+    outputs:
+      api: ${{ steps.filter.outputs.api }}
+      client: ${{ steps.filter.outputs.client }}
+      dashboard: ${{ steps.filter.outputs.dashboard }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          api:
+            - 'apps/api/**'
+            - 'packages/models/**'
+            - 'packages/utils/**'
+            - 'packages/ui/**'
+          client:
+            - 'apps/client/**'
+            - 'packages/models/**'
+            - 'packages/sdk/**'
+            - 'packages/ui/**'
+          dashboard:
+            - 'apps/dashboard/**'
+            - 'packages/admin/**'
+            - 'packages/models/**'
+            - 'packages/sdk/**'
+            - 'packages/utils/**'
+            - 'packages/ui/**'
+
   deploy-api:
+    needs: changes
+    if: ${{ needs.changes.outputs.api == 'true' }}
     environment:
       name: preview/api
       url: https://lettercms-api-${{ github.ref_name }}.vercel.app
@@ -39,7 +76,7 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 2
 
@@ -74,6 +111,8 @@ jobs:
           key: lettercms-api-cache
 
   deploy-client:
+    needs: changes
+    if: ${{ needs.changes.outputs.client == 'true' }}
     environment:
       name: preview/client
       url: https://lettercms-client-${{ github.ref_name }}.vercel.app
@@ -84,7 +123,7 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 2
 
@@ -119,6 +158,8 @@ jobs:
           key: lettercms-client-cache
 
   deploy-dashboard:
+    needs: changes
+    if: ${{ needs.changes.outputs.dashboard == 'true' }}
     environment:
       name: preview/dashboard
       url: https://lettercms-dashboard-${{ github.ref_name }}.vercel.app
@@ -132,7 +173,7 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 2
 
