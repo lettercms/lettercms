@@ -19,6 +19,7 @@ const appConfig = withTM({
   },
   poweredByHeader: false,
   env: {
+    LETTERCMS_ENDPOINT: process.env.LETTERCMS_ENDPOINT,
     PAYPAL_PRODUCTION_CLIENT: process.env.PAYPAL_PRODUCTION_CLIENT,
     PAYPAL_PRODUCTION: process.env.PAYPAL_PRODUCTION_CLIENT,
     FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID,
