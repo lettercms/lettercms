@@ -3,9 +3,6 @@ import {join} from 'path';
 import fetch from 'isomorphic-unfetch';
 
 export default async function createRequest(path, method, data) {
-  if (!this.accessToken)
-    throw new Error('Access Token is not Set');
-
   const hasNotMethod = typeof method === 'object' && !data;
 
   const dataParam = hasNotMethod ? method : data;
@@ -15,9 +12,7 @@ export default async function createRequest(path, method, data) {
 
   let query = '';
 
-  let headers = {
-    Authorization: this.accessToken
-  };
+  let headers = {};
 
   let newData = {};
 

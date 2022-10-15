@@ -32,17 +32,13 @@ export default class AccountConfig extends Component {
     try {
       await asyncImport(
         'cropper-js',
-        isDev
-          ? 'http://localhost:3003/editor/cropper.css'
-          : 'https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css',
         'css'
       );
 
       await asyncImport(
         'cropper-css',
-        isDev
-          ? 'http://localhost:3003/editor/cropper.js'
-          : 'https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js'
+        'https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js'
       );
     
       const me = await sdk.accounts.me([

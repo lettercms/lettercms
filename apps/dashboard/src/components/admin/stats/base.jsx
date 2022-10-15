@@ -17,8 +17,8 @@ const Base = ({children, rows = 1, title, style, principal}) => <div className={
 
       border-radius: 15px;
       width: calc(${(typeof rows !== 'number' ? rows : 100 / rows)}% - 50px);
-      height: 250px;
-      background: white;
+      height: auto;
+      min-height: 250px;
       margin: 15px 25px;
       padding: 50px 0;
     }

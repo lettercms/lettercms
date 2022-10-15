@@ -1,4 +1,4 @@
-const Input = ({className, id, value, type = 'text', label, ...opts}) => {
+const Input = ({className, id, value = '', type = 'text', label, ...opts}) => {
   let customClassName = !!value && 'notEmpty';
   const isTextarea = type === 'textarea';
   const isRadio = type === 'radio';

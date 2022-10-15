@@ -28,17 +28,22 @@ export default function middleware(req) {
     }
   }
 
-  const lastLogin = new Date(req.cookies.get('__last-login') || Date.now());
-  const limit = Date.now() - (24*60*60*1000);
+  const _lastLogin = req.cookies.get('__last-login');
 
-  if (lastLogin > limit && url.pathname === '/dashboard') {
-    url.pathname = '/dashboard/posts';
+  if (_lastLogin) {
 
-    return NextResponse.redirect(url);
-  } else if (lastLogin < limit &&  /\/dashboard\/\w*$/.test(url.pathname)) {
-    url.pathname = '/dashboard';
+    const lastLogin = new Date(_lastLogin);
+    const limit = Date.now() - (24*60*60*1000);
 
-    return NextResponse.redirect(url);
+    if (lastLogin > limit && url.pathname === '/dashboard') {
+      url.pathname = '/dashboard/posts';
+
+      return NextResponse.redirect(url);
+    } else if (lastLogin < limit &&  /\/dashboard\/\w*$/.test(url.pathname)) {
+      url.pathname = '/dashboard';
+
+      return NextResponse.redirect(url);
+    }
   }
 
   return NextResponse.next();

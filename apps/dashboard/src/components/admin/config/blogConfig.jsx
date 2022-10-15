@@ -9,6 +9,7 @@ import BlogCategory from './blog/categories';
 import BlogUrl from './blog/url';
 import BlogImport from './blog/import';
 import BlogDelete from './blog/delete';
+import Thumbnail from './blog/thumbnail';
 
 export default class BlogConfig extends Component{
   constructor(props) {
@@ -18,7 +19,8 @@ export default class BlogConfig extends Component{
       category: '',
       alias: '',
       showModal: false,
-      categories: props.state.categories
+      categories: props.state.categories,
+      thumbnail: props.state.thumbnail
     };
   }
   filterCategory = categories => this.setState({
@@ -52,13 +54,14 @@ export default class BlogConfig extends Component{
   }
   
   render() {
-    const {title, description, urlID, sending, isVisible} = this.props.state;
+    const {title, description, urlID, sending, isVisible, thumbnail} = this.props.state;
     const {handleInput} = this.props;
     const {categories, category, alias, showModal} = this.state;
 
     return <>
       { sending && <Load/> }
       <ul className='config-opts'>
+        <Thumbnail url={thumbnail}/>
         <Container rows={1} title='Meta' style={{height: 'auto !important'}}>
           <BlogTitle isVisible={isVisible} title={title} description={description} onChange={handleInput}/>
         </Container>

@@ -105,11 +105,10 @@ export default class Verify extends Component {
       return alert('Codigo invalido');
     }
 
-    const res = await fetch('http://localhost:3009/api/account/verify', {
+    const res = await fetch('/api/account/verify', {
       credentials: 'include',
       method: 'POST',
       headers: {
-        Authorization: process.env.LETTER_ACCESS_TOKEN,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({

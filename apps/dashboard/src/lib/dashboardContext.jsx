@@ -90,10 +90,10 @@ export function DashboardProvider({userID, children, hideMenu}) {
 
       const {user: {firebaseToken, accessToken}} = data;
 
-      /*const app = createFirebaseApp();
+      const app = createFirebaseApp();
       const auth = getAuth(app);
 
-      signInWithCustomToken(auth, firebaseToken);*/
+      signInWithCustomToken(auth, firebaseToken);
       
       sdk.setAccessToken(accessToken);
       

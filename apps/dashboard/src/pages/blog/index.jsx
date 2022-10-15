@@ -3,6 +3,7 @@ import posts from '@lettercms/models/posts';
 import blogs from '@lettercms/models/blogs';
 import {Ratings} from '@lettercms/models/users';
 import {find as findPosts} from '@lettercms/utils/lib/findHelpers/posts';
+import {findOne as findBlog} from '@lettercms/utils/lib/findUtils';
 import {find as findRecommendations} from '@lettercms/utils/lib/findHelpers/recommendations';
 import Card from '@/components/blog/card';
 import Header from '@/components/blog/header';
@@ -49,16 +50,21 @@ const Blog = ({posts, blog}) => {
 export async function getServerSideProps({req, res, query}) {
   const {page} = query;
   const referrer = req?.headers.referrer || null;
-  const {userID} = req ? req.cookies : cookieParser(document.cookie);
+  const {userID = null} = req ? req.cookies : cookieParser(document.cookie);
   
   await connect();
 
-  const blog = await blogs.findOne({subdomain: 'davidsdevel'}, 'thumbnail owner', {
+  const _blog = await blogs.findOne({subdomain: 'davidsdevel'}, 'thumbnail owner', {
     populate: {
       path: 'owner',
-      select: 'photo name description lastname facebook twitter instagram linkedin website'
+      select: 'photo name description lastname facebook twitter instagram linkedin website',
     }
   });
+
+  //Polyfill because ObjectId cannot be serialized as JSON
+  const blog = _blog.toObject();
+  delete blog._id;
+  delete blog.owner._id;
 
   const postsOptions = {
     fields: 'title,description,url,fullUrl,thumbnail,comments',
@@ -70,15 +76,15 @@ export async function getServerSideProps({req, res, query}) {
   if (!userID || userID === 'undefined')
     postsData = await findPosts(posts, {
       subdomain: 'davidsdevel',
-      postStatud: 'published'
-    }, postsOptions)
+      postStatus: 'published'
+    }, postsOptions);
   else
     postsData = await findRecommendations(Ratings, {subdomain: 'davidsdevel', userID}, postsOptions);
 
   return {
     props: {
       blog,
-      posts: postsData.data,
+      posts: postsData.data.map(e => {return {...e, _id: e._id.toString()}}),
       userID,
       referrer
     }

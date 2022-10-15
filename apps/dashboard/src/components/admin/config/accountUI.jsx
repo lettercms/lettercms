@@ -18,17 +18,17 @@ const AccountUI = ({
   onChange
 }) => <div className='flex flex-column config-opts'>
   <img alt={`${name} ${lastname} picture`} id='account-photo' src={photo || `https://avatar.tobi.sh/${name}-${lastname}?&size=250`} onClick={onPictureClick}/>
-  <Container rows={1} title='Información' style={{height: 'auto'}}>
+  <Container rows={1} title='Información'>
     <div>
-    <div className='flex' style={{width: '100%'}}>
-      <Input id='name' value={name} label='Nombre' onInput={onChange}/>
-      <Input id='lastname' value={lastname} label='Apellido' onInput={onChange}/>
-    </div>
-    <Input id='ocupation' value={ocupation} label='Ocupación' onInput={onChange}/>
-    <Input id='userDescription' value={userDescription} type='textarea' label='Acerca de mi' onInput={onChange}/>
+      <div className='flex' style={{width: '100%'}}>
+        <Input id='name' value={name} label='Nombre' onInput={onChange}/>
+        <Input id='lastname' value={lastname} label='Apellido' onInput={onChange}/>
+      </div>
+      <Input id='ocupation' value={ocupation} label='Ocupación' onInput={onChange}/>
+      <Input id='userDescription' value={userDescription} type='textarea' label='Acerca de mi' onInput={onChange}/>
     </div>
   </Container>
-  <Container rows={1} title='Redes sociales' style={{height: 'auto'}}>
+  <Container rows={1} title='Redes sociales'>
     <div>
       <Input id='website' value={website} label='Sitio Web' onInput={onChange}/>
       <Input id='facebook' value={facebook} label='Facebook' onInput={onChange}/>
@@ -37,7 +37,7 @@ const AccountUI = ({
       <Input id='linkedin' value={linkedin} label='Linkedin' onInput={onChange}/>
     </div>
   </Container>
-  <Container rows={1} title='Enlaces' style={{height: 'auto'}}>
+  <Container rows={1} title='Enlaces'>
     <Social/>
   </Container>
 

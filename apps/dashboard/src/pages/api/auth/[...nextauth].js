@@ -40,7 +40,6 @@ export const authOptions = {
           return token;
         }
 
-
         return {
           user: {sub: token.sub, ...user}
         };

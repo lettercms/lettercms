@@ -4,7 +4,7 @@ import Description from '../components/index/description';
 import Features from '../components/index/features';
 import Details from '../components/index/details';
 import Video from '../components/index/video';
-import Pricing from '../components/index/pricing';
+//import Pricing from '../components/index/pricing';
 import Newsletter from '../components/index/newsletter';
 import Footer from '../components/index/footer';
 import {useEffect} from 'react';
@@ -28,7 +28,7 @@ export default function Home({referrer, isAdmin}) {
       <Description/>
       <Features/>
       <Details/>
-      <Pricing/>
+      {/*<Pricing/>*/}
       <Newsletter/>
       <Video/>
       <Footer/>

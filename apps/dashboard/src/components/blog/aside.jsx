@@ -5,17 +5,17 @@ export default function Aside({owner}) {
   return <aside>
     <Base row={1} principal>
       <div id='query-container'>
-        <Input label='Termino' id='query'/>
+        <Input label='Termino' id='query' onChange={console.log}/>
         <button className='btn-outline-sm alter'>Buscar</button>
       </div>
     </Base>
     <Base row={1}>
-      <div id='user-container'>
+      <div id='user-container' className='flex flex-column'>
         <div>
           <img src={owner.photo}/>
         </div>
         <div>
-          <span>{owner.name} {owner.lastname}</span>
+          <span className='user-name'>{owner.name} {owner.lastname}</span>
           <p>{owner.description}</p>
         </div>
       </div>
@@ -25,6 +25,14 @@ export default function Aside({owner}) {
         display: none;
       }
       @media screen and (min-width: 1024px) {
+        #user-container div img {
+          width: 10rem;
+          border-radius: 50%;
+          margin-bottom: 1rem;
+        }
+        .user-name {
+          font-weight: bold;
+        }
         aside {
           display: block;
           width: 30%;

@@ -1,8 +1,17 @@
 import sdk from '@lettercms/sdk';
-import {getStorage, ref, uploadString, uploadBytes} from 'firebase/storage';
+import {getStorage, ref, uploadBytes, getMetadata} from 'firebase/storage';
+import imageCompression from 'browser-image-compression';
+
 
 export default class ImageHandler {
-  upload(file, subdomain) {
+  getSize(subdomain, name) {
+    const storage = getStorage();
+    // Child references can also take paths delimited by '/'
+    const imgRef = ref(storage, `${subdomain}/${name}.webp`);
+
+    return getMetadata(imgRef);
+  }
+  upload(file, subdomain, name) {
     return new Promise((resolve, reject) => {
       let reader = new FileReader();
 
@@ -11,56 +20,76 @@ export default class ImageHandler {
         img.src = e.target.result;
 
         img.onload = async () => {
-          const {str, width, height} = await this.transform(img);
 
-          const splitted = file.name.split('.');
-          splitted.pop();
+          let fileName = name;
 
-          const path = `${subdomain}/${splitted.join('.')}.webp`;
+          if (!fileName) {
+            const splitted = file.name.split('.');
+            splitted.pop();
 
-          const {metadata: {size}} = await this._upload(path, str);
+            fileName = splitted.join('.');
+          }
+
+          const path = `${subdomain}/${fileName}.webp`;
+          
+          let meta;
+          
+          try {
+            meta = await this.getSize(subdomain, fileName);
+          } catch(err) {
+            console.log(err)
+          }
+
+          const {metadata: {size}} = await this._upload(path, file);
 
           //TODO: add update Storage Size
-          console.log(size);
+          let finalSize = size;
 
-          resolve()
+          if (meta) {
+            console.log(meta)
+            //finalSize = size - meta.metadata.size;
+          }
+
+          console.log(finalSize);
+
+          fetch('/api/usage/update', {
+            method: 'PATCH',
+            body: JSON.stringify({
+              size: finalSize
+            }),
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: sdk.accessToken
+            }
+          });
+
+          resolve(`https://storage.googleapis.com/${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET}/${subdomain}/${fileName}.webp`)
         };
       };
 
       reader.readAsDataURL(file);
     });
   }
-  async transform (image) {
-    return new Promise((resolve) => {
+  async compress(image) {
+    const options = {
+      maxSizeMB: 1,
+      useWebWorker: true,
+      fileType: 'image/webp',
+      initialQuality: 0.7
+    }
 
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-
-      canvas.width = image.naturalWidth;
-      canvas.height = image.naturalHeight;
-
-      ctx.drawImage(image, 0, 0);
-
-      canvas.toBlob(blob => {
-        resolve({
-          str: blob,
-          width: image.naturalWidth,
-          height: image.naturalHeight
-        });
-
-      }, 'image/webp', .5);
-
-    });
+    try {
+      return imageCompression(image, options);
+    } catch (error) {
+      return Promise.reject(err);
+    }
   }
   async uploadProfilePic(file) {
     const {subdomain, _id} = await sdk.accounts.me(['subdomain']);
 
-    const path = `${subdomain}/${_id}/profile.jpg`;
+    const path = `${subdomain}/${_id}/profile.webp`;
 
-    file.name = 'profile.png';
-    file.filename = 'profile.png';
-
-    const picURL = await this._upload(path, file);
+    const picURL = await this._upload(path, file, 'profile');
 
     return sdk.accounts.update(_id, {
       photo: picURL
@@ -69,15 +98,18 @@ export default class ImageHandler {
   async _upload(path, file) {
     const storage = getStorage();
     const _ref = ref(storage, path);
+    
+    const compressed = await this.compress(file);
 
+    //TODO: get with and height
     try {
 
-      return uploadBytes(_ref, file, {
+      return uploadBytes(_ref, compressed, {
         cacheControl: 'public, s-maxage=31536000',
-        customMetadata: {
-          width,
-          height
-        }
+        /*customMetadata: {
+          width: compressed.naturalWidth,
+          height: compressed.naturalHeight
+        }*/
       })
     } catch(err) {
       return Prmoise.reject(err)

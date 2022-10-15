@@ -170,13 +170,15 @@ class Config extends Component {
           url: urlID,
           title,
           description,
-          isVisible
+          isVisible,
+          thumbnail
         } = await sdk.blogs.single([
           'categories',
           'title',
           'description',
           'url',
-          'isVisible'
+          'isVisible',
+          'thumbnail'
         ]);
 
         this.setState({
@@ -184,7 +186,8 @@ class Config extends Component {
           urlID,
           title,
           description,
-          isVisible
+          isVisible,
+          thumbnail
         });
       } catch (err) {
         alert('Error al obtener las categorías');
