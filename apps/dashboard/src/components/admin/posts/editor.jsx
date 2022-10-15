@@ -12,7 +12,6 @@ import Router from 'next/router';
 import Eye from '@/components/svg/preview';
 import Save from '@/components/svg/save';
 
-
 export default class Editor extends Component {
   constructor() {
     super();
