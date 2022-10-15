@@ -11,6 +11,7 @@ import LogoLoad from '@/components/logoLoad';
 import Router from 'next/router';
 import Eye from '@/components/svg/preview';
 import Save from '@/components/svg/save';
+import Send from '@/components/svg/send';
 
 export default class Editor extends Component {
   constructor() {
