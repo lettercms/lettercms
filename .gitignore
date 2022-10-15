@@ -38,3 +38,5 @@ packages/sdk/types
 
 # Vercel
 .now
+
+.vercel

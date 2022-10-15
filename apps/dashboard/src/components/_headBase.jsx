@@ -14,9 +14,7 @@ const Head = props => {
     <meta name="description" content={props.description}/>
     <meta name="theme-color" content="#5f4dee"/>
     <meta name="generator" content="LetterCMS"/>
-
     <title>{props.title}</title>
-
     <meta name="twitter:title" content={props.title}/>
     <meta name="twitter:description" content={props.description}/>
     <meta name="twitter:image" content={props.ogImage || defaultOGImage}/>
