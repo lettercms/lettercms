@@ -20,7 +20,8 @@ LetterCMS is a CMS focused on improving content creation and integrating a built
 - [Unsplash API](https://unsplash.com/) - Photo Stock
 - [Firebase](https://firebase.google.com/) - File Storage
 - [Sentry](https://sentry.io) - Error Management
-- [Brain.JS](https://brain.js.org) - Machine Learning Engine
+- [Brain.JS](https://brain.js.org) - Machine Learning
+- [QStash](https://upstash.com) - Scheduling and Cron Jobs
 
 ## Contributing
 
