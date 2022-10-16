@@ -1,4 +1,4 @@
-import {randomBytes, scrypt, timingSafeEqual} from 'node:crypto';
+import {randomBytes, scrypt, timingSafeEqual} from 'crypto';
 
 export const generateKey = (size = 32, format = 'base64') => {
   const buffer = crypto.randomBytes(size);

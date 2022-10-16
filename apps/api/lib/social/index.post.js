@@ -43,12 +43,8 @@ export default async function() {
 
     if (req.body.schedule) {
       await schedule(req.body.schedule, {
-        method: 'POST',
-        url: 'https://api.lettercms.vercel.app/api/social/instagram',
-        headers: {
-          Authorization: jwt.sign({subdomain}, process.env.JWT_AUTH),
-          'Content-Type': 'application/json' 
-        },
+        url: `https://${process.env.VERCEL_URL}/api/social/instagram/publish`,
+        token: jwt.sign({subdomain}, process.env.JWT_AUTH),
         body: {
           ...req.body,
           schedule: undefined

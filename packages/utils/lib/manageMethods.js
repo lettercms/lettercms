@@ -1,6 +1,8 @@
 import {withSentry} from '@sentry/nextjs';
 import cors from './cors';
 import connect from './connection';
+import jobs from '@lettercms/models/jobs';
+import usage from '@lettercms/models/usages';
 
 export default function manageMethods(methods) {
   if (process.env.LETTERCMS_MAP_ROUTES)
@@ -45,6 +47,24 @@ export default function manageMethods(methods) {
       });
 
       await methodFn();
+
+      //Delete QStash schedule if exists
+      const jobId = req.headers['x-job-id'];
+      if (jobId) {
+        const {scheduleId} = await jobs.findOne({jobId});
+
+        const deleteRes = await fetch(`https://qstash.upstash.io/v1/schedules/${scheduleId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${process.env.QSTASH_TOKEN}`
+          },
+        });
+
+        if (deleteRes.ok) {
+          await jobs.deleteOne({jobId});
+          await usage.updateOne({subdomain}, {$inc: {socialSchedule: -1}});
+        }
+      }
     } catch(err) {
 
       res.status(500).send({
