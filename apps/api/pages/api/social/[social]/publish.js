@@ -1,8 +1,9 @@
 import manageMethods from '@lettercms/utils/lib/manageMethods';
 import POST from '@/lib/social/social.post.js';
-//import { verifySignature } from '@upstash/qstash/nextjs';
+import { verifySignature } from '@upstash/qstash/nextjs';
 
-
-export default manageMethods({
+const handler = manageMethods({
   POST
 });
+
+export default verifySignature(handler);
