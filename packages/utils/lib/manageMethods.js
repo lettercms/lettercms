@@ -2,50 +2,117 @@ import {withSentry} from '@sentry/nextjs';
 import cors from './cors';
 import connect from './connection';
 import jobs from '@lettercms/models/jobs';
+import blogs from '@lettercms/models/blogs';
 import usage from '@lettercms/models/usages';
+import decodeToken from './decodeJwt';
+import bcrypt from 'bcrypt';
 
+/**
+ * API Methods Wrapper Middleware
+ *
+ * Wrapper to handle API routes methods, this provide as modular API route
+ * passing Request and Response methods via "functionName.bind({req, res})"
+ *
+ * This handler will validate auth headers and methods, connect to database,
+ * clear QStash scheduler on each request
+ * 
+ * Every request will pass blog subdomain trhought request object, each handler
+ * can access via "this.req.subdomain"
+ *
+ * @example
+ * 
+ * import GET from 'path/to/handler';
+ * import manageMethods from '@lettercms/utils/lib/manageMethods';
+ *
+ * export default manageMethods({
+ *   GET
+ * });
+ * 
+ *
+ */
 export default function manageMethods(methods) {
-  if (process.env.LETTERCMS_MAP_ROUTES)
-    return Object.keys(methods);
-
-   const handler = async function(req, res) {
+  const handler = async function(req, res) {
     try {
+
+      //Added CORS Headers
+      cors(req, res);
+
+      //CORS preflight
       if (req.method === 'OPTIONS') {
-        res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
-        res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-        res.setHeader('Access-Control-Allow-Credentials', 'true');
-        res.setHeader('Access-Control-Expose-Headers', 'Authorization');
         res.setHeader('Vary', 'Origin');
-
-        res.statusCode = 200;
         res.setHeader('Content-Length', '0');
+        
+        res.statusCode = 200;
 
         return res.end();
       }
 
-      const pass = cors(req, res);
+      //Get Auth headers from request
+      const blogId = req.headers['x-lettercms-id'];
+      const blogSecret = req.headers['x-lettercms-secret'];
+      const accessToken = req.headers['authorization'];
 
-      if (typeof pass === 'object')
-        return res.status(400).json(pass);
+      //Check API credentials
+      if ((blogId && !blogSecret) || (!blogId && blogSecret))
+        return res.status(400).json({
+          message: 'Please Provide a valid client ID and client Secret'
+        });
 
-      if (!pass) {
-        res.status(401);
-        return res.end();
-      }
+      let pass = false;
 
-      if (!(req.method in methods)) {
-        res.status(405);
-        return res.end();
-      }
-
+      //Connect to database
       await connect(); 
 
-      const methodFn = methods[req.method].bind({
-        req,
-        res
-      });
+      //Has API Key
+      if (blogId && blogSecret) {
+        const blog = await blogs.findOne({_id: blogId}, 'tokenHash subdomain', {lean: true});
 
+        if (!blog)
+          return res.status(400).json({
+            status: 'bad-request',
+            message: 'Invalid Client ID'
+          });
+
+        const {tokenHash, subdomain} = blog;
+
+        req.subdomain = subdomain;
+
+        pass = await bcrypt.compare(blogSecret, tokenHash);
+
+      }
+      //Has Access Token
+      else if (accessToken) {
+        const {status, subdomain, account} = decodeToken(accessToken);
+
+        if (!status && subdomain) {
+          req.subdomain = subdomain;
+          req.account = account;
+
+          pass = true;
+        }
+      }
+
+      if (!pass && accessToken)
+        return res.status(401).json({
+          message: 'Invalid Access Token'
+        });
+
+      if (!pass && blogId && blogSecret)
+        return res.status(401).json({
+          message: 'Invalid API credentials'
+        });
+
+      //Verify method on API route
+      if (!(req.method in methods))
+        return res.status(405).json({
+          message: `Invalid method ${req.method}`
+        });
+
+
+      //Bind request and response Objects
+      const methodFn = methods[req.method].bind({req, res});
+
+      //Execute method handler
       await methodFn();
 
       //Delete QStash schedule if exists
@@ -61,8 +128,12 @@ export default function manageMethods(methods) {
         });
 
         if (deleteRes.ok) {
+
+          //Delete Job ID
           await jobs.deleteOne({jobId});
-          await usage.updateOne({subdomain}, {$inc: {socialSchedule: -1}});
+
+          // Commented because usage will reset every month, this behaviour will change
+          // await usage.updateOne({subdomain}, {$inc: {socialSchedule: -1}});
         }
       }
     } catch(err) {
@@ -70,8 +141,6 @@ export default function manageMethods(methods) {
       res.status(500).send({
         status: 'server-error'
       });
-
-      return Promise.reject(err);
     }
   };
 
