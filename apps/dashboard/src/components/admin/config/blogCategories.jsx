@@ -1,29 +1,12 @@
 import sdk from '@lettercms/sdk';
 import Image from 'next/image';
+import Cross from '@/components/svg/cross';
 
-async function deleteCategory(name, categories, cb) {
-  try {
-    if (!confirm('¿Estás seguro de eliminar esta categoría?'))
-      return;
-
-    const {status} = await sdk.blogs.deleteCategory(name);
-
-    if (status === 'OK') {
-      categories = categories.filter((e) => e.name !== name);
-
-      cb(categories);
-    }
-  } catch (err) {
-    throw new Error(err);
-  }
-}
-
-const Categories = ({categories, setCategories}) => <ul id="categories">
-  {categories.map(({ name, alias }) => (
+const Categories = ({categories, onDelete}) => <ul id="categories">
+  {categories.map((name) => (
     <li key={name}>
-      <Image layout='fill' alt='Asset' src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/cross.svg" onClick={() => deleteCategory(name, categories, setCategories)} />
-      <span className="alias">{alias}</span>
       <span className="name">{name}</span>
+      <Cross style={{cursor: 'pointer'}} width='24' height='24' fill='#999' onClick={() => onDelete(name)}/>
     </li>
   ))}
   <style jsx>{`
@@ -35,11 +18,9 @@ const Categories = ({categories, setCategories}) => <ul id="categories">
       padding: 10px 0;
       display: flex;
       align-items: center;
-    }
-    #categories li img {
-      width: 15px;
-      cursor: pointer;
-      margin: 0 5px;
+      justify-content: space-between;
+      padding-right: .5rem;
+      padding-left: .5rem;
     }
     #categories li .alias {
       width: 40%;

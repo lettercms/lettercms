@@ -1,11 +1,11 @@
-﻿import { Component } from 'react';
+﻿import { useState, useRef, useEffect } from 'react';
 import BaseLoad from '../stats/baseLoad';
-import AccountLoad from './accountLoad';
+import AccountLoad from './account/load';
 import Top from '../top';
 import dynamic from 'next/dynamic';
-import sdk from '@lettercms/sdk';
 import ConfigAside from './configAside';
-import asyncImportScript from '../../../lib/asyncImportScript';
+import asyncImport from '@/lib/asyncImportScript';
+
 
 const Blog = dynamic(() => import('./blogConfig'), {
   loading: () => <div className='config-opts'>
@@ -25,203 +25,56 @@ const Usage = dynamic(() => import('./usage'), {
   </div>,
   ssr: false
 });
-const Account = dynamic(() => import('./accountConfig'), {
+const Account = dynamic(() => import('./account'), {
   loading: () => <AccountLoad/>,
   ssr: false
 });
 
-class Config extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      canSave: false,
-      categories: [],
-      urlID: '',
-      title: '',
-      description: '',
-      tab: 'blog'
-    };
-
-    this.handleInput = this.handleInput.bind(this);
-    this.saveConfig = this.saveConfig.bind(this);
-
-    this.changes = {};
-  }
-
-  handleInput({ target }, userID) {
-    const { name, value } = target;
-
-    this.changes[name] = value;
 
 
-    if (userID) {
-      this.setState({
-        userID
-      });
-    }
+export default function Config() {
+  const [tab, setTab] = useState('blog');
+  const buttonRef = useRef();
 
-    this.setState({
-      [name]: name === 'title' || name === 'description' || name === 'urlID' ? value : undefined,
-      canSave: true
-    });
-  }
+  useEffect(() => {
+    asyncImport(
+      'cropper-js',
+      'https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css',
+      'css'
+    );
 
-  async saveConfig() {
-    try {
-      this.setState({
-        canSave: false,
-      });
-
-      const {
-        name,
-        lastname,
-        ocupation,
-        userDescription,
-        photo,
-        website,
-        facebook,
-        twitter,
-        instagram,
-        linkedin,
-        title,
-        urlID,
-        description,
-      } = this.changes;
-
-      if (title || urlID || description) {
-
-        const { status } = await sdk.blogs.update({
-          title,
-          url: urlID,
-          description
-        });
-
-        if (status !== 'OK') {
-          alert('Error al guardar la configuración');
-
-          return this.setState({
-            canSave: true
-          });
-        }
-      }
-
-      if (
-        name ||
-        lastname ||
-        ocupation ||
-        userDescription ||
-        photo ||
-        website ||
-        facebook ||
-        twitter ||
-        instagram ||
-        linkedin
-      ) {
-
-        const { status } = await sdk.accounts.update(this.state.userID, {
-          name,
-          lastname,
-          ocupation,
-          description: userDescription,
-          website,
-          facebook,
-          twitter,
-          instagram,
-          linkedin
-        });
-
-        if (status !== 'OK') {
-          alert('Error al guardar la configuración');
-
-          return this.setState({
-            canSave: true
-          });
-        }
-      }
-
-      alert('Guardado Exitosamente');
-
-      this.changes = {};
-
-      this.setState({
-        canSave: false
-      });
-    } catch (err) {
-      this.setState({
-        canSave: true
-      });
-      
-      alert('Error al guardar la configuración');
-      
-      throw err;
-    }
-  }
-  //componentWillUnmount = () => document.getElementById('_paypal').remove();
-  componentDidMount() {
-    /*asyncImportScript('_paypal', 'https://www.paypal.com/sdk/js?intent=capture&vault=false&client-id=Aa2IfcoEvHnfJRnVQLSFrSs3SmTTkv5N1weMEL66ysqYIeHfAqXpDVkjOv3vLhkhbP4eKB6MpRlQIcJw', 'js', {
-      retry: true
-    });*/
-
-    setTimeout(async () => {
-      try {
-        const {
-          categories,
-          url: urlID,
-          title,
-          description,
-          isVisible,
-          thumbnail
-        } = await sdk.blogs.single([
-          'categories',
-          'title',
-          'description',
-          'url',
-          'isVisible',
-          'thumbnail'
-        ]);
-
-        this.setState({
-          categories,
-          urlID,
-          title,
-          description,
-          isVisible,
-          thumbnail
-        });
-      } catch (err) {
-        alert('Error al obtener las categorías');
-        throw err;
-      }
-    }, 1000);
-  }
-
-  render() {
-    const {tab} = this.state;
+    asyncImport(
+      'cropper-css',
+      'https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js'
+    );
+  }, []);
     
-    let UI;
+  let UI;
 
-    if (tab === 'blog')
-      UI = <Blog state={this.state} handleInput={this.handleInput}/>;
+  if (tab === 'blog')
+    UI = <Blog button={buttonRef}/>;
 
-/*    if (tab === 'payment')
-      UI = <Payment/>;*/
+  //if (tab === 'payment')
+  //  UI = <Payment/>;
 
-    if (tab === 'account')
-      UI = <Account handleInput={this.handleInput}/>;
+  if (tab === 'account')
+    UI = <Account button={buttonRef}/>;
 
-    if (tab === 'usage')
-      UI = <Usage/>;
+  if (tab === 'usage')
+    UI = <Usage/>;
 
     return (
       <div id="config-main">
         <Top
+          buttonRef={buttonRef}
           buttonText='Guardar'
-          create={this.saveConfig}
-          disabled={!this.state.canSave}
         />
-        <ConfigAside onChange={_tab => this.setState({tab: _tab})} active={tab}/>
-        {UI}
+        <div className='flex'>
+          <ConfigAside onChange={setTab} active={tab}/>
+          <div className='config-container'>
+            {UI}
+          </div>
+        </div>
         <style jsx global>{`
           .config-opts {
             display: flex;
@@ -248,13 +101,17 @@ class Config extends Component {
           .title {
             flex-grow: 1;
           }
-			  	#config-main {
-			  		width: 100%;
-			  	}
-			  `}</style>
+          #config-main {
+            width: 100%;
+          }
+          .flex {
+            margin-top: 1rem;
+            align-items: start;
+          }
+          .config-container {
+            flex-grow: 1;
+          }
+        `}</style>
       </div>
     );
   }
-}
-
-export default Config;

@@ -1,4 +1,4 @@
-import BaseLoad from '../stats/baseLoad';
+import BaseLoad from '../../stats/baseLoad';
 
 const AccountLoad = () => <div className='flex flex-column config-opts'>
   <div className='account-load' id='account-circle'/>

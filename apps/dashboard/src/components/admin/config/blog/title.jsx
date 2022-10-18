@@ -1,11 +1,13 @@
 import Input from '../../../input';
 
-const BlogTitle = ({title, description, onChange, isVisible = false}) => <div>
-  <Input id='title' value={title} onInput={onChange} label='Título'/>
-  <Input id='description' value={description} onInput={onChange} label='Descripción'/>
-  <div className="selection">
-    <input type="checkbox" onChange={onChange} name="isVisible" value="isVisible" id="isVisible" checked={isVisible} />
-    <label htmlFor="isVisible" className="option">Blog Visible</label>
+const BlogTitle = ({title, description, onChangeTitle, onChangeDescription, onChangeVisible, isVisible = false}) => <div>
+  <Input id='title' value={title} onChange={onChangeTitle} label='Título'/>
+  <Input id='description' value={description} onChange={onChangeDescription} label='Descripción'/>
+  <div className='selection'>
+    <input type='checkbox' name='isVisible' id='isVisible' checked={isVisible} onChange={onChangeVisible}/>
+    <label className='option' htmlFor='isVisible'>
+      <span>Blog Visible</span>
+    </label>
   </div>
 </div>;
 

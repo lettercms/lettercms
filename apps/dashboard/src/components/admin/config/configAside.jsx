@@ -32,9 +32,6 @@ const ConfigAside = ({onChange, active}) => <div id='config-aside'>
   </ul>
   <style jsx>{`
     #config-aside {
-      position: fixed;
-      top: 135px;
-      left: 120px;
       display: flex;
       align-items: center;
       justify-content: center;
