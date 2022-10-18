@@ -11,12 +11,11 @@ import {
 function RenderLineChart({data}) {
 
   if (!Array.isArray(data)) {
-
-      data = Object.entries(data).map((e) => ({
-        name: e[0],
-        vistas: e[1],
-      }));
-    }
+    data = Object.entries(data).map((e) => ({
+      name: e[0],
+      vistas: e[1],
+    }));
+  }
 
   return <div style={{height: 200, width: '95%'}}>
     <ResponsiveContainer>

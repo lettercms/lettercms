@@ -28,7 +28,8 @@ export default async function(req, res) {
   //Create Blog
   const blog = await blogs.create({
     ...req.body,
-    owner: account._id
+    owner: account._id,
+    thumbnail: 'https://cdn.jsdelivr.net/gh/lettercms/lettercms/apps/cdn/public/og-template.png'
   });
 
   //Initialize Blog Data
@@ -53,7 +54,7 @@ export default async function(req, res) {
     url: 'first-example',
     tags: ['example'],
     content: '<div>Hello World</div>',
-    authorEmail: ownerEmail
+    author: account._id
   });
 
   //Publish post

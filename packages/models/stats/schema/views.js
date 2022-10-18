@@ -5,17 +5,23 @@ export default new Schema({
     type: String,
     required: true
   },
-  url: {
+  date: {
+    type: Date,
+    required: true
+  },
+  total: {
+    type: Number,
+    required: true
+  },
+  key: {
     type: String,
     required: true
   },
-  referrer: String,
-  os: String,
-  browser: String,
-  country: String,
-  time:{
-    type: Date,
-    default: Date.now,
-    required: true
-  }
+  urls: Map,
+  oss: Map,
+  browsers: Map,
+  countries: Map,
+  referrers: Map,
+  hours: Map,
+  days: Map
 });

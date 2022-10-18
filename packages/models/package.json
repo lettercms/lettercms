@@ -25,6 +25,9 @@
     "xml-js": "^1.6.11",
     "mongoose": "^5.13.15"
   },
+  "peerDependencies": {
+    "bcrypt": "5.1.0"
+  },
   "devDependencies": {
     "@lettercms/eslint-config": "*",
     "eslint": "^8.22.0"

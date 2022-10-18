@@ -248,8 +248,8 @@
               }
             }
 
-            input:focus + label,
-            input.notEmpty + label,
+            input:not([type=checkbox]):not([type=radio]):focus + label,
+            input:not([type=checkbox]):not([type=radio]).notEmpty + label,
             textarea:focus + label,
             textarea.notEmpty + label {
               top: 0.125rem;
@@ -551,8 +551,6 @@
               height: 100%;
             }
             .selection input:focus+label {
-                top: 17.5px;
-                font-size: 20px;
                 font-weight: bold;
             }
             .flex {

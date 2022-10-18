@@ -1,5 +1,5 @@
 import {Schema} from 'mongoose';
-import {sign, compare} from '@lettercms/utils/lib/crypto';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const Accounts = new Schema({
@@ -67,7 +67,7 @@ Accounts.statics.login = async function(email, password) {
         message: 'Email does not exists'
       };
 
-    const pass = await compare(password, account.password);
+    const pass = await bcrypt.compare(password, account.password);
 
     if (pass) {
       const accessToken = jwt.sign({
@@ -117,7 +117,7 @@ Accounts.statics.createAccount = async function(subdomain, data) {
       subdomain
     };
 
-  const password = await sign(data.password);
+  const password = await bcrypt.hash(data.password, 10);
 
   data.password = password;
 

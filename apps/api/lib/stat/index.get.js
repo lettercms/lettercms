@@ -151,14 +151,7 @@ export default async function() {
     });
 
   const hasData =           fields.all || fields.data || query.fields?.includes('data.');
-  const hasOs =             fields.all || fields.data || fields['data.os'];
-  const hasCountries =      fields.all || fields.data || fields['data.countries'];
-  const hasBrowsers =       fields.all || fields.data || fields['data.browsers'];
-  const hasHours =          fields.all || fields.data || fields['data.hours'];
-  const hasDays =           fields.all || fields.data || fields['data.days'];
-  const hasDates =          fields.all || fields.data || fields['data.dates'];
   const hasDataViews =      fields.all || fields.data || fields['data.views'];
-  const hasReferrers =      fields.all || fields.data || fields['data.referrers'];
   const hasGeneral =        fields.all || fields.general || query.fields?.includes('general.');
   const hasMostCommented =  fields.all || fields.general || fields['general.mostCommented'];
   const hasMostViewed =     fields.all || fields.general || fields['general.mostViewed'];
@@ -179,38 +172,14 @@ export default async function() {
       message: 'End date must be greather than start date'
     });
 
-  let data = hasData ? {} : undefined;
+  let data;
   let general;
   let views;
   let comments;
   let subscriptors;
 
-  if (hasOs) {
-    data.os = {};
-    if (os)
-      conditions.os = new RegExp(os, 'i');
-  }
-  if (hasCountries) {
-    data.countries = {};
-    if (country)
-      conditions.country = new RegExp(country, 'i');
-  }
-  if (hasBrowsers) {
-    data.browsers = {};
-    if (browser)
-      conditions.browser = new RegExp(browser, 'i');
-  }
-
-  if (hasHours)
-    data.hours = hours;
-  if (hasDays)
-    data.days = initialDaysCounts;
-  if (hasReferrers)
-    data.referrers = {};
   if (hasDataViews)
     data.views = {};
-  if (hasDates)
-    data.dates = generateDates(diff, dateEnd);  
   if (hasGeneral && query.fields?.includes('general.')) {
     const generalSelect = query.fields.split(',').filter(e => e.startsWith('general.')).map(e => e.split('.')[1]).join(' ');
     
@@ -219,19 +188,21 @@ export default async function() {
     if (fields['general.bounceRate'])
       general.bounceRate = (general.bounces / general.totalViews * 100).toFixed(1);
   }
-    
-  if (url)
-    conditions.url = url;
-  
-  conditions.time = {
+
+  conditions.date = {
     $gt: dateStart,
     $lt: +dateEnd + (1000 * 60 * 60 * 24)
   };
 
-  const viewData = await stats.Views.find(conditions);
+  if (hasViews || hasDataViews) {
+    const viewData = await stats.Views.find(conditions, null, {lean: true});
 
-  if (hasViews)
-    views = viewData.length;
+    if (hasViews)
+      views = viewData.map(e => e.total).reduce((a, b) => a + b);
+
+    if (hasDataViews)
+      data = viewData;
+  }
   
   if (hasComments)
     comments = await commentsModel.countDocuments({published: conditions.time, subdomain});
@@ -254,44 +225,6 @@ export default async function() {
       },
       lean: true
     });
-
-
-  viewData.forEach(async e => {
-    if (hasHours) {
-      const hour = generateHour(e.time);
-      increment.call(data.hours, hour, 1);
-    }
-
-    if (hasDays) {
-      const day = e.time.getDay();
-      data.days[days[day]] = data.days[days[day]] + 1;
-    }
-
-    if (hasDates) {
-      let date = e.time.getDate();
-      let month = e.time.getMonth() + 1;
-
-      const dateMonth = `${date < 10 ? '0' + date : date}-${month < 10 ? '0' + month : month}`;
-
-      increment.call(data.dates, dateMonth, 1);
-    }
-
-    if (hasOs)
-      increment.call(data.os, e.os, 1);
-
-    if (hasCountries)
-      increment.call(data.countries, e.country, 1);
-
-    if (hasBrowsers)
-      increment.call(data.browsers, e.browser, 1);
-
-    if (hasDataViews)
-      increment.call(data.views, e.url === '/' ? 'inicio' : e.url, 1);
-
-    if (hasReferrers && e.referrer)
-      increment.call(data.referrers, e.referrer, 1);
-    
-  });
 
   res.json({
     general,

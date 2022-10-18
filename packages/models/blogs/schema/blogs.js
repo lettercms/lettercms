@@ -1,16 +1,5 @@
 import {Schema} from 'mongoose';
 
-const Category = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  alias: {
-    type: String,
-    required: true
-  }
-});
-
 const blog = new Schema({
   subdomain:{
     type: String,
@@ -47,7 +36,7 @@ const blog = new Schema({
     default: '1',
     required: true
   },
-  categories: [Category],
+  categories: [String],
   tags: {
     type: Map,
     default: new Map()
@@ -64,7 +53,8 @@ const blog = new Schema({
     type: String,
     required: true
   },
-  thumbnail: String
+  thumbnail: String,
+  tokenHash: String
 });
 
 blog.virtual('domain').get(function() {

@@ -7,7 +7,7 @@ export default class Top extends Component {
   };
 
   render() {
-    const {active, countTabs, data, create, loading, count, buttonText,onChangeTab, tabs, disabled} = this.props;
+    const {active, countTabs, data, create, loading, count, buttonText,onChangeTab, tabs, disabled, buttonRef} = this.props;
 
     let counts;
 
@@ -57,7 +57,7 @@ export default class Top extends Component {
     return <div className='top-static'>
       <div className='top-fixed'>
         <div className="top">
-          <button className="btn-outline-lg" onClick={create} disabled={loading || disabled}>{buttonText || 'Create'}</button>
+          <button className="btn-outline-lg"  ref={buttonRef} onClick={create} disabled={loading || disabled}>{buttonText || 'Create'}</button>
           <div>
             {counts}
           </div>

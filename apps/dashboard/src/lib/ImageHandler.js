@@ -105,7 +105,7 @@ export default class ImageHandler {
     try {
 
       return uploadBytes(_ref, compressed, {
-        cacheControl: 'public, s-maxage=31536000',
+        cacheControl: 'no-cache, no-store, max-age=0, must-revalidate',
         /*customMetadata: {
           width: compressed.naturalWidth,
           height: compressed.naturalHeight
