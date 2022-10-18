@@ -1,4 +1,4 @@
-import * as socials from '@lettercms/models/socials';
+import {Stats, Views} from '@lettercms/models/stats';
 import posts from '@lettercms/models/posts';
 import blogs from '@lettercms/models/blogs';
 import parser from 'ua-parser-js';
@@ -31,7 +31,7 @@ function generateHour(date) {
 }
 
 function generateKey() {
-  const date = new Date();
+  const time = new Date();
   const month = time.getMonth() + 1;
   const date = time.getDate();
   const year = time.getFullYear();
@@ -57,7 +57,7 @@ export default async function() {
   const {browser, os} = parser(ua);
   const country = headers['x-vercel-ip-country'];
 
-  const countryName = look ? countries.getName(country, 'es') : 'Unknown';
+  const countryName = country ? countries.getName(country, 'es') : 'Unknown';
   const osName = os.name ||'Unknown';
   const browserName = browser.name ||'Unknown';
   const referrerName = referrer && referrer != 'undefined' && referrer != 'null' ? _url.parse(referrer).hostname : null;
@@ -65,7 +65,9 @@ export default async function() {
   const {mainUrl} = await blogs.findOne({subdomain}, 'mainUrl', {lean: true});
   const existsPost = await posts.exists({url, subdomain});
 
-  if (!existsPost && '/' + url !== mainUrl)
+
+
+  if (!existsPost && '/' + url !== '/' + mainUrl)
     return res.status(404).json({
       status: 'not-found'
     });
@@ -73,21 +75,23 @@ export default async function() {
   if ('/' + url !== mainUrl)    
     await posts.updateOne({url, subdomain}, {$inc: {views: 1}});
 
-  const key = generateKey();
+  const viewKey = generateKey();
+    console.log(viewKey)
 
-  const view = await stats.views.findOne({key, subdomain});
+
+  const view = await Views.findOne({viewKey, subdomain});
 
   const now = new Date();
   const hour = generateHour(now);
-  const day = time.getDay();
+  const day = now.getDay();
 
   if (!view) {
     //set default data
     const newData = {
       subdomain,
-      key,
+      viewKey,
       total: 1,
-      date: new Date(key),
+      date: new Date(viewKey),
       hours: {
         '1AM': 0,
         '2AM': 0,
@@ -125,18 +129,24 @@ export default async function() {
       }
     };
 
+
+    newData.countries = {};
+    newData.oss = {};
+    newData.browsers = {};
+    newData.urls = {};
+
     newData.countries[countryName] = 1;
     newData.oss[osName] = 1;
     newData.browsers[browserName] = 1;
     newData.urls[url] = 1;
 
-    newData.hours[hours] = 1;
+    newData.hours[hour] = 1;
     newData.days[days[day]] = 1
 
     if (referrerName)
       newData.referrers[referrerName] = 1;
 
-    await stats.views.create(newData);
+    await Views.create(newData);
   } else {
     const {countries, oss, browsers, urls, referrers, hours, days: _days} = view;
 
@@ -147,7 +157,7 @@ export default async function() {
     const newUrlsValue = (urls.get(url) || 0) + 1;
 
     const newHourValue = (hours.get(hour) || 0) + 1;
-    const newDayValue = (_days.get(day) || 0) + 1;
+    const newDayValue = (_days.get(days[day]) || 0) + 1;
 
     //Updated views
     countries.set(countryName, newCountriesValue);
@@ -155,7 +165,7 @@ export default async function() {
     oss.set(osName, newOssValue);
     urls.set(url, newUrlsValue);
     hours.set(hour, newHourValue);
-    _days.set(day, newDayValue);
+    _days.set(days[day], newDayValue);
 
     if (referrerName) {
       const newRefValue = (referrers.get(referrerName) || 0) + 1;
@@ -163,10 +173,10 @@ export default async function() {
       referrers.set(referrerName, newRefValue);
     }
 
-    await stats.Views.updateOne({key, subdomain}, {urls, referrers, countries, oss, browsers, $inc: {total: 1}});
+    await Views.updateOne({viewKey, subdomain}, {urls, hours, days, referrers, countries, oss, browsers, $inc: {total: 1}});
   }
 
-  await stats.Stats.updateOne({subdomain}, {$inc: {totalViews: 1}});
+  await Stats.updateOne({subdomain}, {$inc: {totalViews: 1}});
 
   res.json({
     status: 'OK'

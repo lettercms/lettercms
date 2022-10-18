@@ -13,7 +13,7 @@ export default new Schema({
     type: Number,
     required: true
   },
-  key: {
+  viewKey: {
     type: String,
     required: true
   },

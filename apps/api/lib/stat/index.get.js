@@ -15,6 +15,7 @@ const parseFields = fields => {
     fieldsObj[e] = true;
   });
 
+  console.log(fieldsObj)
   return fieldsObj;
 };
 
@@ -179,9 +180,11 @@ export default async function() {
   let subscriptors;
 
   if (hasDataViews)
-    data.views = {};
-  if (hasGeneral && query.fields?.includes('general.')) {
-    const generalSelect = query.fields.split(',').filter(e => e.startsWith('general.')).map(e => e.split('.')[1]).join(' ');
+    data = {};
+
+  console.log(hasGeneral)
+  if (hasGeneral) {
+    const generalSelect = query.fields?.split(',').filter(e => e.startsWith('general.')).map(e => e.split('.')[1]).join(' ');
     
     general = await stats.Stats.findOne({subdomain}, generalSelect, {lean: true});
 
@@ -195,6 +198,7 @@ export default async function() {
   };
 
   if (hasViews || hasDataViews) {
+
     const viewData = await stats.Views.find(conditions, null, {lean: true});
 
     if (hasViews)
