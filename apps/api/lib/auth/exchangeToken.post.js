@@ -2,7 +2,7 @@ import blogs from '@lettercms/models/blogs';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-export default function exchange() {
+export default async function exchange() {
   const {req, res} = this;
 
   const blogId = req.headers['x-lettercms-id'];
@@ -13,7 +13,6 @@ export default function exchange() {
     return res.status(400).json({
       message: 'Please Provide a valid client ID and client Secret'
     });
-
 
   const blog = await blogs.findOne({_id: blogId}, 'tokenHash subdomain', {lean: true});
 

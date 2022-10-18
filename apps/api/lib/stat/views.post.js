@@ -5,7 +5,7 @@ import parser from 'ua-parser-js';
 import countries from 'i18n-iso-countries';
 import _url from 'url';
 
-const days = [
+const dayNames = [
   'sunday',
   'monday',
   'tuesday',
@@ -60,12 +60,11 @@ export default async function() {
   const countryName = country ? countries.getName(country, 'es') : 'Unknown';
   const osName = os.name ||'Unknown';
   const browserName = browser.name ||'Unknown';
-  const referrerName = referrer && referrer != 'undefined' && referrer != 'null' ? _url.parse(referrer).hostname : null;
+  const referrerName = referrer && referrer != 'undefined' && referrer != 'null' ? _url.parse(referrer).hostname.replace(/\./g, ':') : null;
 
   const {mainUrl} = await blogs.findOne({subdomain}, 'mainUrl', {lean: true});
+  console.log(url);
   const existsPost = await posts.exists({url, subdomain});
-
-
 
   if (!existsPost && '/' + url !== '/' + mainUrl)
     return res.status(404).json({
@@ -76,14 +75,13 @@ export default async function() {
     await posts.updateOne({url, subdomain}, {$inc: {views: 1}});
 
   const viewKey = generateKey();
-    console.log(viewKey)
-
 
   const view = await Views.findOne({viewKey, subdomain});
 
   const now = new Date();
   const hour = generateHour(now);
   const day = now.getDay();
+
 
   if (!view) {
     //set default data
@@ -129,7 +127,6 @@ export default async function() {
       }
     };
 
-
     newData.countries = {};
     newData.oss = {};
     newData.browsers = {};
@@ -141,14 +138,15 @@ export default async function() {
     newData.urls[url] = 1;
 
     newData.hours[hour] = 1;
-    newData.days[days[day]] = 1
+    newData.days[dayNames[day]] = 1;
 
     if (referrerName)
       newData.referrers[referrerName] = 1;
 
     await Views.create(newData);
   } else {
-    const {countries, oss, browsers, urls, referrers, hours, days: _days} = view;
+    const {countries, oss, browsers, urls, hours, days} = view;
+    let {referrers} = view;
 
     //Get new values from actual data
     const newCountriesValue = (countries.get(countryName) || 0) + 1;
@@ -157,7 +155,7 @@ export default async function() {
     const newUrlsValue = (urls.get(url) || 0) + 1;
 
     const newHourValue = (hours.get(hour) || 0) + 1;
-    const newDayValue = (_days.get(days[day]) || 0) + 1;
+    const newDayValue = (days.get(dayNames[day]) || 0) + 1;
 
     //Updated views
     countries.set(countryName, newCountriesValue);
@@ -165,9 +163,12 @@ export default async function() {
     oss.set(osName, newOssValue);
     urls.set(url, newUrlsValue);
     hours.set(hour, newHourValue);
-    _days.set(days[day], newDayValue);
+    days.set(dayNames[day], newDayValue);
 
     if (referrerName) {
+      if (!referrers)
+        referrers = new Map();
+
       const newRefValue = (referrers.get(referrerName) || 0) + 1;
 
       referrers.set(referrerName, newRefValue);

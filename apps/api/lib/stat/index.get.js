@@ -15,90 +15,29 @@ const parseFields = fields => {
     fieldsObj[e] = true;
   });
 
-  console.log(fieldsObj)
   return fieldsObj;
 };
 
-function increment(key, value) {
-  if (!value)
-    return;
-
-  this[key] = this[key] ? this[key] + value : value;
-}
-
 const days = [
-  'Domingo',
-  'Lunes',
-  'Martes',
-  'Miercoles',
-  'Jueves',
-  'Viernes',
-  'Sabado'
+  'sunday',
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday'
 ];
-
-const hours = {
-  '1AM': 0,
-  '2AM': 0,
-  '3AM': 0,
-  '4AM': 0,
-  '5AM': 0,
-  '6AM': 0,
-  '7AM': 0,
-  '8AM': 0,
-  '9AM': 0,
-  '10AM': 0,
-  '11AM': 0,
-  '12M': 0,
-  '1PM': 0,
-  '2PM': 0,
-  '3PM': 0,
-  '4PM': 0,
-  '5PM': 0,
-  '6PM': 0,
-  '7PM': 0,
-  '8PM': 0,
-  '9PM': 0,
-  '10PM': 0,
-  '11PM': 0,
-  '12AM': 0,
-};
-
-const initialDaysCounts = {
-  Domingo: 0,
-  Lunes: 0,
-  Martes: 0,
-  Miercoles: 0,
-  Jueves: 0,
-  Viernes: 0,
-  Sabado: 0
-};
-
-const generateHour = date => {
-  let hour = date.getHours();
-
-  if (hour < 12)
-    hour = `${hour}AM`;
-  else if (hour === 12)
-    hour = `${hour}M`;
-  else if (hour > 12)
-    hour = `${hour - 12}PM`;
-  else if (hour === 0)
-    hour = '12AM';
-
-  return hour;
-};
-
 const generateDates = (daysCount, dateEnd) => {
-  const dates = {};
+  const dates = [];
 
   for (let i = Math.floor(daysCount); i >= 0; i -= 1) {
       const time = new Date(dateEnd - ((i - 1)* 1000 * 60 * 60 * 24));
       const month = time.getMonth() + 1;
       const date = time.getDate();
 
-      const path = `${date < 10 ? `0${date}` : date}-${month < 10 ? `0${month}` : month}`;
+      const path = `${time.getFullYear()}-${month < 10 ? `0${month}` : month}-${date < 10 ? `0${date}` : date}`;
       
-      dates[path] = 0;
+      dates.push(path);
     }
 
     return dates;
@@ -160,10 +99,8 @@ export default async function() {
   const hasComments =       fields.all || fields.comments;
   const hasSubscriptors =   fields.all || fields.subscriptors;
 
-  if (start === 'historic') {
-    const {creationDate} = await Stats.findOne({subdomain}, 'creationDate', {lean: true});
-    start = creationDate;
-  }
+  if (start === 'historic')
+    start = (await Stats.findOne({subdomain}, 'creationDate', {lean: true})).creationDate;
 
   const {dateEnd, dateStart, diff} = generateRanges(start, end);
 
@@ -173,7 +110,7 @@ export default async function() {
       message: 'End date must be greather than start date'
     });
 
-  let data;
+  let data = {};
   let general;
   let views;
   let comments;
@@ -182,7 +119,6 @@ export default async function() {
   if (hasDataViews)
     data = {};
 
-  console.log(hasGeneral)
   if (hasGeneral) {
     const generalSelect = query.fields?.split(',').filter(e => e.startsWith('general.')).map(e => e.split('.')[1]).join(' ');
     
@@ -198,14 +134,98 @@ export default async function() {
   };
 
   if (hasViews || hasDataViews) {
-
-    const viewData = await stats.Views.find(conditions, null, {lean: true});
+    const viewData = await stats.Views.find(conditions);
 
     if (hasViews)
       views = viewData.map(e => e.total).reduce((a, b) => a + b);
 
-    if (hasDataViews)
-      data = viewData;
+    if (hasDataViews) {
+      data = {
+        countries: {},
+        oss: {},
+        browsers: {},
+        urls: {},
+        hours: {},
+        days: {},
+        dates: {},
+        referrers: {}
+      };
+
+      const defaultDates = generateDates(diff, dateEnd);
+
+      const dataKeys = viewData.map(e => e.viewKey);
+
+      defaultDates.forEach(e => {
+        const viewIndex = dataKeys.indexOf(e);
+        const view = viewData[viewIndex];
+
+        if (!view) {
+          data.dates[e] = 0;
+          return;
+        }
+
+        data.dates[e] = view.total;
+
+        view.countries?.forEach((val, key) => {
+          const value = data.countries[key];
+
+          if (value)
+            data.countries[key] = value + val;
+          else
+            data.countries[key] = val;
+        });
+        view.oss?.forEach((val, key) => {
+          const value = data.oss[key];
+
+          if (value)
+            data.oss[key] = value + val;
+          else
+            data.oss[key] = val;
+        });
+        view.browsers?.forEach((val, key) => {
+          const value = data.browsers[key];
+
+          if (value)
+            data.browsers[key] = value + val;
+          else
+            data.browsers[key] = val;
+        });
+        view.urls?.forEach((val, key) => {
+          const value = data.urls[key];
+
+          if (value)
+            data.urls[key] = value + val;
+          else
+            data.urls[key] = val;
+        });
+        view.hours.forEach((val, key) => {
+          const value = data.hours[key];
+
+          if (value)
+            data.hours[key] = value + val;
+          else
+            data.hours[key] = val;
+        });
+        view.days.forEach((val, key) => {
+          const value = data.days[key];
+
+          if (value)
+            data.days[key] = value + val;
+          else
+            data.days[key] = val;
+        });
+        view.referrers?.forEach((val, key) => {
+          const _key = key.replace(/\:/g, '.');
+
+          const value = data.referrers[_key];
+
+          if (value)
+            data.referrers[_key] = value + val;
+          else
+            data.referrers[_key] = val;
+        });
+      });
+    }
   }
   
   if (hasComments)

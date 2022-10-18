@@ -10,7 +10,7 @@ export default async function PatchUsage() {
 
     const img = await getImg(subdomain, file);
 
-    await usage.updateOne({subdomain}, {$inc: {storageSize: -img.size}})
+    await usage.updateOne({subdomain}, {$inc: {storageSize: -img.size}});
 
     res.json({
       status: 'OK'
