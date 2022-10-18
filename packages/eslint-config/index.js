@@ -14,6 +14,7 @@ module.exports = {
     "curly": "off",
     "@next/next/no-img-element": "off",
     "no-buffer-constructor": "error",
-    "no-var": "error"
+    "no-var": "error",
+    "turbo/no-undeclared-env-vars": "off"
   }
 };

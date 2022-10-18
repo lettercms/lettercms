@@ -14,5 +14,5 @@ export default function Banners({ length })  {
       </a>
 		)
 	}
-  </aside>
+  </aside>;
 };

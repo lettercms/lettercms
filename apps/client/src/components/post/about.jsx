@@ -106,5 +106,5 @@ export default function About({photo, name, lastname, description, facebook, twi
 			}
 		`}
       </style>
-    </div>
+    </div>;
 };
