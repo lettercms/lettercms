@@ -74,8 +74,6 @@ export function DashboardProvider({userID, children, hideMenu}) {
   const router = useRouter();
   const {status, data} = useSession();
 
-  console.log(status);
-
   const [blog, setBlog] = useState(null);
   const [user, setUser] = useState(null);
   const [isLoading, setLoading] = useState(true);

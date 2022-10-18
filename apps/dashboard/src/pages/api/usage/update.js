@@ -36,7 +36,7 @@ export default async function patchUsage(req, res) {
   const {size} = req.body;
 
   try {
-    await usage.updateOne({subdomain}, {$inc: {filesStorage: size, filesUpload: 1}})
+    await usage.updateOne({subdomain}, {$inc: {filesStorage: size, filesUpload: 1}});
 
     res.json({
       status: 'OK'

@@ -32,8 +32,7 @@ const Account = dynamic(() => import('./account'), {
 
 
 
-export default function Config() {
-  const [tab, setTab] = useState('blog');
+export default function Config({tab}) {
   const buttonRef = useRef();
 
   useEffect(() => {
@@ -70,7 +69,7 @@ export default function Config() {
           buttonText='Guardar'
         />
         <div className='flex'>
-          <ConfigAside onChange={setTab} active={tab}/>
+          <ConfigAside active={tab}/>
           <div className='config-container'>
             {UI}
           </div>

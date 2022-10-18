@@ -69,7 +69,7 @@ export async function getServerSideProps({req, res, query}) {
   const postsOptions = {
     fields: 'title,description,url,fullUrl,thumbnail,comments',
     page: page || '1'
-  }
+  };
 
   let postsData = null;
 
@@ -84,7 +84,7 @@ export async function getServerSideProps({req, res, query}) {
   return {
     props: {
       blog,
-      posts: postsData.data.map(e => {return {...e, _id: e._id.toString()}}),
+      posts: postsData.data.map(e => {return {...e, _id: e._id.toString()};}),
       userID,
       referrer
     }

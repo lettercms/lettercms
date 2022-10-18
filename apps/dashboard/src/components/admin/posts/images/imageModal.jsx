@@ -8,10 +8,10 @@ export default function ImageModal({show, img, meta, onClose, onSelect}) {
   const close = () => {
     setOpacity('0');
     setTimeout(() => {
-      setDisplay('none')
+      setDisplay('none');
       onClose();
     }, 610);
-  }
+  };
 
   useEffect(() => {
     if (show) {
@@ -66,5 +66,5 @@ export default function ImageModal({show, img, meta, onClose, onSelect}) {
         margin: 0 auto;
       }
     `}</style>
-  </div>
+  </div>;
 }

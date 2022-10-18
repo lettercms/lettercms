@@ -47,6 +47,15 @@ const appConfig = withTM({
         destination: '/api/sitemap'
       }
     ]
+  },
+  async redirects() {
+    return [
+      {
+        source: '/dashboard/config',
+        destination: '/dashboard/config/blog',
+        permanent: true
+      }
+    ]
   }
 })
 

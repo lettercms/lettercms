@@ -1,4 +1,5 @@
 import {Fragment} from 'react';
+import Link from 'next/link';
 
 const paths = [
   {
@@ -26,7 +27,17 @@ const ConfigAside = ({onChange, active}) => <div id='config-aside'>
   {
     paths.map(({name, alias}, i) => {
       const isActive = name === active;
-      return <Fragment key={name}>{i > 0 && <hr/>}<li className={isActive ? 'active' : null} onClick={() => isActive ? null : onChange(name)}>{alias}</li></Fragment>;
+
+      return <Fragment key={name}>
+        {i > 0 && <hr/>}
+        <Link href={`/dashboard/config/${name}`}>
+          <a>
+            <li className={isActive ? 'active' : null}>
+            {alias}
+            </li>
+          </a>
+        </Link>
+      </Fragment>;
     })
   }
   </ul>

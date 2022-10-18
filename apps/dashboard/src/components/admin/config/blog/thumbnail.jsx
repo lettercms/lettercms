@@ -17,12 +17,12 @@ export default function Thumbnail({url = 'https://cdn.jsdelivr.net/gh/davidsdeve
     onLoadStart() {
       shadowRef.current.style.opacity = 1;
       setImg('');
-      setLoadState(true)
+      setLoadState(true);
     },
     onLoadEnd(_url) {
       shadowRef.current.style.opacity = 0;
 
-      setLoadState(false)
+      setLoadState(false);
       setImg(_url);
 
       sdk.blogs.update({
@@ -91,5 +91,5 @@ export default function Thumbnail({url = 'https://cdn.jsdelivr.net/gh/davidsdeve
         opacity: 1 !important;
       }
     `}</style>
-  </div>
+  </div>;
 }

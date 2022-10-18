@@ -59,7 +59,7 @@ export default function ImageList({images, isUploading, onLoadMore, isLoadingMor
       <Modal show={showModal} img={selectedImage} meta={meta} onClose={() => {
         setShowModal(false);
         setSelectedImage('');
-        setMeta({})
+        setMeta({});
       }} onSelect={onSelect}/>
     }
     <style jsx>{`

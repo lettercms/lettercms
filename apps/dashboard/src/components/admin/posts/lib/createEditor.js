@@ -32,7 +32,7 @@ async function createEditor(content) {
       const image =        writer.createElement('imageBlock', src);
 
       const container =    writer.createElement('paragraph', {alignment: 'center'});
-      const photo =        writer.createText(`Photo by `);
+      const photo =        writer.createText('Photo by ');
       const userText =     writer.createText(user, {linkHref: href});
       const on =           writer.createText(' on ');
       const unsplashA =    writer.createText('Unsplash', {linkHref: 'https://unsplash.com/?utm_source=lettercms&utm_medium=referral'});

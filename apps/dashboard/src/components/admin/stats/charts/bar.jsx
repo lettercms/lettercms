@@ -8,25 +8,17 @@ import {
   BarChart,
 } from 'recharts';
 
-function RenderBarChart({data, dataKey, layout}) {
-  dataKey = !dataKey ? 'name' : dataKey;
-  layout = !layout ? 'horizontal' : 'vertical';
-
-  if (!Array.isArray(data)) {
-    data = Object.entries(data).map((e) => {
-      let data = {
-        vistas: e[1]
-      };
-
-      data[dataKey] = e[0];
-
-      return data;
-    });
-  }
-
+function RenderBarChart({data, dataKey = 'vista', layout = 'horizontal'}) {
   const isHorizontal = layout === 'horizontal';
 
-  return <div style={{height: !isHorizontal ? data.length * 50 : 200, width: '95%'}}>
+  data = Object.entries(data).map(([key, vistas]) => ({
+    vistas,
+    [dataKey]: key
+  }));
+
+
+
+  return <div style={{height: !isHorizontal ? data.length * 50 + 10 : 200, width: '95%'}}>
     <ResponsiveContainer>
       <BarChart data={data}
         height={layout === 'horizontal' ? 200 : 'auto'}

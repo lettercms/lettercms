@@ -27,7 +27,7 @@ export default function createUploader({name, subdomain, onLoadStart, onLoadEnd,
 
         onLoadEnd(url);
       } catch(err) {
-        alert('Error al subir la imagen')
+        alert('Error al subir la imagen');
 
         onError(err);
       }

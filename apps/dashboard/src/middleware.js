@@ -2,10 +2,10 @@ import { NextResponse } from 'next/server';
 
 export const config = {
   matcher: [
-    "/([^/.]*)",
-    "/login",
-    "/signin",
-    "/dashboard/:path*"
+    '/([^/.]*)',
+    '/login',
+    '/signin',
+    '/dashboard/:path*'
   ],
 };
 

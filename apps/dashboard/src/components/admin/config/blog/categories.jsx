@@ -8,7 +8,7 @@ export default function BlogCategories({categories, onAdd, onDelete}) {
   const addCategory = () => {
     onAdd(categoryName);
     setName('');
-  }
+  };
 
   return <div>
     <Input id='category' value={categoryName} onChange={({target: {value}}) => setName(value)} label='CategorÍa'/>

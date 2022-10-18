@@ -52,7 +52,7 @@ export default async function(req, res) {
       status: 'OK'
     });
   } catch(err) {
-    console.log(err)
+    console.log(err);
     res.status(500).json({
       status: 'verification-error',
       message: 'Unable to verify account'

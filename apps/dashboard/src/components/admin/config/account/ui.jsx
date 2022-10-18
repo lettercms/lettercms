@@ -28,12 +28,12 @@ const AccountUI = ({
 
       input.type = 'file';
       input.accept = 'image/*';
-      input.id = 'cropper-input'
+      input.id = 'cropper-input';
       input.onchange = ({target: {files}}) => onChangePicture(files[0]);
     }
 
     input.click();
-  }
+  };
   return <div className='flex flex-column config-opts'>
     <div id='photo-container' onClick={changePicture}>
       <img alt={`${name} ${lastname} picture`} id='account-photo' src={photo || `https://avatar.tobi.sh/${name}-${lastname}?&size=250`}/>
@@ -137,6 +137,6 @@ const AccountUI = ({
       }
     `}</style>
   </div>;
-}
+};
 
 export default AccountUI;

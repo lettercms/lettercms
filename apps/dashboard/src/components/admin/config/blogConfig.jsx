@@ -20,14 +20,14 @@ const handleChanges = (e, cb) => {
 
   cb(value);
   changes[name] = value;
-}
+};
 
 export default function BlogConfig({button}) {
-  const [thumbnail, setThumbnail] = useState('')
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [isVisible, setIsVisible] = useState(false)
-  const [categories, setCategories] = useState([])
+  const [thumbnail, setThumbnail] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
+  const [categories, setCategories] = useState([]);
   const [urlID, setUrl] = useState('');
 
   const [load, setLoad] = useState(true);
@@ -57,13 +57,9 @@ export default function BlogConfig({button}) {
       });
       
       button.current.onclick = () => sdk.blogs.update(changes).then(() => {
-        alert('Datos Modificados con exito')
+        alert('Datos Modificados con exito');
         changes = {};
       });
-
-    }
-    return () => {
-        button.current.onclick = null;
     }
   }, [status]);
 
@@ -75,7 +71,7 @@ export default function BlogConfig({button}) {
       changes.categories.push(cat);
 
     setCategories(arr => [...arr, cat]);
-  }
+  };
 
   const deleteCategory = cat => {
     changes.categories = changes.categories.filter(e => e !== cat);
@@ -86,10 +82,10 @@ export default function BlogConfig({button}) {
     }
 
     setCategories(arr => arr.filter(e => e !== cat));
-  }
+  };
 
   if (load)
-    return <BaseLoad rows={1}/>
+    return <BaseLoad rows={1}/>;
 
   return <>
       <div className='config-opts'>

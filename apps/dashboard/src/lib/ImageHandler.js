@@ -37,7 +37,7 @@ export default class ImageHandler {
           try {
             meta = await this.getSize(subdomain, fileName);
           } catch(err) {
-            console.log(err)
+            console.log(err);
           }
 
           const {metadata: {size}} = await this._upload(path, file);
@@ -46,7 +46,7 @@ export default class ImageHandler {
           let finalSize = size;
 
           if (meta) {
-            console.log(meta)
+            console.log(meta);
             //finalSize = size - meta.metadata.size;
           }
 
@@ -63,7 +63,7 @@ export default class ImageHandler {
             }
           });
 
-          resolve(`https://storage.googleapis.com/${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET}/${subdomain}/${fileName}.webp`)
+          resolve(`https://storage.googleapis.com/${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET}/${subdomain}/${fileName}.webp`);
         };
       };
 
@@ -76,7 +76,7 @@ export default class ImageHandler {
       useWebWorker: true,
       fileType: 'image/webp',
       initialQuality: 0.7
-    }
+    };
 
     try {
       return imageCompression(image, options);
@@ -110,9 +110,9 @@ export default class ImageHandler {
           width: compressed.naturalWidth,
           height: compressed.naturalHeight
         }*/
-      })
+      });
     } catch(err) {
-      return Prmoise.reject(err)
+      return Prmoise.reject(err);
     }
   }
 }

@@ -12,7 +12,7 @@ const UI = dynamic(() => import('./ui'), {
 
 const Cropper = dynamic(() => import('./cropper'), {
   ssr: false
-}) 
+}); 
 
 let changes = {};
 
@@ -40,18 +40,14 @@ export default function AccountConfig({button}) {
     .then(d => {
       setData(d);
       setLoad(false);
-    })
+    });
 
     button.current.onclick = () => {
       sdk.accounts.update(user._id, changes).then(() => {
-        alert('Datos Modificados con exito')
+        alert('Datos Modificados con exito');
         changes = {};
       });
-    }
-
-    return () => {
-      button.current.onclick = null;
-    }
+    };
   }, []);
 
   const handleInput = ({target: {name, value}}) => {
@@ -62,7 +58,7 @@ export default function AccountConfig({button}) {
     }));
 
     changes[name] = value;
-  }
+  };
 
   if (loading)
     return <AccountLoad/>;
@@ -79,5 +75,5 @@ export default function AccountConfig({button}) {
         border-radius: 50%;
       }
     `}</style>
-  </div>
+  </div>;
 }

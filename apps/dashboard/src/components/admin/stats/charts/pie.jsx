@@ -9,12 +9,10 @@ import {
 } from 'recharts';
 
 function RenderPieChart({data}) {
-  if (!Array.isArray(data)) {
-    data = Object.entries(data).map((e) => ({
-      name: e[0],
-      value: e[1],
-    }));
-  }
+  data = Object.entries(data).map(([name, value]) => ({
+    name,
+    value,
+  }));
   
   return <div style={{ width: '100%', height: 200 }}>
     <ResponsiveContainer>

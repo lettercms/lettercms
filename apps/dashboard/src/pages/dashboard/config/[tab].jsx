@@ -1,11 +1,23 @@
 import {useEffect, useState} from 'react';
 import Head from 'next/head';
-import sdk from '@lettercms/sdk';
 import {getSession} from 'next-auth/react';
 import {DashboardProvider} from '@/lib/dashboardContext';
 import Config from '@/components/admin/config';
 
-export async function getServerSideProps({ req, res, query}) {
+const tabs = [
+  'blog',
+  'account',
+  'usage'
+];
+
+export async function getServerSideProps({ req, res, query }) {
+  const {tab} = query;
+
+  if (!tabs.includes(tab))
+    return {
+      notFound: true
+    };
+  
   const session = await getSession({req});
 
   if (!session)
@@ -16,11 +28,11 @@ export async function getServerSideProps({ req, res, query}) {
       }
     };
 
-
   return {
     props: {
       user: session.user,
-      hideLayout: true
+      hideLayout: true,
+      tab
     }
   };
 }
@@ -32,7 +44,7 @@ const AdminDashboard = ({tab, user}) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Config />
+      <Config tab={tab}/>
     </>;
 };
 AdminDashboard.getLayout = function getLayout(page, user) {

@@ -18,8 +18,8 @@ export default function SocialDashboard() {
   const [accounts, setAccounts] = useState(null);
 
   switch (tab) {
-    case "dashboard":
-      return <Dashboard onAccounts={setAccounts} newPost={() => setTab('new')} showFeed={type => {setType(type); setTab('feed')}}/>;
+    case 'dashboard':
+      return <Dashboard onAccounts={setAccounts} newPost={() => setTab('new')} showFeed={type => {setType(type); setTab('feed');}}/>;
     case 'new':
       return <NewPosts accounts={accounts}/>;
     case 'feed':

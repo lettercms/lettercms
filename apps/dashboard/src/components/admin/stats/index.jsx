@@ -1,6 +1,8 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
+import {useUser} from '@/lib/dashboardContext';
 import sdk from '@lettercms/sdk';
 import CardLoad from './baseLoad';
+import dynamic from 'next/dynamic';
 
 const Load = () => {
   return <div style={{display: 'flex', flexWrap: 'wrap'}}>
@@ -12,123 +14,88 @@ const Load = () => {
   </div>;
 };
 
-let Dashboard = () => <Load/>;
-let NoData = () => <Load/>;
+const Dashboard = dynamic(() => import('./dashboard'), {
+  ssr: false,
+  loading: () => <Load/>
+});
 
-export default class Stats extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      haveData: false,
-      general: {},
-      mostView: {},
-      mostCommented: {},
-      viewsPosts: [],
-      commentsPosts: [],
-    };
-
-    this.componentDidMount = this.componentDidMount.bind(this);
-    this.fetchStatsData = this.fetchStatsData.bind(this);
-  }
-
-  componentDidMount() {
-    setTimeout(async () => {
-      const haveData = await this.fetchStatsData();
-      
-      if (haveData){
-        let mod = await import('./dashboard');
-        Dashboard = mod.default;
-      }
-      else {
-        let mod = await import('./noData');
-        NoData = mod.default;
-      }
-
-      this.setState({
-        haveData
-      });
-    }, 1000);
-  }
+const NoData = dynamic(() => import('./noData'), {
+  ssr: false,
+  loading: () => <Load/>
+});
 
 
-  async fetchStatsData() {
-    try {
-      const data = await sdk.stats.all([
-        'data.referrers',
-        'data.views',
-        'data.os',
-        'data.browsers',
-        'data.countries',
-        'data.days',
-        'data.dates',
-        'data.hours',
-        'general.totalViews',
-        'general.bounces',
-        'general.bounceRate',
-        'general.totalComments',
-        'general.subscriptors',
-        'general.mostViewed',
-        'general.subdomain',
-        'general.mostCommented'
-      ]);
+const fetchData = start => {
+  const fields = [
+    'data.referrers',
+    'data.views',
+    'data.os',
+    'data.browsers',
+    'data.countries',
+    'data.days',
+    'data.dates',
+    'data.hours',
+    'general.totalViews',
+    'general.bounces',
+    'general.bounceRate',
+    'general.totalComments',
+    'general.subscriptors',
+    'general.mostViewed',
+    'general.subdomain',
+    'general.mostCommented'
+  ];
 
-      if (data.general.totalViews === 0 && data.general.totalComments === 0)
-        return Promise.resolve(false);
-
-      this.setState(data);
-
-      return Promise.resolve(true);
-    } catch (err) {
-      alert('Error al Obtener los Datos');
-      throw err;
-    }
-  }
-  reload = async start => {
-    const data = await sdk.stats.all({
+  if (start)
+    return sdk.stats.all({
       start,
-      fields: [
-        'data.referrers',
-        'data.views',
-        'data.os',
-        'data.browsers',
-        'data.countries',
-        'data.days',
-        'data.dates',
-        'data.hours',
-        'general.totalViews',
-        'general.bounces',
-        'general.bounceRate',
-        'general.totalComments',
-        'general.subscriptors',
-        'general.mostViewed',
-        'general.subdomain',
-        'general.mostCommented'
-      ]
+      fields
     });
 
-    this.setState(data);
-  }
+  return sdk.stats.all(fields);
+}
 
-  render() {
-    const {haveData} = this.state;
+export default function Stats() {
+  const [hasData, setHasData] = useState(false);
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const {status} = useUser();
 
-    return (
-      <div>
-        {
-          haveData
-          ? <Dashboard {...this.state} onChange={this.reload}/>
-          : <NoData/>
-        }
-        <style jsx>{`
-          :global(#content > div) {
-            width: 100%;
+  useEffect(() => {
+    if (status === 'done')
+      fetchData()
+        .then(e => {
+          if (e.general.totalViews === 0 && e.general.totalComments === 0) {
+            setHasData(false);
+            setLoading(false);
+          } else {
+            setHasData(true);
+            setLoading(false); 
+            setData(e); 
           }
-          :global(#content > div > div) {
-            height: 100%;
-          }
-        `}</style>
-      </div>
-    );
-  }
+        });
+
+  }, [status]);
+
+  return <div>
+    {
+      loading &&
+      <Load/>
+    }
+    {
+      !loading && hasData &&
+      <Dashboard {...data}/>
+    }
+    {
+      !loading && !hasData &&
+      <NoData/>
+    }
+    <style jsx>{`
+      :global(#content > div) {
+        width: 100%;
+      }
+      :global(#content > div > div) {
+        height: 100%;
+      }
+    `}</style>
+  </div>
 }

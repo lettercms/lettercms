@@ -21,7 +21,7 @@ const createCropper = img => {
     cropBoxResizable: false,
     toggleDragModeOnDblclick: false
   });
-}
+};
 
 export default function CropperModal({file, onChange}) {
   const [edit, setEdit] = useState(true);
@@ -54,7 +54,7 @@ export default function CropperModal({file, onChange}) {
     setEdit(false);
 
     cropper.destroy();
-  }
+  };
 
   const close = () => {
 
@@ -65,7 +65,7 @@ export default function CropperModal({file, onChange}) {
       setFullImage('');
       setPreviewImage('');
     }, 600);
-  }
+  };
 
   const cancelCrop = () => {
     setEdit(true);
@@ -75,7 +75,7 @@ export default function CropperModal({file, onChange}) {
 
       cropper = createCropper(img);
     }, 0);
-  }
+  };
 
   const upload = () => {
     const uploader = new ImageUploader();
@@ -96,7 +96,7 @@ export default function CropperModal({file, onChange}) {
       }
     });
 
-  }
+  };
 
   return <Modal show={showModal} close={close} width='500px' height='552px'>
     {
@@ -124,5 +124,5 @@ export default function CropperModal({file, onChange}) {
         border-radius: 50%;
       }
     `}</style>
-  </Modal>
+  </Modal>;
 }

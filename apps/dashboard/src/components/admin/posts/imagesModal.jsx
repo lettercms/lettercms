@@ -13,8 +13,8 @@ const generateUnsplashSrc = raw => {
         ${raw}&w=720 720w,
         ${raw}&w=1024 1024w,
         ${raw}&w=2048 1400w`
-    }
-}
+    };
+};
 
 const generateLetterSrc = raw => {
   return {
@@ -24,8 +24,8 @@ const generateLetterSrc = raw => {
         /_next/image?url=${raw}&q=75&w=720 720w,
         /_next/image?url=${raw}&q=7&w=1024 1024w,
         /_next/image?url=${raw}&q=7&w=2048 1400w`
-    }
-}
+    };
+};
 
 export default function ImagesModal({onClose, show}) {
   const [display, setDisplay] = useState('none');
@@ -35,10 +35,10 @@ export default function ImagesModal({onClose, show}) {
   const close = () => {
     setOpacity('0');
     setTimeout(() => {
-      setDisplay('none')
+      setDisplay('none');
       onClose();
     }, 610);
-  }
+  };
 
   const appendUnsplash = ({raw, user, href, download}) => {
     const src = generateUnsplashSrc(raw);
@@ -53,7 +53,7 @@ export default function ImagesModal({onClose, show}) {
 
   const appendImage = raw => {
     const obj = generateLetterSrc(raw);
-    window.editorEventEmitter.emit('insert', obj)
+    window.editorEventEmitter.emit('insert', obj);
   };
 
   useEffect(() => {
@@ -136,7 +136,7 @@ export default function ImagesModal({onClose, show}) {
         height: 93%;
       }
     `}</style>
-  </div>
+  </div>;
 }
 
 /*

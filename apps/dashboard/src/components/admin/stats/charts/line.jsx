@@ -6,7 +6,7 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  } from 'recharts';
+} from 'recharts';
 
 function RenderLineChart({data}) {
 

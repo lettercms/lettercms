@@ -2,24 +2,23 @@
 import Base from './base';
 import GeneralPanel from './general';
 import Card from './statsSingleCard';
-import Circle from './circleChart';
-import Image from 'next/image';
+import Spinner from '@/components/svg/spinner';
 
 const Load = () => <div>
   <span>
-    <img alt='Spinner' src='/assets/spinner-black.svg' style={{animation: 'rotation linear .6s infinite', width: 75}}/>
+    <Spinner/>
   </span>
 </div>;
 
-const LineChart = dynamic(() => import('./lineChart'), {
+const LineChart = dynamic(() => import('./charts/line'), {
   loading: Load,
   ssr: false
 });
-const BarChart = dynamic(() => import('./barChart'), {
+const BarChart = dynamic(() => import('./charts/bar'), {
   loading: Load,
   ssr: false
 });
-const PieChart = dynamic(() => import('./pieChart'), {
+const PieChart = dynamic(() => import('./charts/pie'), {
   loading: Load,
   ssr: false
 });
@@ -33,7 +32,7 @@ const sortObject = obj =>
   )
   .sort((a, b) => a.vistas > b.vistas ? -1 : +1);
 
-const StatsDashboard = ({data: {referrers, views, os, browsers, countries, days, dates, hours}, general, onChange}) => {
+const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days, dates, hours}, general, onChange}) => {
   const changeTime = id => {
     const now = Date.now();
     let newDate;
@@ -82,10 +81,10 @@ const StatsDashboard = ({data: {referrers, views, os, browsers, countries, days,
         <LineChart data={dates}/>
       </Base>
       <Base rows={1} title='Horas'>
-        <BarChart data={hours} dataKey="time"/>
+        <BarChart data={hours} dataKey="hora"/>
       </Base>
       <Base rows={1} title='Días'>
-        <BarChart data={days} dataKey="days"/>
+        <BarChart data={days} dataKey="día"/>
       </Base>
       <Base rows={3} title='Países'>
         <PieChart data={countries}/>
@@ -94,22 +93,17 @@ const StatsDashboard = ({data: {referrers, views, os, browsers, countries, days,
         <PieChart data={browsers}/>
       </Base>
       <Base rows={3} title='Sistema Operativo'>
-        <PieChart data={os}/>
+        <PieChart data={oss}/>
       </Base>
-    {/*
-      <Base rows={2} title='Origen'>
-        <PieChart data={general.origins}/>
-      </Base>
-    */}
     </div>
     <span className="title">Más Visto</span>
     <Card {...general.mostViewed} subdomain={general.subdomain}/>
     <span className="title">Más Comentado</span>
     <Card {...general.mostCommented} subdomain={general.subdomain}/>
     <span className="title">Entradas</span>
-    <BarChart data={sortObject(views)} layout='vertical'/>
+    <BarChart data={urls} layout='vertical'/>
     <span className="title">Origenes</span>
-    <BarChart data={sortObject(referrers)} layout='vertical'/>
+    <BarChart data={referrers} layout='vertical'/>
     <style jsx>{`
       #stats-dashboard {
         display: flex;

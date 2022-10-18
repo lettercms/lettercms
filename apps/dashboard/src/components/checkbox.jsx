@@ -19,5 +19,5 @@ export default function Checkbox({icon, title, id, ...options}) {
         display: flex;
       }
     `}</style>
-  </div>
+  </div>;
 }
