@@ -4,7 +4,6 @@ import blogs from '@lettercms/models/blogs';
 import {Ratings} from '@lettercms/models/blogs';
 import {findOne as findPost} from '@lettercms/utils/lib/findHelpers/posts';
 import {findOne as findRecommendation} from '@lettercms/utils/lib/findHelpers/recommendations';
-
 import sdk from '@lettercms/sdk';
 import dynamic from 'next/dynamic';
 import Header from '@/components/post/header';
