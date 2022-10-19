@@ -375,7 +375,7 @@ export default class Editor extends Component {
         <Input id='url' value={url} onInput={this.handleInput} label='Enlace' disabled={postStatus === 'published' || sending}/>
         <hr/>
         <div>
-          <Input id='tags' onKeyUp={this.getTag} label='Etiqueta'/>
+          <Input id='tags' onKeyUp={this.getTag} label='Etiqueta' onChange={null}/>
           <Tags data={tags} removeTag={this.removeTag}/>
         </div>
         <hr/>

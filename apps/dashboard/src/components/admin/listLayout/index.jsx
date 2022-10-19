@@ -73,7 +73,7 @@ function Layout(props) {
       } else
         alert(message);
     } catch (err) {
-      alert('Error al obtener los datos');
+      alert('Error al Eliminar entrada');
       throw err;
     }
   };

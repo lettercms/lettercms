@@ -2,6 +2,7 @@ import {isValidObjectId} from 'mongoose';
 import posts from '@lettercms/models/posts';
 import pages from '@lettercms/models/pages';
 import usage from '@lettercms/models/usages';
+import schedule from '@lettercms/utils/lib/schedule';
 
 export default async function() {
   const {req, res} = this;
@@ -38,7 +39,7 @@ export default async function() {
   }
 
   await schedule(req.body.schedule, {
-    url: `https://${process.env.VERCEL_URL}/api/post/${url}/publish`,
+    url: `https://${process.env.VERCEL_URL}/api/post/${url}/qstash`,
     token: jwt.sign({subdomain}, process.env.JWT_AUTH),
     body: req.body
   });

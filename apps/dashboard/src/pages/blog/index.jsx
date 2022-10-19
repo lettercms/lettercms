@@ -1,10 +1,3 @@
-import connect from '@lettercms/utils/lib/connection';
-import posts from '@lettercms/models/posts';
-import blogs from '@lettercms/models/blogs';
-import {Ratings} from '@lettercms/models/users';
-import {find as findPosts} from '@lettercms/utils/lib/findHelpers/posts';
-import {findOne as findBlog} from '@lettercms/utils/lib/findUtils';
-import {find as findRecommendations} from '@lettercms/utils/lib/findHelpers/recommendations';
 import Card from '@/components/blog/card';
 import Header from '@/components/blog/header';
 import Aside from '@/components/blog/aside';
@@ -12,8 +5,11 @@ import Head from '@/components/headBlog';
 import Footer from '@/components/index/footer';
 import Layout from '@/components/tracingLayout';
 import {parse as cookieParser} from 'cookie';
+import {getBlog} from '@/lib/mongo/blogs';
+import Paging from '@/components/blog/paging';
 
-const Blog = ({posts, blog}) => {
+const Blog = ({posts, blog, paging}) => {
+  console.log(paging)
   return <Layout>
     <Head ogImage={blog.thumbnail}/>
     <div>
@@ -31,6 +27,7 @@ const Blog = ({posts, blog}) => {
               ID={e._id}
             />
           )}
+        <Paging {...paging}/>
         </div>
         <Aside owner={blog.owner}/>
       </div>
@@ -52,39 +49,15 @@ export async function getServerSideProps({req, res, query}) {
   const referrer = req?.headers.referrer || null;
   const {userID = null} = req ? req.cookies : cookieParser(document.cookie);
   
-  await connect();
+  const blogData = await getBlog(page);
 
-  const _blog = await blogs.findOne({subdomain: 'davidsdevel'}, 'thumbnail owner', {
-    populate: {
-      path: 'owner',
-      select: 'photo name description lastname facebook twitter instagram linkedin website',
-    }
-  });
-
-  //Polyfill because ObjectId cannot be serialized as JSON
-  const blog = _blog.toObject();
-  delete blog._id;
-  delete blog.owner._id;
-
-  const postsOptions = {
-    fields: 'title,description,url,fullUrl,thumbnail,comments',
-    page: page || '1'
-  };
-
-  let postsData = null;
-
-  if (!userID || userID === 'undefined')
-    postsData = await findPosts(posts, {
-      subdomain: 'davidsdevel',
-      postStatus: 'published'
-    }, postsOptions);
-  else
-    postsData = await findRecommendations(Ratings, {subdomain: 'davidsdevel', userID}, postsOptions);
+  const {blog, posts} = JSON.parse(JSON.stringify(blogData));
 
   return {
     props: {
+      posts: posts.data,
       blog,
-      posts: postsData.data.map(e => {return {...e, _id: e._id.toString()};}),
+      paging: posts.paging,
       userID,
       referrer
     }

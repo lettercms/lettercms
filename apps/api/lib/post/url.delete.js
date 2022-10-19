@@ -1,6 +1,6 @@
 import posts from '@lettercms/models/posts';
 import blogs from '@lettercms/models/blogs';
-import {users} from '@lettercms/models/users';
+import {Ratings} from '@lettercms/models/users';
 import {isValidObjectId} from 'mongoose';
 import revalidate from '@lettercms/utils/lib/revalidate';
 import {getFullUrl} from '@lettercms/utils/lib/posts';

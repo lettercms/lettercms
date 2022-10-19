@@ -43,7 +43,7 @@ export default async function() {
 
     if (req.body.schedule) {
       await schedule(req.body.schedule, {
-        url: `https://${process.env.VERCEL_URL}/api/social/instagram/publish`,
+        url: `https://${process.env.VERCEL_URL}/api/social/instagram/qstash`,
         token: jwt.sign({subdomain}, process.env.JWT_AUTH),
         body: {
           ...req.body,
