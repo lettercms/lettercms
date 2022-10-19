@@ -87,7 +87,7 @@ jobs:
 
       - name: 'Generate Preview URL'
         if: ${{inputs.env == 'preview'}}
-        run: echo "env_url=${{inputs.name}}-${{ github.ref_name }}-$(git rev-parse --short HEAD).vercel.app >> $GITHUB_ENV
+        run: echo "env_url=${{inputs.name}}-${{ github.ref_name }}-$(git rev-parse --short HEAD).vercel.app" >> $GITHUB_ENV
 
       - name: 'Generate API Production URL'
         if: ${{inputs.env == 'production' && inputs.name == 'api'}}

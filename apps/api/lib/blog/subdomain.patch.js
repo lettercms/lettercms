@@ -39,7 +39,6 @@ export default async function() {
       revalidate(subdomain, prevBase);
     }
 
-
     if (prevUrlID !== urlID) {
       const _posts = await posts.find({subdomain, views: {$gt: 0}, postStatus: 'published'}, 'url published category', {lean: true});
 

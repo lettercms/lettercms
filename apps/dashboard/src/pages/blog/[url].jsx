@@ -21,6 +21,7 @@ import Card from '@/components/blog/card';
 import {parse as cookieParser} from 'cookie';
 import {getSession} from 'next-auth/react';
 
+
 const _sdk = new sdk.Letter(process.env.TRACK_TOKEN);
 
 const BlogPost = ({isAdmin, user, recommendation: {recommended, similar}, post: {_id, content, title, url, published, updated, thumbnail, tags, description}, referrer, notFound}) => {
