@@ -4,6 +4,7 @@ import {Users} from '@lettercms/models/users';
 import jwt from 'jsonwebtoken';
 import {findOne as findPost} from '@lettercms/utils/lib/findHelpers/posts';
 import {find as findRecommendations} from '@lettercms/utils/lib/findHelpers/recommendations';
+import sdk from '@lettercms/sdk';
 
 const subdomain = 'davidsdevel';
 
@@ -26,10 +27,14 @@ export async function getPost(url, userID) {
     };
     
   if (userID)
-  const user = userID
-    ? await Users.findOne({_id: userID}, 'name lastname email', {lean: true})
-    : {}
+    const user = userID
+      ? await Users.findOne({_id: userID}, 'name lastname email', {lean: true})
+      : {}
 
+  const token = jwt.sign({subdomain}, process.env.JWT_AUTH);
+
+  const _sdk = new sdk.Letter(token);
+ 
   const recommendation = await _sdk.users.recommendationForPost(userID, url, fields.split(','));
 
   return {
