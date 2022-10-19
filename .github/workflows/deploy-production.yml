@@ -44,26 +44,26 @@ jobs:
   deploy-api:
     needs: changes
     if: ${{ needs.changes.outputs.api == 'true' }}
-    uses: ./.github/workflows/deploy@deploy
-      secrets: inherit
-      with:
-        name: api
-        env: production
+    uses: ./.github/workflows/deploy.yml#deploy
+    with:
+      name: api
+      env: production
+    secrets: inherit
 
   deploy-client:
     needs: changes
     if: ${{ needs.changes.outputs.client == 'true' }}
-    uses: ./.github/workflows/deploy@deploy
-      secrets: inherit
-      with:
-        name: client
-        env: production
+    uses: ./.github/workflows/deploy.yml#deploy
+    with:
+      name: client
+      env: production
+    secrets: inherit
 
   deploy-dashboard:
     needs: changes
     if: ${{ needs.changes.outputs.dashboard == 'true' }}
-    uses: ./.github/workflows/deploy@deploy
-      secrets: inherit
-      with:
-        name: dashboard
-        env: production
+    uses: ./.github/workflows/deploy.yml#deploy
+    with:
+      name: api
+      env: production
+    secrets: inherit
