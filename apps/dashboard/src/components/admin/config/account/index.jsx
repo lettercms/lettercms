@@ -20,35 +20,37 @@ export default function AccountConfig({button}) {
   const [data, setData] = useState({});
   const [loading, setLoad] = useState(true);
   const [file, setFile] = useState(null);
-  const {user} = useUser();
+  const {user, status} = useUser();
 
-  console.log(data);
   useEffect(() => {
-    sdk.accounts.me([
-      'photo',
-      'name',
-      'lastname',
-      'website',
-      'twitter',
-      'facebook',
-      'instagram',
-      'linkedin',
-      'description',
-      'ocupation',
-      'role'
-    ])
-    .then(d => {
-      setData(d);
-      setLoad(false);
-    });
+    if (status === 'done') {
 
-    button.current.onclick = () => {
-      sdk.accounts.update(user._id, changes).then(() => {
-        alert('Datos Modificados con exito');
-        changes = {};
-      });
-    };
-  }, []);
+      sdk.accounts.me([
+        'photo',
+        'name',
+        'lastname',
+        'website',
+        'twitter',
+        'facebook',
+        'instagram',
+        'linkedin',
+        'description',
+        'ocupation',
+        'role'
+      ])
+        .then(d => {
+          setData(d);
+          setLoad(false);
+        });
+
+      button.current.onclick = () => {
+        sdk.accounts.update(user._id, changes).then(() => {
+          alert('Datos Modificados con exito');
+          changes = {};
+        });
+      };
+    }
+  }, [status]);
 
   const handleInput = ({target: {name, value}}) => {
 

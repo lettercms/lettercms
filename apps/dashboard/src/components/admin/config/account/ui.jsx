@@ -13,7 +13,7 @@ const AccountUI = ({
   facebook,
   instagram,
   linkedin,
-  userDescription,
+  description,
   ocupation,
   onChangePicture,
   onChange
@@ -48,7 +48,7 @@ const AccountUI = ({
           <Input id='lastname' value={lastname} label='Apellido' onInput={onChange}/>
         </div>
         <Input id='ocupation' value={ocupation} label='Ocupación' onInput={onChange}/>
-        <Input id='userDescription' value={userDescription} type='textarea' label='Acerca de mi' onInput={onChange}/>
+        <Input id='description' value={description} type='textarea' label='Acerca de mi' onInput={onChange}/>
       </div>
     </Container>
     <Container rows={1} title='Redes sociales'>
