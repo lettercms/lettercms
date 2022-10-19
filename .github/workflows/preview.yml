@@ -5,11 +5,6 @@ on:
     branches:
       - main
 
-env:
-  API_PROJECT_ID: ${{secrets.API_PROJECT_ID}}
-  CLIENT_PROJECT_ID: ${{secrets.CLIENT_PROJECT_ID}}
-  DASHBOARD_PROJECT_ID: ${{secrets.DASHBOARD_PROJECT_ID}}
-
 jobs:
   changes:
     runs-on: ubuntu-latest

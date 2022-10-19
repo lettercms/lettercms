@@ -64,6 +64,6 @@ jobs:
     if: ${{ needs.changes.outputs.dashboard == 'true' }}
     uses: ./.github/workflows/deploy.yml
     with:
-      name: api
+      name: dashboard
       env: production
     secrets: inherit
