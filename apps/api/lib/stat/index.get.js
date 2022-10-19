@@ -133,7 +133,6 @@ export default async function() {
     if (fields['general.bounceRate'])
       general.bounceRate = (general.bounces / general.totalViews * 100).toFixed(1);
   }
-  console.log(dateStart);
 
   conditions.date = {
     $gt: dateStart,
