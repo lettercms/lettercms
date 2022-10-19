@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+env:
+  API_PROJECT_ID: ${{secrets.API_PROJECT_ID}}
+  CLIENT_PROJECT_ID: ${{secrets.CLIENT_PROJECT_ID}}
+  DASHBOARD_PROJECT_ID: ${{secrets.DASHBOARD_PROJECT_ID}}
+
 jobs:
   changes:
     runs-on: ubuntu-latest
@@ -48,7 +53,7 @@ jobs:
     with:
       name: api
       env: preview
-      project: ${{secrets.API_PROJECT_ID}}
+      project: ${{env.API_PROJECT_ID}}
     secrets: inherit
 
   deploy-client:
@@ -58,7 +63,7 @@ jobs:
     with:
       name: client
       env: preview
-      project: ${{secrets.CLIENT_PROJECT_ID}}
+      project: ${{env.CLIENT_PROJECT_ID}}
     secrets: inherit
 
   deploy-dashboard:
@@ -68,5 +73,5 @@ jobs:
     with:
       name: dashboard
       env: preview
-      project: ${{secrets.DASHBOARD_PROJECT_ID}}
+      project: ${{env.DASHBOARD_PROJECT_ID}}
     secrets: inherit
