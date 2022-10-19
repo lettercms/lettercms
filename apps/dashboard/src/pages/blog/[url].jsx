@@ -204,13 +204,16 @@ export const getServerSideProps = async ({req, res, query}) => {
       notFound: true
     };
 
+  //Parse Mongo Object IDs
+  const props = JSON.parse(JSON.stringify({
+    post,
+    referrer: req?.headers.referer || null,
+    recommendation,
+    user
+  }));
+
   return {
-    props: {
-      post,
-      referrer: req?.headers.referer || null,
-      recommendation,
-      user
-    }
+    props
   };
 };
 
