@@ -37,6 +37,7 @@ jobs:
       NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
       PAYPAL_PRODUCTION_CLIENT: ${{ secrets.PAYPAL_PRODUCTION_CLIENT }}
       PAYPAL_PRODUCTION_SECRET: ${{ secrets.PAYPAL_PRODUCTION_SECRET }}
+      NEXTAUTH_URL: https://lettercms-${{inputs.name}}-${{github.ref_name}}.vercel.app
 
     steps:
       - name: Check out code
