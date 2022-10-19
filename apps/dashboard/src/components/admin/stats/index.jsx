@@ -76,6 +76,16 @@ export default function Stats() {
 
   }, [status]);
 
+  const reload = start => {
+    setLoading(false);
+    
+    fetchData(start)
+      .then(e => {
+        setLoading(false); 
+        setData(e); 
+      });
+  }
+
   return <div>
     {
       loading &&
@@ -83,7 +93,7 @@ export default function Stats() {
     }
     {
       !loading && hasData &&
-      <Dashboard {...data}/>
+      <Dashboard {...data} onChange={reload}/>
     }
     {
       !loading && !hasData &&

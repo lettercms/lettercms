@@ -16,8 +16,6 @@ function RenderBarChart({data, dataKey = 'vista', layout = 'horizontal'}) {
     [dataKey]: key
   }));
 
-
-
   return <div style={{height: !isHorizontal ? data.length * 50 + 10 : 200, width: '95%'}}>
     <ResponsiveContainer>
       <BarChart data={data}

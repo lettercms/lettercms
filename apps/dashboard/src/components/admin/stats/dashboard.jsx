@@ -1,4 +1,6 @@
-﻿import dynamic from 'next/dynamic';
+﻿import {useState} from 'react';
+import dynamic from 'next/dynamic';
+
 import Base from './base';
 import GeneralPanel from './general';
 import Card from './statsSingleCard';
@@ -23,16 +25,9 @@ const PieChart = dynamic(() => import('./charts/pie'), {
   ssr: false
 });
 
-const sortObject = obj =>
-  Object.entries(obj).map((e) =>
-    ({
-      vistas: e[1],
-      name: e[0]
-    })
-  )
-  .sort((a, b) => a.vistas > b.vistas ? -1 : +1);
-
 const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days, dates, hours}, general, onChange}) => {
+  const [range, setRange] = useState('2');
+
   const changeTime = id => {
     const now = Date.now();
     let newDate;
@@ -48,14 +43,15 @@ const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days,
     if(id === '5')
       newDate = 'historic';
 
+    setRange(id);
     onChange(newDate);
   };
 
   return <div>
       <div id='select-container'>
-        <select onChange={({target: {value}}) => changeTime(value)}>
+        <select value={range} onChange={({target: {value}}) => changeTime(value)}>
           <option value='1'>Ultimos 7 dias</option>
-          <option value='2' default>Ultimo mes</option>
+          <option value='2'>Ultimo mes</option>
           <option value='3'>Ultimos 3 meses</option>
           <option value='4'>Ultimos 6 meses</option>
           <option value='5'>Desde la creacion del blog</option>

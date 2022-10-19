@@ -45,7 +45,13 @@ const generateDates = (daysCount, dateEnd) => {
 
 const generateRanges = (start, end) => {
   const dateEnd = new Date(end || Date.now());
-  const dateStart = new Date(start || dateEnd - (1000 * 60 * 60 * 24 * 30));
+
+  let parsedStart = +start;
+
+  if (typeof parsedStart !== 'number')
+    parsedStart = start;
+
+  const dateStart = new Date(parsedStart  || dateEnd - (1000 * 60 * 60 * 24 * 30));
  
   return {
     dateEnd,
@@ -127,6 +133,7 @@ export default async function() {
     if (fields['general.bounceRate'])
       general.bounceRate = (general.bounces / general.totalViews * 100).toFixed(1);
   }
+  console.log(dateStart);
 
   conditions.date = {
     $gt: dateStart,
