@@ -15,7 +15,6 @@ export default async function() {
 
   const ua = req.headers['user-agent'];
 
-
   //const {os} = parser(ua);
   const device = /Android|iPhone|iPad/.test(ua) ? 'mobile' : 'desktop';
 

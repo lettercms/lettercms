@@ -1,9 +1,9 @@
-name: Preview Deploy
+name: Production Deploy
 
 on:
   push:
     branches:
-      - main
+      - production
 
 jobs:
   changes:
@@ -47,7 +47,7 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       name: api
-      env: preview
+      env: production
     secrets: inherit
 
   deploy-client:
@@ -56,7 +56,7 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       name: client
-      env: preview
+      env: production
     secrets: inherit
 
   deploy-dashboard:
@@ -64,6 +64,6 @@ jobs:
     if: ${{ needs.changes.outputs.dashboard == 'true' }}
     uses: ./.github/workflows/deploy.yml
     with:
-      name: dashboard
-      env: preview
+      name: api
+      env: production
     secrets: inherit

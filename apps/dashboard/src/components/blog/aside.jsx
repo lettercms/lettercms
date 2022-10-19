@@ -19,7 +19,6 @@ export default function Aside({owner}) {
           <span className='user-name'>{owner.name} {owner.lastname}</span>
           <p>{owner.description}</p>
           <div>
-
           </div>
         </div>
       </div>
