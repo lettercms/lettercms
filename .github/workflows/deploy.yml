@@ -70,19 +70,19 @@ jobs:
         run: vercel pull --environment=${{github.event.inputs.env}} -y -t $VERCEL_TOKEN
       
       - name: Vercel Build Preview
-        if: ${{github.event.inputs.env === 'preview'}}
+        if: ${{github.event.inputs.env == 'preview'}}
         run: vercel build -t $VERCEL_TOKEN
 
       - name: Vercel Build Production
-        if: ${{github.event.inputs.env === 'production'}}
+        if: ${{github.event.inputs.env == 'production'}}
         run: vercel build --prod -t $VERCEL_TOKEN
 
       - name: Vercel Deploy Preview
-        if: ${{github.event.inputs.env === 'preview'}}
+        if: ${{github.event.inputs.env == 'preview'}}
         run: echo "vercel_url=$(vercel --prebuilt -t $VERCEL_TOKEN)" >> $GITHUB_ENV
       
       - name: Vercel Deploy Production
-        if: ${{github.event.inputs.env === 'production'}}
+        if: ${{github.event.inputs.env == 'production'}}
         run: echo "vercel_url=$(vercel --prebuilt --prod -t $VERCEL_TOKEN)" >> $GITHUB_ENV
 
       - name: 'Generate Preview URL'
