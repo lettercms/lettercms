@@ -44,7 +44,7 @@ jobs:
   deploy-api:
     needs: changes
     if: ${{ needs.changes.outputs.api == 'true' }}
-    uses: ./.github/workflows/deploy.yml#deploy
+    uses: .github/workflows/deploy.yml#deploy
     with:
       name: api
       env: preview
@@ -53,7 +53,7 @@ jobs:
   deploy-client:
     needs: changes
     if: ${{ needs.changes.outputs.client == 'true' }}
-    uses: ./.github/workflows/deploy.yml#deploy
+    uses: .github/workflows/deploy.yml#deploy
     with:
       name: client
       env: preview
@@ -62,7 +62,7 @@ jobs:
   deploy-dashboard:
     needs: changes
     if: ${{ needs.changes.outputs.dashboard == 'true' }}
-    uses: ./.github/workflows/deploy.yml#deploy
+    uses: .github/workflows/deploy.yml#deploy
     with:
       name: api
       env: preview
