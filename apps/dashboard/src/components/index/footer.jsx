@@ -7,16 +7,16 @@ const links = [
     href: 'https://facebook.com/davidsdevel'
   },
   {
-    pre: 'Apoyanos en ',
+    pre: 'Colabora con nosotros en ',
     link: 'GitHub' ,
     href: 'https://github.com/lettercms/lettercms'
   },
   {
-    pre: 'Patrocinanos en ',
+    pre: 'Apoyanos en ',
     link: 'Patreon' ,
     href: 'https://patreon.com/lettercms'
   }
-]
+];
 
 const Footer = ({isPost}) => {
   return <>
@@ -36,10 +36,10 @@ const Footer = ({isPost}) => {
               <ul className="list-unstyled li-space-lg p-small">
               {
                 links.map(({pre, link, href}) => {
-                  return  <li className="media">
+                  return  <li key={link} className="media">
                     <i className="fas fa-square"></i>
                     <div className="media-body">{pre} <Link href={href}><a target='_blank' className="white">{link}</a></Link></div>
-                  </li>
+                  </li>;
                 })
               }
               </ul>

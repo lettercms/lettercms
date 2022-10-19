@@ -52,7 +52,7 @@ const fetchData = start => {
     });
 
   return sdk.stats.all(fields);
-}
+};
 
 export default function Stats() {
   const [hasData, setHasData] = useState(false);
@@ -84,7 +84,7 @@ export default function Stats() {
         setLoading(false); 
         setData(e); 
       });
-  }
+  };
 
   return <div>
     {
@@ -107,5 +107,5 @@ export default function Stats() {
         height: 100%;
       }
     `}</style>
-  </div>
+  </div>;
 }

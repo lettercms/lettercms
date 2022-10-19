@@ -2,7 +2,7 @@ import Base from '@/components/admin/stats/base';
 import Input from '@/components/input';
 
 export default function Aside({owner}) {
-  console.log(owner)
+  console.log(owner);
   return <aside>
     <Base row={1} principal>
       <div id='query-container'>

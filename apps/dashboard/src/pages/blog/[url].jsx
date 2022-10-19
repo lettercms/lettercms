@@ -1,9 +1,4 @@
-import connect from '@lettercms/utils/lib/connection';
-import posts from '@lettercms/models/posts';
-import blogs from '@lettercms/models/blogs';
-import {Ratings} from '@lettercms/models/blogs';
-import {findOne as findPost} from '@lettercms/utils/lib/findHelpers/posts';
-import {findOne as findRecommendation} from '@lettercms/utils/lib/findHelpers/recommendations';
+import {useEffect, useState} from 'react';
 import sdk from '@lettercms/sdk';
 import dynamic from 'next/dynamic';
 import Header from '@/components/post/header';
@@ -13,14 +8,13 @@ import Tags from '@/components/post/tags';
 import Comments from '@/components/post/comments';
 import Subscription from '@/components/post/subscription';
 import Footer from '@/components/index/footer';
-import {useEffect, useState} from 'react';
 import Layout from '@/components/tracingLayout';
 import Base from '@/components/admin/stats/base';
 import HandleDate from '@/lib/handleDate';
 import Card from '@/components/blog/card';
 import {parse as cookieParser} from 'cookie';
 import {getSession} from 'next-auth/react';
-
+import {getPost} from '@/lib/mongo/posts';
 
 const _sdk = new sdk.Letter(process.env.TRACK_TOKEN);
 
@@ -201,44 +195,23 @@ const BlogPost = ({isAdmin, user, recommendation: {recommended, similar}, post: 
 export const getServerSideProps = async ({req, res, query}) => {  
   const {url} = query;
   
-  let userID;
+  const userID = req?.cookies.userID || 'no-user';
 
-  if (req)
-    userID = req.cookies.userID || 'no-user';
-  else
-    userID = cookieParser(document.cookie).userID || 'no-user';
+  const {notFound, post, user, recommendation} = await getPost(url, userID);
 
-  if (url) {
-    const fields = 'title,description,thumbnail,content,url,published,updated,tags';
-
-  await connect();
-
-  const post = await findPost(posts, {url, subdomain: 'davidsdevel'}, {
-    fields
-  });
-
-  if (post?.postStatus !== 'published')
+  if (notFound)
     return {
       notFound: true
     };
-    
-    const recommendation = await _sdk.users.recommendationForPost(userID, url, fields.split(','));
-    const user = userID ? await _sdk.users.single(userID, [
-      'name',
-      'lastname',
-      'email'
-    ]) : {};
 
-    return {
-      props: {
-        notFound,
-        post,
-        referrer: req?.headers.referer || null,
-        recommendation,
-        user
-      }
-    };
-  }
+  return {
+    props: {
+      post,
+      referrer: req?.headers.referer || null,
+      recommendation,
+      user
+    }
+  };
 };
 
 export default BlogPost;

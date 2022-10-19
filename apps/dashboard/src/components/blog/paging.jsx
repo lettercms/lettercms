@@ -42,5 +42,5 @@ export default function Paging({page, total}) {
       width: 3.5rem;
     }
   `}</style>
-  </div>
+  </div>;
 }
