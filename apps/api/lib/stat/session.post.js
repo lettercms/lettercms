@@ -19,16 +19,18 @@ export default async function() {
   const device = /Android|iPhone|iPad/.test(ua) ? 'mobile' : 'desktop';
 
   if (action === 'start') {
-    //const statsData = await subdomainRef.get();
+    /*
+    const statsData = await subdomainRef.get();
 
-    /*const statsOs = statsData[os.name];
+    const statsOs = statsData[os.name];
 
     const newStats = {
       activeUsers: statsData.activeUsers + 1,
       [os.name]: (statsOs || 0) + 1
-    };*/
+    };
 
-    //await subdomainRef.set(newStats);
+    await subdomainRef.set(newStats);
+    */
 
     return res.json({
       status: 'OK'
