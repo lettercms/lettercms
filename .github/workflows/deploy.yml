@@ -7,9 +7,6 @@ on:
       env:
         required: true
         type: string
-      project:
-        required: true
-        type: string
 
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -29,6 +26,7 @@ env:
   SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
   VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
   VERCEL_ORG_ID: ${{secrets.VERCEL_ORG_ID}}
+  VERCEL_PROJECT_ID: ${{secrets.VERCEL_PROJECT_ID}}
 
 jobs:
   deploy:
@@ -40,7 +38,6 @@ jobs:
       NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
       PAYPAL_PRODUCTION_CLIENT: ${{ secrets.PAYPAL_PRODUCTION_CLIENT }}
       PAYPAL_PRODUCTION_SECRET: ${{ secrets.PAYPAL_PRODUCTION_SECRET }}
-      VERCEL_PROJECT_ID: ${{inputs.project}}
 
     steps:
       - name: Check out code

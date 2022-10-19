@@ -50,28 +50,31 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.api == 'true' }}
     uses: ./.github/workflows/deploy.yml
+    env:
+      VERCEL_PROJECT_ID: ${{env.API_PROJECT_ID}}
     with:
       name: api
       env: preview
-      project: ${{env.API_PROJECT_ID}}
     secrets: inherit
 
   deploy-client:
     needs: changes
     if: ${{ needs.changes.outputs.client == 'true' }}
     uses: ./.github/workflows/deploy.yml
+    env:
+      VERCEL_PROJECT_ID: ${{env.CLIENT_PROJECT_ID}}
     with:
       name: client
       env: preview
-      project: ${{env.CLIENT_PROJECT_ID}}
     secrets: inherit
 
   deploy-dashboard:
     needs: changes
     if: ${{ needs.changes.outputs.dashboard == 'true' }}
     uses: ./.github/workflows/deploy.yml
+    env:
+      VERCEL_PROJECT_ID: ${{env.DASHBOARD_PROJECT_ID}}
     with:
       name: dashboard
       env: preview
-      project: ${{env.DASHBOARD_PROJECT_ID}}
     secrets: inherit
