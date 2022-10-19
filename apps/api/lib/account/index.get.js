@@ -22,3 +22,4 @@ export default async function() {
 
   res.json(data);
 };
+

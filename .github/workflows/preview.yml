@@ -48,6 +48,7 @@ jobs:
     with:
       name: api
       env: preview
+      project: ${{secrets.API_PROJECT_ID}}
     secrets: inherit
 
   deploy-client:
@@ -57,6 +58,7 @@ jobs:
     with:
       name: client
       env: preview
+      project: ${{secrets.CLIENT_PROJECT_ID}}
     secrets: inherit
 
   deploy-dashboard:
@@ -66,4 +68,5 @@ jobs:
     with:
       name: dashboard
       env: preview
+      project: ${{secrets.DASHBOARD_PROJECT_ID}}
     secrets: inherit
