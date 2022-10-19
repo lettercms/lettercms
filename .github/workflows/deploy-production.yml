@@ -1,0 +1,69 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    # Set job outputs to values from filter step
+    outputs:
+      api: ${{ steps.filter.outputs.api }}
+      client: ${{ steps.filter.outputs.client }}
+      dashboard: ${{ steps.filter.outputs.dashboard }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            api:
+              - 'apps/api/**'
+              - 'packages/models/**'
+              - 'packages/utils/**'
+              - 'packages/ui/**'
+            client:
+              - 'apps/client/**'
+              - 'packages/models/**'
+              - 'packages/sdk/**'
+              - 'packages/ui/**'
+            dashboard:
+              - 'apps/dashboard/**'
+              - 'packages/admin/**'
+              - 'packages/models/**'
+              - 'packages/sdk/**'
+              - 'packages/utils/**'
+              - 'packages/ui/**'
+
+  deploy-api:
+    needs: changes
+    if: ${{ needs.changes.outputs.api == 'true' }}
+    uses: ./.github/workflows/deploy@deploy
+      secrets: inherit
+      with:
+        name: api
+        env: production
+
+  deploy-client:
+    needs: changes
+    if: ${{ needs.changes.outputs.client == 'true' }}
+    uses: ./.github/workflows/deploy@deploy
+      secrets: inherit
+      with:
+        name: client
+        env: production
+
+  deploy-dashboard:
+    needs: changes
+    if: ${{ needs.changes.outputs.dashboard == 'true' }}
+    uses: ./.github/workflows/deploy@deploy
+      secrets: inherit
+      with:
+        name: dashboard
+        env: production
