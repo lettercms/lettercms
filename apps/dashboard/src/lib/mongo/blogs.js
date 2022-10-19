@@ -12,7 +12,7 @@ const subdomain = 'davidsdevel';
 export async function getBlog(page = '1', userID) {
   await connect();
 
-  const blog = await blogs.findOne({subdomain: 'davidsdevel'}, 'thumbnail owner urlID mainUrl', {
+  const blog = await blogs.findOne({subdomain}, 'thumbnail owner urlID mainUrl', {
     populate: {
       path: 'owner',
       select: 'photo name description lastname facebook twitter instagram linkedin website',
@@ -23,15 +23,16 @@ export async function getBlog(page = '1', userID) {
     fields: 'title,description,url,fullUrl,thumbnail,comments',
     page,
     urlID: blog.urlID,
-    mainUrl: blog.mainUrl
+    mainUrl: blog.mainUrl,
+    sort: 'published'
   };
 
   let postsData = null;
 
   if (!userID || userID === 'undefined')
-    postsData = await findPosts(posts, {subdomain: 'davidsdevel',postStatus: 'published'}, postsOptions);
+    postsData = await findPosts(posts, {subdomain, postStatus: 'published'}, postsOptions);
   else
-    postsData = await findRecommendations(Ratings, {subdomain: 'davidsdevel', userID}, postsOptions);
+    postsData = await findRecommendations(Ratings, {subdomain, userID}, postsOptions);
 
   return {
     posts: postsData,

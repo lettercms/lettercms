@@ -34,7 +34,7 @@ env:
 jobs:
   deploy:
     environment:
-      name: ${{github.event.inputs.env}}/${{github.event.inputs.name}}
+      name: ${{inputs.env}}/${{inputs.name}}
       url: https://${{env.env_url}}
     runs-on: ubuntu-latest
     env:
@@ -59,53 +59,53 @@ jobs:
       - uses: actions/cache@v3
         id: restore-build
         with:
-          path: ./apps/${{github.event.inputs.name}}/.next/cache
-          key: lettercms-${{github.ref_name}}-${{github.event.inputs.name}}-${{hashFiles('yarn.lock')}}
+          path: ./apps/${{inputs.name}}/.next/cache
+          key: lettercms-${{github.ref_name}}-${{inputs.name}}-${{hashFiles('yarn.lock')}}
           restore-keys: |
-            lettercms-${{github.ref_name}}-${{github.event.inputs.name}}-
+            lettercms-${{github.ref_name}}-${{inputs.name}}-
             lettercms-${{github.ref_name}}-
             lettercms-
 
       - name: Vercel Pull 
-        run: vercel pull --environment=${{github.event.inputs.env}} -y -t $VERCEL_TOKEN
+        run: vercel pull --environment=${{inputs.env}} -y -t $VERCEL_TOKEN
       
       - name: Vercel Build Preview
-        if: ${{github.event.inputs.env == 'preview'}}
+        if: ${{inputs.env == 'preview'}}
         run: vercel build -t $VERCEL_TOKEN
 
       - name: Vercel Build Production
-        if: ${{github.event.inputs.env == 'production'}}
+        if: ${{inputs.env == 'production'}}
         run: vercel build --prod -t $VERCEL_TOKEN
 
       - name: Vercel Deploy Preview
-        if: ${{github.event.inputs.env == 'preview'}}
+        if: ${{inputs.env == 'preview'}}
         run: echo "vercel_url=$(vercel --prebuilt -t $VERCEL_TOKEN)" >> $GITHUB_ENV
       
       - name: Vercel Deploy Production
-        if: ${{github.event.inputs.env == 'production'}}
+        if: ${{inputs.env == 'production'}}
         run: echo "vercel_url=$(vercel --prebuilt --prod -t $VERCEL_TOKEN)" >> $GITHUB_ENV
 
       - name: 'Generate Preview URL'
-        if: ${{github.event.inputs.env == 'preview'}}
-        run: echo "env_url=${{github.event.inputs.name}}-${{ github.ref_name }}-$(git rev-parse --short HEAD).vercel.app >> $GITHUB_ENV
+        if: ${{inputs.env == 'preview'}}
+        run: echo "env_url=${{inputs.name}}-${{ github.ref_name }}-$(git rev-parse --short HEAD).vercel.app >> $GITHUB_ENV
 
       - name: 'Generate API Production URL'
-        if: ${{github.event.inputs.env == 'production' && github.event.inputs.name == 'api'}}
+        if: ${{inputs.env == 'production' && inputs.name == 'api'}}
         run: echo "env_url=api.lettercms.vercel.app" >> $GITHUB_ENV
 
       - name: 'Generate Dashboard Production URL'
-        if: ${{github.event.inputs.env == 'production' && github.event.inputs.name == 'dashboard'}}
+        if: ${{inputs.env == 'production' && inputs.name == 'dashboard'}}
         run: echo "env_url=lettercms.vercel.app" >> $GITHUB_ENV
 
       - name: 'Generate Client Production URL'
-        if: ${{github.event.inputs.env == 'production'}}
+        if: ${{inputs.env == 'production'}}
         run: echo "env_url=davidsdevel.lettercms.vercel.app" >> $GITHUB_ENV
 
       - name: Set alias
-        if: ${{github.event.inputs.env == 'preview'}}
+        if: ${{inputs.env == 'preview'}}
         run: vercel alias set ${{ env.vercel_url }} ${{env.env_url}} --scope lettercms -t $VERCEL_TOKEN
       
       - uses: actions/cache@v3
         with:
-          path: ./apps/${{github.event.inputs.name}}/.next/cache
-          key: lettercms-${{github.event.inputs.name}}-cache
+          path: ./apps/${{inputs.name}}/.next/cache
+          key: lettercms-${{inputs.name}}-cache

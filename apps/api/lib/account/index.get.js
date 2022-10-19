@@ -7,7 +7,6 @@ export default async function() {
     res
   } = this;
 
-
   const {
     role
   } = query;
