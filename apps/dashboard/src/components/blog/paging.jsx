@@ -14,7 +14,6 @@ export default function Paging({page, total}) {
       ? <button className='btn-outline-sm' onClick={() => router.push(`/blog?page=${page - 1}`)}>Anterior</button>
       : <div/>
     }
-    <div/>
     {
       page !== total
       ? <button className='btn-outline-sm' onClick={() => router.push(`/blog?page=${page + 1}`)}>Siguiente</button>

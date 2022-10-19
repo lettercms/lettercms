@@ -47,7 +47,7 @@ const Footer = ({isPost}) => {
           </div> 
           <div className="col-md-4">
             <div className="footer-col last">
-              <h4>Contact</h4>
+              <h4>Contactos</h4>
               <ul className="list-unstyled li-space-lg p-small">
                 <li className="media">
                   <i className="fas fa-map-marker-alt"></i>

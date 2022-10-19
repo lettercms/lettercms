@@ -2,6 +2,7 @@ import Base from '@/components/admin/stats/base';
 import Input from '@/components/input';
 
 export default function Aside({owner}) {
+  console.log(owner)
   return <aside>
     <Base row={1} principal>
       <div id='query-container'>
@@ -17,6 +18,9 @@ export default function Aside({owner}) {
         <div>
           <span className='user-name'>{owner.name} {owner.lastname}</span>
           <p>{owner.description}</p>
+          <div>
+
+          </div>
         </div>
       </div>
     </Base>

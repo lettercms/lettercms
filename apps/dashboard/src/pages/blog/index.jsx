@@ -9,7 +9,6 @@ import {getBlog} from '@/lib/mongo/blogs';
 import Paging from '@/components/blog/paging';
 
 const Blog = ({posts, blog, paging}) => {
-  console.log(paging)
   return <Layout>
     <Head ogImage={blog.thumbnail}/>
     <div>
@@ -17,7 +16,7 @@ const Blog = ({posts, blog, paging}) => {
       <div id='content-wrapper'>
         <div id='posts-container'>
           {posts.map(e => <Card
-              key={`blog-index-${e.title}`}
+              key={`blog-index-${e._id}`}
               title={e.title}
               content={e.description}
               url={e.url}
