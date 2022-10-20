@@ -42,9 +42,5 @@
     "swr": "^1.3.0",
     "unsplash-js": "^7.0.15",
     "xml-js": "^1.6.11"
-  },
-  "devDependencies": {
-    "@lettercms/eslint-config": "*",
-    "vercel": "^28.4.5"
   }
 }

@@ -1,6 +1,6 @@
 const Header = ({title, thumbnail}) => {
   return <header id="header" className="ex-header" style={{backgroundImage: `url(${thumbnail})`}}>
-    <div className="header-shadow" style={{backgroundColor: thumbnail ? '#000a' : ''}}>
+    <div className="header-shadow" style={{backgroundColor: !thumbnail ? '' : '#000a'}}>
       <div className="container">
         <div className="row">
           <div className="col-md-12">
@@ -16,7 +16,7 @@ const Header = ({title, thumbnail}) => {
       }
       .ex-header {
         background-color: #5f4dee;
-        margin-top: 6rem;
+        padding-top: 6rem;
       }
 
       .ex-header h1 {

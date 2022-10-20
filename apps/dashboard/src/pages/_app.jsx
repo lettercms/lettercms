@@ -5,6 +5,7 @@ import Facebook from '../lib/client/FacebookSDK';
 import { SessionProvider } from 'next-auth/react';
 import toast, { Toaster } from 'react-hot-toast';
 import Load from '../components/loadBar';
+import {ClientProvider} from '@/lib/userContext'; 
 import '@/styles/global.css';
 
 //Dynamics
@@ -50,9 +51,11 @@ export default function App({Component, pageProps: { session, ...pageProps }}) {
           && !Component.hideMenu)
           && <Nav />
         }
-        <SessionProvider session={session}>
-          {getLayout(<Component {...pageProps} />, pageProps.user)}
-        </SessionProvider>
+        <ClientProvider accessToken={pageProps.accessToken}>
+          <SessionProvider session={session}>
+            {getLayout(<Component {...pageProps} />, pageProps.user)}
+          </SessionProvider>
+        </ClientProvider>
         <Toaster />
       </div>
     );

@@ -13,11 +13,11 @@ const Header =({title, description, thumbnail}) =>  {
         <header>
           <div id="header-shadow">
             <div id='landing-description'>
-              <img src={`${process.env.ASSETS_BASE}/images/davidsdevel-rombo.png`} className='mobile'/>
+              <img src={`${process.env.ASSETS_BASE}/images/lettercms-logo-white-standalone.png`} className='mobile'/>
               <span>Mantente al tanto de las actualizaciones de mi blog</span>
             </div>
             <div id='landing-image'>
-              <img src={`${process.env.ASSETS_BASE}/images/davidsdevel-rombo.png`} className='desktop'/>
+              <img src={`${process.env.ASSETS_BASE}/images/lettercms-logo-white-standalone.png`} className='desktop'/>
               {/*
                 !isSubscribe
                 && <Subscribe/>

@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 const _sdk = new sdk.Letter(process.env.TRACK_TOKEN);
 
 const Layout = ({children, userID}) => {
-  useEffect(() => {
+  useEffect(() => {/*
     const {userID} = cookieParser(document.cookie);
     
     if (!userID){
@@ -21,7 +21,7 @@ const Layout = ({children, userID}) => {
       });
     }
 
-    _sdk.stats.startTrace();
+    _sdk.stats.startTrace();*/
   }, []);
 
   return children;

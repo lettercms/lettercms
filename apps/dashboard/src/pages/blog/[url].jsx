@@ -15,23 +15,26 @@ import Card from '@/components/blog/card';
 import {parse as cookieParser} from 'cookie';
 import {getSession} from 'next-auth/react';
 import {getPost} from '@/lib/mongo/posts';
-
-const _sdk = new sdk.Letter(process.env.TRACK_TOKEN);
+import jwt from 'jsonwebtoken';
+import {useToken} from '@/lib/userContext';
 
 const BlogPost = ({isAdmin, user, recommendation: {recommended, similar}, post: {_id, content, title, url, published, updated, thumbnail, tags, description}, referrer, notFound}) => {
   const [stateUser, setUser] = useState(user);
+  const {accessToken} = useToken();
 
   useEffect(() => {
-    if (!notFound || isAdmin) {
+    if (!notFound) {
       
       const {userID} = cookieParser(document.cookie);
 
-      _sdk.stats.setView(url, referrer);
+      const _sdk = new sdk.Letter(accessToken);
       
-      if (userID)
+      _sdk.stats.setView(url, referrer);
+
+      if (userID && userID !== 'undefined')
         _sdk.createRequest(`/user/${userID}/recommendation`, 'POST', {url});
     }
-  }, [url, isAdmin, referrer, notFound]);
+  }, [url, isAdmin, referrer, notFound, accessToken]);
 
   return <Layout>
     <Head
@@ -61,27 +64,33 @@ const BlogPost = ({isAdmin, user, recommendation: {recommended, similar}, post: 
         </div>
       </div>
       <Breadcrumbs title={title}/>
-      <Base rows={1} title='Recomendados para ti' style={{flexWrap: 'wrap', height: 'auto', width: '100%', borderRadius: '1rem 1rem 0 0', margin: '1rem 0 0'}}>
-        <Card
-          title={recommended.title}
-          content={recommended.description}
-          url={recommended.url}
-          fullUrl={recommended.fullUrl}
-          thumbnail={recommended.thumbnail}
-          comments={0}
-          ID={recommended._id}
-        />
-        <Card
-          title={similar.title}
-          content={similar.description}
-          url={similar.url}
-          fullUrl={similar.fullUrl}
-          thumbnail={similar.thumbnail}
-          comments={0}
-          ID={similar._id}
-        />
-        <Comments id={_id} user={stateUser}/>
-      </Base>
+        <Base rows={1} title='Recomendados para ti' style={{flexWrap: 'wrap', height: 'auto', width: '100%', borderRadius: '1rem 1rem 0 0', margin: '1rem 0 0'}}>
+          {
+            (recommended && similar) &&
+            <Card
+              title={recommended.title}
+              content={recommended.description}
+              url={recommended.url}
+              fullUrl={recommended.fullUrl}
+              thumbnail={recommended.thumbnail}
+              comments={0}
+              ID={recommended._id}
+            />
+          } 
+          {
+            (recommended && similar) &&
+            <Card
+              title={similar.title}
+              content={similar.description}
+              url={similar.url}
+              fullUrl={similar.fullUrl}
+              thumbnail={similar.thumbnail}
+              comments={0}
+              ID={similar._id}
+            />
+          }
+          <Comments id={_id} user={stateUser}/>
+        </Base>
       <Footer isPost/>
     </div>
     <style jsx>{`
@@ -213,7 +222,10 @@ export const getServerSideProps = async ({req, res, query}) => {
   }));
 
   return {
-    props
+    props: {
+      ...props,
+      accessToken: jwt.sign({subdomain: 'davidsdevel'}, process.env.JWT_AUTH)
+    }
   };
 };
 

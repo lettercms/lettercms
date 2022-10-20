@@ -23,9 +23,8 @@ const appConfig = withTM({
     PAYPAL_PRODUCTION_CLIENT: process.env.PAYPAL_PRODUCTION_CLIENT,
     PAYPAL_PRODUCTION: process.env.PAYPAL_PRODUCTION_CLIENT,
     FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID,
-    TRACK_TOKEN: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJkb21haW4iOiJkYXZpZHNkZXZlbCIsImFjY291bnQiOiI2MjU0ZWEwZWQ4OTIzNzAwMDRkMzk0NmMiLCJpYXQiOjE2NTUwNjYzMDd9.7vHblwRXDSd7UMETXcdcbGGsaXlMGa8kLgDz96NDMRs',
     LETTER_ACCESS_TOKEN: process.env.LETTER_ACCESS_TOKEN,
-    ASSETS_BASE: isDev ? 'http://localhost:3003' : 'https://cdn.jsdelivr.net/gh/lettercms/lettercms/apps/cdn/public'
+    ASSETS_BASE: isDev ? 'http://localhost:3003' : 'https://cdn.jsdelivr.net/gh/lettercms/lettercms/apps/cdn'
   },
   images: {
     domains: [

@@ -1,5 +1,6 @@
 import connect from '@lettercms/utils/lib/connection';
 import posts from '@lettercms/models/posts';
+import blogs from '@lettercms/models/blogs';
 import {Users} from '@lettercms/models/users';
 import jwt from 'jsonwebtoken';
 import {findOne as findPost} from '@lettercms/utils/lib/findHelpers/posts';
@@ -11,7 +12,7 @@ const subdomain = 'davidsdevel';
 export async function getPost(url, userID) {
   await connect();
 
-  const fields = 'title,description,thumbnail,content,url,published,updated,tags';
+  const fields = 'subdomain,title,description,thumbnail,content,url,published,updated,tags,postStatus';
 
   const {url: urlID, mainUrl} = await blogs.findOne({subdomain}, 'mainUrl url', {lean: true});
 
@@ -21,15 +22,16 @@ export async function getPost(url, userID) {
     mainUrl
   });
 
+
   if (post?.postStatus !== 'published')
     return {
       notFound: true
     };
-    
-  if (userID)
-    const user = userID
-      ? await Users.findOne({_id: userID}, 'name lastname email', {lean: true})
-      : {}
+
+  if (userID === 'undefined')
+    userID = 'no-user';
+
+  const user = userID && userID !== 'no-user' ? await Users.findOne({_id: userID}, 'name lastname email', {lean: true}) : {};
 
   const token = jwt.sign({subdomain}, process.env.JWT_AUTH);
 

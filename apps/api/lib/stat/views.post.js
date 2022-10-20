@@ -63,7 +63,6 @@ export default async function() {
   const referrerName = referrer && referrer != 'undefined' && referrer != 'null' ? _url.parse(referrer).hostname.replace(/\./g, ':') : null;
 
   const {mainUrl} = await blogs.findOne({subdomain}, 'mainUrl', {lean: true});
-  console.log(url);
   const existsPost = await posts.exists({url, subdomain});
 
   if (!existsPost && '/' + url !== '/' + mainUrl)
@@ -131,6 +130,7 @@ export default async function() {
     newData.oss = {};
     newData.browsers = {};
     newData.urls = {};
+    newData.referrers = {};
 
     newData.countries[countryName] = 1;
     newData.oss[osName] = 1;

@@ -11,15 +11,19 @@ import {useEffect} from 'react';
 import sdk from '@lettercms/sdk';
 import Layout from '../components/tracingLayout';
 import {getSession} from 'next-auth/react';
+import {useToken} from '@/lib/userContext';
+
 
 export default function Home({referrer, isAdmin}) {
+  const {accessToken} = useToken();
+
   useEffect(() => {
     if (!isAdmin) {
-      const sdkToken = new sdk.Letter(process.env.TRACK_TOKEN);
+      const sdkToken = new sdk.Letter(accessToken);
 
       sdkToken.stats.setView('/', referrer);
     }
-  }, []);
+  }, [accessToken, isAdmin, referrer]);
 
   return <Layout>
     <div>
@@ -41,5 +45,11 @@ export async function getServerSideProps({req, res}) {
 
   const isAdmin = !!session;
 
-  return {props: { referrer: req.headers.referer || null, isAdmin } };
+  return {
+    props: {
+      referrer: req.headers.referer || null,
+      isAdmin,
+      accessToken: jwt.sign({subdomain: 'davidsdevel'}, process.env.JWT_AUTH)
+    }
+  };
 }

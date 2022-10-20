@@ -27,6 +27,14 @@ export async function getBlog(page = '1', userID) {
     sort: 'published'
   };
 
+  const mostViewed = await findPosts(posts, {subdomain, postStatus: 'published'}, {
+    limit: 3,
+    sort: 'views',
+    fields: 'thumbnail,title,fullUrl',
+    urlID: blog.urlID,
+    mainUrl: blog.mainUrl
+  });
+
   let postsData = null;
 
   if (!userID || userID === 'undefined')
@@ -34,10 +42,12 @@ export async function getBlog(page = '1', userID) {
   else
     postsData = await findRecommendations(Ratings, {subdomain, userID}, postsOptions);
 
+
   return {
     posts: postsData,
     blog,
-    paging: postsData.paging
+    paging: postsData.paging,
+    mostViewed: mostViewed.data
   };
 }
 

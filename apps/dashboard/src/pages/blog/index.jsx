@@ -8,7 +8,7 @@ import {parse as cookieParser} from 'cookie';
 import {getBlog} from '@/lib/mongo/blogs';
 import Paging from '@/components/blog/paging';
 
-const Blog = ({posts, blog, paging}) => {
+const Blog = ({posts, blog, paging, mostViewed}) => {
   return <Layout>
     <Head ogImage={blog.thumbnail}/>
     <div>
@@ -28,7 +28,7 @@ const Blog = ({posts, blog, paging}) => {
           )}
         <Paging {...paging}/>
         </div>
-        <Aside owner={blog.owner}/>
+        <Aside mostViewed={mostViewed} owner={blog.owner}/>
       </div>
       <Footer/>
     </div>
@@ -50,7 +50,7 @@ export async function getServerSideProps({req, res, query}) {
   
   const blogData = await getBlog(page);
 
-  const {blog, posts} = JSON.parse(JSON.stringify(blogData));
+  const {blog, posts, mostViewed} = JSON.parse(JSON.stringify(blogData));
 
   return {
     props: {
@@ -58,7 +58,8 @@ export async function getServerSideProps({req, res, query}) {
       blog,
       paging: posts.paging,
       userID,
-      referrer
+      referrer,
+      mostViewed
     }
   };
 }

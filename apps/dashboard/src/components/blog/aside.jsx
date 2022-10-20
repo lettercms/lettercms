@@ -1,8 +1,15 @@
 import Base from '@/components/admin/stats/base';
 import Input from '@/components/input';
+import FacebookIcon from '@/components/svg/facebook';
+import InstagramIcon from '@/components/svg/instagram';
+import LinkedinIcon from '@/components/svg/linkedin';
+import TwitterIcon from '@/components/svg/twitter';
+import WebsiteIcon from '@/components/svg/website';
+import Link from 'next/link';
+import MostViewed from './mostViewed';
 
-export default function Aside({owner}) {
-  console.log(owner);
+export default function Aside({owner, mostViewed}) {
+  console.log(mostViewed)
   return <aside>
     <Base row={1} principal>
       <div id='query-container'>
@@ -19,13 +26,77 @@ export default function Aside({owner}) {
           <span className='user-name'>{owner.name} {owner.lastname}</span>
           <p>{owner.description}</p>
           <div>
+            <ul className='flex flex-row'>
+              {
+                owner.website &&
+                <li>
+                  <Link href={owner.website}>
+                    <a target='_blank'>
+                      <WebsiteIcon fill='#555' width='28'/>
+                    </a>
+                  </Link>
+                </li>
+              }
+              {
+                owner.facebook &&
+                <li>
+                  <Link href={owner.facebook}>
+                    <a target='_blank'>
+                      <FacebookIcon width='28'/>
+                    </a>
+                  </Link>
+                </li>
+              }
+              {
+                owner.instagram &&
+                <li>
+                  <Link href={owner.instagram}>
+                    <a target='_blank'>
+                      <InstagramIcon width='28'/>
+                    </a>
+                  </Link>
+                </li>
+              }
+              {
+                owner.twitter &&
+                <li>
+                  <Link href={owner.twitter}>
+                    <a target='_blank'>
+                      <TwitterIcon width='28'/>
+                    </a>
+                  </Link>
+                </li>
+              }
+              {
+                owner.linkedin &&
+                <li>
+                  <Link href={owner.linkedin}>
+                    <a target='_blank'>
+                      <LinkedinIcon width='28'/>
+                    </a>
+                  </Link>
+                </li>
+              }
+            </ul>
           </div>
         </div>
+      </div>
+    </Base>
+    <Base row={1} title='Más vistos'>
+      <div className='flex flex-column'>
+        <MostViewed mostViewed={mostViewed}/>
       </div>
     </Base>
     <style jsx>{`
       aside {
         display: none;
+      }
+      ul {
+        width: 100%;
+        padding: 1rem 10% 0;
+      }
+      ul li {
+        list-style: none;
       }
       @media screen and (min-width: 1024px) {
         #user-container div img {

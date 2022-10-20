@@ -14,12 +14,6 @@
     "lint": "next lint"
   },
   "author": "David's Devel <davidsdevel@gmail.com>",
-  "devDependencies": {
-    "@lettercms/eslint-config": "*",
-    "dotenv": "^16.0.0",
-    "jest": "^26.6.3",
-    "vercel": "^28.4.5"
-  },
   "dependencies": {
     "@google-cloud/storage": "^6.1.0",
     "@lettercms/models": "*",

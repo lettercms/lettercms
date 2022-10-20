@@ -9,7 +9,7 @@ const links = [
   {
     pre: 'Colabora con nosotros en ',
     link: 'GitHub' ,
-    href: 'https://github.com/lettercms/lettercms'
+    href: 'https://github.com/lettercms'
   },
   {
     pre: 'Apoyanos en ',

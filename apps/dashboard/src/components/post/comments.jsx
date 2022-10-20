@@ -5,8 +5,10 @@ import Base from '../admin/stats/base';
 import HandleDate from '../../lib/handleDate';
 import Cookie from 'js-cookie';
 import {Fragment} from 'react';
+import Spinner from '@/components/svg/spinner';
+import {useToken} from '@/lib/userContext';
 
-const sdk = new _sdk.Letter(process.env.TRACK_TOKEN);
+const sdk = new _sdk.Letter();
 
 const publish = async (comment, {user, postID, replyTo}, cb) => {
   const path = `/comment${replyTo ? '/' + replyTo : ''}`;
@@ -239,8 +241,11 @@ const Comments = ({id, numPosts = 10, user}) => {
   const [isLoad, setLoad] = useState(true);
   const [data, setData] = useState([]);
   const [pageToken, setPageToken] = useState(false);
+  const {accessToken} = useToken();
 
   useEffect(() => {
+    sdk.setAccessToken(accessToken);
+
     sdk.createRequest(`/comment/${id}`, {
       limit: numPosts
     })
@@ -248,7 +253,7 @@ const Comments = ({id, numPosts = 10, user}) => {
       setData(data);
       setLoad(false);
     });
-  }, [id]);
+  }, [id, accessToken]);
 
   const onPublish = (d) => {
     const newData = data.concat([{
@@ -274,8 +279,8 @@ const Comments = ({id, numPosts = 10, user}) => {
        {
          isLoad
           ? <div className='flex-center' style={{height: '100%'}}>
-            <img style={{width: '5rem', height: '5rem', animation: 'rotation linear .6s infinite'}} src='/assets/spinner.svg'/>
-          </div>
+              <Spinner width='64' fill='#fff' className='rotate'/>
+            </div>
           : <CommentData postID={id} data={data} user={user} onPublish={onPublish}/>
        }
       </ul>
@@ -293,6 +298,7 @@ const Comments = ({id, numPosts = 10, user}) => {
       }
     `}</style>
     <style jsx>{`
+
       #lettercms-comments {
         width: 100%;
         padding: 0 10%;

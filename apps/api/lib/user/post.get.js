@@ -30,8 +30,7 @@ export default async function() {
   req.query.mainUrl = mainUrl;
 
   let recommended = null;
-
-  const {tags, _id} = await findPost(postModel, condition, {fields: 'tags'});
+  const {tags, _id} = await findPost(postModel, condition, {fields: 'tags,published'});
 
   const tagsMapped = tags.map(e => ({tags: {$in: e}}));
 
@@ -48,18 +47,21 @@ export default async function() {
     customFields = 'tags';
   }
 
-  const similars = await findPosts(postModel, {
+  let similarOpts = {
     subdomain,
     $nor:[{_id}],
-    $or: tagsMapped,
     postStatus: 'published'
-  }, {
+  }
+
+  if (tagsMapped.length > 0)
+    similarOpts['$or'] = tagsMapped;
+
+  const similars = await findPosts(postModel, similarOpts, {
     ...req.query,
     fields: customFields
   });
-  
 
-  let ordered = similars.map(e => {
+  let ordered = similars.data.map(e => {
     let matches = 0;
 
     e.tags.forEach(t => {
@@ -78,16 +80,16 @@ export default async function() {
     return e;
   });
 
-  if (ordered.length < 1) {
+  if (ordered?.length < 1) {
     ordered = await findPosts(postModel, {_id: {$ne: _id}, subdomain, postStatus: 'published'}, {limit: 2, ...req.query});
-  } else if (ordered.length < 2) {
+  } else if (ordered?.length < 2) {
     ordered[1] = await findPost(postModel, {_id: {$ne: _id}, subdomain, postStatus: 'published'}, req.query);
   }
 
-  const similar = ordered[0];
+  let similar = ordered?.[0];
   
   if (id.includes('no-user'))
-    recommended = ordered[1];
+    recommended = ordered?.[1];
   else {
     recommended = await findRecommendation(Ratings, {
       subdomain,
@@ -97,6 +99,25 @@ export default async function() {
       ]
     },
     req.query);
+  }
+
+
+  if (!recommended || !similar) {
+    const fallbackCondition = condition._id
+      ? {_id: {$ne: postID}, postStatus: 'published'}
+      : {subdomain, url: {$ne: postID}, postStatus: 'published'}
+
+    const fallBack = await findPosts(postModel, fallbackCondition, {
+      ...req.query,
+      limit: 2
+    });
+
+    console.log(fallBack)
+
+
+    recommended = fallBack.data[0];
+    similar = fallBack.data[1];
+
   }
 
   res.json({
