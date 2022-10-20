@@ -51,7 +51,7 @@ export default async function() {
     subdomain,
     $nor:[{_id}],
     postStatus: 'published'
-  }
+  };
 
   if (tagsMapped.length > 0)
     similarOpts['$or'] = tagsMapped;
@@ -105,14 +105,14 @@ export default async function() {
   if (!recommended || !similar) {
     const fallbackCondition = condition._id
       ? {_id: {$ne: postID}, postStatus: 'published'}
-      : {subdomain, url: {$ne: postID}, postStatus: 'published'}
+      : {subdomain, url: {$ne: postID}, postStatus: 'published'};
 
     const fallBack = await findPosts(postModel, fallbackCondition, {
       ...req.query,
       limit: 2
     });
 
-    console.log(fallBack)
+    console.log(fallBack);
 
 
     recommended = fallBack.data[0];
