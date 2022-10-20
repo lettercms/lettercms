@@ -7,7 +7,6 @@ import Layout from '@/components/tracingLayout';
 import {parse as cookieParser} from 'cookie';
 import {getBlog} from '@/lib/mongo/blogs';
 import Paging from '@/components/blog/paging';
-import jwt from 'jsonwebtoken';
 
 const Blog = ({posts, blog, paging, mostViewed}) => {
   return <Layout>

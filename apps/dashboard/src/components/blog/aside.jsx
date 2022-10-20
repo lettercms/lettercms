@@ -9,7 +9,7 @@ import Link from 'next/link';
 import MostViewed from './mostViewed';
 
 export default function Aside({owner, mostViewed}) {
-  console.log(mostViewed)
+  console.log(mostViewed);
   return <aside>
     <Base row={1} principal>
       <div id='query-container'>

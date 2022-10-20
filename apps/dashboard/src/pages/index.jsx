@@ -12,7 +12,7 @@ import sdk from '@lettercms/sdk';
 import Layout from '../components/tracingLayout';
 import {getSession} from 'next-auth/react';
 import {useToken} from '@/lib/userContext';
-
+import jwt from 'jsonwebtoken';
 
 export default function Home({referrer, isAdmin}) {
   const {accessToken} = useToken();

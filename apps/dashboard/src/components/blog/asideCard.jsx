@@ -40,5 +40,5 @@ export default function AsideCard({thumbnail, title, fullUrl}) {
         padding: 0 .5rem;
       }
     `}</style>
-  </div>
+  </div>;
 }

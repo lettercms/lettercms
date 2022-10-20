@@ -43,6 +43,6 @@ export async function getPost(url, userID) {
     post,
     user,
     recommendation
-  }
+  };
 }
 
