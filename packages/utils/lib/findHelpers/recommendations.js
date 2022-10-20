@@ -43,7 +43,7 @@ export const find = async (model, filter, opts = {}) => {
     if (post.postStatus !== 'published')
       return post;
 
-    post.fullUrl = opts.mainUrl + getFullUrl(e, opts.urlID);
+    post.fullUrl = opts.mainUrl + getFullUrl(post, opts.urlID);
 
     if (!hasUrl)
       delete post.url;
