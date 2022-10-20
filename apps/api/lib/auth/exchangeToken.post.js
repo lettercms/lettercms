@@ -31,7 +31,7 @@ export default async function exchange() {
       message: 'Invalid API credentials'
     });
 
-  const accessToken = jwt.sign({subdomain}, process.env.JWT_AUTH);
+  const accessToken = jwt.sign({subdomain}, process.env.JWT_AUTH, req.body);
 
   res.json({
     accessToken
