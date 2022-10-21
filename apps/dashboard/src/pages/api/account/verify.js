@@ -1,36 +1,27 @@
 import connect from '@lettercms/utils/lib/connection';
-import {Accounts} from '@lettercms/models/accounts';
-import {compare} from '@lettercms/utils/lib/crypto';
+import {Accounts, Codes} from '@lettercms/models/accounts';
 
 export default async function(req, res) {
   if (req.method !== 'POST')
     return res.status(405).json({
       status: 'method-not-allowed'
     });
-  
-  await connect();
 
-  const {token} = req.body;
-
-  if (!token)
-    return res.status(400).json({
-      status: 'bad-request',
-      message: 'You must set a valid code'
-    });
-
-  const [key, dataHex] = token.split('@');
-
-  const isValid = await compare(process.env.JWT_AUTH, key);
-
-  if (!isValid)
-    return res.json({
-      status: 'invalid-token'
-    });
-
-  const decoded = JSON.parse(Buffer.from(dataHex, 'hex').toString('utf-8'));
-  const {email} = decoded;
+  const {email, code} = req.body;
 
   try {
+    await connect();
+    
+    await Codes.deleteMany({expiresAt: {$lt: Date.now()}});
+
+    const code = await Codes.findOne({email, code}, null, {lean: true});
+
+    if (!code)
+      return res.json({
+        status: 'invalid-code',
+        message: 'You must set a valid code'
+      });
+
     const existsAccount = await Accounts.exists({
       email
     });
@@ -41,18 +32,20 @@ export default async function(req, res) {
         message: `Account with email "${email}" already exists`
       });
 
-    const emailHash = Buffer.from(email).toString('hex');
+    const {name, lastname, password} = code;
 
     await Accounts.createAccount({
       photo: `https://avatar.tobi.sh/${emailHash}.svg?text=${decoded.name[0]+decoded.lastname[0]}&size=250`,
-      ...decoded
+      name,
+      lastname,
+      password,
+      email
     });
 
     res.json({
       status: 'OK'
     });
   } catch(err) {
-    console.log(err);
     res.status(500).json({
       status: 'verification-error',
       message: 'Unable to verify account'

@@ -4,7 +4,6 @@ import sdk from '@lettercms/sdk';
 import {createAccount, createCollaborator} from '@lettercms/admin';
 import Input from '../input';
 import Image from 'next/image';
-import Cookie from 'js-cookie';
 import {signIn} from 'next-auth/react';
 
 export default class UserTab extends Component {
@@ -66,29 +65,22 @@ export default class UserTab extends Component {
         email
       } = this.state;
 
-      let code = Math.floor(Math.random() * 10000);
-
-      if (code < 1000)
-        code = '0' + code;
-      else
-        code = code.toString();
-
-      const {token} = await createAccount({
+      const opts = {
         name,
         lastname,
-        email,
         password,
-        code
-      });
+        email
+      };
 
-      const expires = Date.now() + (5 * 60 * 1000);
+      //Create Temp Hex String with user data, this will be deleted on success verification
+      //This will be used to resend verification email
+      const userData = JSON.stringify(opts);
+      const userToken = Buffer.from(userData).toString('hex');
 
-      Cookie.set('userCode', code, {
-        expires
-      });
-      Cookie.set('userToken', token, {
-        expires
-      });
+      sessionStorage.set('userToken', userToken);
+      sessionStorage.set('userEmail', email);
+
+      await createAccount(opts);
 
       this.setState({
         isLoad: false,
@@ -128,6 +120,7 @@ export default class UserTab extends Component {
     this.setState({
       isLoad: false
     });
+    console.log(email, password);
 
     const user = await signIn('credentials', {
       redirect: false,

@@ -20,7 +20,6 @@ const Blog = ({posts, blog, paging, mostViewed}) => {
               title={e.title}
               content={e.description}
               url={e.url}
-              fullUrl={e.fullUrl}
               thumbnail={e.thumbnail}
               comments={e.comments}
               ID={e._id}
@@ -51,6 +50,7 @@ export async function getServerSideProps({req, res, query}) {
   const blogData = await getBlog(page);
 
   const {blog, posts, mostViewed} = JSON.parse(JSON.stringify(blogData));
+
 
   return {
     props: {

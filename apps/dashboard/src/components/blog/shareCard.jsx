@@ -10,7 +10,7 @@ const ShareCard = ({ url, title, style }) => {
         <img src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/facebook.svg" />
       </a>
       <a
-        href={`https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Flettercms-dashboard-davidsdevel.vercel.app&ref_src=twsrc%5Etfw&text=${encodeURI(`Esta entrada me gusto, puede que a ti también te interese.${title}`)}&tw_p=tweetbutton&url=${encodedURL}&via=davidsdevel`}
+        href={`https://twitter.com/intent/tweet?original_referer=${encodedURL.split('vercel.app')[0] + 'vercel.app'}&ref_src=twsrc%5Etfw&text=${encodeURI(`Esta entrada me gusto, puede que a ti también te interese.`)}&tw_p=tweetbutton&url=${encodedURL}&via=lettercms`}
         target="_blank"
         rel='noreferrer'
       >

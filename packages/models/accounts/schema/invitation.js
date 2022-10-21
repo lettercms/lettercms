@@ -27,12 +27,11 @@ const Invitations = new Schema({
     type: String,
     required: true,
     default: 'pending',
-    enum: ['pending', 'expired', 'accepted']
+    enum: ['pending', 'accepted']
   },
-  expireIn: {
+  expiresAt: {
     type: Date,
-    default:() => (Date.now() + (60 * 60 * 24)),
-    required: true
+    default:() => (Date.now() + (60 * 60 * 24 * 1000))
   }
 });
 

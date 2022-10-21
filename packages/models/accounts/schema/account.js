@@ -92,7 +92,7 @@ Accounts.statics.login = async function(email, password) {
 };
 
 Accounts.statics.createCollab = async function(subdomain, data) {
-  const password = await sign(data.password);
+  const password = await bcrypt.hash(data.password, 10);
 
   const id = await this.create({
     ...data,

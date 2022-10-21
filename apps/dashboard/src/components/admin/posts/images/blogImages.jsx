@@ -7,7 +7,7 @@ import Upload from '@/components/svg/upload';
 import createUploader from '@/lib/createUploader';
 import {useUser} from '@/lib/dashboardContext';
 
-export default function BlogImages({onSelect}) {
+export default function BlogImages({onSelect, isHidden}) {
   const {blog} = useUser();
   const [images, setImages] = useState([]);
   const [isLoading, setLoadState] = useState(true);
@@ -29,12 +29,14 @@ export default function BlogImages({onSelect}) {
   });
 
   useEffect(() => {
-    sdk.images.all()
-      .then(({data}) => {
-        setImages(data);
-        setLoadState(false);
-      });
-  }, []);
+    if (!isHidden) {
+      sdk.images.all()
+        .then(({data}) => {
+          setImages(data);
+          setLoadState(false);
+        });
+    }
+  }, [isHidden]);
 
   let ui = null;
 

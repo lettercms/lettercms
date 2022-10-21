@@ -1,12 +1,24 @@
-import {readFile} from 'node:fs';
-import {join} from 'node:path';
+import {readFile} from 'fs';
+import {join} from 'path';
+import https from 'https';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
 const getTemplate = async type => {
   return new Promise((resolve, reject) => {
-    if (/verify|reset-password/) {
-      readFile(join(__dirname, `../templates/${type}.html`), {encoding: 'utf-8'}, (err, res) => {if (err) { reject(err);} else {resolve(res);}});
+    if (/verify|invitation/) {
+      const req = https.get(`https://cdn.jsdelivr.net/gh/lettercms/lettercms/packages/utils/templates/${type}.html`, res => {
+        let chunks = '';
+
+        res.on('data', e => {
+          chunks += e.toString()
+        });
+
+        res.on('end', () => resolve(chunks));
+        res.on('error', reject);
+      });
+        
+      req.on('error', reject);
     }
   });
 };
@@ -23,11 +35,6 @@ const filterTemplate = (template, data) => {
 
 const sendMail = async (to, subject, data) => {
   try {
-    if (isDev){
-      console.log(data);
-      return Promise.resolve();
-    }
-
     const template = await getTemplate(data.type);
 
     const mailOptions = {
@@ -55,6 +62,8 @@ const sendMail = async (to, subject, data) => {
         },
         body: JSON.stringify(mailOptions)
       });
+
+      console.log(res)
 
     return res.json();
   } catch(err) {

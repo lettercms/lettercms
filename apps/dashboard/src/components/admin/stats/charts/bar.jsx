@@ -8,13 +8,16 @@ import {
   BarChart,
 } from 'recharts';
 
-function RenderBarChart({data, dataKey = 'vista', layout = 'horizontal'}) {
+function RenderBarChart({data, sort = false, dataKey = 'vista', layout = 'horizontal'}) {
   const isHorizontal = layout === 'horizontal';
 
   data = Object.entries(data).map(([key, vistas]) => ({
     vistas,
     [dataKey]: key
   }));
+
+  if (sort)
+    data = data.sort((a,b) => a.vistas > b.vistas ? -1 : +1)
 
   return <div style={{height: !isHorizontal ? data.length * 50 + 10 : 200, width: '95%'}}>
     <ResponsiveContainer>

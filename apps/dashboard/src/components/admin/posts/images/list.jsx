@@ -29,7 +29,9 @@ export default function ImageList({images, isUploading, onLoadMore, isLoadingMor
           raw:e.raw,
           user: e.user.name,
           href: e.user.profile,
-          download: e.download
+          download: e.download,
+          width: e.width,
+          height: e.height
         });
         setSelectedImage(e.url);
         setShowModal(true);

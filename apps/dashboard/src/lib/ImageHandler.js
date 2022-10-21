@@ -11,64 +11,46 @@ export default class ImageHandler {
 
     return getMetadata(imgRef);
   }
-  upload(file, subdomain, name) {
-    return new Promise((resolve, reject) => {
-      let reader = new FileReader();
+  async upload(file, subdomain, name) {
+    try {
+      let fileName = name;
 
-      reader.onload = (e) => {
-        let img = document.createElement('img');
-        img.src = e.target.result;
+      if (!fileName) {
+        //Get filename from img path
+        const splitted = file.name.split('.');
+        splitted.pop();
 
-        img.onload = async () => {
+        fileName = splitted.join('.');
+      }
 
-          let fileName = name;
-
-          if (!fileName) {
-            const splitted = file.name.split('.');
-            splitted.pop();
-
-            fileName = splitted.join('.');
-          }
-
-          const path = `${subdomain}/${fileName}.webp`;
+      const path = `${subdomain}/${fileName}.webp`;
           
-          let meta;
-          
-          try {
-            meta = await this.getSize(subdomain, fileName);
-          } catch(err) {
-            console.log(err);
-          }
+      //Get metadata for overwriten file if exists
+      const fileMetadata = await this.getSize(subdomain, fileName);
 
-          const {metadata: {size}} = await this._upload(path, file);
+      const {metadata: {size}} = await this._upload(path, file);
 
-          //TODO: add update Storage Size
-          let finalSize = size;
+      let finalSize = size;
 
-          if (meta) {
-            console.log(meta);
-            //finalSize = size - meta.metadata.size;
-          }
+      if (fileMetadata)
+        finalSize -= fileMetadata.metadata.size;
 
-          console.log(finalSize);
+      fetch('/api/usage/update', {
+        method: 'PATCH',
+        body: JSON.stringify({
+          size: finalSize
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: sdk.accessToken
+        }
+      });
 
-          fetch('/api/usage/update', {
-            method: 'PATCH',
-            body: JSON.stringify({
-              size: finalSize
-            }),
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: sdk.accessToken
-            }
-          });
-
-          resolve(`https://storage.googleapis.com/${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET}/${subdomain}/${fileName}.webp`);
-        };
-      };
-
-      reader.readAsDataURL(file);
-    });
+      //TODO: add proxy URL
+      return `https://storage.googleapis.com/${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET}/${subdomain}/${fileName}.webp`;
+    } catch(err) {
+      return Promise.reject(err);      
+    }
   }
   async compress(image) {
     const options = {
@@ -85,11 +67,12 @@ export default class ImageHandler {
     }
   }
   async uploadProfilePic(file) {
+
     const {subdomain, _id} = await sdk.accounts.me(['subdomain']);
 
     const path = `${subdomain}/${_id}/profile.webp`;
 
-    const picURL = await this._upload(path, file, 'profile');
+    const picURL = await this._upload(path, file);
 
     return sdk.accounts.update(_id, {
       photo: picURL
@@ -98,18 +81,30 @@ export default class ImageHandler {
   async _upload(path, file) {
     const storage = getStorage();
     const _ref = ref(storage, path);
-    
+
+    const imgString = await imageCompression.getDataUrlFromFile(file);
+
+    const customMetadata = await new Promise((resolve, reject) => {
+      const img = document.createElement('img');
+
+      img.src = imgString;
+
+      img.onload = async function() {
+        resolve({
+          width: this.width,
+          height: this.height
+        });
+      }
+
+      img.onerror = reject;
+    });
+
     const compressed = await this.compress(file);
-
-    //TODO: get with and height
+    
     try {
-
       return uploadBytes(_ref, compressed, {
         cacheControl: 'no-cache, no-store, max-age=0, must-revalidate',
-        /*customMetadata: {
-          width: compressed.naturalWidth,
-          height: compressed.naturalHeight
-        }*/
+        customMetadata
       });
     } catch(err) {
       return Prmoise.reject(err);

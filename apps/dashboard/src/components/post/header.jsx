@@ -16,15 +16,14 @@ const Header = ({title, thumbnail}) => {
       }
       .ex-header {
         background-color: #5f4dee;
-        padding-top: 6rem;
       }
 
       .ex-header h1 {
         color: #fff;
       }
       .header-shadow {
-        padding-top: 8rem;
-        padding-bottom: 5rem;
+        padding-top: 14rem;
+        padding-bottom: 8rem;
         text-align: center;
       }
       @media (min-width: 768px) {

@@ -5,19 +5,23 @@ import BlogImages from './images/blogImages';
 import BlogSearch from './images/search';
 import ModalTabs from './images/tabs';
 
-const generateUnsplashSrc = raw => {
+const generateUnsplashSrc = (raw, width, height) => {
   return {
-      src: `${raw}&w=100`,
-      'data-src': `${raw}&w=1400`,
-      srcset:`${raw}&w=480 480w,
-        ${raw}&w=720 720w,
-        ${raw}&w=1024 1024w,
-        ${raw}&w=2048 1400w`
-    };
+    'data-dimensions': `${width}x${height}`,
+    class: 'lettercms-image',
+    src: `${raw}&w=100`,
+    'data-src': `${raw}&w=1400`,
+    srcset:`${raw}&w=480 480w,
+      ${raw}&w=720 720w,
+      ${raw}&w=1024 1024w,
+      ${raw}&w=2048 1400w`
+  };
 };
 
-const generateLetterSrc = raw => {
+const generateLetterSrc = (raw, width, height) => {
   return {
+    'data-dimensions': `${width}x${height}`,
+      class: 'lettercms-image',
       src: `/_next/image?url=${raw}&q=50&w=100`,
       'data-src': `/_next/image?url=${raw}&q=75&w=1400`,
       srcset:`/_next/image?url=${raw}&q=75&w=480 480w,
@@ -40,8 +44,8 @@ export default function ImagesModal({onClose, show}) {
     }, 610);
   };
 
-  const appendUnsplash = ({raw, user, href, download}) => {
-    const src = generateUnsplashSrc(raw);
+  const appendUnsplash = ({raw, user, href, download, width, height}) => {
+    const src = generateUnsplashSrc(raw, width, height);
 
     window.editorEventEmitter.emit('unsplash', {
       user,
@@ -51,8 +55,8 @@ export default function ImagesModal({onClose, show}) {
     });
   };
 
-  const appendImage = raw => {
-    const obj = generateLetterSrc(raw);
+  const appendImage = (raw, width, height) => {
+    const obj = generateLetterSrc(raw, width, height);
     window.editorEventEmitter.emit('insert', obj);
   };
 
@@ -74,7 +78,7 @@ export default function ImagesModal({onClose, show}) {
           <div id='wrapper'>
           {
             tab === 'photos' &&
-            <BlogImages onSelect={appendImage}/>
+            <BlogImages isHidden={!show} onSelect={appendImage}/>
           }
           {
             tab === 'search' &&

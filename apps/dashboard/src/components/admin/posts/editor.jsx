@@ -25,12 +25,14 @@ export default class Editor extends Component {
       thumbnail: '',
       postStatus: 'new',
       category: '',
+      inputTag: '',
       categories: [],
       isSaved: false,
       sending: false,
       showImagesModal: false,
       showEditorLoad: true,
-      hasFacebook: false
+      promoteOnFacebook: false,
+      promoteOnInstagram: false
     };
 
     this.changes = {};
@@ -49,8 +51,7 @@ export default class Editor extends Component {
     window.reactEditor = this;
     window.editorEventEmitter = new EventEmitter();
 
-    if (this.props.accessToken)
-      sdk.setAccessToken(this.props.accessToken);
+    console.log(this.props);
 
     const {
       _id,
@@ -65,23 +66,7 @@ export default class Editor extends Component {
       thumbnail,
       subdomain,
       content
-    } = await sdk.posts.single(this.props.postID, [
-        'title',
-        'description',
-        'images',
-        'postStatus',
-        'url',
-        'category',
-        'tags',
-        'isProtected',
-        'thumbnail',
-        'subdomain',
-        'content'
-      ]);
-
-    if (url)
-      this.changes.url = url;
-
+    } = this.props.postData.post;
 
     this.setState({
       _id,
@@ -164,14 +149,18 @@ export default class Editor extends Component {
       await sdk.createRequest(`/post/${this.state._id}/publish`, 'POST', {
         ...data,
         promote: {
-          facebook: this.state.hasFacebook
+          facebook: this.state.promoteOnFacebook
         }
       });
     } catch(err) {
       return console.log(err);
     }
 
-    alert('Publicado con exito');
+    if (this.state.postStatus === 'published') {
+      alert('Publicado con exito');
+    } else {
+      alert('Actualizado con exito');
+    }
 
     this.close(true);
   }
@@ -234,6 +223,7 @@ export default class Editor extends Component {
     return data;
   }
   close = isSaved => {
+    //TODO: add changes verification
     Router.push('/dashboard/posts');
   }
 
@@ -276,22 +266,21 @@ export default class Editor extends Component {
   }
   getTag = e => {
     if (e.key === 'Enter') {
-      const {value} = e.target;
 
       const {
-        tags
+        tags,
+        inputTag
       } = this.state;
 
-      const tgs = [value].concat(tags);
+      const tgs = [inputTag].concat(tags);
 
       this.setState({
         tags: tgs,
         isSaved: false,
+        inputTag: ''
       });
 
       this.changes.tags = tgs;
-
-      e.target.value = ''; 
     }
   }
   removeTag = ind => {
@@ -334,8 +323,13 @@ export default class Editor extends Component {
       subdomain,
       _id,
       showEditorLoad,
-      hasFacebook
+      inputTag
     } = this.state;
+
+    const {
+      hasFacebook,
+      hasInstagram
+    } = this.props.postData;
 
     const hasCategories = categories.length > 0;
 
@@ -375,7 +369,7 @@ export default class Editor extends Component {
         <Input id='url' value={url} onInput={this.handleInput} label='Enlace' disabled={postStatus === 'published' || sending}/>
         <hr/>
         <div>
-          <Input id='tags' onKeyUp={this.getTag} label='Etiqueta' onChange={null}/>
+          <Input id='tags' onKeyUp={this.getTag} label='Etiqueta' value={inputTag} onChange={({target: {value}}) => this.setState({inputTag: value})}/>
           <Tags data={tags} removeTag={this.removeTag}/>
         </div>
         <hr/>
@@ -383,14 +377,22 @@ export default class Editor extends Component {
           <span>Miniatura</span>
           <Images images={images} actual={thumbnail} setThumbnail={this.setThumbnail}/>
         </div>
-        <hr/>
-        <div>
-          <span>Promocionar en</span>
-          <div className='selection'>
-            <input type='checkbox' name='checkFacebook' id='checkFacebook' checked={hasFacebook} onChange={() => this.setState({hasFacebook: !hasFacebook})}/>
-            <label className='option' htmlFor='checkFacebook'><img alt='' src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/facebook.svg'/><span>Facebook</span></label>
+        {
+          (hasFacebook || hasInstagram) &&
+          <>
+          <hr/>
+          <div>
+            <span>Promocionar en</span>
+            {
+              hasFacebook &&
+              <div className='selection'>
+                <input type='checkbox' name='checkFacebook' id='checkFacebook' checked={promoteOnFacebook} onChange={() => this.setState({promoteOnFacebook: !promoteOnFacebook})}/>
+                <label className='option' htmlFor='checkFacebook'><img alt='' src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/facebook.svg'/><span>Facebook</span></label>
+              </div>
+            }
           </div>
-        </div>
+          </>
+        }
       </div>
     </aside>
     <div id='buttons'>

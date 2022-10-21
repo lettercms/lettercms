@@ -40,10 +40,11 @@ function Layout(props) {
     if (type === 'accounts')
       opts.role = 'collaborator';
 
+    if (type === 'pages' || type === 'posts')
+      opts.sort = 'created';
+
     if (_status && _status !== '*')
       opts.status = _status;
-
-    console.log(data);
 
     sdk[type].all(opts)
       .then(({ total, data: fetchedData, paging: {cursors: {before: b}} }) => {

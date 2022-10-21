@@ -9,6 +9,8 @@ export default async function() {
     res
   } = this;
 
+  await Invitations.deleteMany({expiresAt: {$lt: Date.now()}});
+
   const existsAccount = await Accounts.exists({
     email: body.email
   });
@@ -30,20 +32,25 @@ export default async function() {
     });
 
   const blog = await blogs.findOne({subdomain}, 'title', {lean: true});
-  const token = jwt.sign({subdomain}, process.env.JWT_AUTH);
+  const {name, lastname}  = Accounts.findOne({_id: account}, 'name lastname', {lean: true});
 
   const {_id} = await Invitations.create({
     ...body,
     subdomain,
+    type: 'collaborator',
     blog: blog._id,
-    blogOwner: account
+    blogOwner: account,
+    expiresAt: Date.now() + (60 * 60 * 24 * 1000)
   });
 
-  await sendMail(body.email, `Has sido invitado a colaborar en ${blog.title} - LetterCMS`, {
+  const r = await sendMail(body.email, `Has sido invitado a colaborar en ${blog.title} - LetterCMS`, {
     type: 'invitation',
-    title: blog.title,
-    url: `https://lettercms.vercel.app/invitation/${_id}`
+    name: body.name,
+    admin: `${name} ${lastname}`,
+    invitation: _id
   });
+
+  console.log(r);
 
   res.json({
     status: 'OK'

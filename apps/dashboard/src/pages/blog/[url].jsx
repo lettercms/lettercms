@@ -17,6 +17,7 @@ import {getSession} from 'next-auth/react';
 import {getPost} from '@/lib/mongo/posts';
 import jwt from 'jsonwebtoken';
 import {useToken} from '@/lib/userContext';
+import initLazyLoad from '@/lib/initLazyLoad';
 
 const BlogPost = ({isAdmin, user, recommendation: {recommended, similar}, post: {_id, content, title, url, published, updated, thumbnail, tags, description}, referrer, notFound}) => {
   const [stateUser, setUser] = useState(user);
@@ -24,6 +25,7 @@ const BlogPost = ({isAdmin, user, recommendation: {recommended, similar}, post: 
 
   useEffect(() => {
     if (!notFound) {
+      initLazyLoad();
       
       const {userID} = cookieParser(document.cookie);
 
@@ -98,9 +100,6 @@ const BlogPost = ({isAdmin, user, recommendation: {recommended, similar}, post: 
         padding: 2rem 5%;
         width: 100%;
       }
-      :global(main img) {
-        max-width: 100%;
-      }
       #post-main {
         width: 100%;
         max-width: 60rem;
@@ -116,6 +115,12 @@ const BlogPost = ({isAdmin, user, recommendation: {recommended, similar}, post: 
       }
     `}</style>
     <style jsx global>{`
+      main img {
+        max-width: 100%;
+      }
+      .lazy-img {
+        filter: blur(5px);
+      }
       @media (max-width: 720px) {
         .chart-container {
           width: 100% !important;

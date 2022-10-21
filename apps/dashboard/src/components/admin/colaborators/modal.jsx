@@ -7,8 +7,10 @@ class InvitationModal extends Component {
     super();
     this.state = {
       permissions: [],
-      role: 'admin',
+      role: 'collaborator',
       email: '',
+      name: '',
+      lastname: '',
       step: 1
     };
   }
@@ -34,15 +36,15 @@ class InvitationModal extends Component {
   }
   sendInvitation = async _ => {
     try {
-      const {role, permissions, email} = this.state;
+      const {role, permissions, email, name, lastname} = this.state;
 
-      if (!email)
-        return alert('Coloca un Email');
+      if (!email || !name || !lastname)
+        return alert('Ingresa los datos');
 
       if (role === 'admin')
         await sdk.accounts.inviteAdmin(email);
       else if (role === 'collaborator') 
-        await sdk.createRequest('/account/invitation', 'POST', {email});
+        await sdk.createRequest('/account/invitation', 'POST', {email, name, lastname});
       else if (role === 'single')
         await sdk.accounts.inviteSingle(email);
 
@@ -55,10 +57,10 @@ class InvitationModal extends Component {
     }
   }
   render() {
-    const {role, step, email} = this.state;
+    const {role, step, email, name, lastname} = this.state;
 
     return <div>
-      <ModalUser onChange={this.handleInput} role={role} email={email}/>
+      <ModalUser onChange={this.handleInput} role={role} name={name} lastname={lastname} email={email}/>
       <button className='black' onClick={this.sendInvitation}>Enviar Invitacion</button>
     </div>; 
   }

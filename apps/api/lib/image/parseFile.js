@@ -5,7 +5,7 @@ const parseFile = ({name, metadata}, fields) => {
 
   //const url = `https://lettercms-usercontent.vercel.app/${name}`;
   //TODO: update url
-  const url = `https://storage.googleapis.com/${process.env.STORAGE_BUCKET}/${name}`;
+  const url = `https://storage.googleapis.com/${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET}/${name}`;
   
   const parsed = {
     id: name.split('/')[1].replace('.webp', ''),

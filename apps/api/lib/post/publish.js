@@ -56,7 +56,7 @@ export default async function() {
 
   const {tags, _id: postID, url: _url, description} = await posts.findOneAndUpdate(updateCondition, newData, {select: 'description _id tags url'});
 
-  if (body.promote?.Facebook) {
+  if (body.promote?.facebook) {
     //Promote on Facebook
     Facebook.findOne({subdomain}, 'pageId token').then(({pageId, token}) => {
       const fb = new FB(pageId, token);

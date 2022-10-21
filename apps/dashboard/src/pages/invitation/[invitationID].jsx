@@ -8,6 +8,7 @@ import {getSession} from 'next-auth/react';
 import Invitation from '@/components/signin/invitation';
 import Footer from '@/components/miniFooter';
 import dateHandler from '@/lib/handleDate';
+import getInvitation from '@/lib/mongo/getInvitation';
 
 class InvitationPage extends Component {
   state = {
@@ -49,7 +50,7 @@ class InvitationPage extends Component {
   };
   
   render() {
-    const {blog, blogOwner, expireIn, id} = this.props;
+    const {blog, blogOwner, expiresAt, id, email} = this.props;
 
     return <div id='register-main'>
       <Head>
@@ -74,10 +75,10 @@ class InvitationPage extends Component {
             <span id='blog-title'>{blog.title}</span>
           </div>
           <div className='form-container'>
-            <Invitation invitationID={id}/>
+            <Invitation email={email}/>
           </div>
           <div id='invitation-notice'>
-            <span>Esta invitación caduca el: {dateHandler.getGMTDate(expireIn)}</span>
+            <span>Esta invitación caduca el: {dateHandler.getGMTDate(expiresAt)}</span>
           </div>
         </div>
       </div>
@@ -204,21 +205,15 @@ class InvitationPage extends Component {
 }
 
 export async function getServerSideProps({query}) {
-  return {
-    props: {
-      id: query.invitationID,
-      subdomain: 'davidsdevel',
-      type: 'collaborator',
-      blog: {
-        title: 'David\'s Devel - Blog'
-      },
-      blogOwner: {
-        name: 'David',
-        lastname: 'González'
-      },
-      email:'davidsdevel@gmail.com',
-      expireIn: Date.now() + (60 * 60 * 24)
+  const invitation = await getInvitation(query.invitationID);
+
+  if (invitation.notFound)
+    return {
+      notFound: true
     }
+
+  return {
+    props: invitation
   };
 }
 

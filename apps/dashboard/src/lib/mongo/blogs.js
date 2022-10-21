@@ -1,6 +1,7 @@
 import connect from '@lettercms/utils/lib/connection';
 import blogs from '@lettercms/models/blogs';
 import posts from '@lettercms/models/posts';
+import * as accounts from '@lettercms/models/accounts';
 import {Ratings} from '@lettercms/models/users';
 import jwt from 'jsonwebtoken';
 import {find as findPosts} from '@lettercms/utils/lib/findHelpers/posts';
@@ -12,7 +13,7 @@ const subdomain = 'davidsdevel';
 export async function getBlog(page = '1', userID) {
   await connect();
 
-  const blog = await blogs.findOne({subdomain}, 'thumbnail owner urlID mainUrl', {
+  const blog = await blogs.findOne({subdomain}, 'thumbnail owner url mainUrl', {
     populate: {
       path: 'owner',
       select: 'photo name description lastname facebook twitter instagram linkedin website',
@@ -20,19 +21,15 @@ export async function getBlog(page = '1', userID) {
   });
 
   const postsOptions = {
-    fields: 'title,description,url,fullUrl,thumbnail,comments',
+    fields: 'title,description,url,thumbnail,comments',
     page,
-    urlID: blog.urlID,
-    mainUrl: blog.mainUrl,
     sort: 'published'
   };
 
   const mostViewed = await findPosts(posts, {subdomain, postStatus: 'published'}, {
     limit: 3,
     sort: 'views',
-    fields: 'thumbnail,title,fullUrl',
-    urlID: blog.urlID,
-    mainUrl: blog.mainUrl
+    fields: 'thumbnail,title,url'
   });
 
   let postsData = null;

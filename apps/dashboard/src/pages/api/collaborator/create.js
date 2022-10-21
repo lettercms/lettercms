@@ -13,29 +13,28 @@ export default async function(req, res) {
   const {body} = req;
   const {subdomain} = body;
 
-  const invitation = await accounts.Invitations.findOne({
+  const invitation = await accounts.Invitations.exists({
     email: body.email
   });
 
-  if (invitation === null)
+  if (!invitation)
     return res.json({
       status: 'not-invited',
       messages: 'Collaborator not invited'
     });
 
-  if (invitation.expireIn < Date.now())
-    return res.json({
-      status: 'invitation-expired',
-      message: `Invitation to ${body.email} expired`
-    });
+  await accounts.Accounts.createCollab(subdomain, {
+    ...body,
+    role: 'collaborator'
+  });
 
-  await accounts.Accounts.createCollab(subdomain, body);
   await accounts.Invitations.updateOne({
     subdomain,
     email: body.email
   }, {
     status: 'accepted'
   });
+
   await usage.updateOne({subdomain}, {$inc: {accountsCollabs: 1}});
 
   res.json({

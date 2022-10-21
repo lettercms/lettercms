@@ -96,10 +96,12 @@ const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days,
     <Card {...general.mostViewed} subdomain={general.subdomain}/>
     <span className="title">Más Comentado</span>
     <Card {...general.mostCommented} subdomain={general.subdomain}/>
-    <span className="title">Entradas</span>
-    <BarChart data={urls} layout='vertical'/>
-    <span className="title">Origenes</span>
-    <BarChart data={referrers} layout='vertical'/>
+    <Base rows={1} title='Entradas'>
+      <BarChart data={urls} sort={true} layout='vertical'/>
+    </Base>
+    <Base rows={1} title='Origenes'>
+      <BarChart data={referrers} sort={true} layout='vertical'/>
+    </Base>
     <style jsx>{`
       #stats-dashboard {
         display: flex;

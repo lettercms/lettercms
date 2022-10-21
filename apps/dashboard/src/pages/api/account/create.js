@@ -1,7 +1,8 @@
 import connect from '@lettercms/utils/lib/connection';
-import {Accounts} from '@lettercms/models/accounts';
+import {Accounts, Codes} from '@lettercms/models/accounts';
 import sendMail from '@lettercms/utils/lib/sendMail';
 import {sign} from '@lettercms/utils/lib/crypto';
+import bcrypt from 'bcrypt';
 
 export default async function(req, res) {
   if (req.method !== 'POST')
@@ -45,14 +46,32 @@ export default async function(req, res) {
     }
   }
 
-  req.body.role = 'admin';
+  //delete expired codes
+  await Codes.deleteMany({expiresAt: {$lt: Date.now()}});
 
-  const key = await sign(process.env.JWT_AUTH); //jwt.sign(req.body, process.env.JWT_AUTH, { expiresIn: 60 * 5 });
-  const hex = Buffer.from(JSON.stringify(req.body)).toString('hex');
+  let code = '';
+
+  for (let i = 0; i < 4; i++) {
+    code += Math.floor(Math.random() * 10);
+  }
+
+  const {email, name, lastname} = req.body;
+
+  const password = bcrypt.hash(req.body.password, 10);
+
+  await Codes.create({
+    code,
+    email,
+    name,
+    lastname,
+    password
+  });
 
   try {
-    await sendMail(req.body.email, `${req.body.name} verifica tu cuenta - LetterCMS`, {
+    await sendMail(email, `${name} verifica tu cuenta - LetterCMS`, {
       type: 'verify',
+      password,
+      code,
       ...req.body
     });
   } catch(err) {
@@ -63,7 +82,6 @@ export default async function(req, res) {
   }
   
   res.json({
-    status: 'OK',
-    token: `${key}@${hex}`
+    status: 'OK'
   });
 };

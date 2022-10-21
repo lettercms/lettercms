@@ -14,6 +14,7 @@ const Images = ({images, setThumbnail, actual}) => {
         cursor: pointer;
         border-radius: 5px;
         transition: ease .3s;
+        list-style: none;
       }
       li.actual {
         cursor: default;

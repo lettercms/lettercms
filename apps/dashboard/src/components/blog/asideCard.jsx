@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
-export default function AsideCard({thumbnail, title, fullUrl}) {
+export default function AsideCard({thumbnail, title, url}) {
   return <div className='flex flex-row aside-card'>
-    <Link href={fullUrl}>
+    <Link href={`/blog/${url}`}>
       <a target='_blank'>
         {
           thumbnail
@@ -20,6 +20,9 @@ export default function AsideCard({thumbnail, title, fullUrl}) {
       .aside-card {
         width: 100%;
         margin: .5rem 0;
+      }
+      a {
+        text-decoration: none !important;
       }
       .aside-no-thumbnail,
       .aside-thumbnail {
