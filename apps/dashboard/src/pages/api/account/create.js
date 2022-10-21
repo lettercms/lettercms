@@ -55,7 +55,7 @@ export default async function(req, res) {
     code += Math.floor(Math.random() * 10);
   }
 
-  const {email, name, lastname} = req.body;
+  const {name, lastname} = req.body;
 
   const password = bcrypt.hash(req.body.password, 10);
 
