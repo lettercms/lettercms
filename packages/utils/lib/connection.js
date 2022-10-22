@@ -2,11 +2,6 @@ import mongoose from '@lettercms/models/mongoose';
 
 const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/blog';
 
-if (!MONGO_URL) {
-  throw new Error(
-    'Please define the MONGO_URL environment variable inside .env.local'
-  );
-}
 
 /**
  * Global is used here to maintain a cached connection across hot reloads
