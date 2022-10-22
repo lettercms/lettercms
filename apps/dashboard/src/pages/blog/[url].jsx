@@ -1,5 +1,4 @@
 import Post from '@/components/post';
-
 import {parse as cookieParser} from 'cookie';
 import {getSession} from 'next-auth/react';
 import {getPost} from '@/lib/mongo/posts';
@@ -25,7 +24,10 @@ export const getServerSideProps = async ({req, res, query}) => {
   }));
 
   return {
-    props
+    props: {
+      ...props,
+      accessToken: jwt.sign({subdomain: 'davidsdevel'}, process.env.JWT_AUTH)
+    }
   };
 };
 
