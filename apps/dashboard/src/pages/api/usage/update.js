@@ -1,8 +1,9 @@
+import { withSentry } from '@sentry/nextjs';
 import usage from '@lettercms/models/usages';
 import jwt from 'jsonwebtoken';
 import connect from '@lettercms/utils/lib/connection';
 
-export default async function patchUsage(req, res) {
+async function patchUsage(req, res) {
   const {authorization} = req.headers;
   
   let decoded;
@@ -51,3 +52,4 @@ export default async function patchUsage(req, res) {
   }
 }
 
+export default withSentry(patchUsage);

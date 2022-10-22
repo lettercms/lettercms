@@ -46,39 +46,13 @@ export default class Signin extends Component {
   };
 
   onUserCreate = email => {
-    localStorage.setItem('tempUser', email);
-    localStorage.setItem('tempStep', 'verify');
-
     this.setState({
       email,
       tab: 'verify'
     });
   };
-  componentDidMount = () => {
-    const email = localStorage.getItem('tempUser');
-    const tab = localStorage.getItem('tempStep');
-
-    if (!email){
-      this.setState({
-        load: false,
-        email,
-        tab: 'account'
-      });
-    } else{
-      this.setState({
-        load: false,
-        email,
-        tab
-      });
-    }
-  };
 
   onVerify = () => {
-    localStorage.setItem('tempStep', 'blog');
-
-    Cookie.remove('userCode');
-    Cookie.remove('userToken');
-
     this.setState({
       email: this.state.email,
       tab: 'blog'
@@ -86,11 +60,6 @@ export default class Signin extends Component {
   };
 
   onVerifyError = () => {
-    localStorage.removeItem('tempUser');
-    localStorage.removeItem('tempStep');
-    Cookie.remove('userCode');
-    Cookie.remove('userToken');
-
     this.setState({
       email: null,
       tab: 'user'

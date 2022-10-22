@@ -11,7 +11,7 @@ const getTemplate = async type => {
         let chunks = '';
 
         res.on('data', e => {
-          chunks += e.toString()
+          chunks += e.toString();
         });
 
         res.on('end', () => resolve(chunks));
@@ -63,7 +63,7 @@ const sendMail = async (to, subject, data) => {
         body: JSON.stringify(mailOptions)
       });
 
-      console.log(res)
+      console.log(res);
 
     return res.json();
   } catch(err) {

@@ -17,11 +17,11 @@ async function Preview(req, res) {
     return res.status(401).json({ message: 'Invalid slug' });
   }
 
-  res.setPreviewData({id:_id}, {
+  res.setPreviewData({id}, {
      maxAge: 60
   });
 
-  res.redirect(`/${req.query.id}`);
+  res.redirect(`/blog/${req.query.id}`);
 }
 
 export default withSentry(Preview);

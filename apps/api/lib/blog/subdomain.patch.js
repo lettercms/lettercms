@@ -55,12 +55,7 @@ export default async function() {
     }
   }
   
-  if (db.ok)
-    return res.json({
-      status: 'OK'
-    });
-
   res.json({
-    status:'not-modified'
+    status: 'OK'
   });
 };

@@ -1,8 +1,9 @@
 import connect from '@lettercms/utils/lib/connection';
 import * as accounts from '@lettercms/models/accounts';
 import usage from '@lettercms/models/usages';
+import { withSentry } from '@sentry/nextjs';
 
-export default async function(req, res) {
+async function createCollab(req, res) {
   if (req.method !== 'POST')
     return res.status(405).json({
       status: 'method-not-allowed'
@@ -23,17 +24,16 @@ export default async function(req, res) {
       messages: 'Collaborator not invited'
     });
 
-  await accounts.Accounts.createCollab(subdomain, {
-    ...body,
-    role: 'collaborator'
-  });
+  await accounts.Accounts.createCollab(subdomain, body);
 
-  await accounts.Invitations.updateOne({
+  /*await accounts.Invitations.updateOne({
     subdomain,
     email: body.email
   }, {
     status: 'accepted'
-  });
+  });*/
+
+  await accounts.Invitations.deleteOne({subdomain,email: body.email});
 
   await usage.updateOne({subdomain}, {$inc: {accountsCollabs: 1}});
 
@@ -41,3 +41,5 @@ export default async function(req, res) {
     status: 'OK'
   });
 };
+
+export default withSentry(createCollab);

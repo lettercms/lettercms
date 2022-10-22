@@ -77,10 +77,13 @@ export default class UserTab extends Component {
       const userData = JSON.stringify(opts);
       const userToken = Buffer.from(userData).toString('hex');
 
-      sessionStorage.set('userToken', userToken);
-      sessionStorage.set('userEmail', email);
+      sessionStorage.setItem('userToken', userToken);
+      sessionStorage.setItem('userEmail', email);
 
-      await createAccount(opts);
+      const {status} = await createAccount(opts);
+
+      if (status !== 'OK')
+        return alert('Error enviando los datos');
 
       this.setState({
         isLoad: false,
@@ -120,7 +123,6 @@ export default class UserTab extends Component {
     this.setState({
       isLoad: false
     });
-    console.log(email, password);
 
     const user = await signIn('credentials', {
       redirect: false,
@@ -148,6 +150,7 @@ export default class UserTab extends Component {
           id='name'
           onInput={this.handleInput}
           label='Nombre'
+          autoComplete='false'
         />
         <Input
           disabled={isLoad}
@@ -155,6 +158,7 @@ export default class UserTab extends Component {
           id='lastname'
           onInput={this.handleInput}
           label='Apellido'
+          autoComplete='false'
         />
         {
           !isCollab &&
@@ -167,6 +171,7 @@ export default class UserTab extends Component {
               type='email'
               onInput={this.handleInput}
               label='Email'
+              autoComplete='false'
             />
             {
               emailLoad &&
@@ -183,6 +188,7 @@ export default class UserTab extends Component {
           onInput={this.handleInput}
           label='Contraseña'
           type='password'
+          autoComplete='false'
         />
         {
           isLoad

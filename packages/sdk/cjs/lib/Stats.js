@@ -12,7 +12,7 @@ class Stats {
     async all(data) {
         return this.parent.createRequest("/stat", data);
     }
-    async setView(url, referrer) {
+    async setView(url, referrer = '') {
         return this.parent.createRequest("/stat/view", "POST", {
             url,
             referrer,

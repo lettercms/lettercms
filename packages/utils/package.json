@@ -6,7 +6,8 @@
   "license": "Apache-2.0",
   "scripts": {
     "deploy-canary": "prerelease && npm publish --tag canary",
-    "lint": "eslint ."
+    "lint": "eslint -c .eslintrc.json ."
+
   },
   "dependencies": {
     "jsonwebtoken": "^8.5.1",

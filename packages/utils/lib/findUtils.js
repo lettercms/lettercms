@@ -2,6 +2,11 @@ const generateCursorPagination = async (model, filter, opts) => {
   const {before, after} = opts;
   const {options, projection} = parseQuery(opts);
 
+  if (before)
+    filter._id = {$gt: before};
+  else if (after)
+    filter._id = {$lt: after};
+
   options.limit = options.limit + 1;
   
   const data = await model.find(filter, projection, options);

@@ -1,27 +1,38 @@
-import posts from '@lettercms/models/posts';
-import formidable  from 'formidable';
+import getBucket  from '../image/operations/getBucket';
+import processBlogger from './processBlogger';
 
+export default async function importData() {
+  const {req, res} = this;
 
-/**
- * TODO: Changed import method
- *
- * Steps
- *
- * 1. Upload XML to Firebase Storage
- * 2. Fetch it
- * 3. Parse
- * 4. Insert into DB
- * 5. Delete XML from storage
- */
-export default async function() {
-  const form = formidable({ multiples: true });
+  const {subdomain, account} = req;
+  const {type} = req.body;
 
-  form.parse(this.req, async (err, fields) => {
-    if (fields.cms === 'blogger')
-      await posts.importBlogger(this.req.subdomain, JSON.parse(fields.data));
+  const bucket  = await getBucket();
 
-    this.res.json({
-      status: 'OK'
+  const fileStream = bucket.file(`${subdomain}/${type}.xml`).createReadStream();
+
+  let data = '';
+
+  fileStream
+    .on('data', chunk => {
+      data += chunk.toString();
+    })
+    .on('error', err => {
+      console.log(err)
+      throw err;
+    })
+    .on('end', async () => {
+      try {
+        const r = await processBlogger(data, subdomain, account);
+        await bucket.file(`${subdomain}/${type}.xml`).delete();
+        console.log(r)
+
+        res.json({
+          status: 'OK'
+        });
+      } catch(err) {
+        console.log(err);
+        throw err;
+      }
     });
-  });
-};
+}

@@ -2,14 +2,12 @@ import Post from '@/components/post';
 
 import {parse as cookieParser} from 'cookie';
 import {getSession} from 'next-auth/react';
-import {getPost} from '@/lib/mongo/posts';
+import {getPreview} from '@/lib/mongo/posts';
 import jwt from 'jsonwebtoken';
 
 export const getServerSideProps = async ({req, res, query}) => {  
-  const {url} = query;
-  const userID = req?.cookies.userID || 'no-user';
-
-  const {notFound, post, user, recommendation} = await getPost(url, userID);
+  const {id} = query;
+  const {notFound, post} = await getPreview(id);
 
   if (notFound)
     return {
@@ -18,14 +16,16 @@ export const getServerSideProps = async ({req, res, query}) => {
 
   //Parse Mongo Object IDs
   const props = JSON.parse(JSON.stringify({
-    post,
-    referrer: req?.headers.referer || null,
-    recommendation,
-    user
+    post
   }));
 
   return {
-    props
+    props: {
+      ...props,
+      isPreview: true,
+      recommendation: {},
+      accessToken: jwt.sign({subdomain: 'davidsdevel'}, process.env.JWT_AUTH)
+    }
   };
 };
 

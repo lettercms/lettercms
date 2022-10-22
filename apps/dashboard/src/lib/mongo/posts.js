@@ -46,3 +46,26 @@ export async function getPost(url, userID) {
   };
 }
 
+export async function getPreview(_id) {
+  await connect();
+
+  const fields = 'subdomain,title,description,thumbnail,content,url,published,updated,tags,postStatus';
+
+  const {url: urlID, mainUrl} = await blogs.findOne({subdomain}, 'mainUrl url', {lean: true});
+
+  const post = await findPost(posts, {_id, subdomain}, {
+    fields,
+    urlID,
+    mainUrl
+  });
+
+
+  if (!post)
+    return {
+      notFound: true
+    };
+
+  return {
+    post
+  }
+}

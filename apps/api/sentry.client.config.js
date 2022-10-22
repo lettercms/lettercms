@@ -6,7 +6,8 @@ const isDev = process.env.NODE_ENV !== 'production';
 Sentry.init({
   dsn: SENTRY_DSN,
   tracesSampleRate: 0.25,
-  enabled: !isDev,
+  //Only enabled on production env
+  enabled: !isDev && !!SENTRY_DSN,
   debug: isDev,
   environment: 'API'
 });

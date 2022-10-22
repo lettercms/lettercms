@@ -68,7 +68,7 @@ class Card extends Component {
         <div className="data-cont">
           {(!!thumbnail || size === 'big') && 
             <div className="title-container">
-              <h3>{title}</h3>
+              <h3>{title.length > 70 ? title.slice(0, 67) + '...' : title}</h3>
             </div>
           }
           <p>{content.length > 200 ? `${content.slice(0, 197)}...` : content}</p>

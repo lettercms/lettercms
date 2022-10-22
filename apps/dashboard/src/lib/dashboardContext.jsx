@@ -41,7 +41,7 @@ const menu = [
   {
     name: 'config',
     title: 'Configuración',
-    path: '/dashboard/config',
+    path: '/dashboard/config/blog',
     image: 'https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/config.png' 
   },
   {

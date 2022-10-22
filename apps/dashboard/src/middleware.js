@@ -4,6 +4,8 @@ export const config = {
   matcher: [
     '/([^/.]*)',
     '/login',
+    '/blog/:path*',
+    '/_preview/:path*',
     '/signin',
     '/dashboard/:path*'
   ],
@@ -11,6 +13,20 @@ export const config = {
 
 export default function middleware(req) {
   const url = req.nextUrl;
+  console.log(url.pathname);
+
+  if (url.pathname.startsWith('/blog/')) {
+    const isPreview = req.cookies.get('__next_preview_data') || req.cookies.get('__prerender_bypass');
+
+    if (isPreview) {
+      url.pathname = url.pathname.replace('/blog/', '/_preview/');
+      
+      return NextResponse.rewrite(url);  
+    } else {
+      return NextResponse.next();
+    }
+  }
+
 
   const isAuth = req.cookies.get('next-auth.session-token') || req.cookies.get('__Secure-next-auth.session-token');
 

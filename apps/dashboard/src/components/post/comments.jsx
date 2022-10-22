@@ -267,7 +267,7 @@ const Comments = ({id, numPosts = 10, user}) => {
   return <Base title='Comentarios' principal rows={1} style={{height: 'auto', maxWidth: 1024}}>
     <div id='lettercms-comments'>
       <div id='comment-top'> {
-        user.email
+        user?.email
           ? <CommentForm user={user} postID={id} onPublish={onPublish}/>
           : <div className='flex-center'>
             <span>Tienes que suscribirte para poder comentar las entradas</span>

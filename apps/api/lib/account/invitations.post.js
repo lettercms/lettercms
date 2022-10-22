@@ -46,6 +46,7 @@ export default async function() {
   const r = await sendMail(body.email, `Has sido invitado a colaborar en ${blog.title} - LetterCMS`, {
     type: 'invitation',
     name: body.name,
+    lastname: body.lastname,
     admin: `${name} ${lastname}`,
     invitation: _id
   });

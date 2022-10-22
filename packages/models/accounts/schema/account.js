@@ -27,7 +27,7 @@ const Accounts = new Schema({
     type: Boolean,
     required: true,
     default: false
-  },
+  },/*
   permissions: {
     type: Array,
     default: [
@@ -39,7 +39,7 @@ const Accounts = new Schema({
       'config',
       'accounts',
     ]
-  },
+  },*/
   photo: String,
   email:{
     type: String,
@@ -92,13 +92,10 @@ Accounts.statics.login = async function(email, password) {
 };
 
 Accounts.statics.createCollab = async function(subdomain, data) {
-  const password = await bcrypt.hash(data.password, 10);
-
   const id = await this.create({
     ...data,
-    subdomain,
-    verified: true,
-    password
+    role: 'collaborator',
+    subdomain
   });
 
   return Promise.resolve({id});

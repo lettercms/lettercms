@@ -11,6 +11,7 @@
     "test": "jest --detectOpenHandles",
     "coverage": "yarn test --coverage",
     "build": "next build",
+    "start": "set NODE_ENV=production&& next start --port 3009",
     "lint": "next lint"
   },
   "author": "David's Devel <davidsdevel@gmail.com>",
@@ -22,6 +23,7 @@
     "@sentry/nextjs": "^7.11.1",
     "@upstash/qstash": "^0.1.7",
     "bcrypt": "5.1.0",
+    "fast-xml-parser": "^4.0.11",
     "i18n-iso-countries": "^7.5.0",
     "jsonwebtoken": "^8.5.1",
     "next": "12.2.5",

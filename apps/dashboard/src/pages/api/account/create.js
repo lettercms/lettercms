@@ -57,7 +57,7 @@ export default async function(req, res) {
 
   const {name, lastname} = req.body;
 
-  const password = bcrypt.hash(req.body.password, 10);
+  const password = await bcrypt.hash(req.body.password, 10);
 
   await Codes.create({
     code,
