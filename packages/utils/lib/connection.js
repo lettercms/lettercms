@@ -1,6 +1,6 @@
 import mongoose from '@lettercms/models/mongoose';
 
-const MONGO_URL = process.env.NEXT_PUBLIC_MONGO_URL || 'mongodb://localhost/blog';
+const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/blog';
 
 if (!MONGO_URL) {
   throw new Error(
