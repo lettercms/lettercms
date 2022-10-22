@@ -1,4 +1,4 @@
-import {XMLParser} from 'fast-xml-parser'
+import {XMLParser} from 'fast-xml-parser';
 import posts from '@lettercms/models/posts';
 
 const parser = new XMLParser({
@@ -65,5 +65,5 @@ function parseBlogger(data, subdomain, author) {
     tags,
     url,
     subdomain
-  }
+  };
 }

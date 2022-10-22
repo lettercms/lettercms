@@ -210,7 +210,7 @@ export async function getServerSideProps({query}) {
   if (invitation.notFound)
     return {
       notFound: true
-    }
+    };
 
   return {
     props: invitation

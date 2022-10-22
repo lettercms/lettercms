@@ -72,7 +72,7 @@ async function createEditor(content) {
 
     const images = nodes
       .map(({name, _attrs}) => {
-        return name === 'imageBlock' ? _attrs.get('data-src') : null
+        return name === 'imageBlock' ? _attrs.get('data-src') : null;
       })
       .filter(e => e);
 

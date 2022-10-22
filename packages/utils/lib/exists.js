@@ -4,9 +4,8 @@ export default function exists(model) {
 
     const exists = await model.exists(req.query);
 
-    if (exists)
-      res.status(200).end();
-    else
-      res.status(404).end();
+    res.json({
+      exists
+    });
   };
 }

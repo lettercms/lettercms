@@ -19,7 +19,7 @@ const resendEmail = async () => {
     alert('Error al reenviar el correo de verificacion');
     throw err;
   }
-}
+};
 
 export default function Verify({onVerify}) {
   const [code, setCode] = useState();
@@ -49,7 +49,7 @@ export default function Verify({onVerify}) {
     } else {
       alert('Código no valido');
     }
-  }
+  };
 
   return <div className='form'>
     <span style={{color: '#555', fontSize: '1rem'}}>
@@ -59,5 +59,5 @@ export default function Verify({onVerify}) {
     </span>
     <hr/>
     <button className='btn-outline-lg' onClick={resendEmail}>Reenviar Correo</button>
-  </div>
+  </div>;
 }

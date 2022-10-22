@@ -67,5 +67,5 @@ export async function getPreview(_id) {
 
   return {
     post
-  }
+  };
 }

@@ -91,6 +91,11 @@ export default function manageMethods(methods) {
           pass = true;
         }
       }
+      //Is Public Path
+      else {
+        if (/\/api\/\w*\/exists\?/.test(req.url))
+          pass = true;
+      }
 
       if (!pass && accessToken)
         return res.status(401).json({
@@ -100,6 +105,11 @@ export default function manageMethods(methods) {
       if (!pass && blogId && blogSecret)
         return res.status(401).json({
           message: 'Invalid API credentials'
+        });
+
+      if (!pass)
+        return res.status(401).json({
+          message: 'Unauthorized'
         });
 
       //Verify method on API route

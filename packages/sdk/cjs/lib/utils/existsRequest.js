@@ -12,8 +12,8 @@ async function default_1(path, conditions) {
         ? `http://localhost:3009/api/${path}`
         : `${stagingEndpoint}/api/${path}`; //`https://davidsdevel-${path}.lettercms.vercel.app`;
     const res = await (0, isomorphic_fetch_1.default)(`${host}/exists${query}`);
-    if (res.status === 404)
-        return Promise.resolve(false);
-    return Promise.resolve(true);
+    const {exists} = await res.json();
+
+    return Promise.resolve(exists);
 }
 exports.default = default_1;

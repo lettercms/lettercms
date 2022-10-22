@@ -14,7 +14,7 @@ export default function InvitationModal({onClose}) {
     role: 'collaborator'
   });
 
-  console.log(showModal)
+  console.log(showModal);
   useState(() => {
     setTimeout(() => setShowModal(true), 0);
   }, []);
@@ -31,7 +31,7 @@ export default function InvitationModal({onClose}) {
       ...e,
       [name]: value
     }));
-  }
+  };
 
   const sendInvitation = async () => {
     try {
@@ -64,12 +64,12 @@ export default function InvitationModal({onClose}) {
       alert('Error enviando invitacion');
       throw err;
     }
-  }
+  };
 
   return <Base show={showModal} close={close} width='auto' height='auto'>
     <div>
       <ModalUser onChange={handleInput} role={data.role} name={data.name} lastname={data.lastname} email={data.email}/>
       <button className='black' onClick={sendInvitation}>Enviar Invitacion</button>
     </div>
-  </Base>
+  </Base>;
 }

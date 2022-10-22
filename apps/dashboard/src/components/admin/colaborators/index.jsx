@@ -52,5 +52,5 @@ export default function Accounts() {
         top: 0;
       }
     `}</style>
-  </div>
+  </div>;
 }

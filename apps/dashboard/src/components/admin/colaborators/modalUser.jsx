@@ -32,5 +32,5 @@ export default function ModalUser({onChange, role, email, name, lastname}) {
         margin: 10px 0;
       }
     `}</style>
-  </div>
+  </div>;
 }

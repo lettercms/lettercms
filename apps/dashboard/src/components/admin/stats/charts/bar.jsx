@@ -17,7 +17,7 @@ function RenderBarChart({data, sort = false, dataKey = 'vista', layout = 'horizo
   }));
 
   if (sort)
-    data = data.sort((a,b) => a.vistas > b.vistas ? -1 : +1)
+    data = data.sort((a,b) => a.vistas > b.vistas ? -1 : +1);
 
   return <div style={{height: !isHorizontal ? data.length * 50 + 10 : 200, width: '95%'}}>
     <ResponsiveContainer>

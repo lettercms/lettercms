@@ -38,5 +38,5 @@ export default function Collab({id, onClose}) {
 
   return <Base show={showModal} close={() => setShowModal(false)} width='auto' height='auto'>
     <Details {...user}/>
-  </Base>
+  </Base>;
 }

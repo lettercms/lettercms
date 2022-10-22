@@ -94,7 +94,7 @@ export default class ImageHandler {
           width: this.width,
           height: this.height
         });
-      }
+      };
 
       img.onerror = reject;
     });

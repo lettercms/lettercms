@@ -23,7 +23,7 @@ export async function getServerSideProps({ req, res, query}) {
   if (data.notFound) 
     return {
       notFound: true
-    }
+    };
 
   return {
     props: {
