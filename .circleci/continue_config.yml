@@ -30,9 +30,17 @@ jobs:
       - run:
           name: Vercel Pull
           command: vercel pull --environment=preview -y -t $VERCEL_TOKEN
+      - restore_cache:
+          keys:
+            - client-build-{{ checksum "apps/client/package.json" }}
+            - client-build-
       - run:
           name: Vercel Build
           command: vercel build -t $VERCEL_TOKEN
+      - save_cache:
+          key: api-build-{{ checksum "apps/api/package.json" }}
+          paths:
+            - apps/api/.next/cache
       - run:
           name: Vercel Deploy
           command: echo "export VERCEL_URL=$(vercel --prebuilt -t $VERCEL_TOKEN)" >> "$BASH_ENV"
@@ -41,6 +49,12 @@ jobs:
           command: |
             vercel alias set $VERCEL_URL client-$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM.vercel.app --scope lettercms -t $VERCEL_TOKEN
             vercel alias set $VERCEL_URL lettercms-client-$CIRCLE_BRANCH.vercel.app --scope lettercms -t $VERCEL_TOKEN
+      steps:
+      - save_cache:
+          key: my-cache
+          paths:
+            - my-file.txt
+            - my-project/my-dependencies-directory
 
   deploy-dashboard:
     docker:
@@ -59,9 +73,17 @@ jobs:
       - run:
           name: Vercel Pull
           command: vercel pull --environment=preview -y -t $VERCEL_TOKEN
+      - restore_cache:
+          keys:
+            - dashboard-build-{{ checksum "apps/dashboard/package.json" }}
+            - dashboard-build-
       - run:
           name: Vercel Build
           command: vercel build -t $VERCEL_TOKEN
+      - save_cache:
+          key: api-build-{{ checksum "apps/api/package.json" }}
+          paths:
+            - apps/api/.next/cache
       - run:
           name: Vercel Deploy
           command: echo "export VERCEL_URL=$(vercel --prebuilt -t $VERCEL_TOKEN)" >> "$BASH_ENV"
@@ -87,9 +109,17 @@ jobs:
       - run:
           name: Vercel Pull
           command: vercel pull --environment=preview -y -t $VERCEL_TOKEN
+      - restore_cache:
+          keys:
+            - api-build-{{ checksum "apps/api/package.json" }}
+            - api-build-
       - run:
           name: Vercel Build
           command: vercel build -t $VERCEL_TOKEN
+      - save_cache:
+          key: api-build-{{ checksum "apps/api/package.json" }}
+          paths:
+            - apps/api/.next/cache
       - run:
           name: Vercel Deploy
           command: echo "export VERCEL_URL=$(vercel --prebuilt -t $VERCEL_TOKEN)" >> "$BASH_ENV"
