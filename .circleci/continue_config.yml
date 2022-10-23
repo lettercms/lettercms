@@ -55,6 +55,7 @@ jobs:
           command: |
             yarn global add vercel
             echo 'export VERCEL_PROJECT_ID="$DASHBOARD_PROJECT_ID"' >> "$BASH_ENV"
+            echo 'export NEXTAUTH_URL="https://lettercms-dashboard-$CIRCLE_BRANCH.vercel.app"' >> "$BASH_ENV"
       - run:
           name: Vercel Pull
           command: vercel pull --environment=preview -y -t $VERCEL_TOKEN
@@ -96,7 +97,7 @@ jobs:
           name: Set alias
           command: |
             vercel alias set $VERCEL_URL api-$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM.vercel.app --scope lettercms -t $VERCEL_TOKEN
-            vercel alias set $VERCEL_URL lettercms-client-$CIRCLE_BRANCH.vercel.app --scope lettercms -t $VERCEL_TOKEN
+            vercel alias set $VERCEL_URL lettercms-api-$CIRCLE_BRANCH.vercel.app --scope lettercms -t $VERCEL_TOKEN
 
 workflows:
   api-preview:
