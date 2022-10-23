@@ -35,7 +35,7 @@ async function verify(req, res) {
   const {name, lastname, password} = code;
 
   await Accounts.createAccount({
-    photo: `https://avatar.tobi.sh/${emailHash}.svg?text=${name[0]+lastname[0]}&size=250`,
+    photo: `https://avatar.tobi.sh/${Buffer.from(email).toString('hex')}.svg?text=${name[0]+lastname[0]}&size=250`,
     name,
     lastname,
     password,
