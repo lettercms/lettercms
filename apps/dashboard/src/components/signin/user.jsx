@@ -136,7 +136,7 @@ export default class UserTab extends Component {
   render() {
     const {email, isCollab} = this.props;
     const {name, lastname, password, email: emailState, existsEmail, isLoad, emailLoad} = this.state;
-    let emailClass = '';
+    let emailStatus = '';
 
     if (existsEmail === true)
       emailStatus = 'invalid';
