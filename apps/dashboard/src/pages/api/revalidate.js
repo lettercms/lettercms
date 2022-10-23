@@ -1,4 +1,6 @@
-export default async function revalidate(req, res) {
+import {withSentry} from '@sentry/nextjs';
+
+async function revalidate(req, res) {
   if (req.method !== 'POST')
     return res.sendStatus(405);
 
@@ -17,3 +19,5 @@ export default async function revalidate(req, res) {
     });
   }
 }
+
+export default withSentry(revalidate);

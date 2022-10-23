@@ -1,11 +1,9 @@
 name: Promote to Staging
 
 on:
-  pull_request:
+  push:
     branches:
       - main
-    types:
-      - closed
 
 concurrency:
   group: ci-tests-${{ github.ref }}-1
@@ -13,7 +11,7 @@ concurrency:
 
 jobs:
   changes:
-    if: github.event.pull_request.merged == true
+    #if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     # Set job outputs to values from filter step
     outputs:
@@ -55,6 +53,7 @@ jobs:
     with:
       name: api
       env: staging
+      vercel_env: preview
     secrets: inherit
 
   deploy-client:
@@ -64,6 +63,7 @@ jobs:
     with:
       name: client
       env: staging
+      vercel_env: preview
     secrets: inherit
 
   deploy-dashboard:
@@ -73,4 +73,5 @@ jobs:
     with:
       name: dashboard
       env: staging
+      vercel_env: preview
     secrets: inherit

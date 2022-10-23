@@ -3,8 +3,9 @@ import {Accounts, Codes} from '@lettercms/models/accounts';
 import sendMail from '@lettercms/utils/lib/sendMail';
 import {sign} from '@lettercms/utils/lib/crypto';
 import bcrypt from 'bcrypt';
+import {withSentry} from '@sentry/nextjs';
 
-export default async function(req, res) {
+async function create(req, res) {
   if (req.method !== 'POST')
     return res.status(405).json({
       status: 'method-not-allowed'
@@ -85,3 +86,6 @@ export default async function(req, res) {
     status: 'OK'
   });
 };
+
+
+export default withSentry(create);

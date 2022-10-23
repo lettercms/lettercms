@@ -32,7 +32,6 @@ const Head = props => {
     <meta property="og:locale"  content="es_LA"/>
     <meta property="og:site_name" content='LetterCMS'/>
 
-
     <meta property="fb:admins"  content="100000619759917"/>
     <meta property="fb:app_id"  content={process.env.FACEBOOK_APP_ID}/>
     <meta property="fb:pages" content="552760701890501"/>
