@@ -1,6 +1,8 @@
 name: Promote to Staging
 
 on:
+  branch:
+    - production
   pull_request:
     types:
       - closed
@@ -46,8 +48,6 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.api == 'true' }}
     uses: ./.github/workflows/deploy.yml
-    environment:
-      name: production
     with:
       name: api
       env: production
@@ -57,8 +57,6 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.client == 'true' }}
     uses: ./.github/workflows/deploy.yml
-    environment:
-      name: production
     with:
       name: client
       env: production
@@ -68,9 +66,6 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.dashboard == 'true' }}
     uses: ./.github/workflows/deploy.yml
-    environment:
-      name: production
-      url: https://lettercms.vercel.app
     with:
       name: dashboard
       env: production
