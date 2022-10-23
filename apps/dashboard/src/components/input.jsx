@@ -37,6 +37,3 @@ const Input = ({className, id, value = '', type = 'text', label, ...opts}) => {
 };
 
 export default Input;
-
-
-//Email pattern [a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}  
