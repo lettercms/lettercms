@@ -34,7 +34,7 @@ async function verify(req, res) {
     });
 
 
-  const salt = await bcrypt.genSalt(10);
+  const salt = await bcrypt.genSalt(10, 'a');
   const password = await bcrypt.hash(req.body.password, salt);
 
   await Accounts.createAccount({
