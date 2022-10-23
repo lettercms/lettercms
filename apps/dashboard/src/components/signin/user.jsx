@@ -134,15 +134,9 @@ export default class UserTab extends Component {
       Router.push('/dashboard');
   }
   render() {
-<<<<<<< Updated upstream
     const {email, isCollab} = this.props;
     const {name, lastname, password, email: emailState, existsEmail, isLoad, emailLoad} = this.state;
     let emailClass = '';
-=======
-    const {isCollab} = this.props;
-    const {name, lastname, password, email, existsEmail, isLoad, emailLoad} = this.state;
-    let emailStatus = '';
->>>>>>> Stashed changes
 
     if (existsEmail === true)
       emailStatus = 'invalid';
