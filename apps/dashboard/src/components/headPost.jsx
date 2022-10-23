@@ -12,6 +12,7 @@ const Head = props => {
     <meta property="og:updated_time" content={props.updated} />
     <meta property='article:author' content='https://www.facebook.com/davidsdevel'/>
     <meta property='article:publisher' content='https://www.facebook.com/davidsdevel'/>
+
     {/*<meta property='article:section' content=''/>*/}
 
     {props.tags.map(e => <meta key={'tag-' + e} property='article:tag' content={e}/>)}
