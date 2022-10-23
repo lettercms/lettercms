@@ -40,7 +40,6 @@ Schema.methods.deleteCategory = async (subdomain, name) => {
     }
   };
 
-
 Schema.methods.blogMetadata = async (subdomain, fields) => {
   try {
     const rows = await this.findOne.where({ subdomain });
