@@ -27,7 +27,6 @@ export default function middleware(req) {
     }
   }
 
-
   const isAuth = req.cookies.get('next-auth.session-token') || req.cookies.get('__Secure-next-auth.session-token');
 
   if (isAuth) {
