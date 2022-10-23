@@ -40,22 +40,6 @@ Schema.methods.deleteCategory = async (subdomain, name) => {
     }
   };
 
- 
-
-
-Schema.methods.saveConfig = (data) => {
-  //TODO: Fix method
-
-  const entries = Object.entries(data);
-
-  const promises = entries.map((e) => this.db('blog').where({
-    key: e[0],
-  }).update({
-    value: e[1],
-  }));
-
-  return Promise.all(promises);
-};
 
 Schema.methods.blogMetadata = async (subdomain, fields) => {
   try {
