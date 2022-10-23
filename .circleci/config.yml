@@ -1,0 +1,30 @@
+version: 2.1
+
+setup: true
+
+orbs:
+  path-filtering: circleci/path-filtering@0.1.1
+
+workflows:
+  always-run:
+    jobs:
+      - path-filtering/filter:
+          name: check-updated-files
+          mapping: |
+            packages/models/.* run-dashboard true
+            apps/dashboard/.* run-dashboard true
+            packages/admin/.* run-dashboard true
+            packages/utils/.* run-dashboard true
+            packages/models/.* run-client true
+            packages/sdk/.* run-dashboard true
+            packages/ui/.* run-dashboard true
+            packages/models/.* run-api true
+            packages/sdk/.* run-client true
+            packages/utils/.* run-api true
+            apps/client/.* run-client true
+            packages/ui/.* run-client true
+            packages/ui/.* run-api true
+            apps/api/.* run-api true
+
+          base-revision: main
+          config-path: .circleci/continue_config.yml

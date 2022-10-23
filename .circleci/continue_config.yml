@@ -1,10 +1,7 @@
 version: 2.1
-
 orbs:
-  maven: circleci/maven@1.2.0
+  node: circleci/node@4.1
 
-# the default pipeline parameters, which will be updated according to
-# the results of the path-filtering orb
 parameters:
   run-api:
     type: boolean
@@ -16,38 +13,108 @@ parameters:
     type: boolean
     default: false
 
-# here we specify our workflows, most of which are conditionally
-# executed based upon pipeline parameter values. Each workflow calls a
-# specific job defined above, in the jobs section.
+jobs:
+  deploy-client:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: false
+      - run:
+          name: Prepare Env
+          command: |
+            yarn global add vercel
+            echo 'export VERCEL_PROJECT_ID="$CLIENT_PROJECT_ID"' >> "$BASH_ENV"
+      - run:
+          name: Vercel Pull
+          command: vercel pull --environment=preview -y -t $VERCEL_TOKEN
+      - run:
+          name: Vercel Build
+          command: vercel build -t $VERCEL_TOKEN
+      - run:
+          name: Vercel Deploy
+          command: echo "export VERCEL_URL=$(vercel --prebuilt -t $VERCEL_TOKEN)" >> "$BASH_ENV"
+      - run:
+          name: Set alias
+          command: |
+            vercel alias set $VERCEL_URL client-$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM.vercel.app --scope lettercms -t $VERCEL_TOKEN
+            vercel alias set $VERCEL_URL lettercms-client-$CIRCLE_BRANCH.vercel.app --scope lettercms -t $VERCEL_TOKEN
+
+  deploy-dashboard:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: false
+      - run:
+          name: Prepare Env
+          command: |
+            yarn global add vercel
+            echo 'export VERCEL_PROJECT_ID="$DASHBOARD_PROJECT_ID"' >> "$BASH_ENV"
+            echo 'export NEXTAUTH_URL="https://lettercms-dashboard-$CIRCLE_BRANCH.vercel.app"' >> "$BASH_ENV"
+      - run:
+          name: Vercel Pull
+          command: vercel pull --environment=preview -y -t $VERCEL_TOKEN
+      - run:
+          name: Vercel Build
+          command: vercel build -t $VERCEL_TOKEN
+      - run:
+          name: Vercel Deploy
+          command: echo "export VERCEL_URL=$(vercel --prebuilt -t $VERCEL_TOKEN)" >> "$BASH_ENV"
+      - run:
+          name: Set alias
+          command: |
+            vercel alias set $VERCEL_URL dashboard-$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM.vercel.app --scope lettercms -t $VERCEL_TOKEN
+            vercel alias set $VERCEL_URL lettercms-dashboard-$CIRCLE_BRANCH.vercel.app --scope lettercms -t $VERCEL_TOKEN
+
+  deploy-api:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: false
+      - run:
+          name: Prepare Env
+          command: |
+            yarn global add vercel
+            echo 'export VERCEL_PROJECT_ID="$API_PROJECT_ID"' >> "$BASH_ENV"
+      - run:
+          name: Vercel Pull
+          command: vercel pull --environment=preview -y -t $VERCEL_TOKEN
+      - run:
+          name: Vercel Build
+          command: vercel build -t $VERCEL_TOKEN
+      - run:
+          name: Vercel Deploy
+          command: echo "export VERCEL_URL=$(vercel --prebuilt -t $VERCEL_TOKEN)" >> "$BASH_ENV"
+      - run:
+          name: Set alias
+          command: |
+            vercel alias set $VERCEL_URL api-$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM.vercel.app --scope lettercms -t $VERCEL_TOKEN
+            vercel alias set $VERCEL_URL lettercms-api-$CIRCLE_BRANCH.vercel.app --scope lettercms -t $VERCEL_TOKEN
+
 workflows:
-  # when pipeline parameter, run-build-service-1-job is true, the
-  # build-service-1 job is triggered.
-  service-1:
-    when: << pipeline.parameters.run-build-service-1-job >>
+  api-preview:
+    when: << pipeline.parameters.run-api >>
     jobs:
-      - maven/test:
-          name: build-service-1
-          command: 'install -DskipTests'
-          app_src_directory: 'service1'
-  # when pipeline parameter, run-build-service-2-job is true, the
-  # build-service-2 job is triggered.
-  service-2:
-    when: << pipeline.parameters.run-build-service-2-job >>
+      - deploy-api:
+          context:
+            - LetterCMS
+  client-preview:
+    when: << pipeline.parameters.run-client >>
     jobs:
-      - maven/test:
-          name: build-service-2
-          command: 'install -DskipTests'
-          app_src_directory: 'service2'
-  # when pipeline parameter, run-build-service-1-job OR
-  # run-build-service-2-job is true, run-integration-tests job is
-  # triggered. see:
-  # https://circleci.com/docs/configuration-reference/#logic-statements
-  # for more information.
-  run-integration-tests:
-    when:
-      or: [<< pipeline.parameters.run-build-service-1-job >>, << pipeline.parameters.run-build-service-2-job >>]
+      - deploy-client:
+          context:
+            - LetterCMS
+  dashboard-preview:
+    when: << pipeline.parameters.run-dashboard >>
     jobs:
-      - maven/test:
-          name: run-integration-tests
-          command: '-X verify'
-          app_src_directory: 'tests'
+      - deploy-dashboard:
+          context:
+            - LetterCMS
