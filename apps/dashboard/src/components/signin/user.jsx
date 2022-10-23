@@ -134,8 +134,8 @@ export default class UserTab extends Component {
       Router.push('/dashboard');
   }
   render() {
-    const {email, isCollab} = this.props;
-    const {name, lastname, password, email: emailState, existsEmail, isLoad, emailLoad} = this.state;
+    const {isCollab} = this.props;
+    const {name, lastname, password, email, existsEmail, isLoad, emailLoad} = this.state;
     let emailClass = '';
 
     if (existsEmail === true)
@@ -164,9 +164,9 @@ export default class UserTab extends Component {
           !isCollab &&
           <div id='emailLoad'>
             <Input
-              disabled={isLoad || !!email}
-              className={((!!emailState || !!email) && 'notEmpty ') + emailClass}
-              value={email || emailState}
+              disabled={isLoad}
+              className={(email && 'notEmpty ') + emailClass}
+              value={email}
               id='email'
               type='email'
               onInput={this.handleInput}

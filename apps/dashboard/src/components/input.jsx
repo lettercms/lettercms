@@ -1,4 +1,4 @@
-const Input = ({className, id, value = '', type = 'text', label, ...opts}) => {
+const Input = ({className, id, status, value = '', type = 'text', label, ...opts}) => {
   let customClassName = !!value && 'notEmpty';
   const isTextarea = type === 'textarea';
   const isRadio = type === 'radio';
@@ -7,6 +7,11 @@ const Input = ({className, id, value = '', type = 'text', label, ...opts}) => {
 
   if (className)
     customClassName = className;
+
+  if (status === 'invalid')
+    className += ' button-invalid';
+  else if (status === 'valid')
+    className += ' button-valid';
 
   const options = {
     className: customClassName || undefined,
@@ -30,6 +35,12 @@ const Input = ({className, id, value = '', type = 'text', label, ...opts}) => {
       input:disabled,
       textarea:disabled {
         background-color: #f5f5f5 !important;
+      }
+      .button-invalid {
+        border-color: red !important;
+      }
+      .button-valid {
+        border-color: green !important;
       }
     `}</style>
   </div>;
