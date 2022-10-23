@@ -25,7 +25,7 @@ export default function Verify({onVerify}) {
   const [code, setCode] = useState();
 
   const verify = async () => {
-    const email = sessionStorage.get('userEmail');
+    const email = sessionStorage.getItem('userEmail');
 
     const res = await fetch('/api/account/verify', {
       credentials: 'include',
@@ -42,8 +42,8 @@ export default function Verify({onVerify}) {
     const {status} = await res.json();
 
     if (status === 'OK') {
-      sessionStorage.set('userToken', null);
-      sessionStorage.set('userEmail', null);
+      sessionStorage.setItem('userToken', null);
+      sessionStorage.setItem('userEmail', null);
       
       onVerify();
     } else {
