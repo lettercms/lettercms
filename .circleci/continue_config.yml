@@ -29,15 +29,12 @@ jobs:
       - run:
           name: Vercel Pull
           command: vercel pull --environment=preview -y -t $VERCEL_TOKEN
-
       - run:
           name: Vercel Build
           command: vercel build -t $VERCEL_TOKEN
-
       - run:
           name: Vercel Deploy
           command: echo "export VERCEL_URL=$(vercel --prebuilt -t $VERCEL_TOKEN)" >> "$BASH_ENV"
-
       - run:
           name: Set alias
           command: |
@@ -59,15 +56,12 @@ jobs:
       - run:
           name: Vercel Pull
           command: vercel pull --environment=preview -y -t $VERCEL_TOKEN
-
       - run:
           name: Vercel Build
           command: vercel build -t $VERCEL_TOKEN
-
       - run:
           name: Vercel Deploy
           command: echo "export VERCEL_URL=$(vercel --prebuilt -t $VERCEL_TOKEN)" >> "$BASH_ENV"
-
       - run:
           name: Set alias
           command: |
@@ -82,7 +76,6 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
           with-cache: false
-
       - run:
           name: Set Env Vars
           command: |
@@ -90,15 +83,12 @@ jobs:
       - run:
           name: Vercel Pull
           command: vercel pull --environment=preview -y -t $VERCEL_TOKEN
-
       - run:
           name: Vercel Build
           command: vercel build -t $VERCEL_TOKEN
-
       - run:
           name: Vercel Deploy
           command: echo "export VERCEL_URL=$(vercel --prebuilt -t $VERCEL_TOKEN)" >> "$BASH_ENV"
-
       - run:
           name: Set alias
           command: |
@@ -112,14 +102,12 @@ workflows:
       - deploy-api:
           context:
             - LetterCMS
-
   client-preview:
     when: << pipeline.parameters.run-client >>
     jobs:
       - deploy-client:
           context:
             - LetterCMS
-
   dashboard-preview:
     when: << pipeline.parameters.run-dashboard >>
     jobs:
