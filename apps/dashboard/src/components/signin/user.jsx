@@ -134,8 +134,8 @@ export default class UserTab extends Component {
       Router.push('/dashboard');
   }
   render() {
-    const {email, isCollab} = this.props;
-    const {name, lastname, password, email: emailState, existsEmail, isLoad, emailLoad} = this.state;
+    const {isCollab} = this.props;
+    const {name, lastname, password, email, existsEmail, isLoad, emailLoad} = this.state;
     let emailStatus = '';
 
     if (existsEmail === true)
