@@ -26,6 +26,7 @@ export const getServerSideProps = async ({req, res, query}) => {
   return {
     props: {
       ...props,
+      //TODO: implement SDK token generation
       accessToken: jwt.sign({subdomain: 'davidsdevel'}, process.env.JWT_AUTH)
     }
   };
