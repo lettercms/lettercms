@@ -53,6 +53,7 @@ jobs:
     with:
       name: api
       env: staging
+      vercel_env: preview
     secrets: inherit
 
   deploy-client:
@@ -62,6 +63,7 @@ jobs:
     with:
       name: client
       env: staging
+      vercel_env: preview
     secrets: inherit
 
   deploy-dashboard:
@@ -71,4 +73,5 @@ jobs:
     with:
       name: dashboard
       env: staging
+      vercel_env: preview
     secrets: inherit
