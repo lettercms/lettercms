@@ -51,6 +51,8 @@ async function verify(req, res) {
       status: 'verification-error',
       message: 'Unable to verify account'
     });
+
+    throw err;
   }
 };
 
