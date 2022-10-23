@@ -134,7 +134,9 @@ Accounts.statics.createAccount = async function(subdomain, data) {
     id = acc._id;
   }
 
-  return Promise.resolve({id});
+  return {
+    id
+  };
 };
 
 export default Accounts;
