@@ -1,9 +1,9 @@
-name: Promote to Staging
+name: Promote to Production
 
 on:
-  branch:
-    - production
   pull_request:
+    branches:
+      - production
     types:
       - closed
 
