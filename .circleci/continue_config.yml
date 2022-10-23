@@ -23,8 +23,9 @@ jobs:
           pkg-manager: yarn
           with-cache: false
       - run:
-          name: Set Env Vars
+          name: Prepare Env
           command: |
+            yarn global add vercel
             echo 'export VERCEL_PROJECT_ID="$CLIENT_PROJECT_ID"' >> "$BASH_ENV"
       - run:
           name: Vercel Pull
@@ -50,8 +51,9 @@ jobs:
           pkg-manager: yarn
           with-cache: false
       - run:
-          name: Set Env Vars
+          name: Prepare Env
           command: |
+            yarn global add vercel
             echo 'export VERCEL_PROJECT_ID="$DASHBOARD_PROJECT_ID"' >> "$BASH_ENV"
       - run:
           name: Vercel Pull
@@ -77,8 +79,9 @@ jobs:
           pkg-manager: yarn
           with-cache: false
       - run:
-          name: Set Env Vars
+          name: Prepare Env
           command: |
+            yarn global add vercel
             echo 'export VERCEL_PROJECT_ID="$API_PROJECT_ID"' >> "$BASH_ENV"
       - run:
           name: Vercel Pull
