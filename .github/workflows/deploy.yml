@@ -29,9 +29,6 @@ env:
 
 jobs:
   deploy:
-    environment:
-      name: ${{inputs.env}}/${{inputs.name}}
-      url: https://${{env.env_url}}
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}

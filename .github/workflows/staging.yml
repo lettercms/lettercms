@@ -47,10 +47,10 @@ jobs:
     if: ${{ needs.changes.outputs.api == 'true' }}
     uses: ./.github/workflows/deploy.yml
     environment:
-      name: production
+      name: staging
     with:
       name: api
-      env: production
+      env: preview
     secrets: inherit
 
   deploy-client:
@@ -58,10 +58,10 @@ jobs:
     if: ${{ needs.changes.outputs.client == 'true' }}
     uses: ./.github/workflows/deploy.yml
     environment:
-      name: production
+      name: staging
     with:
       name: client
-      env: production
+      env: preview
     secrets: inherit
 
   deploy-dashboard:
@@ -69,9 +69,9 @@ jobs:
     if: ${{ needs.changes.outputs.dashboard == 'true' }}
     uses: ./.github/workflows/deploy.yml
     environment:
-      name: production
-      url: https://lettercms.vercel.app
+      name: staging
+      url: https://lettercms-dashboard-main.vercel.app
     with:
       name: dashboard
-      env: production
+      env: preview
     secrets: inherit
