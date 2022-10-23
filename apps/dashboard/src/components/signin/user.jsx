@@ -134,16 +134,22 @@ export default class UserTab extends Component {
       Router.push('/dashboard');
   }
   render() {
+<<<<<<< Updated upstream
     const {email, isCollab} = this.props;
     const {name, lastname, password, email: emailState, existsEmail, isLoad, emailLoad} = this.state;
     let emailClass = '';
+=======
+    const {isCollab} = this.props;
+    const {name, lastname, password, email, existsEmail, isLoad, emailLoad} = this.state;
+    let emailStatus = '';
+>>>>>>> Stashed changes
 
     if (existsEmail === true)
-      emailClass = 'invalid';
+      emailStatus = 'invalid';
     else if (existsEmail === false)
-      emailClass = 'valid' ;
+      emailStatus = 'valid' ;
 
-    return <form className='form' onSubmit={!email ? this.register : this.createCollab}>
+    return <form className='form' onSubmit={!isCollab ? this.register : this.createCollab}>
         <Input
           disabled={isLoad}
           value={name}
@@ -164,9 +170,9 @@ export default class UserTab extends Component {
           !isCollab &&
           <div id='emailLoad'>
             <Input
-              disabled={isLoad || !!email}
-              className={((!!emailState || !!email) && 'notEmpty ') + emailClass}
-              value={email || emailState}
+              status={emailStatus}
+              disabled={isLoad}
+              value={email}
               id='email'
               type='email'
               onInput={this.handleInput}

@@ -50,7 +50,6 @@ jobs:
             vercel alias set $VERCEL_URL client-$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM.vercel.app --scope lettercms -t $VERCEL_TOKEN
             vercel alias set $VERCEL_URL lettercms-client-$CIRCLE_BRANCH.vercel.app --scope lettercms -t $VERCEL_TOKEN
 
-
   deploy-dashboard:
     docker:
       - image: cimg/node:lts
@@ -124,22 +123,133 @@ jobs:
             vercel alias set $VERCEL_URL api-$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM.vercel.app --scope lettercms -t $VERCEL_TOKEN
             vercel alias set $VERCEL_URL lettercms-api-$CIRCLE_BRANCH.vercel.app --scope lettercms -t $VERCEL_TOKEN
 
+  alias-api:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: false
+      - run:
+          name: Prepare Env
+          command: |
+            yarn global add vercel
+            echo 'export VERCEL_PROJECT_ID="$API_PROJECT_ID"' >> "$BASH_ENV"
+      - run:
+          name: Set alias
+          command: |
+            vercel alias set lettercms-api-main.vercel.app lettercms-api-$CIRCLE_BRANCH.vercel.app --scope lettercms -t $VERCEL_TOKEN
+
+  alias-client:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: false
+      - run:
+          name: Prepare Env
+          command: |
+            yarn global add vercel
+            echo 'export VERCEL_PROJECT_ID="$CLIENT_PROJECT_ID"' >> "$BASH_ENV"
+      - run:
+          name: Set alias
+          command: |
+            vercel alias set lettercms-client-main.vercel.app lettercms-client-$CIRCLE_BRANCH.vercel.app --scope lettercms -t $VERCEL_TOKEN
+
+  alias-dashboard:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: false
+      - run:
+          name: Prepare Env
+          command: |
+            yarn global add vercel
+            echo 'export VERCEL_PROJECT_ID="$DASHBOARD_PROJECT_ID"' >> "$BASH_ENV"
+      - run:
+          name: Set alias
+          command: |
+            vercel alias set lettercms-dashboard-main.vercel.app lettercms-dashboard-$CIRCLE_BRANCH.vercel.app --scope lettercms -t $VERCEL_TOKEN
+
+
 workflows:
   api-preview:
     when: << pipeline.parameters.run-api >>
     jobs:
       - deploy-api:
+          filters:
+            branches:
+              ignore:
+                - main
+                - production
           context:
             - LetterCMS
+
   client-preview:
     when: << pipeline.parameters.run-client >>
     jobs:
       - deploy-client:
+          filters:
+            branches:
+              ignore:
+                - main
+                - production
           context:
             - LetterCMS
+
   dashboard-preview:
     when: << pipeline.parameters.run-dashboard >>
     jobs:
       - deploy-dashboard:
+          filters:
+            branches:
+              ignore:
+                - main
+                - production
+          context:
+            - LetterCMS
+
+  api-alias:
+    when:
+      not: << pipeline.parameters.run-api >>
+    jobs:
+      - deploy-api:
+          filters:
+            branches:
+              ignore:
+                - main
+                - production
+          context:
+            - LetterCMS
+
+  client-alias:
+    when:
+      not: << pipeline.parameters.run-client >>
+    jobs:
+      - deploy-client:
+          filters:
+            branches:
+              ignore:
+                - main
+                - production
+          context:
+            - LetterCMS
+
+  dashboard-alias:
+    when:
+      not: << pipeline.parameters.run-dashboard >>
+    jobs:
+      - deploy-dashboard:
+          filters:
+            branches:
+              ignore:
+                - main
+                - production
           context:
             - LetterCMS
