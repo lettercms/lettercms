@@ -122,7 +122,3 @@ jobs:
         if: ${{inputs.env == 'preview'}}
         run: vercel alias set ${{ env.vercel_url }} lettercms-${{inputs.name}}-${{github.ref_name}}.vercel.app --scope lettercms -t $VERCEL_TOKEN
 
-      - uses: actions/cache@v3
-        with:
-          path: ./apps/${{inputs.name}}/.next/cache
-          key: lettercms-${{inputs.name}}-${{ hashFiles('yarn.lock') }}
