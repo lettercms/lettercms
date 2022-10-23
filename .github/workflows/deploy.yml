@@ -8,6 +8,11 @@ on:
         required: true
         type: string
 
+
+concurrency:
+  group: ci-${{ inputs.env }}-${{ inputs.name }}
+  cancel-in-progress: true
+
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
