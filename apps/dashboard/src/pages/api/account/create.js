@@ -1,8 +1,6 @@
 import connect from '@lettercms/utils/lib/connection';
 import {Accounts, Codes} from '@lettercms/models/accounts';
 import sendMail from '@lettercms/utils/lib/sendMail';
-import {sign} from '@lettercms/utils/lib/crypto';
-import bcrypt from 'bcrypt';
 import {withSentry} from '@sentry/nextjs';
 
 async function create(req, res) {
@@ -15,7 +13,8 @@ async function create(req, res) {
 
   const {
     email,
-    isSubscribeToNewsletter
+    isSubscribeToNewsletter,
+    name
   } = req.body;
 
   const existsAccount = await Accounts.exists({
@@ -56,24 +55,16 @@ async function create(req, res) {
     code += Math.floor(Math.random() * 10);
   }
 
-  const {name, lastname} = req.body;
-
-  const password = await bcrypt.hash(req.body.password, 10);
-
   await Codes.create({
     code,
-    email,
-    name,
-    lastname,
-    password
+    email
   });
 
   try {
     await sendMail(email, `${name} verifica tu cuenta - LetterCMS`, {
       type: 'verify',
-      password,
       code,
-      ...req.body
+      name
     });
   } catch(err) {
     return res.status(500).json({

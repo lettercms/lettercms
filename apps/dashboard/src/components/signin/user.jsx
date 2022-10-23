@@ -77,10 +77,13 @@ export default class UserTab extends Component {
       const userData = JSON.stringify(opts);
       const userToken = Buffer.from(userData).toString('hex');
 
-      sessionStorage.setItem('userToken', userToken);
-      sessionStorage.setItem('userEmail', email);
+      localStorage.setItem('userToken', userToken);
+      localStorage.setItem('userEmail', email);
 
-      const {status} = await createAccount(opts);
+      const {status} = await createAccount({
+        name,
+        email
+      });
 
       if (status !== 'OK')
         return alert('Error enviando los datos');

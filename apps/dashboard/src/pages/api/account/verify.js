@@ -1,6 +1,7 @@
 import connect from '@lettercms/utils/lib/connection';
 import {Accounts, Codes} from '@lettercms/models/accounts';
 import {withSentry} from '@sentry/nextjs';
+import bcrypt from 'bcrypt';
 
 async function verify(req, res) {
   if (req.method !== 'POST')
@@ -8,13 +9,13 @@ async function verify(req, res) {
       status: 'method-not-allowed'
     });
 
-  const {email} = req.body;
+  const {email, name, lastname} = req.body;
 
   await connect();
     
   await Codes.deleteMany({expiresAt: {$lt: Date.now()}});
 
-  const code = await Codes.findOne({email, code: req.body.code}, null, {lean: true});
+  const code = await Codes.exists({email, code: req.body.code});
 
   if (!code)
     return res.json({
@@ -32,7 +33,8 @@ async function verify(req, res) {
       message: `Account with email "${email}" already exists`
     });
 
-  const {name, lastname, password} = code;
+
+  const password = await bcrypt.hash(req.body.password, 10);
 
   await Accounts.createAccount({
     photo: `https://avatar.tobi.sh/${Buffer.from(email).toString('hex')}.svg?text=${name[0]+lastname[0]}&size=250`,
@@ -42,6 +44,8 @@ async function verify(req, res) {
     email,
     role: 'admin'
   });
+  
+  await Codes.deleteOne({email, code: req.body.code});
 
   res.json({
     status: 'OK'
