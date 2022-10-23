@@ -8,13 +8,13 @@ async function verify(req, res) {
       status: 'method-not-allowed'
     });
 
-  const {email, code} = req.body;
+  const {email} = req.body;
 
   await connect();
     
   await Codes.deleteMany({expiresAt: {$lt: Date.now()}});
 
-  const code = await Codes.findOne({email, code}, null, {lean: true});
+  const code = await Codes.findOne({email, code: req.body.code}, null, {lean: true});
 
   if (!code)
     return res.json({
@@ -35,7 +35,7 @@ async function verify(req, res) {
   const {name, lastname, password} = code;
 
   await Accounts.createAccount({
-    photo: `https://avatar.tobi.sh/${emailHash}.svg?text=${decoded.name[0]+decoded.lastname[0]}&size=250`,
+    photo: `https://avatar.tobi.sh/${emailHash}.svg?text=${name[0]+lastname[0]}&size=250`,
     name,
     lastname,
     password,
