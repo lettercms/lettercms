@@ -34,7 +34,8 @@ async function verify(req, res) {
     });
 
 
-  const password = await bcrypt.hash(req.body.password, 10);
+  const salt = await bcrypt.genSalt(10);
+  const password = await bcrypt.hash(req.body.password, salt);
 
   await Accounts.createAccount({
     photo: `https://avatar.tobi.sh/${Buffer.from(email).toString('hex')}.svg?text=${name[0]+lastname[0]}&size=250`,
