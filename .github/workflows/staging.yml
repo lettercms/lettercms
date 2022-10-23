@@ -50,8 +50,6 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.api == 'true' }}
     uses: ./.github/workflows/deploy.yml
-    environment:
-      name: staging
     with:
       name: api
       env: preview
@@ -61,8 +59,6 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.client == 'true' }}
     uses: ./.github/workflows/deploy.yml
-    environment:
-      name: staging
     with:
       name: client
       env: preview
@@ -72,9 +68,6 @@ jobs:
     needs: changes
     if: ${{ needs.changes.outputs.dashboard == 'true' }}
     uses: ./.github/workflows/deploy.yml
-    environment:
-      name: staging
-      url: https://lettercms-dashboard-main.vercel.app
     with:
       name: dashboard
       env: preview
