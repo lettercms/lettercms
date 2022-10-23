@@ -12,8 +12,6 @@ async function verify(req, res) {
 
   try {
     await connect();
-    
-    await Codes.deleteMany({expiresAt: {$lt: Date.now()}});
 
     const code = await Codes.findOne({email, code}, null, {lean: true});
 
