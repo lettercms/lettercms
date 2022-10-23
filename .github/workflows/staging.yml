@@ -54,7 +54,7 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       name: api
-      env: preview
+      env: staging
     secrets: inherit
 
   deploy-client:
@@ -63,7 +63,7 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       name: client
-      env: preview
+      env: staging
     secrets: inherit
 
   deploy-dashboard:
@@ -72,5 +72,5 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       name: dashboard
-      env: preview
+      env: staging
     secrets: inherit
