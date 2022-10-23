@@ -39,7 +39,8 @@ async function verify(req, res) {
     name,
     lastname,
     password,
-    email
+    email,
+    role: 'admin'
   });
 
   res.json({
