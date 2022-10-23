@@ -49,12 +49,7 @@ jobs:
           command: |
             vercel alias set $VERCEL_URL client-$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM.vercel.app --scope lettercms -t $VERCEL_TOKEN
             vercel alias set $VERCEL_URL lettercms-client-$CIRCLE_BRANCH.vercel.app --scope lettercms -t $VERCEL_TOKEN
-      steps:
-      - save_cache:
-          key: my-cache
-          paths:
-            - my-file.txt
-            - my-project/my-dependencies-directory
+
 
   deploy-dashboard:
     docker:
