@@ -1,5 +1,4 @@
 import Post from '@/components/post';
-import {parse as cookieParser} from 'cookie';
 import {getSession} from 'next-auth/react';
 import {getPost} from '@/lib/mongo/posts';
 import jwt from 'jsonwebtoken';

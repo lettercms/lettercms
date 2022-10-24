@@ -24,6 +24,7 @@ const appConfig = withTM({
     PAYPAL_PRODUCTION: process.env.PAYPAL_PRODUCTION_CLIENT,
     FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID,
     LETTER_ACCESS_TOKEN: process.env.LETTER_ACCESS_TOKEN,
+    SENTRY_DSN: process.env.SENTRY_DSN,
     ASSETS_BASE: isDev ? 'http://localhost:3003' : 'https://cdn.jsdelivr.net/gh/lettercms/lettercms/apps/cdn'
   },
   images: {

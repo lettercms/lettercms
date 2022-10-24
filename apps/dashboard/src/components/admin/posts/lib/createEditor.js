@@ -71,9 +71,11 @@ async function createEditor(content) {
     const nodes = e.source.roots._items[1]._children._nodes;
 
     const images = nodes
-      .map(({name, _attrs}) => {
-        return name === 'imageBlock' ? _attrs.get('data-src') : null;
-      })
+      .map(({name, _attrs}) =>
+        name === 'imageBlock'
+          ? _attrs.get('data-src')
+          : _attrs.get('src')
+      )
       .filter(e => e);
 
     this.changes.images = images;

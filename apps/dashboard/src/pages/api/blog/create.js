@@ -29,8 +29,7 @@ async function createBlog(req, res) {
   //Create Blog
   const blog = await blogs.create({
     ...req.body,
-    owner: account._id,
-    thumbnail: 'https://cdn.jsdelivr.net/gh/lettercms/lettercms/apps/cdn/public/og-template.png'
+    owner: account._id
   });
 
   //Initialize Blog Data
