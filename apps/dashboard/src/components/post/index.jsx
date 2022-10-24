@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import sdk from '@lettercms/sdk';
 import dynamic from 'next/dynamic';
-
+import {parse as cookieParser} from 'cookie';
 import Header from './header';
 import Breadcrumbs from './breadcrumbs';
 import Tags from './tags';
