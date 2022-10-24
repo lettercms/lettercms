@@ -36,7 +36,12 @@ const Blog = ({posts, blog, paging, mostViewed}) => {
         display: flex;
       }
       #posts-container {
-        width: 70%;
+        width: 100%;
+      }
+      @media screen and (min-width: 720px) {
+        #posts-container {
+          width: 70%;
+        }
       }
     `}</style>
   </Layout>;
