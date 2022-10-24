@@ -30,7 +30,7 @@ export default class UserTab extends Component {
       });
 
       sdk.Letter.existsAccount({email})
-        .then(exists => this.setState({
+        .then(({exists}) => this.setState({
           existsEmail: exists,
           emailLoad: false
         }));
