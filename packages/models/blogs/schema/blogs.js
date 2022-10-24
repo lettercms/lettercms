@@ -56,7 +56,10 @@ const blog = new Schema({
     type: String,
     required: true
   },
-  thumbnail: String,
+  thumbnail: {
+    type: String,
+    default: 'https://cdn.jsdelivr.net/gh/lettercms/lettercms/apps/cdn/images/og-template.png'
+  },
   tokenHash: String
 });
 
