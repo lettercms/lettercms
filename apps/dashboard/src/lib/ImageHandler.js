@@ -32,7 +32,7 @@ export default class ImageHandler {
 
       let finalSize = size;
 
-      if (fileMetadata)
+      if (fileMetadata?.metadata)
         finalSize -= fileMetadata.metadata.size;
 
       fetch('/api/usage/update', {
