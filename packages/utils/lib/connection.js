@@ -2,7 +2,6 @@ import mongoose from '@lettercms/models/mongoose';
 
 const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/blog';
 
-
 /**
  * Global is used here to maintain a cached connection across hot reloads
  * in development. This prevents connections growing exponentially
@@ -35,8 +34,6 @@ export default async function dbConnect() {
     cached.conn = await cached.promise;
     return cached.conn;
   } catch(err) {
-    cached.promise = mongoose.connect(MONGO_URL, opts).then(m => m);
-    
-    return dbConnect();
+    throw err;
   }
 }

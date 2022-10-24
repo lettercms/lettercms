@@ -45,23 +45,28 @@ export default class Signin extends Component {
     load: true
   };
 
-  onUserCreate = email => {
+  componentDidMount = () => {
+    const step = localStorage.getItem('_step');
+
+    if (step === 'blog')
+      this.setState({
+        tab: 'blog'
+      })
+  }
+  onUserCreate = () => {
     this.setState({
-      email,
       tab: 'verify'
     });
   };
 
   onVerify = () => {
     this.setState({
-      email: this.state.email,
       tab: 'blog'
     });
   };
 
   onVerifyError = () => {
     this.setState({
-      email: null,
       tab: 'user'
     });
   };
@@ -94,11 +99,11 @@ export default class Signin extends Component {
         }
         {
           tab === 'verify' &&
-          <Verify email={this.state.email} onVerify={this.onVerify} onVerifyError={this.onVerifyError}/>
+          <Verify onVerify={this.onVerify} onVerifyError={this.onVerifyError}/>
         }
         {
           tab === 'blog' &&
-          <BlogTab ownerEmail={this.state.email}/>
+          <BlogTab />
         }
       </div>
       <style jsx>{`

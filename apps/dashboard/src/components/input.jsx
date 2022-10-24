@@ -9,9 +9,9 @@ const Input = ({className, id, status, value = '', type = 'text', label, ...opts
     customClassName = className;
 
   if (status === 'invalid')
-    className += ' button-invalid';
+    customClassName += ' button-invalid';
   else if (status === 'valid')
-    className += ' button-valid';
+    customClassName += ' button-valid';
 
   const options = {
     className: customClassName || undefined,

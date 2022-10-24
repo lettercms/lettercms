@@ -1,11 +1,11 @@
 import connect from '@lettercms/utils/lib/connection';
-import {Payment} from '@lettercms/models/payments';
+//import {Payment} from '@lettercms/models/payments';
 import {Stats} from '@lettercms/models/stats';
 import {Accounts} from '@lettercms/models/accounts';
 import blogs from '@lettercms/models/blogs';
 import posts from '@lettercms/models/posts';
-import { withSentry } from '@sentry/nextjs';
 import usage from '@lettercms/models/usages';
+import { withSentry } from '@sentry/nextjs';
 
 async function createBlog(req, res) {
   if (req.method !== 'POST')
@@ -30,8 +30,7 @@ async function createBlog(req, res) {
   const blog = await blogs.create({
     ...req.body,
     owner: account._id,
-    thumbnail: 'https://cdn.jsdelivr.net/gh/lettercms/lettercms/apps/cdn/public/og-template.png',
-    mainUrl: '/'
+    thumbnail: 'https://cdn.jsdelivr.net/gh/lettercms/lettercms/apps/cdn/public/og-template.png'
   });
 
   //Initialize Blog Data
@@ -39,10 +38,10 @@ async function createBlog(req, res) {
   await usage.create({subdomain});
 
   const date = new Date();
-  await Payment.create({
+  /*await Payment.create({
     subdomain,
-    nextPayment: date.setMonth(date.getMonth() + 1)
-  });
+    //nextPayment: date.setMonth(date.getMonth() + 1)
+  });*/
 
   //Link subdomain to account 
   await Accounts.updateOne({email: ownerEmail}, {subdomain});
@@ -50,19 +49,18 @@ async function createBlog(req, res) {
   //TODO: Create Example Page
   //const pageID = await pages.create();
 
-  const id = await posts.createPost(subdomain, {
+  //Publish post
+  const {_id} = await posts.createPost(subdomain, {
+    subdomain,
+    created: date,
     title: 'Yay! My firts post',
     description: 'You can use this description to get conversions',
     url: 'first-example',
     tags: ['example'],
     content: '<div>Hello World</div>',
-    author: account._id
-  });
-
-  //Publish post
-  await posts.updateOne({_id: id}, {
+    author: account._id,
     postStatus: 'published',
-    published: new Date()
+    published: date
   });
 
   return res.json({

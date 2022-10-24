@@ -36,14 +36,17 @@ const blog = new Schema({
     default: '1',
     required: true
   },
-  categories: [String],
+  categories: {
+    type: Array,
+    default: []
+  },
   tags: {
     type: Map,
     default: new Map()
   },
   mainUrl: {
     type: String,
-    default: ''
+    default: '/'
   },
   title: {
     type: String,

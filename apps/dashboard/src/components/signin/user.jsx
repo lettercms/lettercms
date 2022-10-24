@@ -30,7 +30,7 @@ export default class UserTab extends Component {
       });
 
       sdk.Letter.existsAccount({email})
-        .then(exists => this.setState({
+        .then(({exists}) => this.setState({
           existsEmail: exists,
           emailLoad: false
         }));
@@ -77,10 +77,13 @@ export default class UserTab extends Component {
       const userData = JSON.stringify(opts);
       const userToken = Buffer.from(userData).toString('hex');
 
-      sessionStorage.setItem('userToken', userToken);
-      sessionStorage.setItem('userEmail', email);
+      localStorage.setItem('userToken', userToken);
+      localStorage.setItem('userEmail', email);
 
-      const {status} = await createAccount(opts);
+      const {status} = await createAccount({
+        name,
+        email
+      });
 
       if (status !== 'OK')
         return alert('Error enviando los datos');
@@ -136,14 +139,14 @@ export default class UserTab extends Component {
   render() {
     const {isCollab} = this.props;
     const {name, lastname, password, email, existsEmail, isLoad, emailLoad} = this.state;
-    let emailClass = '';
+    let emailStatus = '';
 
     if (existsEmail === true)
-      emailClass = 'invalid';
+      emailStatus = 'invalid';
     else if (existsEmail === false)
-      emailClass = 'valid' ;
+      emailStatus = 'valid' ;
 
-    return <form className='form' onSubmit={!email ? this.register : this.createCollab}>
+    return <form className='form' onSubmit={!isCollab ? this.register : this.createCollab}>
         <Input
           disabled={isLoad}
           value={name}
@@ -164,8 +167,8 @@ export default class UserTab extends Component {
           !isCollab &&
           <div id='emailLoad'>
             <Input
+              status={emailStatus}
               disabled={isLoad}
-              className={(email && 'notEmpty ') + emailClass}
               value={email}
               id='email'
               type='email'

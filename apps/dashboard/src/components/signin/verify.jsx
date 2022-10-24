@@ -3,7 +3,7 @@ import Input from '../input';
 import {createAccount, createCollaborator} from '@lettercms/admin';
 
 const resendEmail = async () => {
-  const token = sessionStorage.get('userToken');
+  const token = localStorage.getItem('userToken');
 
   const data = JSON.parse(Buffer.from(token, 'hex').toString('utf-8'));
 
@@ -25,7 +25,10 @@ export default function Verify({onVerify}) {
   const [code, setCode] = useState();
 
   const verify = async () => {
-    const email = sessionStorage.getItem('userEmail');
+    const email = localStorage.getItem('userEmail');
+    const token = localStorage.getItem('userToken');
+
+    const data = JSON.parse(Buffer.from(token, 'hex').toString('utf-8'));
 
     const res = await fetch('/api/account/verify', {
       credentials: 'include',
@@ -34,7 +37,7 @@ export default function Verify({onVerify}) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email,
+        ...data,
         code
       })
     });
@@ -42,8 +45,8 @@ export default function Verify({onVerify}) {
     const {status} = await res.json();
 
     if (status === 'OK') {
-      sessionStorage.setItem('userToken', null);
-      sessionStorage.setItem('userEmail', null);
+      localStorage.removeItem('userToken');
+      localStorage.setItem('_step', 'blog');
       
       onVerify();
     } else {

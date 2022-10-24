@@ -38,8 +38,8 @@ export default class BlogTab extends Component {
         description,
         subdomain
       } = this.state;
-
-      const {ownerEmail} = this.props;
+      
+      const ownerEmail = localStorage.getItem('userEmail');
 
       await createBlog({
         subdomain,
@@ -52,9 +52,9 @@ export default class BlogTab extends Component {
         isLoad: false
       });
 
-      localStorage.removeItem('tempUser');
-      localStorage.removeItem('tempStep');
-      localStorage.removeItem('tempData');
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('_step');
+      localStorage.removeItem('userToken');
 
       Router.push('/login');
     } catch(err) {
