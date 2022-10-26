@@ -37,8 +37,8 @@ const blog = new Schema({
     required: true
   },
   categories: {
-    type: Array,
-    default: []
+    type: Map,
+    default: new Map()
   },
   tags: {
     type: Map,
