@@ -25,7 +25,6 @@ export default async function importData() {
       try {
         const r = await processBlogger(data, subdomain, account);
         await bucket.file(`${subdomain}/${type}.xml`).delete();
-        console.log(r);
 
         res.json({
           status: 'OK'

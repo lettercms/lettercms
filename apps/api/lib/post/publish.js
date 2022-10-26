@@ -7,6 +7,8 @@ import {Facebook} from '@lettercms/models/socials';
 import brain from '@/lib/brain';
 import FB from '@lettercms/utils/lib/social/Facebook';
 import revalidate from '@lettercms/utils/lib/revalidate';
+import updateTags from './updateTags';
+import updateCategories from './updateCategories';
 
 export default async function() {
   const {req, res} = this;
@@ -54,7 +56,11 @@ export default async function() {
     postStatus: 'published'
   };
 
-  const {tags, _id: postID, url: _url, description} = await posts.findOneAndUpdate(updateCondition, newData, {select: 'description _id tags url'});
+  const {tags, _id: postID, url: _url, description, categories} = await posts.findOneAndUpdate(updateCondition, newData, {select: 'description _id tags url categories'});
+
+  updateTags(subdomain, tags, newData.tags);
+  updateCategories(subdomain, categories, newData.category);
+
 
   if (body.promote?.facebook) {
     //Promote on Facebook

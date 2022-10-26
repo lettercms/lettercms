@@ -2,6 +2,8 @@ import {Letter} from '@lettercms/sdk';
 import jwt from 'jsonwebtoken';
 import {getSubdomain} from './utils';
 
+//TODO: Move function to packages/next
+//TODO: use DB connection
 export default async function sitemap(req, res) {
     try {
       const hostname = req.headers.host;
@@ -33,7 +35,7 @@ export default async function sitemap(req, res) {
 
       const data = Object.assign([], posts, pages);
       
-      const domain = customDomain || `https://lettercms-client-davidsdevel.vercel.app/${subdomain}`;
+      const domain = customDomain || `https://${subdomain}.lettercms.vercel.app`;
 
       const mapped = data.map(({ fullUrl, updated }) => `<url><changefreq>monthly</changefreq><loc>https://blog.davidsdevel.com/${fullUrl}</loc><lastmod>${updated}</lastmod><priority>1</priority></url>`);
 

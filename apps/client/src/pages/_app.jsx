@@ -2,13 +2,11 @@ import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import Head from 'next/head';
 import sdk from '@lettercms/sdk';
-import Cookies from 'js-cookie';
+//import Cookies from 'js-cookie';
+
 import {UserProvider} from '@/lib/userContext';
-import Facebook from '@/lib/client/FacebookSDK';
 import Load from '@/components/loadBar';
-import Nav from '@/components/nav';
-import Footer from '@/components/index/footer';
-import '@/styles/global.css';
+
 import Fallback from '@/components/fallback';
 
 const CustomApp = ({pageProps, Component}) => {
@@ -24,18 +22,19 @@ const CustomApp = ({pageProps, Component}) => {
       if (!pageProps.notFound) {
         setView();
 
-        const UID = Cookies.get('userID');
-        if (!UID) {
-          sdk.createRequest('/user','POST', {
-            device: /Android|iPhone|iPad/.test(navigator.userAgent) ? 'mobile' : 'desktop'
-          }).then(({id}) => {
-            Cookies.set('userID', id);
-          });
-        }
+        // const UID = Cookies.get('userID');
+
+        // if (!UID) {
+        //   sdk.createRequest('/user','POST', {
+        //     device: /Android|iPhone|iPad/.test(navigator.userAgent) ? 'mobile' : 'desktop'
+        //   }).then(({id}) => {
+        //     Cookies.set('userID', id);
+        //   });
+        // }
 
       }
       if (!pageProps.notFound && !tracingInit) {
-        sdk.stats.startTrace();
+        //sdk.stats.startTrace();
         setTracing(true);
       }
     }
@@ -92,11 +91,9 @@ const CustomApp = ({pageProps, Component}) => {
       showLoad
       && <Load />
     }
-    <Nav subdomain={router.query.subdomain} main={pageProps.mainUrl}/>
     <UserProvider ready={pageProps.accessToken && !router.isFallback}>
       <Component {...pageProps} />
     </UserProvider>
-    <Footer title={pageProps.blog?.title}/>
   </div>;
 };
 

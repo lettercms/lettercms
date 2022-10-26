@@ -4,6 +4,8 @@ import blogs from '@lettercms/models/blogs';
 import {isValidObjectId} from 'mongoose';
 import revalidate from '@lettercms/utils/lib/revalidate';
 import {getFullUrl} from '@lettercms/utils/lib/posts';
+import updateTags from './updateTags';
+import updateCategories from './updateCategories';
 
 export default async function() {
   const {req, res} = this;
@@ -50,7 +52,10 @@ export default async function() {
     updated: date
   };
 
-  const updatedPost = await posts.findOneAndUpdate(updateCondition, newData, {select: 'url postStatus category published'});
+  const updatedPost = await posts.findOneAndUpdate(updateCondition, newData, {select: 'url postStatus category published tags categories'});
+
+  updateTags(subdomain, updatedPost.tags, newData.tags);
+  updateCategories(subdomain, updatedPost.category, newData.category);
 
   if (updatedPost.postStatus === 'published') {
     blogs.findOne({subdomain}, 'mainUrl url', {lean: true})

@@ -1,5 +1,7 @@
 import {XMLParser} from 'fast-xml-parser';
 import posts from '@lettercms/models/posts';
+import updateTags from './updateTags';
+import updateCategories from './updateCategories';
 
 const parser = new XMLParser({
   ignoreAttributes : false  
@@ -20,7 +22,17 @@ export default function processBlogger(file, subdomain, author) {
     }
   });
 
-  return posts.insertMany(postData);
+  const promises = [];
+
+  //TODO: optimize loop
+  postData.forEach(({tags}) => {
+    promises.push(consupdateTags(subdomain, [], newData.tags));
+    promises.push(updateCategories(subdomain, null, newData.category))
+  })
+
+  promises.push(posts.insertMany(postData));
+
+  return Promise.all(promises);
 }
 
 function parseBlogger(data, subdomain, author) {
