@@ -82,7 +82,8 @@ export default function PageWraper(props) {
           id="lettercms-main-script"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
-            __html: props.js}}
+            __html: props.js
+          }}
         />
       }
    </>

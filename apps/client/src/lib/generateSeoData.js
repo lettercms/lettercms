@@ -11,7 +11,7 @@
 export default function generateSeoData(url, type, data) {
   //TODO: generate data depending type
   const {blog} = data;
-
+ 
   return {
     title: blog.title,
     description: blog.description,
