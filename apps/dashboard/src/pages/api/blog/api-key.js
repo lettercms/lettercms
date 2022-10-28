@@ -73,7 +73,6 @@ async function deleteKey() {
 
   const filtered = keys.filter(e => e._id.toString() !== id);
 
-
   await blogs.updateOne({subdomain}, {$set: {keys: filtered}});
 
   res.json({

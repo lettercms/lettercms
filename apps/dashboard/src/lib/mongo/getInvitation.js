@@ -1,7 +1,6 @@
 import connect from '@lettercms/utils/lib/connection';
 import {Invitations} from '@lettercms/models/accounts';
 
-
 export default async function getInivitation(_id, subdomain) {
   await connect();
 
