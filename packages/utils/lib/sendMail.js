@@ -35,6 +35,9 @@ const filterTemplate = (template, data) => {
 
 const sendMail = async (to, subject, data) => {
   try {
+    if (isDev)
+      return console.log(to, subject, data);
+
     const template = await getTemplate(data.type);
 
     const mailOptions = {

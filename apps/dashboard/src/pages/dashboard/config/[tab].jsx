@@ -7,7 +7,8 @@ import Config from '@/components/admin/config';
 const tabs = [
   'blog',
   'account',
-  'usage'
+  'usage',
+  'developers'
 ];
 
 export async function getServerSideProps({ req, res, query }) {

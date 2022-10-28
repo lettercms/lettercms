@@ -19,6 +19,14 @@ const Blog = dynamic(() => import('./blogConfig'), {
   </div>,
   ssr: false
 });*/
+
+const Developers = dynamic(() => import('./developers'), {
+  loading: () => <div className='config-opts'>
+    <BaseLoad rows={1}/>
+  </div>,
+  ssr: false
+});
+
 const Usage = dynamic(() => import('./usage'), {
   loading: () => <div className='config-opts'>
     <BaseLoad rows={1}/>
@@ -55,6 +63,9 @@ export default function Config({tab}) {
 
   //if (tab === 'payment')
   //  UI = <Payment/>;
+
+  if (tab === 'developers')
+    UI = <Developers/>;
 
   if (tab === 'account')
     UI = <Account button={buttonRef}/>;

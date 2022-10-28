@@ -9,12 +9,12 @@ export default async function exchange() {
   const blogSecret = req.headers['x-lettercms-secret'];
 
   //Invalid API credentials
-  if ((blogId && !blogSecret) || (!blogId && blogSecret))
+  if (!blogSecret || !blogId)
     return res.status(400).json({
       message: 'Please Provide a valid client ID and client Secret'
     });
-
-  const blog = await blogs.findOne({_id: blogId}, 'tokenHash subdomain', {lean: true});
+    
+  const blog = await blogs.findOne({_id: blogId}, 'keys subdomain', {lean: true});
 
   if (!blog)
     return res.status(400).json({
@@ -22,9 +22,11 @@ export default async function exchange() {
       message: 'Invalid Client ID'
     });
 
-  const {tokenHash, subdomain} = blog;
+  const {keys, subdomain} = blog;
 
-  const isValid = await bcrypt.compare(blogSecret, tokenHash);
+  const checks = await Promise.all(keys.map(e => bcrypt.compare(blogSecret, e.hash)));
+
+  const isValid = checks.includes(true);
 
   if (!isValid)
     return res.status(401).json({
@@ -34,6 +36,7 @@ export default async function exchange() {
   const accessToken = jwt.sign({subdomain}, process.env.JWT_AUTH, req.body);
 
   res.json({
+    status: 'OK',
     accessToken
   });
 }

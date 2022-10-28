@@ -52,6 +52,8 @@ export default function manageMethods(methods) {
       const blogSecret = req.headers['x-lettercms-secret'];
       const accessToken = req.headers['authorization'];
 
+      console.log(blogId, blogSecret)
+
       //Check API credentials
       if ((blogId && !blogSecret) || (!blogId && blogSecret))
         return res.status(400).json({
@@ -65,7 +67,7 @@ export default function manageMethods(methods) {
 
       //Has API Key
       if (blogId && blogSecret) {
-        const blog = await blogs.findOne({_id: blogId}, 'tokenHash subdomain', {lean: true});
+        const blog = await blogs.findOne({_id: blogId}, 'keys subdomain', {lean: true});
 
         if (!blog)
           return res.status(400).json({
@@ -73,12 +75,13 @@ export default function manageMethods(methods) {
             message: 'Invalid Client ID'
           });
 
-        const {tokenHash, subdomain} = blog;
+        const {keys, subdomain} = blog;
 
         req.subdomain = subdomain;
 
-        pass = await bcrypt.compare(blogSecret, tokenHash);
+        const checks = await Promise.all(keys.map(e => bcrypt.compare(blogSecret, e.hash)));
 
+        pass = checks.includes(true);
       }
       //Has Access Token
       else if (accessToken) {
