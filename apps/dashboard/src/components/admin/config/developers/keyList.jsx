@@ -1,15 +1,14 @@
 import Trash from '@/components/svg/trash';
 import sdk from '@lettercms/sdk';
 
-
-//TODO: add corfination modal to delete
+//TODO: add confirmation modal to delete
 export default function KeyList({apiKeys, onDelete}) {
   const deleteKey = async id => {
     try {
       const res = await fetch('/api/blog/api-key', {
         method: 'DELETE',
         headers: {
-          "Content-Type": 'application/json', 
+          'Content-Type': 'application/json', 
           Authorization: sdk.accessToken
         },
         body: JSON.stringify({
@@ -28,7 +27,7 @@ export default function KeyList({apiKeys, onDelete}) {
     } catch(err) {
       return alert('Error al eliminar la llave');
     }
-  }
+  };
   return <div style={{width: '100%'}}>
     <ul>
       {
@@ -52,7 +51,7 @@ export default function KeyList({apiKeys, onDelete}) {
                 <Trash onClick={() => deleteKey(e._id)} width='24' height='24'/>
               </div>
             </div>
-          </li>
+          </li>;
         })
       }
     </ul>
@@ -79,5 +78,5 @@ export default function KeyList({apiKeys, onDelete}) {
         cursor: pointer;
       }
     `}</style>
-  </div>
+  </div>;
 }

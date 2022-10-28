@@ -52,7 +52,7 @@ export default function ImageList({images, isUploading, onLoadMore, isLoadingMor
     <div id='button-container'>
     {
       isLoading
-      ? <img src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/spinner-black.svg'/>
+      ? <img src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/spinner-black.svg' alt=''/>
       : <button className='btn-outline-sm' onClick={onLoadMore}>Cargar más</button>
     }
     </div>

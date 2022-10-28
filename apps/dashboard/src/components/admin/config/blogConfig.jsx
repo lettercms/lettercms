@@ -61,7 +61,7 @@ export default function BlogConfig({button}) {
         changes = {};
       });
     }
-  }, [status]);
+  }, [status, button]);
 
 
   const addCategory = cat => {

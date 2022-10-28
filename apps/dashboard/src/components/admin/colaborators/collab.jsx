@@ -13,7 +13,7 @@ export default function Collab({id, onClose}) {
       setShowModal(false);
       setTimeout(onClose, 600);
     }
-  }, [showModal, loading]);
+  }, [showModal, loading, onClose]);
 
   useEffect(() => {
     if (id) {

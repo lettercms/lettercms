@@ -143,7 +143,7 @@ const Faturation = ({data, lastPayment}) => {
 
   useEffect(() => {
     window.p =paypal.Buttons(opts).render('#payment-button');
-  }, []);
+  }, [opts]);
 
   return <div style={{width: '100%'}}>
     <ul>
@@ -186,7 +186,7 @@ const BalanceModal = ({addFunds}) => {
 
   useEffect(() => {
     window.p2 = paypal.Buttons(opts).render('#paypalCheckoutContainer');
-  }, []);
+  }, [opts]);
 
   return <div className='modal-funding'>
     <div className='modal-prices'>
@@ -258,7 +258,7 @@ const Payment = () => {
       </div>
     </Base>
     <Base rows={2} title='Añadir Fondos' style={{height: 250}}>
-      <Image src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/plus.svg' width='100' height='100' style={{cursor: 'pointer'}} onClick={() => setModal(true)}/>
+      <Image src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/plus.svg' width='100' height='100' style={{cursor: 'pointer'}} onClick={() => setModal(true)} alt=''/>
     </Base>
     <Base rows={1} title='Factura Actual' style={{height: 'auto'}}>
       {

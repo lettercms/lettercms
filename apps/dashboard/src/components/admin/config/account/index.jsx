@@ -50,7 +50,7 @@ export default function AccountConfig({button}) {
         });
       };
     }
-  }, [status]);
+  }, [status, button, user._id]);
 
   const handleInput = ({target: {name, value}}) => {
 

@@ -4,7 +4,7 @@ export default function CopyField({text}) {
   const copy = () => {
     navigator.clipboard.writeText(text);
     alert('Copiada');
-  }
+  };
 
   return <div className='copy-field flex flex-row'>
     <span>{text}</span>
@@ -22,5 +22,5 @@ export default function CopyField({text}) {
         cursor: pointer;
       }
     `}</style>
-  </div>  
+  </div>;  
 }

@@ -82,7 +82,7 @@ function Layout(props) {
   useEffect(() => {
     if (user.status === 'done')
       fetchData();
-  }, [user.status]);
+  }, [user.status, fetchData]);
 
   let ui;
 

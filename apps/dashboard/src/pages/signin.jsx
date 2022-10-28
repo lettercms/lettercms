@@ -51,7 +51,7 @@ export default class Signin extends Component {
     if (step === 'blog')
       this.setState({
         tab: 'blog'
-      })
+      });
   }
   onUserCreate = () => {
     this.setState({

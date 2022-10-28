@@ -40,7 +40,7 @@ const ApiKey = () => {
       const res = await fetch('/api/blog/api-key', {
         method: 'POST',
         headers: {
-          "Content-Type": 'application/json', 
+          'Content-Type': 'application/json', 
           Authorization: sdk.accessToken
         },
         body: JSON.stringify({
@@ -54,7 +54,7 @@ const ApiKey = () => {
         if (status === 'OK') {
           setNewKey(data.key);
           setStep(1);
-          setKeyName('')
+          setKeyName('');
           
           data.created = Date.now();
 
@@ -70,12 +70,12 @@ const ApiKey = () => {
 
       alert('Error al crear la llave');
     } catch(err) {
-      console.error(err)
+      console.error(err);
       return alert('Error al crear la llave');
     } finally {
       setKeyName('');
     }
-  }
+  };
 
   const close = () => {
     toggleModal(false);
@@ -85,7 +85,7 @@ const ApiKey = () => {
       setStep(0);
       setNewKey('');
     }, 600);
-  }
+  };
 
   const removeKey = id => setKeys(k => k.filter(e => e._id.toString() !== id));
 

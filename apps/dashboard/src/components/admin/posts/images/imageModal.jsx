@@ -23,7 +23,7 @@ export default function ImageModal({show, img, meta, onClose, onSelect}) {
   return <div id='image-shadow' style={{opacity, display}}>
     <Cross fill='#fff' id='image-modal-cross' onClick={close}/>
     <div id='modal-image-container'>
-      <img className='lazy-img' src={img}/>
+      <img className='lazy-img' src={img} alt=''/>
     </div>
     <button className='btn-solid-sm alter' onClick={() => onSelect(meta)}>Seleccionar</button>
     <style jsx>{`
