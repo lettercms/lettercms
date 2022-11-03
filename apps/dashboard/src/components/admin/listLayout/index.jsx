@@ -110,7 +110,7 @@ function Layout(props) {
         {data.map((e) => <Card key={e.url + e._id} edit={props.onEdit} del={id => _delete(id, setData)} {...e}/>)}
       </ul>
       {
-        before &&
+        cursor &&
         <Button onClick={() => setBefore(cursor)} loading={isLoadingMore}>Cargar Más</Button>
       }
     </>;
