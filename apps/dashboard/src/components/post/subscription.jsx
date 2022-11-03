@@ -3,6 +3,7 @@ import Modal from '../modalBase';
 import Input from '../input';
 import _sdk from '@lettercms/sdk';
 import Cookie from 'js-cookie';
+import Button from '@/components/button';
 
 const sdk = new _sdk.Letter(process.env.TRACK_TOKEN);
 
@@ -64,7 +65,7 @@ const Subscription = ({user, onSubscribe}) => {
         <Input value={name} onInput={e => setName(e.target.value)} label='Nombre'/>
         <Input value={lastname} onInput={e => setLastname(e.target.value)} label='Apellido'/>
         <Input value={email} onInput={e => setEmail(e.target.value)} label='Email' type='email'/>
-        <button className='btn-outline-sm'>Suscribirse</button>
+        <Button type='outline'>Suscribirse</Button>
       </form>
     </Modal>
     <style jsx>{`
