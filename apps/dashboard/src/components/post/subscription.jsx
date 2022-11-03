@@ -59,7 +59,7 @@ const Subscription = ({user, onSubscribe}) => {
       <br/>
       <span>Tenemos contenido de calidad esperando por ti</span>
     </div>
-    <button className='btn-outline-sm alter' onClick={() => setModal(true)}>Suscribirse</button>
+    <Button type='outline' alt onClick={() => setModal(true)}>Suscribirse</Button>
     <Modal show={showModal} close={() => setModal(false)} width='auto' height='auto'>
       <form onSubmit={e => {e.preventDefault(); subscribe(user._id, data, cb);}}>
         <Input value={name} onInput={e => setName(e.target.value)} label='Nombre'/>
