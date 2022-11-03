@@ -1,11 +1,11 @@
-import {useEffect, useState, useMemo} from 'react';
+import {useEffect, useState} from 'react';
 import Card from '../posts/card';
 import Top from '../top';
 import CardLoad from '../cardLoad';
 import sdk from '@lettercms/sdk';
-import LoadMore from './loadMore';
 import NoData from './noData';
 import {useUser} from '@/lib/dashboardContext';
+import Button from '@/components/button';
 
 let actual = {};
 let cursor = '';
@@ -111,7 +111,7 @@ function Layout(props) {
       </ul>
       {
         before &&
-        <LoadMore onClick={() => setBefore(cursor)} isLoading={isLoadingMore}/>
+        <Button onClick={() => setBefore(cursor)} loading={isLoadingMore}>Cargar Más</Button>
       }
     </>;
   } else {
