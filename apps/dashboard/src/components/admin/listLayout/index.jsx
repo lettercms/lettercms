@@ -111,7 +111,7 @@ function Layout(props) {
       </ul>
       {
         cursor &&
-        <Button onClick={() => setBefore(cursor)} loading={isLoadingMore}>Cargar Más</Button>
+        <Button style={{margin: 'auto'}} type='outline' onClick={() => setBefore(cursor)} loading={isLoadingMore}>Cargar Más</Button>
       }
     </>;
   } else {
@@ -125,7 +125,11 @@ function Layout(props) {
       loading={!count}
       countTabs={props.tabs}
       create={props.onCreate}
-      onFilter={status => setStatus(status)}
+      onFilter={status => {
+        setData([]);
+        setLoading(true);
+        setStatus(status)
+      }}
       count={count}
       buttonText={props.buttonText}
     />
