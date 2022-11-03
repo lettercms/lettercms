@@ -9,7 +9,7 @@
   "scripts": {
     "build": "turbo run build",
     "deploy": "turbo run deploy",
-    "dev": "turbo run dev --parallel --filter=dashboard --filter=client --filter=api --filter=cdn",
+    "dev": "node ./scripts/run-dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
