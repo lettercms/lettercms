@@ -1,7 +1,12 @@
 import Base from '../admin/stats/base';
 import Link from 'next/link';
+import Button from '@/components/button';
+import {useRouter} from 'next/router';
 
-const Video = () => <div id="video" className="basic-2">
+export default function CTA() {
+  const router = useRouter();
+
+  return <div id="video" className="basic-2">
     <Base rows={1} style={{height: 'auto'}}>
       <div className="row">
         <div className="col-lg-12">
@@ -11,9 +16,7 @@ const Video = () => <div id="video" className="basic-2">
             </div> 
           </div>
           <p className="p-heading">Empieza desde cero y crece junto a nosotros.</p>
-          <Link href='/signin'>
-            <a className="btn-outline-lg page-scroll">REGISTRARSE</a>
-          </Link>    
+          <Button type='outline' onClick={() => router.push('/signin')}>REGISTRARSE</Button>
         </div> 
       </div> 
     </Base> 
@@ -131,5 +134,4 @@ const Video = () => <div id="video" className="basic-2">
       }
     `}</style>
   </div>;
-
-export default Video;
+}

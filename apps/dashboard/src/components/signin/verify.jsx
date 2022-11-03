@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import Input from '../input';
 import {createAccount, createCollaborator} from '@lettercms/admin';
+import Button from '@/components/button';
 
 const resendEmail = async () => {
   const token = localStorage.getItem('userToken');
@@ -22,9 +23,12 @@ const resendEmail = async () => {
 };
 
 export default function Verify({onVerify}) {
-  const [code, setCode] = useState();
+  const [code, setCode] = useState('');
+  const [isLoad, setIsLoad] = useState(false);
 
   const verify = async () => {
+    setIsLoad(true);
+
     const email = localStorage.getItem('userEmail');
     const token = localStorage.getItem('userToken');
 
@@ -52,15 +56,17 @@ export default function Verify({onVerify}) {
     } else {
       alert('Código no valido');
     }
+
+    setIsLoad(false);
   };
 
   return <div className='form'>
     <span style={{color: '#555', fontSize: '1rem'}}>
       <span>Ingresa el código recibido por correo</span>
       <Input id='code' value={code} onInput={({target: {value}}) => setCode(value)} label='Código de verificación'/>
-      <button className='btn-outline-lg' onClick={verify}>Verificar</button>
+      <Button type='outline' loading={isLoad} onClick={verify}>Verificar</Button>
     </span>
     <hr/>
-    <button className='btn-outline-lg' onClick={resendEmail}>Reenviar Correo</button>
+    <Button type='outline' loading={isLoad} onClick={resendEmail}>Reenviar Correo</Button>
   </div>;
 }

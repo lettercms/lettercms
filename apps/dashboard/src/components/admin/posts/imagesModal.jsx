@@ -7,28 +7,18 @@ import ModalTabs from './images/tabs';
 
 const generateUnsplashSrc = (raw, width, height) => {
   return {
-    'data-dimensions': `${width}x${height}`,
-    class: 'lettercms-image',
-    src: `${raw}&w=100`,
-    'data-src': `${raw}&w=1400`,
-    srcset:`${raw}&w=480 480w,
-      ${raw}&w=720 720w,
-      ${raw}&w=1024 1024w,
-      ${raw}&w=2048 1400w`
+    'data-width': width,
+    class: 'image',
+    'data-src': raw
   };
 };
 
 const generateLetterSrc = (raw, width, height) => {
   return {
-    'data-dimensions': `${width}x${height}`,
-      class: 'lettercms-image',
-      src: `/_next/image?url=${raw}&q=50&w=100`,
-      'data-src': `/_next/image?url=${raw}&q=75&w=1400`,
-      srcset:`/_next/image?url=${raw}&q=75&w=480 480w,
-        /_next/image?url=${raw}&q=75&w=720 720w,
-        /_next/image?url=${raw}&q=7&w=1024 1024w,
-        /_next/image?url=${raw}&q=7&w=2048 1400w`
-    };
+    'data-width': width,
+    class: 'image',
+    'data-src': `/_next/image?url=${raw}&q=75`
+  };
 };
 
 export default function ImagesModal({onClose, show}) {

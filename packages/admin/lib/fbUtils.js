@@ -7,7 +7,7 @@ export function getLoginStatus() {
 }
 
 export function getPages(options) {
-  return new Promise((resolve, reject) => window.FB.api('/me/accounts', resolve, option));
+  return new Promise((resolve, reject) => window.FB.api('/me/accounts', resolve, options));
 }
 
 export function api(url, options) {

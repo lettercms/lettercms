@@ -1,5 +1,16 @@
 import {withSentry} from '@sentry/nextjs';
 
+
+/**
+ * NOTE: posible Feat remotion
+ *
+ * This revalidation can be deleted
+ *
+ * Because recommendations changes on every visit,
+ * I think is inefficient create and revalidate all pages on all visits, on all updates
+ *
+ * ISR improve load performance, but with getServerSideProps and built-in preload, pages load fast
+ */
 async function revalidate(req, res) {
   if (req.method !== 'POST')
     return res.sendStatus(405);

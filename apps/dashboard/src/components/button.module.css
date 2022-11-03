@@ -1,0 +1,69 @@
+.btn:disabled {
+  cursor: default !important;
+}
+.btn {
+  display: inline-block;
+  width: auto;
+  height: 2.75rem;
+  border-radius: 1.5rem;
+  font: 700 0.875rem/0 "Quicksand", sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0 10px;
+  text-decoration: none;
+  padding: 1.1875rem 2.125rem 1.1875rem 2.125rem;
+}
+
+.solid:disabled:hover,
+.solid {
+  border: 0.125rem solid #1282a2;
+  background-color: #1282a2;
+  color: #fff;
+}
+
+.solid:enabled:hover {
+  background-color: transparent;
+  color: #1282a2;
+}
+
+.solid-alt:disabled:hover,
+.solid-alt {
+  border: 0.125rem solid #5f4dee;
+  background-color: #5f4dee;
+  color: #fff;
+}
+
+.solid-alt:enabled:hover {
+  background-color: transparent;
+  color: #5f4dee;
+}
+
+.outline:disabled:hover,
+.outline {
+  border: 0.125rem solid #5f4dee;
+  background-color: transparent;
+  color: #5f4dee !important;
+}
+
+.outline:enabled:hover {
+  background-color: #5f4dee;
+  color: #fff !important;
+}
+
+.outline-alt:disabled:hover,
+.outline-alt {
+  border: 0.125rem solid #fff;
+  color: #fff !important;
+  background: transparent;
+}
+.outline-alt:enabled:hover {
+  background: #fff;
+  color: #5f4dee !important;
+}
+
+.spinner {
+  width: 2.75rem;
+  height: 2.75rem;
+  position: relative;
+  margin: auto;
+}

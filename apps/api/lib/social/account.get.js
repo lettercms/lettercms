@@ -21,12 +21,14 @@ export default async function() {
     const {token, pageId} = await socialModel.Facebook.findOne({
       subdomain
     }, 'token pageId');
+    console.log(token)
 
     const {cover, name, username, error} = await Base.api(`/${pageId}`, {
       access_token: token,
       fields: 'name,username,cover'
     });
 
+    console.log(error)
     if (error) {
       socials.facebook = {
         status: 'auth-error'

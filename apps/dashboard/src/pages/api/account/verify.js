@@ -11,7 +11,8 @@ async function verify(req, res) {
   const {email, name, lastname, password} = req.body;
 
   await connect();
-    
+  
+  //delete expired codes
   await Codes.deleteMany({expiresAt: {$lt: Date.now()}});
 
   const code = await Codes.exists({email, code: req.body.code});
@@ -41,6 +42,7 @@ async function verify(req, res) {
     role: 'admin'
   });
   
+  //Delete authorized code
   await Codes.deleteOne({email, code: req.body.code});
 
   res.json({

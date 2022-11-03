@@ -5,6 +5,11 @@ const api = createApi({
   accessKey: process.env.UNSPLASH_KEY
 });
 
+
+/**
+ * Send download notification to Unsplash when put an image on post
+ * See https://help.unsplash.com/api-guidelines/unsplash-api-guidelines 
+ */
 async function trackImage(req, res) {
 
   if (req.method !== 'GET')

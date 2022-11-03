@@ -1,5 +1,6 @@
 import Modal from './imageModal';
 import {useState, useEffect} from 'react';
+import Button from '@/components/button';
 
 export default function ImageList({images, isUploading, onLoadMore, isLoadingMore, onSelect}) {
   const [isLoading, setLoad] = useState(true);
@@ -37,7 +38,7 @@ export default function ImageList({images, isUploading, onLoadMore, isLoadingMor
         setShowModal(true);
       }}>
         <div className='image-thumb' style={{
-          backgroundImage:`url(${e.thumbnail || e.url})`
+          backgroundImage:`url(${e.thumbnail || e.url}&w=250)`
         }}>
         <div className='image-overflow'/>
         </div>
@@ -50,11 +51,7 @@ export default function ImageList({images, isUploading, onLoadMore, isLoadingMor
       </li>
     }
     <div id='button-container'>
-    {
-      isLoading
-      ? <img src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/spinner-black.svg' alt=''/>
-      : <button className='btn-outline-sm' onClick={onLoadMore}>Cargar más</button>
-    }
+      <Button type='outline' loading={isLoading} onClick={onLoadMore}>Cargar más</Button>
     </div>
     {
       showModal &&

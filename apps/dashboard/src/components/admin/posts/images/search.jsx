@@ -12,12 +12,13 @@ export default function Search({onSelect}) {
   const [isLoading, setLoadState] = useState(false);
   const [isLoadingMore, setLoadMore] = useState(false);
   const [nextPage, setNextPage] = useState(1);
+  const [actualPage, setActualPage] = useState(1);
 
   useEffect(() => {
-    if (searchQuery) {
+    if (searchQuery !== lastQuery) {
       setLoadState(true);
 
-      fetch(`/api/search-images?q=${query}&page=${nextPage}`)
+      fetch(`/api/search-images?q=${searchQuery}&page=1`)
         .then(r => r.json())
         .then(img => {
           setImages(img);
@@ -26,7 +27,23 @@ export default function Search({onSelect}) {
         });
     }
 
-  }, [searchQuery, nextPage]);
+  }, [searchQuery, lastQuery]);
+
+  useEffect(() => {
+    console.log(actualPage, nextPage, isLoading)
+    if (actualPage !== nextPage && nextPage !== 1) {
+      setLoadMore(true);
+
+      fetch(`/api/search-images?q=${searchQuery}&page=${nextPage}`)
+        .then(r => r.json())
+        .then(img => {
+          setImages(prev => prev.concat(img));
+          setLoadMore(false);
+          setActualPage(nextPage);
+        });
+    }
+
+  }, [actualPage, nextPage, searchQuery]);
 
 
   let ui = null;
@@ -43,6 +60,7 @@ export default function Search({onSelect}) {
     <div id='input-container'>
       <Input disabled={isLoading} id='search' value={query} onKeyUp={({key, target: {value}}) => {
         if (key === 'Enter' && !isLoading && query !== lastQuery) {
+          setNextPage(1);
           setSearchQuery(value);
         }
       }} onInput={({target: {value}}) => setQuery(value)} label='Término'/>

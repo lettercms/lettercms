@@ -41,7 +41,8 @@ async function create(req, res) {
 
     } catch(err) {
       return res.status(500).json({
-        message: 'Error al subscribir'
+        status: 'subscription-error',
+        message: 'Error on supscription'
       });
     }
   }
@@ -49,6 +50,7 @@ async function create(req, res) {
   //delete expired codes
   await Codes.deleteMany({expiresAt: {$lt: Date.now()}});
 
+  //Generate 4 digit verification code
   let code = '';
 
   for (let i = 0; i < 4; i++) {
@@ -68,7 +70,7 @@ async function create(req, res) {
     });
   } catch(err) {
     return res.status(500).json({
-      status: 'error',
+      status: 'email-error',
       message: 'Error Sending Email'
     });
   }
@@ -77,6 +79,5 @@ async function create(req, res) {
     status: 'OK'
   });
 };
-
 
 export default withSentry(create);

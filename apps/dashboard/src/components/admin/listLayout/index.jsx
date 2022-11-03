@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useMemo} from 'react';
 import Card from '../posts/card';
 import Top from '../top';
 import CardLoad from '../cardLoad';
@@ -7,70 +7,54 @@ import LoadMore from './loadMore';
 import NoData from './noData';
 import {useUser} from '@/lib/dashboardContext';
 
-function Layout(props) {
-  const user = useUser();
+let actual = {};
+let cursor = '';
 
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [before, setBefore] = useState(null);
-  const [isLoadingMore, setLoadMore] = useState(false);
-  const [count, setCount] = useState(0);
-  const [status, setStatus] = useState('*');
+const fetchData = async ({type, fields, pageToken, status,  setData, setBefore, setLoading, setLoadMore, setCount, setStatus}) => {
+      
+  if (!pageToken) {
+    setData([]);
+    setLoading(true);
+  } else
+    setLoadMore(true);
 
-  const fetchData = async (pageToken, _status) => {
-    const {
-      fields,
-      type
-    } = props;
-    
-    if (!pageToken) {
-      setData([]);
-      setLoading(true);
-    } else
-      setLoadMore(true);
-
-    const opts = {
-      fields,
-      limit: 10
-    };
-
-    if (pageToken)
-      opts.before = pageToken;
-
-    if (type === 'accounts')
-      opts.role = 'collaborator';
-
-    if (type === 'pages' || type === 'posts')
-      opts.sort = 'created';
-
-    if (_status && _status !== '*')
-      opts.status = _status;
-
-    sdk[type].all(opts)
-      .then(({ total, data: fetchedData, paging: {cursors: {before: b}} }) => {
-        setData(data.concat(fetchedData));
-        setBefore(b);
-        setLoading(false);
-        setLoadMore(false);
-        setCount(total);
-        setStatus(_status || '*');
-      });
+  const opts = {
+    fields,
+    limit: 10
   };
 
-  const _delete = async id => {
-    const {
-      type
-    } = props;
+  if (pageToken)
+    opts.before = pageToken;
 
+  if (type === 'accounts')
+    opts.role = 'collaborator';
+
+  if (type === 'pages' || type === 'posts')
+    opts.sort = 'created';
+
+  if (status && status !== '*')
+    opts.status = status;
+
+  sdk[type].all(opts)
+    .then(({ total, data, paging: {cursors: {before}} }) => {
+      setData(prev => prev.concat(data));
+      setLoading(false);
+      setLoadMore(false);
+      setCount(total);
+      cursor = before;
+    });
+};
+
+  const _delete = async (id, cb) => {
     try {
       if (!confirm('¿Esta seguro de eliminar?'))
         return;
 
-      const { status, message } = await sdk[type].delete(id);
+      const { status, message } = await sdk[props.type].delete(id);
 
       if (status === 'OK') {
         alert('Eliminado con Exito');
-        fetchData();
+        cb(prev => prev.filter(({_id}) => _id !== id));
       } else
         alert(message);
     } catch (err) {
@@ -79,10 +63,41 @@ function Layout(props) {
     }
   };
 
+
+function Layout(props) {
+  const user = useUser();
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [before, setBefore] = useState(null);
+  const [isLoadingMore, setLoadMore] = useState(false);
+  const [count, setCount] = useState(0);
+  const [status, setStatus] = useState('*');
+
+  const fetchOpts = {
+    type: props.type,
+    fields: props.fields,
+    pageToken: before,
+    status,
+    setData,
+    setBefore,
+    setLoading,
+    setLoadMore,
+    setCount,
+    setStatus
+  }
+
   useEffect(() => {
-    if (user.status === 'done')
-      fetchData();
-  }, [user.status, fetchData]);
+    if (user.status === 'done' && (actual.pageToken !== fetchOpts.pageToken || actual.status !== fetchOpts.status)) {
+
+      fetchData(fetchOpts);
+
+      actual = {
+        pageToken: fetchOpts.pageToken,
+        status: fetchOpts.status
+      }
+    }
+
+  }, [fetchOpts, user.status]);
 
   let ui;
 
@@ -92,11 +107,11 @@ function Layout(props) {
   else if (data.length > 0) {
     ui = <>
       <ul>
-        {data.map((e) => <Card key={e.url + e._id} edit={props.onEdit} del={_delete} {...e}/>)}
+        {data.map((e) => <Card key={e.url + e._id} edit={props.onEdit} del={id => _delete(id, setData)} {...e}/>)}
       </ul>
       {
         before &&
-        <LoadMore onClick={() => fetchData(before, status)} isLoading={isLoadingMore}/>
+        <LoadMore onClick={() => setBefore(cursor)} isLoading={isLoadingMore}/>
       }
     </>;
   } else {
@@ -110,7 +125,7 @@ function Layout(props) {
       loading={!count}
       countTabs={props.tabs}
       create={props.onCreate}
-      onFilter={status => fetchData(null, status)}
+      onFilter={status => setStatus(status)}
       count={count}
       buttonText={props.buttonText}
     />

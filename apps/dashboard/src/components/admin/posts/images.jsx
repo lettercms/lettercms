@@ -2,7 +2,7 @@ const Images = ({images, setThumbnail, actual}) => {
   return <ul>
     {
       images?.length > 0
-      && images.map(e => <li key={e} className={e === actual ? 'actual':''} onClick={e === actual ? null : () => setThumbnail(e)}><img alt={e} src={e}/></li>)
+      && images.map(e => <li key={e} className={e === actual ? 'actual':''} onClick={e === actual ? null : () => setThumbnail(e)}><img alt={e} src={e + '&w=250'}/></li>)
     }
     {
       images.length === 0 &&

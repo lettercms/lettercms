@@ -1,12 +1,19 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import {useRouter} from 'next/router';
 import {useState, useEffect, useRef} from 'react';
 import Search from '@/components/svg/search';
 import Github from '@/components/svg/github';
+import Button from '@/components/button';
+import Times from '@/components/svg/times';
+import Bars from '@/components/svg/bars';
+import MobileNav from './mobileNav';
 
 export default function Nav () {
   const prevScrollY = useRef(0);
   const [isOpen, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const router = useRouter();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -35,11 +42,14 @@ export default function Nav () {
           </div>
         </a> 
       </Link>
-      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-awesome fas fa-bars"/>
-        <span className="navbar-toggler-awesome fas fa-times"/>
+      <button onClick={() => setMobileOpen(!mobileOpen)} className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-label="Toggle navigation">
+        {
+          mobileOpen
+            ? <Times height='28' fill='white'/>
+            : <Bars height='28' fill='white'/>
+        }
       </button>
-      <div className="collapse navbar-collapse" id="navbarsExampleDefault">
+      <div className='collapse navbar-collapse' id="navbarsExampleDefault">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <Link href='/'>
@@ -83,9 +93,7 @@ export default function Nav () {
           */}
         </ul>
         <span className="nav-item">
-          <Link href='/login'>
-            <a className="btn-outline-sm">LOGIN</a>
-          </Link>
+          <Button type='outline' alt onClick={() => router.push('/login')}>Iniciar Sesión</Button>
         </span>
         <span className="nav-item">
           <Link href='/blog/search'>
@@ -103,12 +111,13 @@ export default function Nav () {
         </span>
       </div>
     </div>
+    <MobileNav open={mobileOpen}/>
     <style jsx>{`
       #logo-container {
-        width: 8rem;
-        height: 70%;
+        width: 3rem;
+        height: 34px;
+        top: 8px;
         position: absolute;
-        top: 15%;
         left: 1.75rem;
       }
       .navbar-custom {
@@ -221,26 +230,10 @@ export default function Nav () {
       font-size: 2rem;
       }
 
-      .navbar-custom button[aria-expanded='false'] .navbar-toggler-awesome.fas.fa-times{
-      display: none;
-      }
-
-      .navbar-custom button[aria-expanded='false'] .navbar-toggler-awesome.fas.fa-bars{
-      display: inline-block;
-      }
-
-      .navbar-custom button[aria-expanded='true'] .navbar-toggler-awesome.fas.fa-bars{
-      display: none;
-      }
-
-      .navbar-custom button[aria-expanded='true'] .navbar-toggler-awesome.fas.fa-times{
-      display: inline-block;
-      margin-right: 0.125rem;
-      }
-
       @media (min-width: 992px) {
         #logo-container {
-          width: 11rem;
+          width: 8rem;
+          height: 70%;
         }
       .navbar-custom {
         padding: 2.125rem 1.5rem 2.125rem 2rem;

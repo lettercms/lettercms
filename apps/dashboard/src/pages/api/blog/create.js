@@ -45,8 +45,10 @@ async function createBlog(req, res) {
   //Link subdomain to account 
   await Accounts.updateOne({email: ownerEmail}, {subdomain});
 
-  //TODO: Create Example Page
-  //const pageID = await pages.create();
+  /**
+   * TODO: Create Example Page
+   * const pageID = await pages.create();
+   */
 
   //Publish post
   const {_id} = await posts.createPost(subdomain, {

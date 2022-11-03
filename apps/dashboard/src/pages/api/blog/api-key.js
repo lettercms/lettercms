@@ -53,17 +53,21 @@ async function listKeys() {
   const {req, res} = this;
   const {subdomain} = req;
 
-  const p = await blogs.findOne({subdomain}, 'keys', {lean: true});
+  const post = await blogs.findOne({subdomain}, 'keys', {lean: true});
+
+  //Sort by last created
+  const data = post.keys.reverse().map(e => {
+    delete e.hash;
+
+    return e;
+  });
 
   res.json({
     status: 'OK',
-    data: p.keys.reverse().map(e => {
-      delete e.hash;
-
-      return e;
-    })
+    data
   });
 }
+
 async function deleteKey() {
   const {req, res} = this;
   const {subdomain} = req;

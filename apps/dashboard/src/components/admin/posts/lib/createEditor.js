@@ -4,16 +4,15 @@ async function createEditor(content) {
   const editor = window._editor = await window.ClassicEditor.create( document.querySelector( '#ck' ), {
     language:'es',
     rootName: 'main',
-    initialData: content && typeof content === 'string'  ? content : '<p>Nueva super entrada</p>'
+    initialData: content ? content : '<p>Nueva super entrada</p>'
   });
 
-  editor.model.schema.extend('imageBlock', { allowAttributes: ['data-src', 'data-dimensions'] });
+  editor.model.schema.extend('imageBlock', { allowAttributes: ['data-src', 'data-width'] });
 
   editor.conversion.for( 'upcast' ).elementToElement(figureToImageBlock);
   editor.conversion.for('dataDowncast').add(imageToDataFigure);
   editor.conversion.for('dataDowncast').add(imageDimensionsToDataFigure);
   editor.conversion.for( 'editingDowncast' ).add(imageToEditFigure);
-
 
   window.editorEventEmitter.on('insert', source => {
     editor.execute( 'insertImage', {
@@ -71,11 +70,7 @@ async function createEditor(content) {
     const nodes = e.source.roots._items[1]._children._nodes;
 
     const images = nodes
-      .map(({name, _attrs}) =>
-        name === 'imageBlock'
-          ? _attrs.get('data-src')
-          : _attrs.get('src')
-      )
+      .map(({_attrs}) => _attrs.get('data-src') || _attrs.get('src'))
       .filter(e => e);
 
     this.changes.images = images;

@@ -323,7 +323,8 @@ export default class Editor extends Component {
       subdomain,
       _id,
       showEditorLoad,
-      inputTag
+      inputTag,
+      promoteOnFacebook
     } = this.state;
 
     const {
@@ -522,8 +523,12 @@ export default class Editor extends Component {
       :global(div#buttons button:disabled path) {
         fill: #fff !important;
       }
+      div#buttons button {
+        transition: ease .3s;
+      }
       div#buttons button.send {
         background: #5f4dee;
+        border: 1px solid #5f4dee;
       }
       div#buttons button.send:hover {
         background: #fff;
@@ -533,6 +538,7 @@ export default class Editor extends Component {
       }
       div#buttons button.save {
         background: #fff;
+        border: 1px solid #5f4dee;
       }
       div#buttons button.save:hover {
         background: #5f4dee;

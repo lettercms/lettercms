@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import Base from '@/components/admin/stats/base';
 import Input from '@/components/input';
 import FacebookIcon from '@/components/svg/facebook';
@@ -6,15 +7,19 @@ import LinkedinIcon from '@/components/svg/linkedin';
 import TwitterIcon from '@/components/svg/twitter';
 import WebsiteIcon from '@/components/svg/website';
 import Link from 'next/link';
+import {useRouter} from 'next/router';
 import MostViewed from './mostViewed';
+import Button from '@/components/button';
 
 export default function Aside({owner, mostViewed}) {
-  console.log(mostViewed);
+  const [query, setQuery] = useState('');
+  const router = useRouter();
+
   return <aside>
     <Base row={1} principal>
       <div id='query-container'>
-        <Input label='Termino' id='query' onChange={console.log}/>
-        <button className='btn-outline-sm alter'>Buscar</button>
+        <Input label='Termino' value={query} onChange={e => setQuery(e.target.value)} id='query' onChange={console.log}/>
+        <Button type='outline' alt onClick={() => router.push(`/search?q=${query}`)}>Buscar</Button>
       </div>
     </Base>
     <Base row={1}>

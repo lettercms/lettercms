@@ -29,7 +29,7 @@ const Card = ({
   return <li className="post" key={`post-${_id}`}>
     {
       thumbnail
-      ? <div className="image" style={{ backgroundImage: `url(${thumbnail})` }} />
+      ? <div className="image" style={{ backgroundImage: `url(${thumbnail}&h=150)` }} />
       : <div className="image-title">{!title ? 'N' : title[0].toUpperCase()}</div>
     }
     <div className="data">

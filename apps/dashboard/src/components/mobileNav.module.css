@@ -1,0 +1,17 @@
+.nav {
+  position: absolute;
+  width: 10rem;
+  top: 3rem;
+  left: 0;
+  background: #5f4dee;
+  z-index: -1;
+  width: 100%;
+  transition: ease .6s;
+}
+.collapse {
+  top: -500%;
+}
+.nav ul li {
+  text-align: center;
+  margin: 1rem 0;
+}

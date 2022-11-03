@@ -3,6 +3,13 @@ import usage from '@lettercms/models/usages';
 import jwt from 'jsonwebtoken';
 import connect from '@lettercms/utils/lib/connection';
 
+/**
+ * Update file size and upload usage
+ *
+ * This feature will not be implemented on public API,
+ * to avoid user directly manipulation 
+ *
+ */
 async function patchUsage(req, res) {
   const {authorization} = req.headers;
   

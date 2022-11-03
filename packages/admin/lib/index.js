@@ -20,7 +20,7 @@ export const facebookPages = async fields => {
 };
 
 export const setFacebookPage = (pageID, accessToken, subdomain) =>
-  createRequest('/api/social/account', 'POST', {
+  createRequest('/api/social/create', 'POST', {
     type: 'facebook',
     pageID,
     accessToken,
@@ -28,7 +28,7 @@ export const setFacebookPage = (pageID, accessToken, subdomain) =>
   });
 
 export const setInstagramPage = (pageID, accessToken, subdomain)  =>
-  createRequest('/api/social/account', 'POST', {
+  createRequest('/api/social/create', 'POST', {
     type: 'instagram',
     pageID,
     accessToken,

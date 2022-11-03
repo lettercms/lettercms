@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import {useState} from 'react';
 import Load from '../../logoLoad';
 import dynamic from 'next/dynamic';
 import Dashboard from './dashboard';

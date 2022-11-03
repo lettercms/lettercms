@@ -52,11 +52,10 @@ export default function manageMethods(methods) {
       const blogSecret = req.headers['x-lettercms-secret'];
       const accessToken = req.headers['authorization'];
 
-      console.log(blogId, blogSecret)
-
       //Check API credentials
       if ((blogId && !blogSecret) || (!blogId && blogSecret))
         return res.status(400).json({
+          status: 'bad-request',
           message: 'Please Provide a valid client ID and client Secret'
         });
 

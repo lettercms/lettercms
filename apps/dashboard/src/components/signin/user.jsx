@@ -5,6 +5,7 @@ import {createAccount, createCollaborator} from '@lettercms/admin';
 import Input from '../input';
 import Image from 'next/image';
 import {signIn} from 'next-auth/react';
+import Button from '@/components/button';
 
 export default class UserTab extends Component {
   constructor() {
@@ -51,9 +52,6 @@ export default class UserTab extends Component {
       this.validityEmail(value);
   };
   register = async e => {
-    this.setState({
-      isLoad: true
-    });
 
     e.preventDefault();
 
@@ -64,6 +62,13 @@ export default class UserTab extends Component {
         password,
         email
       } = this.state;
+
+      if (!name || !lastname || password || !email)
+        return alert('Por favor rellene todos los campos')
+
+      this.setState({
+        isLoad: true
+      });
 
       const opts = {
         name,
@@ -141,9 +146,9 @@ export default class UserTab extends Component {
     const {name, lastname, password, email, existsEmail, isLoad, emailLoad} = this.state;
     let emailStatus = '';
 
-    if (existsEmail === true)
+    if (existsEmail)
       emailStatus = 'invalid';
-    else if (existsEmail === false)
+    else if (!existsEmail)
       emailStatus = 'valid' ;
 
     return <form className='form' onSubmit={!isCollab ? this.register : this.createCollab}>
@@ -193,19 +198,7 @@ export default class UserTab extends Component {
           type='password'
           autoComplete='false'
         />
-        {
-          isLoad
-            ? <div style={{width: '2.75rem', height: '2.75rem', position: 'relative', margin: 'auto'}}>
-                <Image layout='fill'
-                  src={`${process.env.ASSETS_BASE}/assets/spinner-black.svg`} 
-                  alt='Spinner'
-                  style={{
-                    display: 'block', height: '2.75rem', margin: '15px auto', animation: 'rotation linear 1s infinite',
-                  }}
-                />
-              </div>
-            : <button className="black">Registrar</button>
-        }
+        <Button type='solid' loading={isLoad}>Registrar</Button>
       <style jsx>{`
         .load-container {
           width: 50px;

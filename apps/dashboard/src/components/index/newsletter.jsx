@@ -1,6 +1,7 @@
 import {Component} from 'react';
 import Input from '../input';
 import * as admin from '@lettercms/admin';
+import Button from '@/components/button';
 
 export default class Newsletter extends Component {
   state = {
@@ -44,7 +45,7 @@ export default class Newsletter extends Component {
                   <div className="help-block with-errors"></div>
                 </div>
                 <div className="form-group">
-                  <button type="submit" className="form-control-submit-button">SUBSCRIBIRSE</button>
+                  <Button type='solid'>SUBSCRIBIRSE</Button>
                 </div>
                 <div className="form-message">
                   <div id="nmsgSubmit" className="h3 text-center hidden"/>

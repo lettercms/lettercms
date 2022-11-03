@@ -8,6 +8,7 @@ import ModalBase from '../../modalBase';
 import ImageSelector from './imageSelector';
 import ImageList from './imagesList';
 import sdk from '@lettercms/sdk';
+import Buttom from '@/components/button';
 import 'react-datetime/css/react-datetime.css';
 import 'moment/locale/es';
 
@@ -174,12 +175,12 @@ const Publish = ({accounts}) => {
             }
           </div>
           <div className='flex flex-row' style={{width: 'auto'}}>
-            <button className='btn-outline-sm alter' onClick={() => publishPost({
+            <Button type='outline' alt onClick={() => publishPost({
               message: content,
               schedule: date !== null && date,
               images,
               feeds: [hasFacebook && 'facebook', hasInstagram && 'instagram'].filter(e => e) 
-            }, clearData)}>{ !date ? 'Publicar' : 'Programar'}</button>
+            }, clearData)}>{ !date ? 'Publicar' : 'Programar'}</Button>
           </div>
         </div>
       </div>
