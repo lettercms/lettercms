@@ -150,23 +150,16 @@ export default function Nav () {
       }
 
       .navbar-custom .nav-item .nav-link {
-      padding: 0.625rem 0.75rem 0.625rem 0.75rem;
-      color: #f7f5f5;
-      opacity: 0.8;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      }
-
-      .navbar-custom .nav-item .nav-link:hover,
-      .navbar-custom .nav-item .nav-link.active {
-      color: #fff;
-      opacity: 1;
+        padding: 0.625rem 0.75rem 0.625rem 0.75rem;
+        color: #fff;
+        text-decoration: none;
+        transition: all 0.2s ease;
       }
 
       .navbar-custom .dropdown:hover > .dropdown-menu {
-      display: block;
-      min-width: auto;
-      animation: fadeDropdown 0.2s;
+        display: block;
+        min-width: auto;
+        animation: fadeDropdown 0.2s;
       }
 
       @keyframes fadeDropdown {
