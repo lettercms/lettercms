@@ -57,17 +57,14 @@ class Card extends Component {
       <div className="blog-card">
         <Link href={`/blog/${url}`}>
           <a>
-            { !!thumbnail
-              ?
-              <>
-                <img width='1' height='1' src='/pixel.png' alt={title}/>
-                <div className="card-header-image" style={{ backgroundImage: `url(${thumbnail}&w=500)` }} />
-              </>
-            : (
-              <div className="card-header-title">
+            <img width='1' height='1' src='/pixel.png' alt={title}/>
+            {
+              !!thumbnail
+              ? <div className="card-header-image" style={{ backgroundImage: `url(${thumbnail}&w=500)` }} />
+              : <div className="card-header-title">
                 <h3>{size === 'big'  ? title[0].toUpperCase() : title}</h3>
               </div>
-              )}
+            }
           </a>
         </Link>
         <div className="data-cont">

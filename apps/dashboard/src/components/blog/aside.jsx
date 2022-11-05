@@ -37,6 +37,7 @@ export default function Aside({owner, mostViewed}) {
                 <li>
                   <Link href={owner.website}>
                     <a target='_blank'>
+                      <img width='1' height='1' src='/pixel.png' alt={`${owner.name} ${owner.lastname} Website - LetterCMS`}/>
                       <WebsiteIcon fill='#555' width='28'/>
                     </a>
                   </Link>
@@ -47,6 +48,7 @@ export default function Aside({owner, mostViewed}) {
                 <li>
                   <Link href={owner.facebook}>
                     <a target='_blank'>
+                      <img width='1' height='1' src='/pixel.png' alt={`${owner.name} ${owner.lastname} Facebook - LetterCMS`}/>
                       <FacebookIcon width='28'/>
                     </a>
                   </Link>
@@ -57,6 +59,7 @@ export default function Aside({owner, mostViewed}) {
                 <li>
                   <Link href={owner.instagram}>
                     <a target='_blank'>
+                      <img width='1' height='1' src='/pixel.png' alt={`${owner.name} ${owner.lastname} Instagram - LetterCMS`}/>
                       <InstagramIcon width='28'/>
                     </a>
                   </Link>
@@ -67,6 +70,7 @@ export default function Aside({owner, mostViewed}) {
                 <li>
                   <Link href={owner.twitter}>
                     <a target='_blank'>
+                      <img width='1' height='1' src='/pixel.png' alt={`${owner.name} ${owner.lastname} Twitter - LetterCMS`}/>
                       <TwitterIcon width='28'/>
                     </a>
                   </Link>
@@ -77,6 +81,7 @@ export default function Aside({owner, mostViewed}) {
                 <li>
                   <Link href={owner.linkedin}>
                     <a target='_blank'>
+                      <img width='1' height='1' src='/pixel.png' alt={`${owner.name} ${owner.lastname} Linkedin - LetterCMS`}/>
                       <LinkedinIcon width='28'/>
                     </a>
                   </Link>
