@@ -57,7 +57,7 @@ class Card extends Component {
         <Link href={`/blog/${url}`}>
           <a>
             { !!thumbnail
-              ? <div className="card-header-image" style={{ backgroundImage: `url(${thumbnail})` }} />
+              ? <div className="card-header-image" style={{ backgroundImage: `url(${thumbnail}&w=500)` }} />
             : (
               <div className="card-header-title">
                 <h3>{size === 'big'  ? title[0].toUpperCase() : title}</h3>

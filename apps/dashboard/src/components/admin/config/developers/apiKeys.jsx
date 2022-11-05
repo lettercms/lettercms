@@ -7,6 +7,7 @@ import {useUser} from '@/lib/dashboardContext';
 import sdk from '@lettercms/sdk';
 import ListLoad from './listLoad';
 import CopyField from '@/components/copyField';
+import Button from '@/components/button';
 
 const ApiKey = () => {
   const [show, toggleModal] = useState(false);
@@ -96,7 +97,7 @@ const ApiKey = () => {
           <div>
             <CopyField text={blog?._id}/>
           </div>
-          <button onClick={() => toggleModal(true)}>Crear Nueva Llave</button>
+          <Button type='solid' onClick={() => toggleModal(true)}>Crear Nueva Llave</Button>
         </div>
         <span>Llaves de la API</span>
         { loading && <ListLoad/> }

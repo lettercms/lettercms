@@ -1,5 +1,6 @@
 import Categories from '../blogCategories';
-import Input from '../../../input';
+import Input from '@/components/input';
+import Button from '@/components/button';
 import {useState} from 'react';
 
 export default function BlogCategories({categories, onAdd, onDelete}) {
@@ -12,7 +13,7 @@ export default function BlogCategories({categories, onAdd, onDelete}) {
 
   return <div>
     <Input id='category' value={categoryName} onChange={({target: {value}}) => setName(value)} label='CategorÍa'/>
-    <button onClick={addCategory}>Añadir</button>
+    <Button type='solid' onClick={addCategory}>Añadir</Button>
     {
       categories?.length > 0
       && <Categories categories={categories} onDelete={onDelete}/>

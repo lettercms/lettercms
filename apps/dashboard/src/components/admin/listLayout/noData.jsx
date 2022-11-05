@@ -1,6 +1,8 @@
+import Button from '@/components/button';
+
 const NoData = ({action, picture = `${process.env.ASSETS_BASE}/assets/posts.svg`, buttonText = 'Crear'}) => <div className="center">
   <img src={picture} alt='Post icon' />
-  <button className='btn-outline-lg' onClick={action}>{buttonText}</button>
+  <Button type='outline' onClick={action}>{buttonText}</Button>
   <style jsx>{`
     .center {
       width: 100%;

@@ -131,6 +131,7 @@ export default class Social extends Component {
       <style jsx>{`
         ul {
           width: 100%;
+          margin: 0;
           display: flex;
           flex-direction: column;
           align-items: center;

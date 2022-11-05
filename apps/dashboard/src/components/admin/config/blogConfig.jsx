@@ -44,22 +44,21 @@ export default function BlogConfig({button}) {
         'url'
       ])
       .then(data => {
-
         setThumbnail(data.thumbnail);
         setTitle(data.title);
         setDescription(data.description);
         setIsVisible(data.isVisible);
         setCategories(data.categories || []);
         setUrl(data.url);
-
         setLoad(false);
-
       });
       
-      button.current.onclick = () => sdk.blogs.update(changes).then(() => {
-        alert('Datos Modificados con exito');
-        changes = {};
-      });
+      if (button.current) {
+        button.current.onclick = () => sdk.blogs.update(changes).then(() => {
+          alert('Datos Modificados con exito');
+          changes = {};
+        });
+      }
     }
   }, [status, button]);
 

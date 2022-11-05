@@ -2,6 +2,7 @@ import {useState} from 'react';
 import Modal from '../../../modalBase';
 import importData from '@/lib/uploadXml';
 import {useUser} from '@/lib/dashboardContext';
+import Button from '@/components/button';
 
 export default function BlogImport() {
   const [showModal, setShowModal] = useState(false);
@@ -47,7 +48,7 @@ export default function BlogImport() {
 
   return <div>
     <div>
-      <button className="black" onClick={() => setShowModal(true)}>Importar</button>
+      <Button type='solid' style={{width: '100%'}} onClick={() => setShowModal(true)}>Eliminar</Button>
       {/*<button className="black">Exportar</button>*/}
     </div>
     <Modal show={showModal} close={() => setShowModal(false)} height='max-content' width='max-content'>

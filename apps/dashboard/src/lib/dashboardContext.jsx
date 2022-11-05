@@ -153,7 +153,7 @@ export function DashboardProvider({userID, children, hideMenu}) {
       </div>
       <style jsx>{`
         :global(body) {
-          background: #f7f7f7;
+          background: #fff;
         }
         #nav-bar {
           padding: 0

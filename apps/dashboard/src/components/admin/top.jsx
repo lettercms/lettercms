@@ -2,7 +2,7 @@ import Tabs from './tabs';
 import Button from '@/components/button';
 
 export default function Top(props) {
-    const {active, countTabs, data, create, loading, count, buttonText,onChangeTab, tabs, disabled, buttonRef} = props;
+    const {active, countTabs, data, create, loading, count, buttonText, onChangeTab, tabs, disabled, buttonRef} = props;
 
     let counts;
 

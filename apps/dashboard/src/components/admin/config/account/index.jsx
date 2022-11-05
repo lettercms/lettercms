@@ -43,11 +43,13 @@ export default function AccountConfig({button}) {
           setLoad(false);
         });
 
-      button.current.onclick = () => {
-        sdk.accounts.update(user._id, changes).then(() => {
-          alert('Datos Modificados con exito');
-          changes = {};
-        });
+        if (button.current) {
+          button.current.onclick = () => {
+            sdk.accounts.update(user._id, changes).then(() => {
+              alert('Datos Modificados con exito');
+              changes = {};
+            });
+        }
       };
     }
   }, [status, button, user._id]);

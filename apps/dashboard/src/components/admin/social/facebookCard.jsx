@@ -1,10 +1,16 @@
-import HandleDate from '../../../lib/handleDate';
+import HandleDate from '@/lib/handleDate';
+import Like from '@/components/svg/like';
+import Bubbles from '@/components/svg/bubbles';
+import Share from '@/components/svg/share';
+import Website from '@/components/svg/website';
+import AngleDown from '@/components/svg/angleDown';
+import EllipsisH from '@/components/svg/ellipsisH';
 
 const FacebookCard = ({ content, pageName, pageImage, created, images}) =>
   <div className="card">
     <div id="head">
       <div id="photo">
-        <img alt='Asset' src={pageImage} style={{ border: 'solid 1px rgba(0,0,0,.1)', borderRadius: '50%', margin: '-5px 5px 0' }} />
+        <img alt='Asset' width='50' height='50' src={`${pageImage}?width=50`} style={{ border: 'solid 1px rgba(0,0,0,.1)', borderRadius: '50%', margin: '-5px 5px 0' }} />
       </div>
       <div id="name">
         <div>
@@ -17,7 +23,7 @@ const FacebookCard = ({ content, pageName, pageImage, created, images}) =>
           <span>{HandleDate.getGMTDate(created)}</span>
           <span> . </span>
           <span>
-            <img className="image-gray" src="https://static.xx.fbcdn.net/rsrc.php/v3/yQ/r/axobuTi734a.png" alt="Público" height={12} width={12} />
+            <Website height='18'/>
           </span>
         </div>
       </div>
@@ -28,7 +34,7 @@ const FacebookCard = ({ content, pageName, pageImage, created, images}) =>
         alignSelf: 'flex-start',
         height: 20 
       }}>
-        <img alt='Asset' className="image-gray" src="https://static.xx.fbcdn.net/rsrc.php/v3/y1/r/BOCzaD2rwOa.png" height={20} width={20} />
+        <EllipsisH width='20'/>
       </div>
     </div>
   </div>
@@ -45,20 +51,25 @@ const FacebookCard = ({ content, pageName, pageImage, created, images}) =>
     <div>
       <div>
         <div>
-          <img alt='Asset' src="https://static.xx.fbcdn.net/rsrc.php/v3/yz/r/gGPRzHuW8qT.png" height={18} width={18} />
+          <Like height='18'/>
         </div>
         Me Gusta
       </div>
-      <div className="comment">Comentar</div>
+      <div className="comment">
+        <div>
+          <Bubbles height='18'/>
+        </div>
+        Comentar
+      </div>
       <div>
         <div>
-          <img alt='Asset' className="image-gray" src="https://static.xx.fbcdn.net/rsrc.php/v3/yP/r/EyGUmEdOqjv.png" height={18} width={18} />
+          <Share height='18'/>
         </div>
         Compartir
       </div>
       <button>
-        <img alt='Asset' style={{ borderRadius: '50%', margin: '0 5px 0 0' }} height={20} src="https://scontent.fccs2-1.fna.fbcdn.net/v/t1.0-1/cp0/p24x24/54192522_2333268353370467_660030894509129728_n.jpg?_nc_cat=104&amp;_nc_sid=7206a8&amp;_nc_ohc=rJNgLTPEH5AAX-Rr4Ih&amp;_nc_ht=scontent.fccs2-1.fna&amp;oh=84d624f9179508a06646254852da84b1&amp;oe=5EF2E05D" width={20} />
-        <img alt='Asset' className="image-gray" src="https://static.xx.fbcdn.net/rsrc.php/v3/yh/r/Rv8gX4eHbyj.png" height={12} width={12} />
+        <img alt='Asset' style={{ borderRadius: '50%', margin: '0 5px 0 0' }} height={20} src={`${pageImage}?width=20`} width={20} />
+        <AngleDown width='12'/>
       </button>
     </div>
   </div>
@@ -71,6 +82,9 @@ const FacebookCard = ({ content, pageName, pageImage, created, images}) =>
         border-radius: 8px;
         box-shadow: 0 1px 2px rgba(0,0,0,.2);
         font-family: Helvetica, Arial, sans-serif;
+      }
+      .card h2 {
+        line-height: 1;
       }
       #head {
         padding: 12px 16px;

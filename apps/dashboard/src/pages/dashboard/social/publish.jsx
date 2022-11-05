@@ -4,6 +4,7 @@ import sdk from '@lettercms/sdk';
 import {getSession} from 'next-auth/react';
 import {DashboardProvider} from '@/lib/dashboardContext';
 import Social from '@/components/admin/social';
+import {getAccounts} from '@/lib/mongo/social';
 
 export async function getServerSideProps({ req, res, query}) {
   const session = await getSession({req});
@@ -16,26 +17,31 @@ export async function getServerSideProps({ req, res, query}) {
       }
     };
 
+  const accounts = await getAccounts();
+
   return {
     props: {
       user: session.user,
-      hideLayout: true
+      hideLayout: true,
+      accounts
     }
   };
 }
 
-const AdminDashboard = ({tab, user}) => {
+const AdminDashboard = ({accounts}) => {
   return <>
       <Head>
         <title>Redes Sociales | Dashboard - LetterCMS</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Social />
+      <Social publish accounts={accounts}/>
     </>;
 };
+
 AdminDashboard.getLayout = function getLayout(page, user) {
   return <DashboardProvider accessToken={user.accessToken} userID={user.id}>{page}</DashboardProvider>;
 };
+
 export default AdminDashboard;
 

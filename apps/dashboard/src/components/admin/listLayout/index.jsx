@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import {useRouter} from 'next/router';
 import Card from '../posts/card';
 import Top from '../top';
 import CardLoad from '../cardLoad';
@@ -73,6 +74,8 @@ function Layout(props) {
   const [count, setCount] = useState(0);
   const [status, setStatus] = useState('*');
 
+  const router = useRouter();
+
   const fetchOpts = {
     type: props.type,
     fields: props.fields,
@@ -87,17 +90,18 @@ function Layout(props) {
   }
 
   useEffect(() => {
-    if (user.status === 'done' && (actual.pageToken !== fetchOpts.pageToken || actual.status !== fetchOpts.status)) {
+    if (user.status === 'done' && (actual.pageToken !== fetchOpts.pageToken || actual.status !== fetchOpts.status || router.pathname !== actual.pathname)) {
 
       fetchData(fetchOpts);
 
       actual = {
         pageToken: fetchOpts.pageToken,
-        status: fetchOpts.status
+        status: fetchOpts.status,
+        pathname: router.pathname
       }
     }
 
-  }, [fetchOpts, user.status]);
+  }, [fetchOpts, user.status, router.pathname]);
 
   let ui;
 
