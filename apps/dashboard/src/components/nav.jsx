@@ -98,6 +98,7 @@ export default function Nav () {
         <span className="nav-item">
           <Link href='/blog/search'>
             <a className="nav-link page-scroll">
+              <img src='/pixel.png' alt='Search'/>
               <Search width='28' height='28'/>
             </a>
           </Link>
@@ -105,6 +106,7 @@ export default function Nav () {
         <span className="nav-item">
           <Link href='https://github.com/lettercms/lettercms'>
             <a className="nav-link page-scroll" target='_blank'>
+              <img src='/pixel.png' alt='Github'/>
               <Github width='32' height='32'/>
             </a>
           </Link>
