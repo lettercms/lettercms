@@ -59,13 +59,13 @@ const Subscription = ({user, onSubscribe}) => {
       <br/>
       <span>Tenemos contenido de calidad esperando por ti</span>
     </div>
-    <Button type='outline' alt onClick={() => setModal(true)}>Suscribirse</Button>
+    <Button style={{width: '100%'}} type='outline' alt onClick={() => setModal(true)}>Suscribirse</Button>
     <Modal show={showModal} close={() => setModal(false)} width='auto' height='auto'>
       <form onSubmit={e => {e.preventDefault(); subscribe(user._id, data, cb);}}>
         <Input value={name} onInput={e => setName(e.target.value)} label='Nombre'/>
         <Input value={lastname} onInput={e => setLastname(e.target.value)} label='Apellido'/>
         <Input value={email} onInput={e => setEmail(e.target.value)} label='Email' type='email'/>
-        <Button type='outline'>Suscribirse</Button>
+        <Button style={{width: '100%'}} type='outline'>Suscribirse</Button>
       </form>
     </Modal>
     <style jsx>{`
