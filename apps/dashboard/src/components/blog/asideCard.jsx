@@ -6,7 +6,7 @@ export default function AsideCard({thumbnail, title, url}) {
       <a target='_blank'>
         {
           thumbnail
-          ? <div className='aside-thumbnail' style={{backgroundImage: `url(${thumbnail})`}}></div>
+          ? <div className='aside-thumbnail' style={{backgroundImage: `url(${thumbnail}&h=100)`}}></div>
           : <div className='flex flex-center aside-no-thumbnail'>
               <span>{title[0].toUpperCase()}</span>
             </div>
