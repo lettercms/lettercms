@@ -110,7 +110,7 @@ const ApiKey = () => {
         <>
           <div>Añade una breve descripci&oacute;n</div>
           <Input id='keyName' value={keyName} onInput={({target:{value}}) => setKeyName(value)} label='Descripción de la llave'/>
-          <button onClick={create}>Crear</button>
+          <Button type='solid' style={{width: '100%'}} onClick={create}>Crear</Button>
         </>
       }
       {
@@ -118,7 +118,7 @@ const ApiKey = () => {
         <>
           <span>Asegurate de Guardala. Por seguridad no la volveremos a mostrar</span>
           <CopyField text={newKey}/>
-          <button onClick={close}>Cerrar</button>
+          <Button type='solid' onClick={close}>Cerrar</Button>
         </>
       }
     </Modal>
