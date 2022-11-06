@@ -149,10 +149,11 @@ export default function manageMethods(methods) {
         }
       }
     } catch(err) {
-      console.log(err);
       res.status(500).send({
         status: 'server-error'
       });
+
+      throw err;
     }
   };
 
