@@ -25,7 +25,7 @@ export default function Aside({owner, mostViewed}) {
     <Base row={1}>
       <div id='user-container' className='flex flex-column'>
         <div>
-          <img width='160' height='160' src={owner.photo} alt={`${owner.name} ${owner.lastname} profile picture - LetterCMS`} />
+          <img width='160' height='160' id='user-picture' src={owner.photo} alt={`${owner.name} ${owner.lastname} profile picture - LetterCMS`} />
         </div>
         <div>
           <span className='user-name'>{owner.name} {owner.lastname}</span>
@@ -109,7 +109,7 @@ export default function Aside({owner, mostViewed}) {
         list-style: none;
       }
       @media screen and (min-width: 720px) {
-        #user-container div img {
+        #user-picture {
           width: 160px;
           border-radius: 50%;
           margin-bottom: 1rem;

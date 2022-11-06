@@ -11,6 +11,9 @@ async function createKey() {
 
   const {keys} = await blogs.findOne({subdomain}, 'keys', {lean: true});
 
+  if (!keys)
+    await blogs.updateOne({subdomain}, {$set: {keys: []}});
+
   if (keys.length === 3)
     return res.json({
       status: 'key-limit'
@@ -55,12 +58,15 @@ async function listKeys() {
 
   const post = await blogs.findOne({subdomain}, 'keys', {lean: true});
 
+  if (!post.keys)
+    await blogs.updateOne({subdomain}, {$set: {keys: []}});
+
   //Sort by last created
   const data = post.keys.reverse().map(e => {
     delete e.hash;
 
     return e;
-  });
+  }) || [];
 
   res.json({
     status: 'OK',

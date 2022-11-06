@@ -57,7 +57,7 @@ class Card extends Component {
       <div className="blog-card">
         <Link href={`/blog/${url}`}>
           <a>
-            <img width='1' height='1' src='/pixel.png' alt={title}/>
+            <img width='1' height='1' src='/pixel.png' style={{position: 'absolute'}} alt={title}/>
             {
               !!thumbnail
               ? <div className="card-header-image" style={{ backgroundImage: `url(${thumbnail}&w=500)` }} />
