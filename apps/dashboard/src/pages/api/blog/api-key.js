@@ -11,8 +11,10 @@ async function createKey() {
 
   const {keys} = await blogs.findOne({subdomain}, 'keys', {lean: true});
 
-  if (!keys)
+  if (!keys) {
     await blogs.updateOne({subdomain}, {$set: {keys: []}});
+    post.keys = [];
+  }
 
   if (keys.length === 3)
     return res.json({
@@ -58,8 +60,10 @@ async function listKeys() {
 
   const post = await blogs.findOne({subdomain}, 'keys', {lean: true});
 
-  if (!post.keys)
+  if (!post.keys) {
     await blogs.updateOne({subdomain}, {$set: {keys: []}});
+    post.keys = [];
+  }
 
   //Sort by last created
   const data = post.keys.reverse().map(e => {
