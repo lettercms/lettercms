@@ -8,8 +8,9 @@ import BlogImport from './blog/import';
 import BlogDelete from './blog/delete';
 import Thumbnail from './blog/thumbnail';
 import sdk from '@lettercms/sdk';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
 import BaseLoad from '../stats/baseLoad';
+import Top from '../top';
 
 let changes = {};
 
@@ -22,7 +23,7 @@ const handleChanges = (e, cb) => {
   changes[name] = value;
 };
 
-export default function BlogConfig({button}) {
+export default function BlogConfig() {
   const [thumbnail, setThumbnail] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -52,15 +53,8 @@ export default function BlogConfig({button}) {
         setUrl(data.url);
         setLoad(false);
       });
-      
-      if (button.current) {
-        button.current.onclick = () => sdk.blogs.update(changes).then(() => {
-          alert('Datos Modificados con exito');
-          changes = {};
-        });
-      }
     }
-  }, [status, button]);
+  }, [status]);
 
 
   const addCategory = cat => {
@@ -87,6 +81,17 @@ export default function BlogConfig({button}) {
     return <BaseLoad rows={1}/>;
 
   return <>
+    <Top
+      create={() => {
+        sdk.blogs
+          .update(changes)
+          .then(() => {
+            alert('Datos Modificados con exito');
+            changes = {};
+          });
+      }}
+      buttonText='Guardar'
+    />
       <div className='config-opts'>
         <Thumbnail url={thumbnail}/>
         <Container rows={1} title='Meta' style={{height: 'auto !important'}}>

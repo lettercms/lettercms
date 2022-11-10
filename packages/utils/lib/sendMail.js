@@ -66,8 +66,6 @@ const sendMail = async (to, subject, data) => {
         body: JSON.stringify(mailOptions)
       });
 
-      console.log(res);
-
     return res.json();
   } catch(err) {
     return Promise.reject(err);

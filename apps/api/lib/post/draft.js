@@ -5,6 +5,7 @@ import {Ratings} from '@lettercms/models/users';
 import {isValidObjectId} from 'mongoose';
 import revalidate from '@lettercms/utils/lib/revalidate';
 import {getFullUrl} from '@lettercms/utils/lib/posts';
+import updateTags from './updateTags';
 
 export default async function() {
   const {req, res} = this;
@@ -23,7 +24,7 @@ export default async function() {
     updateCondition.subdomain = subdomain;
   }
 
-  const {_id: postID, url: _url, postStatus, category, published, views} = await posts.findOneAndUpdate(updateCondition, {postStatus: 'draft'}, {select: '_id url postStatus category published views'});
+  const {_id: postID, url: _url, postStatus, category, published, views, tags} = await posts.findOneAndUpdate(updateCondition, {postStatus: 'draft'}, {select: '_id url postStatus category published views tags'});
 
   if (postStatus === 'draft')
     return res.status(400).json({
@@ -43,6 +44,9 @@ export default async function() {
 
   //Revalidate Home path
   revalidate(subdomain, mainUrl);
+
+  updateTags(subdomain, tags, body.tags);
+
 
   res.json({
     status: 'OK',

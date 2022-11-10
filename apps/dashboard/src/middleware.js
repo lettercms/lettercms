@@ -13,7 +13,6 @@ export const config = {
 
 export default function middleware(req) {
   const url = req.nextUrl;
-  console.log(url.pathname);
 
   if (url.pathname.startsWith('/blog/')) {
     const isPreview = req.cookies.get('__next_preview_data') || req.cookies.get('__prerender_bypass');

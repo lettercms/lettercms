@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react';
 import sdk from '@lettercms/sdk';
 import ModalUser from './modalUser';
 import Base from '@/components/modalBase';
+import Button from '@/components/button';
 
 export default function InvitationModal({onClose}) {
   const [showModal, setShowModal] = useState(false);
@@ -14,7 +15,6 @@ export default function InvitationModal({onClose}) {
     role: 'collaborator'
   });
 
-  console.log(showModal);
   useState(() => {
     setTimeout(() => setShowModal(true), 0);
   }, []);
@@ -34,6 +34,7 @@ export default function InvitationModal({onClose}) {
   };
 
   const sendInvitation = async () => {
+    setSending(true);
     try {
       const {email, name, lastname} = data;
 
@@ -59,6 +60,7 @@ export default function InvitationModal({onClose}) {
         role: 'collaborator'
       });
 
+      setSending(false);
       close();
     } catch(err) {
       alert('Error enviando invitacion');
@@ -69,7 +71,7 @@ export default function InvitationModal({onClose}) {
   return <Base show={showModal} close={close} width='auto' height='auto'>
     <div>
       <ModalUser onChange={handleInput} role={data.role} name={data.name} lastname={data.lastname} email={data.email}/>
-      <button className='black' onClick={sendInvitation}>Enviar Invitacion</button>
+      <Button loading={sending} type='solid' onClick={sendInvitation}>Enviar Invitacion</Button>
     </div>
   </Base>;
 }

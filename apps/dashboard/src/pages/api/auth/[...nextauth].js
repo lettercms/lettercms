@@ -66,6 +66,7 @@ export const authOptions = {
       authorize: async ({email, password}, req) => {
         try {
           await connect();
+
           const {subdomain, accessToken, id} = await Accounts.login(email, password);
 
           if (!accessToken)

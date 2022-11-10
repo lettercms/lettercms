@@ -1,7 +1,6 @@
 ﻿import { useState, useRef, useEffect } from 'react';
 import BaseLoad from '../stats/baseLoad';
 import AccountLoad from './account/load';
-import Top from '../top';
 import dynamic from 'next/dynamic';
 import ConfigAside from './configAside';
 import asyncImport from '@/lib/asyncImportScript';
@@ -41,8 +40,6 @@ const Account = dynamic(() => import('./account'), {
 
 
 export default function Config({tab}) {
-  const buttonRef = useRef();
-
   useEffect(() => {
     asyncImport(
       'cropper-js',
@@ -59,7 +56,7 @@ export default function Config({tab}) {
   let UI;
 
   if (tab === 'blog')
-    UI = <Blog button={buttonRef}/>;
+    UI = <Blog/>;
 
   //if (tab === 'payment')
   //  UI = <Payment/>;
@@ -68,33 +65,27 @@ export default function Config({tab}) {
     UI = <Developers/>;
 
   if (tab === 'account')
-    UI = <Account button={buttonRef}/>;
+    UI = <Account/>;
 
   if (tab === 'usage')
     UI = <Usage/>;
 
     return (
       <div id="config-main">
-        <Top
-          buttonRef={buttonRef}
-          buttonText='Guardar'
-        />
-        <div className='flex'>
-          <ConfigAside active={tab}/>
-          <div className='config-container'>
-            {UI}
-          </div>
-        </div>
+        {UI}
         <style jsx global>{`
+          #config-main {
+            width: 80%;
+          }
           .config-opts {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
             margin: 15px auto 0;
-            width: 75%;
+            width: 100%;
             position: absolute;
             right: 0;
-            padding: 0 10%;
+            padding: 0 20%;
           }
           ul.config-opts li {
             display: flex;
@@ -105,21 +96,6 @@ export default function Config({tab}) {
           ul.config-opts li span,
           ul.config-opts li button {
             margin: 15px 0;
-          }
-        `}</style>
-        <style jsx>{`
-          .title {
-            flex-grow: 1;
-          }
-          #config-main {
-            width: 100%;
-          }
-          .flex {
-            margin-top: 1rem;
-            align-items: start;
-          }
-          .config-container {
-            flex-grow: 1;
           }
         `}</style>
       </div>

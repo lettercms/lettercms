@@ -89,6 +89,6 @@ export default class Signin extends Component {
         tab === 'blog' &&
         <BlogTab />
       }
-    </Container>
+    </Container>;
   }
 }

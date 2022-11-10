@@ -1,12 +1,14 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useMemo} from 'react';
 import {useRouter} from 'next/router';
-import Card from '../posts/card';
-import Top from '../top';
-import CardLoad from '../cardLoad';
+import Top from './top';
+import ListContainer from './listContainer';
 import sdk from '@lettercms/sdk';
 import NoData from './noData';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
 import Button from '@/components/button';
+import {layoutContainer} from './index.module.css';
+import CardLoad from './cardLoad';
+import Filter from './filters';
 
 let actual = {};
 let cursor = '';
@@ -46,16 +48,16 @@ const fetchData = async ({type, fields, pageToken, status,  setData, setBefore, 
     });
 };
 
-  const _delete = async (id, cb) => {
+  const _delete = async (id, type, cb) => {
     try {
       if (!confirm('¿Esta seguro de eliminar?'))
         return;
 
-      const { status, message } = await sdk[props.type].delete(id);
+      const { status, message } = await sdk[type].delete(id);
 
       if (status === 'OK') {
         alert('Eliminado con Exito');
-        cb(prev => prev.filter(({_id}) => _id !== id));
+        cb(prev => prev.filters(({_id}) => _id !== id));
       } else
         alert(message);
     } catch (err) {
@@ -76,7 +78,7 @@ function Layout(props) {
 
   const router = useRouter();
 
-  const fetchOpts = {
+  const fetchOpts = useMemo(() => ({
     type: props.type,
     fields: props.fields,
     pageToken: before,
@@ -87,7 +89,7 @@ function Layout(props) {
     setLoadMore,
     setCount,
     setStatus
-  }
+  }), [props.type, props.fields, before]);
 
   useEffect(() => {
     if (user.status === 'done' && (actual.pageToken !== fetchOpts.pageToken || actual.status !== fetchOpts.status || router.pathname !== actual.pathname)) {
@@ -98,7 +100,7 @@ function Layout(props) {
         pageToken: fetchOpts.pageToken,
         status: fetchOpts.status,
         pathname: router.pathname
-      }
+      };
     }
 
   }, [fetchOpts, user.status, router.pathname]);
@@ -106,39 +108,43 @@ function Layout(props) {
   let ui;
 
   if (loading) {
-    ui = <CardLoad/>;
+    ui = <ul style={{margin: '0 2.5%'}}>
+      <CardLoad/>
+    </ul>;
   }
   else if (data.length > 0) {
-    ui = <>
-      <ul>
-        {data.map((e) => <Card key={e.url + e._id} edit={props.onEdit} del={id => _delete(id, setData)} {...e}/>)}
-      </ul>
-      {
-        cursor &&
-        <Button style={{margin: 'auto'}} type='outline' onClick={() => setBefore(cursor)} loading={isLoadingMore}>Cargar Más</Button>
-      }
-    </>;
+    ui = <ListContainer type={props.type} data={data} before={before} setBefore={setBefore} onDelete={_delete} onEdit={props.onEdit} isLoadingMore={isLoadingMore}/>;
   } else {
     ui = <NoData action={props.onCreate} picture={props.picture} buttonText={props.buttonText}/>;
   }
 
-  return <>
+  return <div className={layoutContainer}>
     <Top
-      active={status}
-      data={data}
       loading={!count}
-      countTabs={props.tabs}
       create={props.onCreate}
-      onFilter={status => {
-        setData([]);
-        setLoading(true);
-        setStatus(status)
-      }}
-      count={count}
       buttonText={props.buttonText}
-    />
+      topImg={props.topImg}
+      topText={props.topText}
+    >
+      <Filter
+        active={status}
+        data={data}
+        loading={!count}
+        countTabs={props.tabs}
+        create={props.onCreate}
+        onFilter={status => {
+          setData([]);
+          setLoading(true);
+          setStatus(status);
+        }}
+        count={count}
+        buttonText={props.buttonText}
+        topImg={props.topImg}
+        topText={props.topText}
+      />
+    </Top>
     {ui}
-  </>;
+  </div>;
 }
 
 export default Layout;

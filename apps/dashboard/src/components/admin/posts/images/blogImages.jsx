@@ -5,7 +5,7 @@ import NoImage from './blogNoImages';
 import sdk from '@lettercms/sdk';
 import Upload from '@/components/svg/upload';
 import createUploader from '@/lib/createUploader';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
 
 export default function BlogImages({onSelect, isHidden}) {
   const {blog} = useUser();

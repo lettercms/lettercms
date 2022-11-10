@@ -1,5 +1,5 @@
+import Cross from '@/components/svg/cross';
 import {Component} from 'react';
-import Image from 'next/image';
 
 export default class ModalBase extends Component {
   state = {
@@ -40,7 +40,7 @@ export default class ModalBase extends Component {
         <div id="subscription-main" style={{width, height}}>
           <div id='modal-top'>
             <div id='close-image-container'>
-              <Image layout='fill' alt='asset' src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/arrow-white.svg" onClick={this.props.close} />
+              <Cross fill='#fff' height='30'/>
             </div>
           </div>
           {children}
@@ -59,7 +59,7 @@ export default class ModalBase extends Component {
           top: 0;
         }
         #modal-top #close-image-container {
-          top: 15px;
+          top: 20px;
           left: 1rem;
           width: 40px;
           height: 40px;

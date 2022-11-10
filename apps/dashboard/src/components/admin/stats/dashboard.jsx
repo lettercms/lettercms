@@ -1,5 +1,6 @@
 ﻿import {useState} from 'react';
 import dynamic from 'next/dynamic';
+import Top from '../listLayout/top';
 
 import Base from './base';
 import GeneralPanel from './general';
@@ -25,10 +26,7 @@ const PieChart = dynamic(() => import('./charts/pie'), {
   ssr: false
 });
 
-const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days, dates, hours}, general, onChange}) => {
-  const [range, setRange] = useState('2');
-
-  const changeTime = id => {
+  const changeTime = (id, setRange, onChange) => {
     const now = Date.now();
     let newDate;
 
@@ -47,9 +45,18 @@ const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days,
     onChange(newDate);
   };
 
+
+const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days, dates, hours}, general, onChange}) => {
+  const [range, setRange] = useState('2');
+
   return <div>
-      <div id='select-container'>
-        <select value={range} onChange={({target: {value}}) => changeTime(value)}>
+    <Top
+      topImg={`${process.env.ASSETS_BASE}/illustrations/72.svg`}
+      topText='Datos del Blog'
+      disableTopButton={true}
+    >
+      <div>
+        <select value={range} onChange={({target: {value}}) => changeTime(value, setRange, onChange)}>
           <option value='1'>Ultimos 7 dias</option>
           <option value='2'>Ultimo mes</option>
           <option value='3'>Ultimos 3 meses</option>
@@ -57,6 +64,7 @@ const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days,
           <option value='5'>Desde la creacion del blog</option>
         </select>
       </div>
+    </Top>
     <div id='stats-dashboard'>
       <Base rows={2} title='Vistas Totales' principal>
         <GeneralPanel value={general.totalViews}/>

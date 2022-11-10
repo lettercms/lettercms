@@ -2,6 +2,7 @@ import connect from '@lettercms/utils/lib/connection';
 import * as accounts from '@lettercms/models/accounts';
 import usage from '@lettercms/models/usages';
 import { withSentry } from '@sentry/nextjs';
+import bcrypt from 'bcrypt';
 
 async function createCollab(req, res) {
   if (req.method !== 'POST')
@@ -12,9 +13,8 @@ async function createCollab(req, res) {
   await connect();
 
   const {body} = req;
-  const {subdomain} = body;
 
-  const invitation = await accounts.Invitations.exists({
+  const invitation = await accounts.Invitations.findOne({
     email: body.email
   });
 
@@ -24,7 +24,18 @@ async function createCollab(req, res) {
       messages: 'Collaborator not invited'
     });
 
-  await accounts.Accounts.createCollab(subdomain, body);
+
+  const password = await bcrypt.hash(body.password, 10);
+
+  const id = await accounts.Accounts.create({
+    name: body.name,
+    lastname: body.lastname,
+    email: body.email,
+    photo: `https://avatar.tobi.sh/${Buffer.from(body.email).toString('hex')}.svg?text=${body.name[0]+body.lastname[0]}&size=250`,
+    password,
+    role: 'collaborator',
+    subdomain: invitation.subdomain
+  });
 
   /*await accounts.Invitations.updateOne({
     subdomain,
@@ -33,9 +44,9 @@ async function createCollab(req, res) {
     status: 'accepted'
   });*/
 
-  await accounts.Invitations.deleteOne({subdomain,email: body.email});
+  await accounts.Invitations.deleteOne({subdomain: invitation.subdomain, email: body.email});
 
-  await usage.updateOne({subdomain}, {$inc: {accountsCollabs: 1}});
+  await usage.updateOne({subdomain: invitation.subdomain}, {$inc: {accountsCollabs: 1}});
 
   res.json({
     status: 'OK'

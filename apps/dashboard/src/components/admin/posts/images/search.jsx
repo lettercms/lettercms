@@ -30,7 +30,7 @@ export default function Search({onSelect}) {
   }, [searchQuery, lastQuery]);
 
   useEffect(() => {
-    console.log(actualPage, nextPage, isLoading)
+    console.log(actualPage, nextPage, isLoading);
     if (actualPage !== nextPage && nextPage !== 1) {
       setLoadMore(true);
 

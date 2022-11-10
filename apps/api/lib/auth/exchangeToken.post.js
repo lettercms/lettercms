@@ -10,7 +10,8 @@ export default async function exchange() {
 
   //Invalid API credentials
   if (!blogSecret || !blogId)
-    return res.status(400).json({
+    return res.status(401).json({
+      status: 'unauthorized',
       message: 'Please Provide a valid client ID and client Secret'
     });
     
@@ -30,6 +31,7 @@ export default async function exchange() {
 
   if (!isValid)
     return res.status(401).json({
+      status: 'unauthorized',
       message: 'Invalid API credentials'
     });
 

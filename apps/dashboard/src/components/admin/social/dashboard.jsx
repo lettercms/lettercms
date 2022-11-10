@@ -3,8 +3,9 @@ import AccountCard from './accountCard';
 import AccountLoad from './accountCardLoad';
 import sdk from '@lettercms/sdk';
 import NoAccount from './noAccount';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
 import Button from '@/components/button';
+import Top from '../listLayout/top';
 
 async function fetchAccounts({setAccounts, setIsLoading, setAuthError, onAccounts}) {
   sdk.social.accounts([
@@ -50,7 +51,7 @@ export default function SocialDashboard({newPost, onAccounts}) {
         onAccounts
       });
     }
-  }, [status, onAccounts])
+  }, [status, onAccounts]);
 
   let UI = '';
     
@@ -69,10 +70,17 @@ export default function SocialDashboard({newPost, onAccounts}) {
       })} authError={authError}/>;
     }
 
-    return <div>
-      <div className="top">
-        <Button type='outline' alt onClick={newPost} disabled={!hasAccounts}>Nueva Entrada</Button>
-      </div>
+    return <div className='social-container'>
+      <Top
+        loading={isLoading}
+        create={newPost}
+        disabled={!hasAccounts}
+        buttonText='Nueva Entrada'
+        topImg={`${process.env.ASSETS_BASE}/illustrations/135.svg`}
+        topText='Redes sociales'
+      >
+        <Button type='outline' onClick={newPost} disabled={!hasAccounts}>Nueva Entrada</Button>
+      </Top>
       <div className='stats-notice'>
         <span>Feature aun en desarrollo. Todos los datos son de demostración</span>
       </div>
@@ -81,50 +89,20 @@ export default function SocialDashboard({newPost, onAccounts}) {
           {UI}
         </ul>
       </div>
-      <style jsx global>{`
-        @keyframes loading {
-           0% {
-             opacity: 1;
-           }
-           50% 
-             opacity: .5;
-           }
-           100% {
-             opacity: 1;
-           }
-        }
-      `}</style>
       <style jsx>{`
+        .social-container {
+          width: 100%;
+        }
         .stats-notice {
-          width: calc(100% - 60px);
-          position: fixed;
-          right: 0;
-          top: 70px;
+          width: 100%;
           background: #ccd7ec;
           padding: 1rem 0;
           text-align: center;
           z-index: 10;
         }
-        .top {
-          z-index: 1;
-          width: calc(100% - 60px);
-          left: 60px;
-          position: fixed;
-          display: flex;
-          background: #5f4dee;
-          color: white;
-          align-items: center;
-          justify-content: space-between;
-          padding: 15px 5%;
-          display: flex;
-        }
         #main-social {
-          position: absolute;
           width: 100%;
-          height: max-content;
-          left: 0;
-          top: 50px;
-          padding: 100px 5%;
+          padding: 0 5%;
         }
         #main-social ul {
           display: flex;

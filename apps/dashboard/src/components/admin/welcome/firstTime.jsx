@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
 import sdk from '@lettercms/sdk';
 import Link from 'next/link';
 

@@ -50,14 +50,14 @@ export default function Login({isMobile}) {
     } finally {
       setIsLoad(false);
     }
-  }
+  };
 
-    const cta = <div className={styles.cta}>
-      <span>¿Aun no tienes cuenta? </span>
-      <Link href='/signin'>
-        <a>Regístrate</a>
-      </Link>
-    </div>
+  const cta = <div className={styles.cta}>
+    <span>¿Aun no tienes cuenta? </span>
+    <Link href='/signin'>
+      <a>Regístrate</a>
+    </Link>
+  </div>;
 
   return <div>
     <Container isMobile={isMobile} title='Login' cta={cta}>
@@ -66,9 +66,9 @@ export default function Login({isMobile}) {
           <Input disabled={isLoad} value={password} id='password' type="password" onInput={({target: {value}}) => setPassword(value) } label='Contraseña'/>
 
           {/*<Link href='#'><a className='forgot'>¿Olvidaste tu contraseña?</a></Link>*/}
-          <Button type='solid' loading={isLoad}>Iniciar Sesión</Button>
+          <Button type='solid' style={{width: '100%'}} loading={isLoad}>Iniciar Sesión</Button>
         </form>
     </Container>
-  </div>
+  </div>;
 }
 

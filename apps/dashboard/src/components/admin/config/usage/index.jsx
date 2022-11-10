@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import sdk from '@lettercms/sdk';
 import BaseLoad from '../../stats/baseLoad';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
 import dynamic from 'next/dynamic';
 
 const CardLoad = () => <BaseLoad rows={1}/>;

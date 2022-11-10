@@ -51,7 +51,6 @@ export default class Editor extends Component {
     window.reactEditor = this;
     window.editorEventEmitter = new EventEmitter();
 
-    console.log(this.props);
 
     const {
       _id,
@@ -85,7 +84,7 @@ export default class Editor extends Component {
     try {
       this.initialContent = content;
       
-      await asyncImportScript('ck-script', 'https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/editor/ckeditor.js', {defer: true, async: true});
+      await asyncImportScript('ck-script', process.env.NODE_ENV === 'production' ? 'https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/editor/ckeditor.js' : 'http://localhost:3003/ckeditor.js', {defer: true, async: true});
       this.editor = await createEditor.bind(this)(content);
 
       this.setState({
@@ -250,7 +249,7 @@ export default class Editor extends Component {
         .replace(/ó|ò|ô|ö/g, 'o')
         .replace(/ú|ù|ü|û/g, 'u')
         .replace(/ñ/g, 'n')
-        .replace(/"|'/g, '');
+        .replace(/"|'|¿|\?|\^|!|#|\$|%|&|\/|\(|\)/g, '');
 
       this.setState({
         url
@@ -361,10 +360,10 @@ export default class Editor extends Component {
           </>
         }
 
-      {/*<div className='selection'>
-              <input type="checkbox" id="isProtected" name="isProtected" checked={isProtected} onInput={this.handleInput} />
-              <label htmlFor='isProtected' className='option'>Proteger Entrada</label>
-            </div>*/}
+        <div className='selection'>
+          <input type="checkbox" id="isProtected" name="isProtected" checked={isProtected} onChange={this.handleInput} />
+          <label htmlFor='isProtected' className='option'>Proteger Entrada</label>
+        </div>
         <Input disabled={sending} id='title' value={title} onInput={this.handleInput} label='Título'/>
         <Input disabled={sending} id='description' value={description} onInput={this.handleInput} label='Descripción' type='textarea'/>
         <Input id='url' value={url} onInput={this.handleInput} label='Enlace' disabled={postStatus === 'published' || sending}/>

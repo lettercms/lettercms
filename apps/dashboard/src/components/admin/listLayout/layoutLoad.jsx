@@ -1,4 +1,4 @@
-import CardLoad from '../cardLoad';
+import CardLoad from './cardLoad';
 
 const LayoutLoad = ({tab}) => <div>
   <div className='layout' style={{height: 76.5, top: 0, background: '#5f4dee'}}/>

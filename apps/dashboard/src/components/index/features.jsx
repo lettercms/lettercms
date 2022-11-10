@@ -36,14 +36,14 @@ const features = [
       'Creación de paginas en demanda'
     ]
   }
-]
+];
 
 const changeTab = (e, tab, cb) => {
   e.preventDefault();
 
   cb(tab);
 
-}
+};
 
 export default function Features() {
   const [tab, setTab] = useState(0);
@@ -87,7 +87,7 @@ export default function Features() {
                           <p>{e.description}</p>
                           <ul className="list-unstyled li-space-lg">
                             {
-                              e.feats.map(f => <li className="media">
+                              e.feats.map((f, fi) => <li key={`${e.title}-f-${fi}`} className="media">
                                 <i className="fas fa-square"></i>
                                 <div className="media-body">{f}</div>
                               </li>)
@@ -97,7 +97,7 @@ export default function Features() {
                         </div> 
                       </div> 
                     </div> 
-                  </div>
+                  </div>;
                 })
               }
             </div>

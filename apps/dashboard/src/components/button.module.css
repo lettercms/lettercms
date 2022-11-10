@@ -4,6 +4,7 @@
 .btn {
   display: inline-block;
   width: auto;
+  min-width: max-content;
   height: 2.75rem;
   border-radius: 1.5rem;
   font: 700 0.875rem/0 "Quicksand", sans-serif;
@@ -42,7 +43,7 @@
 .outline {
   border: 0.125rem solid #5f4dee;
   background-color: transparent;
-  color: #5f4dee !important;
+  color: #5f4dee;
 }
 
 .outline:enabled:hover {

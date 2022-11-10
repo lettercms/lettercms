@@ -6,49 +6,38 @@ import {signOut, useSession} from 'next-auth/react';
 import Link from 'next/link';
 import { createFirebaseApp } from '@/firebase/client';
 import { getAuth, signInWithCustomToken  } from 'firebase/auth';
+import Cross from '@/components/svg/cross';
 
 const menu = [
   {
     name: 'posts',
     title: 'Entradas',
-    path: '/dashboard/posts',
-    image: 'https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/posts-menu.png' 
+    icon: <Cross fill='#5f4dee' height='12'/>
   },
   {
     name: 'pages',
     title: 'Paginas',
-    path: '/dashboard/pages',
-    image: 'https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/pages-menu.png' 
+    icon: <Cross fill='#5f4dee' height='12'/>
   },
   {
     name: 'stats',
     title: 'Datos',
-    path: '/dashboard/stats',
-    image: 'https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/stats-menu.png' 
+    icon: <Cross fill='#5f4dee' height='12'/>
   },
   {
     name: 'social',
     title: 'Redes Sociales',
-    path: '/dashboard/social',
-    image: 'https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/earth.svg' 
-  },/*
-  {
-    name: 'email',
-    title: 'Correo',
-    path: '/dashboard/email',
-    image: 'https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/email-menu.png'
-  },*/
+    icon: <Cross fill='#5f4dee' height='12'/>
+  },
   {
     name: 'config',
     title: 'Configuración',
-    path: '/dashboard/config/blog',
-    image: 'https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/config.png' 
+    icon: <Cross fill='#5f4dee' height='12'/>
   },
   {
     name: 'collaborators',
     title: 'Colaboradores',
-    path: '/dashboard/collaborators',
-    image: 'https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/colaborators.png'
+    icon: <Cross fill='#5f4dee' height='12'/>
   }
 ];
 
@@ -87,11 +76,11 @@ export function DashboardProvider({userID, children, hideMenu}) {
       const now = new Date();
 
       const {user: {firebaseToken, accessToken}} = data;
-
+/*
       const app = createFirebaseApp();
       const auth = getAuth(app);
 
-      signInWithCustomToken(auth, firebaseToken);
+      signInWithCustomToken(auth, firebaseToken);*/
       
       sdk.setAccessToken(accessToken);
       
@@ -130,22 +119,21 @@ export function DashboardProvider({userID, children, hideMenu}) {
           <li>
             <Link href={`https://${blog?.domain}${blog?.mainUrl}`}>
               <a target='_blank'>
-                <img alt="David's Devel Logo" src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/davidsdevel-rombo.png'/>
+                <span>
+                  <Cross fill='#5f4dee' height='12'/>
+                </span>
+                <span>Inicio</span>
               </a>
             </Link>
           </li>
-          {menu.map(e =>
+          {menu.map(e => <>
+            <hr/>
             <li key={e.name}>
-              <Link href={e.path}>
-                <a>
-                  <img alt={e.name} src={e.image} />
-                </a>
-              </Link>
+              <span>{e.icon}</span>
+              <span>{e.title}</span>
             </li>
+            </>
           )}
-          <li onClick={logout}>
-            <img alt='Asset' src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/logout.png'/>
-          </li>
         </ul>
       </aside>
       <div id="content">
@@ -160,16 +148,23 @@ export function DashboardProvider({userID, children, hideMenu}) {
         }
         aside {
           position: fixed;
-          width: 60px;
+          width: 15%;
           display: inline-block;
           height: 100%;
           left: 0;
-          background: #0a1128;
+          background: #f7f7f7;
+          color: #5f4dee;
+        }
+        aside hr {
+          width: 70%;
+          margin: auto;
         }
         :global(aside ul li) {
           cursor: pointer;
-          padding: 7.5px;
+          padding: .5rem;
           transition: ease .3s;
+          font-size: .8rem;
+          font-weight: bold;
         }
         :global(aside ul li:hover) {
           background: rgba(255,255,255,.5);
@@ -179,12 +174,12 @@ export function DashboardProvider({userID, children, hideMenu}) {
         }
         #content {
           position: absolute;
-          width: calc(100% - 60px);
+          width: 85%;
           display: inline-flex;
           height: 100%;
           justify-content: center;
           padding: 0 5%;
-          left: 60px;
+          left: 15%;
         }
       `}</style>
     </div>

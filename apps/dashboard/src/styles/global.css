@@ -1,4 +1,8 @@
-
+:root {
+  --main: #5f4dee;
+  --load-main: #ccd7ec;
+  --main-alt: #362e6f;
+}
 /*
  Global Overrides
 */
@@ -143,10 +147,6 @@ a.white {
               height: 0.5rem;
               margin-right: auto;
               margin-left: auto;
-            }
-
-            .blue {
-              color: #5f4dee;
             }
 
             

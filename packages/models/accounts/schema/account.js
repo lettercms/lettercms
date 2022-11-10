@@ -92,13 +92,17 @@ Accounts.statics.login = async function(email, password) {
 };
 
 Accounts.statics.createCollab = async function(subdomain, data) {
+  const password = await bcrypt.hash(data.password, 10);
+
   const id = await this.create({
     ...data,
+    photo: `https://avatar.tobi.sh/${Buffer.from(data.email).toString('hex')}.svg?text=${data.name[0]+data.lastname[0]}&size=250`,
+    password,
     role: 'collaborator',
     subdomain
   });
 
-  return Promise.resolve({id});
+  return {id};
 };
 
 Accounts.statics.createAccount = async function(subdomain, data) {

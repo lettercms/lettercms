@@ -19,7 +19,7 @@ export default class CustomDocument extends Document {
           <link rel="preconnect" href="https://fonts.googleapis.com"/>
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='true'/>
           <link href="https://fonts.googleapis.com/css?family=Roboto|Quicksand:wght@400;700&display=swap" rel="stylesheet"/>
-          <link href='https://unpkg.com/bootstrap@4.6.1/dist/css/bootstrap.min.css' rel="stylesheet"/>
+          <link href={isDev ? '/bootstrap.min.css' : 'https://unpkg.com/bootstrap@4.6.1/dist/css/bootstrap.min.css'} rel="stylesheet"/>
         </Head>
         <body>
           <div id="fb-root" />

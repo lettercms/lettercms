@@ -1,4 +1,4 @@
-const LoadBar = () => (
+const LoadBar = ({color = '#fff'}) => (
   <div id="load-container">
     <div id="load-bar" />
     <style jsx>
@@ -10,7 +10,7 @@ const LoadBar = () => (
         z-index: 10000;
       }
       #load-container #load-bar {
-        background: white;
+        background: ${color};
         height: 5px;
         position: absolute;
 

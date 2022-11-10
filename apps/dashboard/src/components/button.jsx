@@ -13,9 +13,9 @@ export default function Button({loading, className = '', alt, type, children, ..
   if (loading)
     return <div className={'rotate ' + style.spinner}>
       <Spinner/>
-    </div>
+    </div>;
 
-  return <button className={_className} {...props}>{children}</button>
+  return <button className={_className} {...props}>{children}</button>;
 }
       /*<Image layout='fill'
         src={`${process.env.ASSETS_BASE}/assets/spinner-black.svg`}

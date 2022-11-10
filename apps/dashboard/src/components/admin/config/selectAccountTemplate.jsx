@@ -15,7 +15,7 @@ function AccountTemplate({name, username, cover, picture, onSelect}) {
           </div>
           <div className='account-button'>
             <span className='account-username'>@{username}</span>
-            <Button type='solid' loading={loading} onClick={() => {setLoading(true); onSelect()}}>Usar Cuenta</Button>
+            <Button type='solid' loading={loading} onClick={() => {setLoading(true); onSelect();}}>Usar Cuenta</Button>
           </div>
         </div>
       </div>

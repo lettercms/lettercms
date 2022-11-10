@@ -4,13 +4,13 @@ import Dashboard from'./dashboard';
 import sdk from '@lettercms/sdk';
 import Load from '../../logoLoad';
 import Router from 'next/router';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
 
 const Welcome = () => {
   const {status, user} = useUser();
-  console.log(status, user);
 
   let ui;
+
   if (status === 'loading')
     ui = <Load/>;
   else {

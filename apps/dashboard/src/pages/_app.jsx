@@ -42,17 +42,17 @@ export default function App({Component, pageProps: { session, ...pageProps }}) {
 
     return (
       <div>
-        {
-          (showLoad && !pageProps.hideLayout)
-          && <Load />
-        }
-        {
-          (!router.asPath.startsWith('/dashboard')
-          && !Component.hideMenu)
-          && <Nav />
-        }
         <ClientProvider accessToken={pageProps.accessToken}>
           <SessionProvider session={session}>
+            {
+              (showLoad && !pageProps.hideLayout)
+              && <Load />
+            }
+            {
+              (!router.asPath.startsWith('/dashboard')
+              && !Component.hideMenu)
+              && <Nav />
+            }
             {getLayout(<Component {...pageProps} />, pageProps.user)}
           </SessionProvider>
         </ClientProvider>

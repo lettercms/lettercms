@@ -3,7 +3,7 @@ import Container from '../../stats/base';
 import Modal from '@/components/modalBase';
 import Input from '@/components/input';
 import List from './keyList';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
 import sdk from '@lettercms/sdk';
 import ListLoad from './listLoad';
 import CopyField from '@/components/copyField';

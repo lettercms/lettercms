@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import Modal from '../../../modalBase';
 import importData from '@/lib/uploadXml';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
 import Button from '@/components/button';
 
 export default function BlogImport() {

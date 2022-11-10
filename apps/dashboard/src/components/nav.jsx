@@ -2,18 +2,43 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {useRouter} from 'next/router';
 import {useState, useEffect, useRef} from 'react';
+import {useSession} from 'next-auth/react';
 import Search from '@/components/svg/search';
 import Github from '@/components/svg/github';
 import Button from '@/components/button';
 import Times from '@/components/svg/times';
 import Bars from '@/components/svg/bars';
 import MobileNav from './mobileNav';
+import sdk from '@lettercms/sdk';
 
 export default function Nav () {
   const prevScrollY = useRef(0);
   const [isOpen, setOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [load, setLoad] = useState(true);
+
   const router = useRouter();
+
+  const {status, data} = useSession();
+
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      let _sdk = new sdk.Letter(data.user.accessToken);
+
+      _sdk.accounts.me([
+        'photo'
+      ])
+      .then(({photo}) => {
+        setProfilePicture(photo);
+        setLoad(false);
+      })
+    } else {
+      setLoad(false);
+    }
+
+  }, [status]);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -38,7 +63,7 @@ export default function Nav () {
       <Link href='/'>
         <a className="navbar-brand logo-image">
           <div id='logo-container'>
-            <Image layout='fill' objectFit='contain' src={`${process.env.ASSETS_BASE}/images/lettercms-logo-white-standalone.png`} alt="LetterCMS Logo White"/>          
+            <Image layout='fill' objectFit='contain' src={`${process.env.ASSETS_BASE}/assets/lettercms-logo-white.svg`} alt="LetterCMS Logo White"/>          
           </div>
         </a> 
       </Link>
@@ -93,12 +118,9 @@ export default function Nav () {
           */}
         </ul>
         <span className="nav-item">
-          <Button type='outline' alt onClick={() => router.push('/login')}>Iniciar Sesión</Button>
-        </span>
-        <span className="nav-item">
           <Link href='/blog/search'>
             <a className="nav-link page-scroll">
-              <img width='1' height='1' src='/pixel.png' alt='Search'/>
+              <img width='1' height='1' src='/pixel.png' alt='LetterCMS Search'/>
               <Search width='28' height='28'/>
             </a>
           </Link>
@@ -106,15 +128,43 @@ export default function Nav () {
         <span className="nav-item">
           <Link href='https://github.com/lettercms/lettercms'>
             <a className="nav-link page-scroll" target='_blank'>
-              <img width='1' height='1' src='/pixel.png' alt='Github'/>
+              <img width='1' height='1' src='/pixel.png' alt='LetterCMS Github'/>
               <Github width='32' height='32'/>
             </a>
           </Link>
+        </span>
+        <span className="nav-item">
+          {
+            load &&
+            <div className='img-load picture'/>
+          }
+          {
+            !load && !profilePicture &&
+            <Button type='outline' alt onClick={() => router.push('/login')}>Iniciar Sesión</Button>
+          }
+
+          {
+            !load && profilePicture &&
+            <Link href='/dashboard'>
+              <a>
+                <img className='picture' src={profilePicture} width={32} height={32} alt='Profile picture'/>
+              </a>
+            </Link>
+          }
         </span>
       </div>
     </div>
     <MobileNav open={mobileOpen}/>
     <style jsx>{`
+      .img-load {
+        background: var(--load-main);
+        animation: bounce .6s ease infinite;
+      }
+      .picture {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+      }
       #logo-container {
         width: 3rem;
         height: 34px;

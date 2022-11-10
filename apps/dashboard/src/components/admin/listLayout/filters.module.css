@@ -1,0 +1,29 @@
+.top {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.top div {
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+.top button {
+  margin: 0 .25rem;
+}
+.span {
+  background: #fff;
+  padding: 7.5px 15px;
+  border-radius: 50px;
+  min-height: 19px;
+}
+
+.focus {
+  background-color: var(--main);
+  color: #fff !important;
+  cursor: default !important;
+}
+.focus:hover {
+  color: #fff !important;
+  background-color: var(--main) !important;
+}

@@ -1,9 +1,10 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, forwardRef} from 'react';
 //import asyncImport from '@/lib/asyncImportScript';
 import sdk from '@lettercms/sdk';
 import AccountLoad from './load';
 import dynamic from 'next/dynamic';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
+import Top from '../../top';
 
 const UI = dynamic(() => import('./ui'), {
   loading: () => <AccountLoad/>,
@@ -16,7 +17,7 @@ const Cropper = dynamic(() => import('./cropper'), {
 
 let changes = {};
 
-export default function AccountConfig({button}) {
+export default function AccountConfig() {
   const [data, setData] = useState({});
   const [loading, setLoad] = useState(true);
   const [file, setFile] = useState(null);
@@ -42,17 +43,8 @@ export default function AccountConfig({button}) {
           setData(d);
           setLoad(false);
         });
-
-        if (button.current) {
-          button.current.onclick = () => {
-            sdk.accounts.update(user._id, changes).then(() => {
-              alert('Datos Modificados con exito');
-              changes = {};
-            });
-        }
-      };
     }
-  }, [status, button, user._id]);
+  }, [status]);
 
   const handleInput = ({target: {name, value}}) => {
 
@@ -68,6 +60,17 @@ export default function AccountConfig({button}) {
     return <AccountLoad/>;
 
   return <div>
+    <Top
+      create={() => {
+        sdk.accounts
+          .update(user._id, changes)
+          .then(() => {
+            alert('Datos Modificados con exito');
+            changes = {};
+          });
+      }}
+      buttonText='Guardar'
+    />
     <UI {...data} onChange={handleInput} onChangePicture={setFile}/>
     <Cropper file={file} onChange={photo => setData(prev => ({
       ...prev,

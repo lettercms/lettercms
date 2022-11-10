@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import sdk from '@lettercms/sdk';
-import ImageUploader from '../../../lib/ImageHandler';
+import ImageUploader from '@/lib/ImageHandler';
 import BlogImages from './images/blogImages';
 import BlogSearch from './images/search';
 import ModalTabs from './images/tabs';

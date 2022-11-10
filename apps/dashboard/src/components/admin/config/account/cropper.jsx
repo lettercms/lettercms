@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
 import Modal from '@/components/modalBase';
 import ImageUploader from '@/lib/ImageHandler';
 import Image from 'next/image';

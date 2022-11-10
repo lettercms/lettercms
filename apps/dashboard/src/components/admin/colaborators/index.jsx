@@ -9,7 +9,7 @@ export default function Accounts() {
 
   return <div style={{ width: '100%' }}>
     <Layout
-      picture='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/accounts.svg'
+      picture={`${process.env.ASSETS_BASE}/assets/accounts.svg`}
       type='accounts'
       fields={[
         'photo',
@@ -25,6 +25,8 @@ export default function Accounts() {
       onEdit={setCollabId}
       onCreate={() => setShowInvitation(true)}
       buttonText='Invitar'
+      topImg={`${process.env.ASSETS_BASE}/illustrations/118.svg`}
+      topText='Colaboradores'
     />
 
     {

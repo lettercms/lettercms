@@ -64,7 +64,7 @@ export default class UserTab extends Component {
       } = this.state;
 
       if (!name || !lastname || password || !email)
-        return alert('Por favor rellene todos los campos')
+        return alert('Por favor rellene todos los campos');
 
       this.setState({
         isLoad: true
@@ -198,7 +198,7 @@ export default class UserTab extends Component {
           type='password'
           autoComplete='false'
         />
-        <Button type='solid' loading={isLoad}>Registrar</Button>
+        <Button type='solid' style={{width: '100%'}}  loading={isLoad}>Registrar</Button>
       <style jsx>{`
         .load-container {
           width: 50px;

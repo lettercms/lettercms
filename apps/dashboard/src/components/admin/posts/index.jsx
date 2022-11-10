@@ -11,7 +11,7 @@ function Posts() {
     router.push(`/dashboard/posts/edit/${id}`);
   };
 
-  return <div style={{ width: '90%' }}>
+  return <>
     <Layout
       type='posts'
       fields={[
@@ -22,9 +22,7 @@ function Posts() {
         'views',
         'url',
         'tags',
-        'images',
-        'authorEmail',
-        'author',
+        'author.photo',
         'isProtected',
         'subdomain'
       ]}
@@ -35,8 +33,10 @@ function Posts() {
       onEdit={id => router.push(`/dashboard/posts/edit/${id}`)}
       onCreate={newPost}
       buttonText='Crear'
+      topImg={`${process.env.ASSETS_BASE}/illustrations/27.svg`}
+      topText='Entradas'
     />
-  </div>;
+  </>;
 }
 
 export default Posts;

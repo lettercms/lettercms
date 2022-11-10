@@ -7,19 +7,19 @@ export default function Credentials({title, children, isMobile, cta}) {
   if (isMobile)
     return <>
       <Head>
-        <title>{title} - LetterCMS</title>
+        <title>{`${title} - LetterCMS`}</title>
       </Head>
       <NotSupported/>
     </>;
 
   return <div className={styles.container}>
     <Head>
-      <title>{title} - LetterCMS</title>
+      <title>{`${title} - LetterCMS`}</title>
     </Head>
     <div className={styles.imageContainer}>
       <Image
         layout='fill'
-        src={`${process.env.ASSETS_BASE}/images/lettercms-logo-white-standalone.png`}
+        src={`${process.env.ASSETS_BASE}/assets/lettercms-logo-white.svg`}
         alt='LetterCMS Logo White'
         objectFit='contain'
       />
@@ -28,5 +28,5 @@ export default function Credentials({title, children, isMobile, cta}) {
       {children}
     </div>
     {cta}
-  </div>
+  </div>;
 }

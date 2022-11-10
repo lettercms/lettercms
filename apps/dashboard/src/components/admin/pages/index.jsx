@@ -35,6 +35,8 @@ function Page() {
       onEdit={id => router.push(`/dashboard/pages/edit/${id}`)}
       onCreate={newPage}
       buttonText='Crear'
+      topImg={`${process.env.ASSETS_BASE}/illustrations/74.svg`}
+      topText='Páginas'
     />
   </div>;
 }

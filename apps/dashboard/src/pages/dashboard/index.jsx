@@ -1,9 +1,13 @@
-import {useEffect, useState} from 'react';
 import Head from 'next/head';
-import sdk from '@lettercms/sdk';
 import {getSession} from 'next-auth/react';
-import {DashboardProvider} from '@/lib/dashboardContext';
-import Welcome from '@/components/admin/welcome';
+import {DashboardProvider} from '@/components/layout';
+import LogoLoad from '@/components/logoLoad';
+import dynamic from 'next/dynamic';
+
+const Welcome = dynamic(() => import('@/components/admin/welcome'), {
+  ssr: false,
+  loading:LogoLoad
+});
 
 export async function getServerSideProps({ req, res, query}) {
   const session = await getSession({req});

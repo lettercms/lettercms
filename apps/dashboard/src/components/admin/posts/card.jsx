@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
 import Eye from '@/components/svg/eye';
 import Preview from '@/components/svg/preview';
 import Edit from '@/components/svg/edit';

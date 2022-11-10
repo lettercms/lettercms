@@ -4,11 +4,13 @@ const Base = ({children, rows = 1, title, style, principal}) => <div className={
   <style jsx>{`
     .principal {
       background: linear-gradient(to right, #5f4dee, #03a9f4) !important;
+      border: none !important;
     }
     :global(.principal span) {
       color: white !important;
     }
     .chart-container {
+      border: solid 1px #f7f7f7;
       background: white;
       position: relative;
       display: flex;
