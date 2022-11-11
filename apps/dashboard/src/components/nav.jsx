@@ -63,7 +63,7 @@ export default function Nav () {
       <Link href='/'>
         <a className="navbar-brand logo-image">
           <div id='logo-container'>
-            <Image layout='fill' objectFit='contain' src={`${process.env.ASSETS_BASE}/assets/lettercms-logo-white.svg`} alt="LetterCMS Logo White"/>          
+            <img src={`${process.env.ASSETS_BASE}/assets/lettercms-logo-white.svg`} alt="LetterCMS Logo White"/>
           </div>
         </a> 
       </Link>
