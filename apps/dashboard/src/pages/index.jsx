@@ -40,7 +40,7 @@ export default function Home({referrer, isAdmin}) {
   </Layout>;
 }
 
-export async function getServerSideProps({req, res}) {
+export async function getStaticProps({req, res}) {
   const session = await getSession({req});
 
   const isAdmin = !!session;
