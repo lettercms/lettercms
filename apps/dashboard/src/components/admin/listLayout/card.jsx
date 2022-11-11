@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {useUser} from '@/components/layout';
 import Eye from '@/components/svg/eye';
 import Preview from '@/components/svg/preview';
@@ -6,6 +7,7 @@ import Bubbles from '@/components/svg/bubbles';
 import Trash from '@/components/svg/trash';
 import LinkSvg from '@/components/svg/link';
 import styles from './card.module.css';
+import TagList from './tagList';
 
 const Card = ({
   _id,
@@ -23,6 +25,8 @@ const Card = ({
   edit,
   del
 }) => {
+  const [tagsOpen, setTagsOpen] = useState(false);
+
   const {blog, user} = useUser();
 
   const canDelete = user.role === 'admin' || user._id === author._id;
@@ -44,7 +48,14 @@ const Card = ({
       </div>
       <div className={styles.tags}>
         {
-          tags ? tags.map(e => <span key={e} className={styles.tag}>{e}</span>) : null
+          tags?.length > 0 &&
+          <>
+            <span className={styles.tag}>{tags[0]}</span>
+            {
+              tags.length > 1 &&
+              <button className={styles.tag} onClick={() => setTagsOpen(!tagsOpen)} onBlur={() => setTagsOpen(false)}>{`+${tags.length - 1}`}</button>
+            }
+          </>
         }
       </div>
       <div className={styles.buttons}>
@@ -97,6 +108,10 @@ const Card = ({
         </div>
       </div>
     </div>
+    {
+      tagsOpen &&
+      <TagList tags={tags.slice(1)}/>
+    }
   </li>;
 };
 

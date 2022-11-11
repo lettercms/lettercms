@@ -47,7 +47,7 @@ export async function getStaticProps({req, res}) {
 
   return {
     props: {
-      referrer: req.headers.referer || null,
+      referrer: req?.headers.referer || null,
       isAdmin,
       accessToken: jwt.sign({subdomain: 'davidsdevel'}, process.env.JWT_AUTH)
     }

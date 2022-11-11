@@ -24,7 +24,7 @@ export default function Nav () {
 
 
   useEffect(() => {
-    if (status === 'authenticated') {
+    if (status === 'authenticated' && !profilePicture) {
       let _sdk = new sdk.Letter(data.user.accessToken);
 
       _sdk.accounts.me([
@@ -165,13 +165,6 @@ export default function Nav () {
         height: 38px;
         border-radius: 50%;
       }
-      #logo-container {
-        width: 3rem;
-        height: 34px;
-        top: 8px;
-        position: absolute;
-        left: 1.75rem;
-      }
       .navbar-custom {
       background-color: #5f4dee;
       box-shadow: 0 0.0625rem 0.375rem 0 rgba(0, 0, 0, 0.1);
@@ -184,8 +177,7 @@ export default function Nav () {
       }
 
       .navbar-custom .navbar-brand.logo-image img {
-      width: 4.4375rem;
-      height: 1.75rem;
+        width: 4.4375rem;
       }
 
       .navbar-custom .navbar-brand.logo-text {
