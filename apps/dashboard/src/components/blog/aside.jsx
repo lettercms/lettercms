@@ -18,7 +18,7 @@ export default function Aside({owner, mostViewed}) {
   return <aside>
     <Base row={1} principal>
       <div id='query-container'>
-        <Input label='Termino' value={query} onChange={e => setQuery(e.target.value)} id='query' onChange={console.log}/>
+        <Input label='Termino' value={query} onChange={e => setQuery(e.target.value)} id='query'/>
         <Button type='outline' alt onClick={() => router.push(`/search?q=${query}`)}>Buscar</Button>
       </div>
     </Base>

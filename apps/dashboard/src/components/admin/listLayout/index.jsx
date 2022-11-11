@@ -89,7 +89,7 @@ function Layout(props) {
     setLoadMore,
     setCount,
     setStatus
-  }), [props.type, props.fields, before]);
+  }), [props.type, props.fields, before, status]);
 
   useEffect(() => {
     if (user.status === 'done' && (actual.pageToken !== fetchOpts.pageToken || actual.status !== fetchOpts.status || router.pathname !== actual.pathname)) {

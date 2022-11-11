@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import CardLoad from './cardLoad';
 import {container} from './listContainer.module.css';
+import Button from '@/components/button';
 
 const Card = dynamic(() => import('./card'), {
   loading: CardLoad,
@@ -19,9 +20,9 @@ export default function ListContainer({type, data, before, cursor, onDelete, onE
         data.map((e) => {
           switch(type) {
             case 'accounts':
-              return <Collabs key={e._id} {...e}/>
+              return <Collabs key={e._id} {...e}/>;
             default:
-              return <Card key={e.url + e._id} edit={onEdit} del={id => onDelete(id, setData)} {...e}/>
+              return <Card key={e.url + e._id} edit={onEdit} del={id => onDelete(id, setData)} {...e}/>;
           }
         })
       }

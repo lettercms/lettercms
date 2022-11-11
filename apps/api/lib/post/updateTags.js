@@ -8,7 +8,7 @@ export default async function updateTags(subdomain, prev, next) {
 
   const {tags} = await blogs.findOne({subdomain}, 'tags');
 
-  const data = {}
+  const data = {};
   const diff = getDiff(prev, next);
 
   diff.toAdd.forEach(tag => {

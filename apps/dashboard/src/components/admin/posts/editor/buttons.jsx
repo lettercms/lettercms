@@ -15,5 +15,5 @@ export default function Buttons({sending, postStatus, onPreview, onSave, onPubli
     <button className={send} disabled={sending} title={postStatus === 'published' ? 'Actualizar' : 'Publicar'} onClick={onPublish}>
       <Send fill='#fff'/>
     </button>
-  </div>
+  </div>;
 }

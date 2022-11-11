@@ -41,7 +41,7 @@ const generateDates = (daysCount, dateEnd) => {
       dates.push(path);
     }
 
-    console.log(dateEnd)
+    console.log(dateEnd);
     return dates;
 };
 

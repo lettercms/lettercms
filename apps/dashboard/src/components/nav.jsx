@@ -33,7 +33,7 @@ export default function Nav () {
       .then(({photo}) => {
         setProfilePicture(photo);
         setLoad(false);
-      })
+      });
     } else {
       setLoad(false);
     }

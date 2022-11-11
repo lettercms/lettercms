@@ -10,5 +10,5 @@ export default function Title({onChange, title: _t}) {
 
   return <div style={{width: 400, margin: 'auto'}}>
     <Input value={title} onChange={({target: {value}}) => setTitle(value)}label='Título'/>
-  </div>
+  </div>;
 }

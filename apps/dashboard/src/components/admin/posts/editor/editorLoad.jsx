@@ -6,5 +6,5 @@ export default function EditorLoad() {
     <div className={title}/>
     <div/>
     <div/>
-  </div>
+  </div>;
 }

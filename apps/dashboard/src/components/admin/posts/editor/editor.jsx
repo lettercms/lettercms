@@ -21,7 +21,7 @@ export default function CreateEditor({content}) {
     return () => {
       if (editor)
         editor.destroy();
-    }
+    };
   }, []);
   
   let load = null;
@@ -53,5 +53,5 @@ export default function CreateEditor({content}) {
         box-shadow: none !important;
       }
     `}</style>
-  </div>
+  </div>;
 }

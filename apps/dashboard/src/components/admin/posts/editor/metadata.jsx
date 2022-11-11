@@ -11,7 +11,7 @@ export default function Metadata({categories}) {
   useEffect(() => {
     if (focus) {
       clearTimeout(timeout);
-      setShowMeta(true)
+      setShowMeta(true);
     } else {
       timeout = setTimeout(() => setShowMeta(false), 300);
     }

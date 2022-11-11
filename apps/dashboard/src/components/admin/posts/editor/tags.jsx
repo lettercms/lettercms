@@ -14,11 +14,11 @@ export default function Tags({tags: _t, blogTags: _bt, onChange}) {
     } else {
       const newTags = _bt.filter(e => e.startsWith(text));
 
-      setBlogTags(newTags)
+      setBlogTags(newTags);
       setShowTags(newTags.length === 0 ? false : true);
     }
 
-  }, [text, _bt])
+  }, [text, _bt]);
 
   return <div className={tagsContainer}>
     {
@@ -39,5 +39,5 @@ export default function Tags({tags: _t, blogTags: _bt, onChange}) {
         tags.map((e, i) => <li key={e + i} className={tagList}>{e}</li>)
       }
     </ul>
-  </div>
+  </div>;
 }

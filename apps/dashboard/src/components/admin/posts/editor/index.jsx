@@ -39,7 +39,7 @@ export default function EditorContainer({post: {_id, content, title: _t, tags}, 
     <Tags tags={tags} blogTags={blog.tags}/>
     <Editor content={content}/>
     <Buttons/>
-  </div>
+  </div>;
 }
 
 

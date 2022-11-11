@@ -43,7 +43,7 @@ export default function Top(props) {
     }
 
     return <div className={top}>
-      <Button type='outline' disabled={loading} ref={buttonRef} onClick={create} disabled={loading || disabled}>{buttonText || 'Create'}</Button>
+      <Button type='outline' ref={buttonRef} onClick={create} disabled={loading || disabled}>{buttonText || 'Create'}</Button>
       <div>
         {counts}
       </div>

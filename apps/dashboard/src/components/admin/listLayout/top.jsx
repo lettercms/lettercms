@@ -30,7 +30,7 @@ export default function Top({disableTopButton, topImg, topText, children, loadin
     </div>
     {
       !disableTopButton &&
-      <Button type='outline' className={topButton} disabled={loading} ref={buttonRef} onClick={create} disabled={loading || disabled}>{buttonText || 'Create'}</Button>
+      <Button type='outline' className={topButton} ref={buttonRef} onClick={create} disabled={loading || disabled}>{buttonText || 'Create'}</Button>
     }
     <img src={topImg}/>
     <div className={`${top} ${isOpen ? topOpen : ''}`}>

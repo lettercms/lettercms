@@ -12,5 +12,5 @@ export default function MetaInputs({hasFacebook, hasInstagram}) {
       <input type='checkbox'/>
     }
 
-  </div>
+  </div>;
 }

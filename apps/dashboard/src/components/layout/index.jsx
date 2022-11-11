@@ -23,7 +23,7 @@ import {option} from './option.module.css';
 import Option from './option';
 import Home from '@/components/svg/home';
 import PowerOff from '@/components/svg/powerOff';
-import MenuLoad from './menuLoad'
+import MenuLoad from './menuLoad';
 
 const DashboardContext = createContext();
 
@@ -55,7 +55,7 @@ export function DashboardProvider({userID, children, hideMenu}) {
 
   const ctx = useContext(DashboardContext);
 
-  const router = Router.useRouter()
+  const router = Router.useRouter();
 
   useEffect(() => {
     if (!ctx && status === 'authenticated') {

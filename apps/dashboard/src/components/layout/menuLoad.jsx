@@ -9,5 +9,5 @@ export default function MenuLoad() {
         border-radius: 5px;
       }
     `}</style>
-  </li>
+  </li>;
 }
