@@ -81,7 +81,7 @@ function Layout(props) {
   const fetchOpts = useMemo(() => ({
     type: props.type,
     fields: props.fields,
-    pageToken: before,
+    pageToken: cursor,
     status,
     setData,
     setBefore,
@@ -113,7 +113,7 @@ function Layout(props) {
     </ul>;
   }
   else if (data.length > 0) {
-    ui = <ListContainer type={props.type} data={data} before={before} setBefore={setBefore} onDelete={_delete} onEdit={props.onEdit} isLoadingMore={isLoadingMore}/>;
+    ui = <ListContainer type={props.type} data={data} before={cursor} setBefore={setBefore} onDelete={_delete} onEdit={props.onEdit} isLoadingMore={isLoadingMore}/>;
   } else {
     ui = <NoData action={props.onCreate} picture={props.picture} buttonText={props.buttonText}/>;
   }
