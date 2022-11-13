@@ -60,7 +60,7 @@ class Card extends Component {
             <img width='1' height='1' src='/pixel.png' style={{position: 'absolute'}} alt={title}/>
             {
               !!thumbnail
-              ? <div className="card-header-image" style={{ backgroundImage: `url(${thumbnail}&w=500)` }} />
+              ? <div className="card-header-image" style={{ backgroundImage: `url(${thumbnail}&w=500&q=50)` }} />
               : <div className="card-header-title">
                 <h3>{size === 'big'  ? title[0].toUpperCase() : title}</h3>
               </div>

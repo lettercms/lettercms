@@ -1,7 +1,6 @@
-import { withSentry } from '@sentry/nextjs';
 import {getBlog, getRecommended} from '@/lib/mongo/blogs';
 
-async function blog(req, res) {
+export default async function blog(req, res) {
   const {userID, page} = req.query;
 
   let data = {};
@@ -13,5 +12,3 @@ async function blog(req, res) {
 
   res.json(data);
 }
-
-export default withSentry(blog);

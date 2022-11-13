@@ -22,9 +22,11 @@
     "@lettercms/sdk": "*",
     "@lettercms/ui": "*",
     "@lettercms/utils": "*",
-    "@sentry/nextjs": "^7.11.1",
+    "@sentry/nextjs": "^7.19.0",
     "bcrypt": "5.1.0",
+    "bootstrap": "4.6.1",
     "browser-image-compression": "^2.0.0",
+    "cropperjs": "^1.5.12",
     "feed": "^4.2.2",
     "firebase": "^9.10.0",
     "firebase-admin": "^11.0.1",
@@ -52,8 +54,15 @@
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.3.0",
     "recharts": "2.1.12",
+    "sass": "^1.56.1",
     "swr": "^1.3.0",
     "unsplash-js": "^7.0.15",
     "xml-js": "^1.6.11"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^5.0.0",
+    "autoprefixer": "^10.4.13",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-preset-env": "^7.8.2"
   }
 }

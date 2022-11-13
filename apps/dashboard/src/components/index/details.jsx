@@ -12,7 +12,7 @@ export default function Details() {
         <div className="col-lg-6">
           <div className="text-container">
             <h2>Es tiempo de mejorar la creacion de tu contenido</h2>
-            <p>Nuestra meta es que crezcas y entregues tu contenido de la mejor manera posible. Con la yuda de LetterCMS no tendras que añadir plugins o integrar herramientas externas, todo lo ofrecemos en un mismo lugar</p>
+            <p>Nuestra meta es que crezcas y entregues tu contenido de la mejor manera posible. Con la ayuda de LetterCMS no tendras que añadir plugins o integrar herramientas externas, todo lo ofrecemos en un mismo lugar</p>
             <ul className="list-unstyled li-space-lg">
               <li className="media">
                 <i className="fas fa-square"></i>
@@ -36,7 +36,7 @@ export default function Details() {
     <style jsx>{`
       .basic-1 {
         padding-top: 7.5rem;
-        padding-bottom: 8rem;
+        padding-bottom: 4rem;
       }
 
       .basic-1 .text-container {

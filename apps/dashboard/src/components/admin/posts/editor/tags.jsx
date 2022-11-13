@@ -1,9 +1,11 @@
 import {useState, useEffect} from 'react';
 import {inputTag, tagsContainer, tagList, blogTagsStyles, tagUl} from './tags.module.css';
+import {useData} from './index';
 
-export default function Tags({tags: _t, blogTags: _bt, onChange}) {
+export default function Tags({blogTags: _bt}) {
+  const[data, setData] = useData();
 
-  const [tags,  setTags] = useState(_t ? _t : []);
+  const [tags,  setTags] = useState(data.tags ? data.tags : []);
   const [blogTags, setBlogTags] = useState(_bt || []);
   const [text,  setText] = useState('');
   const [showTags, setShowTags] = useState(false);

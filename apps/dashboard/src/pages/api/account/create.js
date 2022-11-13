@@ -1,9 +1,8 @@
 import connect from '@lettercms/utils/lib/connection';
 import {Accounts, Codes} from '@lettercms/models/accounts';
 import sendMail from '@lettercms/utils/lib/sendMail';
-import {withSentry} from '@sentry/nextjs';
 
-async function create(req, res) {
+export default async function create(req, res) {
   if (req.method !== 'POST')
     return res.status(405).json({
       status: 'method-not-allowed'
@@ -80,4 +79,3 @@ async function create(req, res) {
   });
 };
 
-export default withSentry(create);

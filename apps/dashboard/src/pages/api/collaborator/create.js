@@ -1,10 +1,9 @@
 import connect from '@lettercms/utils/lib/connection';
 import * as accounts from '@lettercms/models/accounts';
 import usage from '@lettercms/models/usages';
-import { withSentry } from '@sentry/nextjs';
 import bcrypt from 'bcrypt';
 
-async function createCollab(req, res) {
+export default async function createCollab(req, res) {
   if (req.method !== 'POST')
     return res.status(405).json({
       status: 'method-not-allowed'
@@ -52,5 +51,3 @@ async function createCollab(req, res) {
     status: 'OK'
   });
 };
-
-export default withSentry(createCollab);

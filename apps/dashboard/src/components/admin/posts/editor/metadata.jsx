@@ -18,7 +18,7 @@ export default function Metadata({categories}) {
   }, [focus]);
 
   return <div style={{position: 'relative'}}>
-    <button onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}>
+    <button onClick={() => setFocus(!focus)} onBlur={() => setFocus(false)}>
       <SlidersH className='ck ck-icon'/>
     </button>
     {

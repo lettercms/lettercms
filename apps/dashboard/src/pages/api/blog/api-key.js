@@ -1,4 +1,3 @@
-import {withSentry} from '@sentry/nextjs';
 import {randomBytes} from 'crypto';
 import manageMethods from '@lettercms/utils/lib/manageMethods';
 import blogs from '@lettercms/models/blogs';

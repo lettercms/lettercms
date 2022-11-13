@@ -1,10 +1,9 @@
-import { withSentry } from '@sentry/nextjs';
 import connect from '@lettercms/utils/lib/connection';
 import blogs from '@lettercms/utils/lib/connection';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 
-async function generateKey(req, res) {
+export default async function generateKey(req, res) {
   const {blogID: _id} = req.body;
 
   await connect();
@@ -28,5 +27,3 @@ async function generateKey(req, res) {
     key: _id + key
   });
 }
-
-export default withSentry(generateKey);

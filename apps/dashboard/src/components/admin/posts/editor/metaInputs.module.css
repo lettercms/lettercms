@@ -2,10 +2,14 @@
   position: absolute;
   background: #fff;
   padding: 1rem 2rem;
-  width: 18rem;
+  width: 20rem;
   right: 0;
   top: 3rem;
   border-radius: 10px;
   box-shadow: 1px 1px 5px #0002;
   z-index: 3;
+}
+.metaInputs textarea {
+  resize: none;
+  height: 10rem;
 }

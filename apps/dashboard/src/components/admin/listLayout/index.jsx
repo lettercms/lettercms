@@ -92,7 +92,15 @@ function Layout(props) {
   }), [props.type, props.fields, before, status]);
 
   useEffect(() => {
-    if (user.status === 'done' && (actual.pageToken !== fetchOpts.pageToken || actual.status !== fetchOpts.status || router.pathname !== actual.pathname)) {
+    if (
+      user.status === 'done' && 
+      !router.pathname.includes('/edit/') &&
+      (
+        actual.pageToken !== fetchOpts.pageToken ||
+        actual.status !== fetchOpts.status ||
+        router.pathname !== actual.pathname
+      )
+    ) {
 
       fetchData(fetchOpts);
 
@@ -125,6 +133,7 @@ function Layout(props) {
       buttonText={props.buttonText}
       topImg={props.topImg}
       topText={props.topText}
+      ico={props.ico}
     >
       <Filter
         active={status}

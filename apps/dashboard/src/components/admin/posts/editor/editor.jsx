@@ -1,57 +1,78 @@
-import {useEffect, useState} from 'react';
-import asyncImportScript from '@/lib/asyncImportScript';
-import createEditor from './lib/createEditor';
+import {useState} from 'react';
+import {useData} from './index';
 import EditorLoad from './editorLoad';
+
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import BallonEditor from '@ckeditor/ckeditor5-build-balloon-block';
 
 let editor = null;
 
-export default function CreateEditor({content}) {
+export default function Editor({onOpenModal}) {
   const [loading, setLoading] = useState(true);
+  const [data, setData] = useData();
 
-  useEffect(() => {
-    asyncImportScript('ck-script', process.env.NODE_ENV === 'production' ? 'https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/editor/ckeditor.js' : 'http://localhost:3003/ckeditor.js', {defer: true, async: true})
-    .then(() => {
-      createEditor(content)
-        .then(e => {
-          editor = e;
+  return <div>
+      {  
+        loading &&
+        <EditorLoad/>
+      }
+      <CKEditor
+        editor={ BallonEditor }
+        data={data.content ? data.content : '<p>Nueva super entrada</p>'}
+        onReady={ editor => {
+
           setLoading(false);
-        });
-    });
 
-    return () => {
-      if (editor)
-        editor.destroy();
-    };
-  }, []);
-  
-  let load = null;
+          //Handle click on image
+          const input = document.querySelector('.ck-file-dialog-button').children[1];
 
-  if (loading)
-    load = <EditorLoad/>;
+          input.onclick = e => {
+            e.preventDefault();
 
-  return <div id='ck'>
-    {load}
-    <style jsx global>{`
-      .ck-editor {
-        ${loading ? 'display: none !important;' : ''}
-        max-width: 97%;
-        margin: auto !important;
-      }
-      .ck-editor__editable {
-        border: none !important;
-        padding: 0 7.5% 5rem !important;
-      }
-      .ck-focused {
-        box-shadow: none !important; 
-      }
-      .ck-toolbar {
-        background: #fff !important;
-        border: none !important;
-      }
-      .ck.ck-sticky-panel__content.ck-sticky-panel__content_sticky {
-        top: 59px;
-        box-shadow: none !important;
-      }
-    `}</style>
-  </div>;
+            onOpenModal(true);
+          };
+
+          //Get images on load
+          let images = document.querySelector('.ck-content').getElementsByTagName('img');
+
+          if (images?.length > 0) {
+
+            let im = Array.from(images).map(e => e.dataset.src ? e.dataset.src : e.src);
+
+            setData('images', im);
+          }
+        }}
+        onChange={ ( event, editor ) => {
+          console.log(event)
+          //TODO: Add thumbnails changes
+          setData('content', editor.getData());
+
+        }}
+        onError={console.log}
+      />
+      <style jsx global>{`
+        .ck-editor {
+          ${loading ? 'display: none !important;' : ''}
+          max-width: 97%;
+          margin: auto !important;
+        }
+        .ck-editor__editable {
+          border: none !important;
+          padding: 0 10% 5rem 0 !important;
+          margin-left: 10%;
+        }
+        .ck-focused {
+          box-shadow: none !important; 
+        }
+        .ck-toolbar {
+          background: #fff !important;
+          border: none !important;
+        }
+        .ck.ck-sticky-panel__content.ck-sticky-panel__content_sticky {
+          top: 59px;
+          box-shadow: none !important;
+        }
+      `}</style>
+    </div>;
 }
+

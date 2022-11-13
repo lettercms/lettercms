@@ -5,9 +5,8 @@ import {Accounts} from '@lettercms/models/accounts';
 import blogs from '@lettercms/models/blogs';
 import posts from '@lettercms/models/posts';
 import usage from '@lettercms/models/usages';
-import { withSentry } from '@sentry/nextjs';
 
-async function createBlog(req, res) {
+export default async function createBlog(req, res) {
   if (req.method !== 'POST')
     return res.status(405).json({
       status: 'method-not-allowed'
@@ -69,5 +68,3 @@ async function createBlog(req, res) {
     status: 'OK'
   });
 };
-
-export default withSentry(createBlog);

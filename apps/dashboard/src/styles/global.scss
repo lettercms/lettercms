@@ -1,0 +1,36 @@
+/*!
+ * Bootstrap v4.6.1 (https://getbootstrap.com/)
+ * Copyright 2011-2021 The Bootstrap Authors
+ * Copyright 2011-2021 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
+
+html {
+  box-sizing: border-box;
+  -ms-overflow-style: scrollbar;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/reboot";
+
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/utilities/_display";
+@import "~bootstrap/scss/utilities/_flex";
+@import "~bootstrap/scss/utilities/_spacing";
+
+@import "~bootstrap/scss/_images";
+@import "~bootstrap/scss/_type";
+@import "~bootstrap/scss/_navbar";
+@import "~bootstrap/scss/_nav";
+@import "~bootstrap/scss/_transitions";
+
+@import "~bootstrap/scss/utilities/_position";
+

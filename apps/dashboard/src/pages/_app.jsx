@@ -6,6 +6,7 @@ import { SessionProvider } from 'next-auth/react';
 import toast, { Toaster } from 'react-hot-toast';
 import Load from '../components/loadBar';
 import {ClientProvider} from '@/lib/userContext'; 
+import '@/styles/global.scss';
 import '@/styles/global.css';
 
 //Dynamics

@@ -1,6 +1,5 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import {withSentry} from '@sentry/nextjs';
 import connect from '@lettercms/utils/lib/connection';
 import {Accounts} from '@lettercms/models/accounts';
 import admin from '@lettercms/admin';
@@ -95,4 +94,4 @@ export const authOptions = {
   ]
 };
 
-export default withSentry(NextAuth(authOptions));
+export default NextAuth(authOptions);

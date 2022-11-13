@@ -1,14 +1,11 @@
 import {useEffect, useState} from 'react';
 import Input from '@/components/input';
+import {useData} from './index';
 
-export default function Title({onChange, title: _t}) {
-  const [title, setTitle] = useState(_t || '');
-
-  useEffect(() => {
-    onChange('title', title);
-  }, [title]);
+export default function Title() {
+  const [data, setData] = useData();
 
   return <div style={{width: 400, margin: 'auto'}}>
-    <Input value={title} onChange={({target: {value}}) => setTitle(value)}label='Título'/>
+    <Input value={data.title} onChange={({target: {value}}) => setData('title', value)}label='Título'/>
   </div>;
 }

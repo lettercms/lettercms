@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Invitation from './invitationModal';
 import Collab from './collab';
 import Layout from '../listLayout';
+import Ico from '@/components/assets/adminCollabs'
 
 export default function Accounts() {
   const [showInvitation, setShowInvitation] = useState(false);
@@ -9,7 +10,6 @@ export default function Accounts() {
 
   return <div style={{ width: '100%' }}>
     <Layout
-      picture={`${process.env.ASSETS_BASE}/assets/accounts.svg`}
       type='accounts'
       fields={[
         'photo',
@@ -25,7 +25,7 @@ export default function Accounts() {
       onEdit={setCollabId}
       onCreate={() => setShowInvitation(true)}
       buttonText='Invitar'
-      topImg={`${process.env.ASSETS_BASE}/illustrations/118.svg`}
+      ico={<Ico/>}
       topText='Colaboradores'
     />
 

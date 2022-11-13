@@ -1,6 +1,10 @@
 .adminTop {
   width: 100%;
 }
+.adminTop svg {
+  display: block;
+  margin: auto;
+}
 .adminTop img {
   height: 80%;
   margin: auto;

@@ -1,8 +1,7 @@
 import connect from '@lettercms/utils/lib/connection';
 import {Accounts, Codes} from '@lettercms/models/accounts';
-import {withSentry} from '@sentry/nextjs';
 
-async function verify(req, res) {
+export default async function verify(req, res) {
   if (req.method !== 'POST')
     return res.status(405).json({
       status: 'method-not-allowed'
@@ -50,5 +49,3 @@ async function verify(req, res) {
     password
   });
 };
-
-export default withSentry(verify);

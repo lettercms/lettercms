@@ -22,7 +22,7 @@ export default function CTA() {
     </Base> 
     <style jsx>{`
       .basic-2 {
-      padding-top: 8rem;
+      padding-top: 1rem;
       padding-bottom: 6.75rem;
       background-color: white;
       text-align: center;

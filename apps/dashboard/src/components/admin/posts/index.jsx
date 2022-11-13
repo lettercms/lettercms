@@ -1,6 +1,7 @@
 import {useRouter} from 'next/router';
 import sdk from '@lettercms/sdk';
 import Layout from '../listLayout';
+import Ico from '@/components/assets/adminPost'
 
 function Posts() {
   const router = useRouter();
@@ -33,7 +34,7 @@ function Posts() {
       onEdit={id => router.push(`/dashboard/posts/edit/${id}`)}
       onCreate={newPost}
       buttonText='Crear'
-      topImg={`${process.env.ASSETS_BASE}/illustrations/27.svg`}
+      ico={<Ico/>}
       topText='Entradas'
     />
   </>;

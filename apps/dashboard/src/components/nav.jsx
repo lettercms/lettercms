@@ -78,7 +78,7 @@ export default function Nav () {
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <Link href='/'>
-              <a className="nav-link page-scroll">HOME<span className="sr-only">(current)</span></a>
+              <a className="nav-link page-scroll">HOME</a>
             </Link>
           </li>
           <li className="nav-item">
@@ -86,36 +86,6 @@ export default function Nav () {
               <a className="nav-link page-scroll">BLOG</a>
             </Link>
           </li>
-          {/*
-
-          <li className="nav-item dropdown">
-            <a className="nav-link dropdown-toggle page-scroll" href="#video" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">VIDEO</a>
-            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <Link href="/blog">
-                <a className="dropdown-item">
-                  <span className="item-text">BLOG</span>
-                </a>
-              </Link>
-              <div className="dropdown-items-divide-hr"></div>
-              <Link href="/terminos">
-                <a className="dropdown-item">
-                  <span className="item-text">TERMS CONDITIONS</span>
-                </a>
-              </Link>
-              <div className="dropdown-items-divide-hr"></div>
-              <Link href="/privacidad">
-                <a className="dropdown-item">
-                  <span className="item-text">PRIVACY POLICY</span>
-                </a>
-              </Link>
-            </div>
-          </li>
-          <li className="nav-item">
-            <Link href='/pricing'>
-              <a className="nav-link page-scroll">PRECIOS</a>
-            </Link>
-          </li>
-          */}
         </ul>
         <span className="nav-item">
           <Link href='/blog/search'>
@@ -198,54 +168,6 @@ export default function Nav () {
         transition: all 0.2s ease;
       }
 
-      .navbar-custom .dropdown:hover > .dropdown-menu {
-        display: block;
-        min-width: auto;
-        animation: fadeDropdown 0.2s;
-      }
-
-      @keyframes fadeDropdown {
-      0% {
-        opacity: 0;
-      }
-
-      100% {
-        opacity: 1;
-      }
-      }
-
-      .navbar-custom .dropdown-toggle:focus {
-      outline: 0;
-      }
-
-      .navbar-custom .dropdown-menu {
-      margin-top: 0;
-      border: none;
-      border-radius: 0.25rem;
-      background-color: #5f4dee;
-      }
-
-      .navbar-custom .dropdown-item {
-      color: #f7f5f5;
-      opacity: 0.8;
-      font: 700 0.875rem/0.875rem "Open Sans", sans-serif;
-      text-decoration: none;
-      }
-
-      .navbar-custom .dropdown-item:hover {
-      background-color: #5f4dee;
-      color: #fff;
-      opacity: 1;
-      }
-
-      .navbar-custom .dropdown-items-divide-hr {
-      width: 100%;
-      height: 1px;
-      margin: 0.75rem auto 0.725rem auto;
-      border: none;
-      background-color: #c4d8dc;
-      opacity: 0.2;
-      }
 
       .navbar-custom .nav-item .btn-outline-sm {
       margin-top: 0.25rem;
@@ -301,27 +223,6 @@ export default function Nav () {
       .navbar-custom.top-nav-collapse .nav-item .nav-link:hover,
       .navbar-custom.top-nav-collapse .nav-item .nav-link.active {
         color: #fff;
-      }
-
-      .navbar-custom .dropdown-menu {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        border-top: 0.25rem solid rgba(0, 0, 0, 0);
-        border-radius: 0.25rem;
-      }
-
-      .navbar-custom.top-nav-collapse .dropdown-menu {
-        border-top: 0.25rem solid rgba(0, 0, 0, 0);
-        box-shadow: 0 0.375rem 0.375rem 0 rgba(0, 0, 0, 0.02);
-      }
-
-      .navbar-custom .dropdown-item {
-        padding-top: 0.25rem;
-        padding-bottom: 0.25rem;
-      }
-
-      .navbar-custom .dropdown-items-divide-hr {
-        width: 84%;
       }
 
       .navbar-custom .nav-item .btn-outline-sm {

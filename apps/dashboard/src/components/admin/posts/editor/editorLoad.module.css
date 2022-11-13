@@ -17,8 +17,8 @@
 }
 
 .top {
-  width: 101% !important;
-  margin: 0 !important;
+  width: 100.5% !important;
+  margin: -1px !important;
   border-radius: 0 !important;
   height: 3rem !important;
 }

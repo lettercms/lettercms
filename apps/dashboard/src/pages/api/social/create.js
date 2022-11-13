@@ -1,9 +1,8 @@
-import { withSentry } from '@sentry/nextjs';
 import connect from '@lettercms/utils/lib/connection';
 import {Facebook, Instagram} from '@lettercms/models/socials';
 import Base from '@lettercms/utils/lib/social/base';
 
-async function createSocial(req, res) {
+export default async function createSocial(req, res) {
   if (req.method !== 'POST')
     return res.status(405).json({
       status: 'method-not-allowed'
@@ -54,5 +53,3 @@ async function createSocial(req, res) {
     });
   }
 };
-
-export default withSentry(createSocial);
