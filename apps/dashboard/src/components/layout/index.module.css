@@ -18,7 +18,7 @@
 .asideImg {
   width: 6rem;
   height: 6rem;
-  margin: 1rem auto 0;
+  margin: 1rem auto;
   display: block;
   border-radius: 50%;
 }
@@ -55,12 +55,12 @@
 
 
 .asideNameLoad {
-  width: 80%;
+  width: 90%;
   height: 1.2rem;
   background: var(--load-main);
   margin: auto;
   border-radius: 5px;
-  margin: 1rem auto 2rem;
+  margin: 1rem auto;
 }
 
 .dashboardSpinner {

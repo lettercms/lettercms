@@ -1,12 +1,11 @@
 import {useState, useEffect, createContext, useContext, memo} from 'react';
-import Router from 'next/router';
+import {useRouter} from 'next/router';
+import dynamic from 'next/dynamic';
 import sdk from '@lettercms/sdk';
 import Cookie from 'js-cookie'; 
 import {signOut, useSession} from 'next-auth/react';
-import Link from 'next/link';
 import { createFirebaseApp } from '@/firebase/client';
 import { getAuth, signInWithCustomToken  } from 'firebase/auth';
-import menu from './menu';
 import {
   dashboardSpinner,
   navBar,
@@ -19,11 +18,12 @@ import {
   accountName,
   asideNameLoad
 } from './index.module.css';
-import {option} from './option.module.css';
-import Option from './option';
-import Home from '@/components/svg/home';
-import PowerOff from '@/components/svg/powerOff';
 import MenuLoad from './menuLoad';
+
+const Nav = dynamic(() => import('./nav'), {
+  loading: MenuLoad,
+  ssr: false
+});
 
 const DashboardContext = createContext();
 
@@ -43,7 +43,6 @@ export function useUser() {
   return value;
 }
 
-const logout = () => signOut({redirect: false}).then(_ => Router.push('/login'));
 
 export function DashboardProvider({userID, children, hideMenu}) {
   const {status, data} = useSession();
@@ -55,7 +54,7 @@ export function DashboardProvider({userID, children, hideMenu}) {
 
   const ctx = useContext(DashboardContext);
 
-  const router = Router.useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     if (!ctx && status === 'authenticated') {
@@ -125,39 +124,7 @@ export function DashboardProvider({userID, children, hideMenu}) {
           {
             isLoading
             ? <MenuLoad/>
-            : <>
-              <li className={option}>
-                <Link href={`https://${blog?.domain}${blog?.mainUrl}`}>
-                  <a target='_blank'>
-                    <span>
-                      <Home fill='#362e6f' height='12' width='32'/>
-                    </span>
-                    <span>Inicio</span>
-                  </a>
-                </Link>
-              </li>
-              {menu.filter(e => {
-                if (!e.admin)
-                  return true;
-                else {
-                  if (user.role === 'admin')
-                    return true;
-                  else
-                    return false;
-                }
-              }).map(e => <>
-                <hr className={asideHr}/>
-                <Option key={e.name} role={user.role} {...e}/>
-                </>
-              )}
-              <hr className={asideHr}/>
-              <li className={option} onClick={logout}>
-                <span>
-                  <PowerOff fill='#362e6f' height='12' width='32'/>
-                </span>
-                <span>Cerrar Sesión</span>
-              </li>
-            </>
+            : <Nav role={user.role} blog={blog}/>
           }
         </ul>
         <div className={asideFooter}>

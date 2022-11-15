@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import {useRef, useEffect, useState} from 'react';
+import {useRef, useEffect, useState, Fragment} from 'react';
 import {option, subTab, subHeader, subHr} from './option.module.css';
 
 export default function Option({role, title, sub, icon, href}) {
@@ -46,14 +46,14 @@ export default function Option({role, title, sub, icon, href}) {
             else
               return false;
           }
-        }).map((e, i) => <>
-          {i !== 0 && <hr  className={subHr} key={e.href + 'hr' + e.label}/>}
+        }).map((e, i) => <Fragment key={e.href + e.label}>
+          {i !== 0 && <hr  className={subHr}/>}
           <Link href={e.href}>
             <a onClick={() => setFocus(false)}>
-              <li key={e.href + 'li' + e.label}>{e.label}</li>
+              <li>{e.label}</li>
             </a>
           </Link>
-        </>)
+        </Fragment>)
       }
     </ul>
   </li>;
