@@ -1,5 +1,3 @@
-import {withSentry} from '@sentry/nextjs';
-
 
 /**
  * NOTE: posible Feat remotion
@@ -11,7 +9,7 @@ import {withSentry} from '@sentry/nextjs';
  *
  * ISR improve load performance, but with getServerSideProps and built-in preload, pages load fast
  */
-async function revalidate(req, res) {
+export default async function revalidate(req, res) {
   if (req.method !== 'POST')
     return res.sendStatus(405);
 
@@ -30,5 +28,3 @@ async function revalidate(req, res) {
     });
   }
 }
-
-export default withSentry(revalidate);

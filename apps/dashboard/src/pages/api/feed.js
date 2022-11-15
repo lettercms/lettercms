@@ -2,10 +2,9 @@ import connect from '@lettercms/utils/lib/connection';
 import posts from '@lettercms/models/posts';
 import blogs from '@lettercms/models/blogs';
 import {find} from '@lettercms/utils/lib/findHelpers/posts';
-import {withSentry} from '@sentry/nextjs';
 import {Feed} from 'feed';
 
-async function feed(req, res) {
+export default async function feed(req, res) {
     await connect();
 
     const {description, thumbnail: blogThumbnail, url: urlID} = await blogs.findOne({subdomain: 'davidsdevel'}, 'description thumbnail url', {lean: true});
@@ -68,5 +67,3 @@ async function feed(req, res) {
 
     res.end();
   }
-
-export default withSentry(feed);

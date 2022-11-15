@@ -1,11 +1,10 @@
-import {withSentry} from '@sentry/nextjs';
 import { createApi } from 'unsplash-js';
 
 const api = createApi({
   accessKey: process.env.UNSPLASH_KEY
 });
 
-async function SearchImages(req, res) {
+export default async function SearchImages(req, res) {
 
   if (req.method !== 'GET')
     return res.status(405).send('Method not allowed');
@@ -36,5 +35,3 @@ async function SearchImages(req, res) {
 
   res.json(mapped);
 }
-
-export default withSentry(SearchImages);
