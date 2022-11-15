@@ -1,12 +1,15 @@
 import {useState, useEffect} from 'react';
 import List from './thumbnailList';
 import ImageIcon from '@/components/svg/image';
+import {useData} from './index';
 
 let timeout = null;
 
 export default function Metadata() {
   const [showList, setShowList] = useState(false);
   const [focus, setFocus] = useState(false);
+
+  const [data] = useData();
 
   useEffect(() => {
     if (focus) {
@@ -18,7 +21,7 @@ export default function Metadata() {
   }, [focus]);
 
   return <div style={{position: 'relative'}}>
-    <button onClick={() => setFocus(!focus)} onBlur={() => setFocus(false)}>
+    <button onClick={() => setFocus(!focus)} onBlur={() => setFocus(false)} dislabled={data.loading}>
       <ImageIcon className='ck ck-icon'/>
     </button>
     {

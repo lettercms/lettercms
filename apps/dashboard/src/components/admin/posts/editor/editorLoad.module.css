@@ -1,7 +1,6 @@
 .load {
   padding-bottom: 2rem; 
   border-radius: 10px;
-  border: solid .5rem var(--load-main);
 }
 .load div {
   background: var(--load-main);
@@ -17,8 +16,8 @@
 }
 
 .top {
-  width: 100.5% !important;
-  margin: -1px !important;
-  border-radius: 0 !important;
-  height: 3rem !important;
+  width: 400px !important;
+  height: 300px !important;
+  margin: 5rem 5% 2rem !important;
+  border-radius: 5px !important;
 }

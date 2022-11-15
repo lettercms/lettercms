@@ -7,17 +7,21 @@ import ModalTabs from './images/tabs';
 
 const generateUnsplashSrc = (raw, width, height) => {
   return {
-    'data-width': width,
+    width,
     class: 'image',
-    'data-src': raw
+    src: raw,
+    'data-src': raw,
+    srcSet: `${raw}&w=480&q=40 480w, ${raw}&w=720&q=50 720w, ${raw}&w=1024&q=75 1024w, ${raw}&w=2048&q=75 1400w`
   };
 };
 
 const generateLetterSrc = (raw, width, height) => {
   return {
-    'data-width': width,
+    width,
     class: 'image',
-    'data-src': `/_next/image?url=${raw}&q=75`
+    src: raw,
+    'data-src': raw,
+    srcSet: `${raw}&w=480&q=40 480w, ${raw}&w=720&q=50 720w, ${raw}&w=1024&q=75 1024w, ${raw}&w=2048&q=75 1400w`
   };
 };
 

@@ -5,7 +5,7 @@ export default function List() {
   const [data, setData] = useData();
 
   return <div className={metaInputs + ' thumbContainer'}>
-    <span>Miniatura</span>
+    <span>Selecciona una miniatura</span>
     <ul>
       {
         data.images?.length > 0

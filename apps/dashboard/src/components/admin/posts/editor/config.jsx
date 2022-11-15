@@ -2,12 +2,14 @@ import {backButton} from './index.module.css';
 import ConfigInputs from './configInputs';
 import {useState, useEffect} from 'react';
 import Cog from '@/components/svg/cog';
+import {useData} from './index';
 
 let timeout = null;
 
 export default function Config({hasFacebook, hasInstagram}) {
   const [showConfig, setShowConfig] = useState(false);
   const [focus, setFocus] = useState(false);
+  const [data] = useData();
 
   useEffect(() => {
     if (focus) {
@@ -19,7 +21,7 @@ export default function Config({hasFacebook, hasInstagram}) {
   }, [focus]);
 
   return <div>
-    <button className={backButton} onClick={() => setFocus(!focus)} onBlur={() => setFocus(false)}>
+    <button className={backButton} disabled={data.loading} onClick={() => setFocus(!focus)} onBlur={() => setFocus(false)}>
       <Cog className='ck ck-icon'/>
     </button>
     {

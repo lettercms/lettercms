@@ -1,13 +1,9 @@
 import {figureToImageBlock, imageToDataFigure, imageToEditFigure, imageDimensionsToDataFigure} from './converters';
+import {EventEmitter} from 'events';
 
-async function createEditor(content) {
-  const editor = window._editor = await window.ClassicEditor.create( document.querySelector( '#ck' ), {
-    language:'es',
-    rootName: 'main',
-    initialData: content ? content : '<p>Nueva super entrada</p>'
-  });
-
-  editor.model.schema.extend('imageBlock', { allowAttributes: ['data-src', 'data-width'] });
+const  EditorPlugin = (closeModal, data, setData) => editor => {
+  
+  window.editorEventEmitter = new EventEmitter();
 
   editor.conversion.for( 'upcast' ).elementToElement(figureToImageBlock);
   editor.conversion.for('dataDowncast').add(imageToDataFigure);
@@ -15,19 +11,18 @@ async function createEditor(content) {
   editor.conversion.for( 'editingDowncast' ).add(imageToEditFigure);
 
   window.editorEventEmitter.on('insert', source => {
+
     editor.execute( 'insertImage', {
       source:  [source]
     });
     
-    this.setState({
-      showImagesModal: false
-    });
+    closeModal();
   });
   
   window.editorEventEmitter.on('unsplash', ({user, href, src, download}) => {
     fetch('/api/track-image?url='+download.replace('https://api.unsplash.com/photos', ''));
 
-    const docFrag = editor.model.change( writer => {
+    const frag = editor.model.change( writer => {
 
       const image =        writer.createElement('imageBlock', src);
 
@@ -49,45 +44,11 @@ async function createEditor(content) {
       return docFrag;
     });
 
-    editor.model.insertContent(docFrag);
+    editor.model.insertContent(frag, editor.model.document.selection);
 
-    this.setState({
-      showImagesModal: false
-    });
+    closeModal();
   });
 
-  const input = document.querySelector('input.ck-hidden');
-
-  input.addEventListener('click', e => {
-    e.preventDefault();
-
-    this.setState({
-      showImagesModal: true
-    });
-  });
-
-  editor.model.document.on('change', (e) => {
-    const nodes = e.source.roots._items[1]._children._nodes;
-
-    const images = nodes
-      .map(({_attrs}) => _attrs.get('data-src') || _attrs.get('src'))
-      .filter(e => e);
-
-    this.changes.images = images;
-    this.changes.hasContent = true;
-
-    this.setState({
-      isSaved: false,
-      images
-    });
-
-    if (this.state.postStatus !== 'published') {
-      clearTimeout(this.timeout);
-      this.timeout = setTimeout(() => this.update(), 5000);
-    }
-  });
-
-  return Promise.resolve(editor);
 }
 
-export default createEditor;
+export default EditorPlugin;

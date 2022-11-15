@@ -22,7 +22,7 @@ export default function ImageModal({show, img, meta, onClose, onSelect}) {
   }, [show]);
 
   return <div id='image-shadow' style={{opacity, display}}>
-    <Cross fill='#fff' id='image-modal-cross' onClick={close}/>
+    <Cross width='32' fill='#fff' id='image-modal-cross' onClick={close}/>
     <div id='modal-image-container'>
       <img className='lazy-img' src={img} alt=''/>
     </div>

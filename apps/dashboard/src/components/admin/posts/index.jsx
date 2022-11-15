@@ -1,7 +1,7 @@
 import {useRouter} from 'next/router';
 import sdk from '@lettercms/sdk';
 import Layout from '../listLayout';
-import Ico from '@/components/assets/adminPost'
+import Ico from '@/components/assets/adminPost';
 
 function Posts() {
   const router = useRouter();

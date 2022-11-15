@@ -6,9 +6,6 @@ export const figureToImageBlock = {
     const width = child.getAttribute('width');
     const src = child.getAttribute('data-src');
 
-    console.log('m >', viewElement);
-
-
     return writer.createElement( 'imageBlock', {
       'data-src': src,
       'data-width': width
@@ -20,8 +17,6 @@ export const figureToImageBlock = {
 export const imageToDataFigure  = d => d.on('attribute:data-src:imageBlock', (e, data, {mapper, writer}) => {
   const figure = mapper.toViewElement(data.item);
   const img = figure.getChild(0);
-    
-  console.log('v >', data);
 
   writer.setAttribute('src', data.attributeNewValue + '&w=100', img);
   writer.setAttribute('data-src', data.attributeNewValue, img);
@@ -33,9 +28,6 @@ export const imageDimensionsToDataFigure  = d => d.on('attribute:data-width:imag
   const figure = mapper.toViewElement(data.item);
   const img = figure.getChild(0);
 
-  console.log('w >', data);
-
-
   writer.setAttribute('width', data.attributeNewValue, img);
 });
 
@@ -45,8 +37,6 @@ export const imageToEditFigure = d => d.on('attribute:data-src:imageBlock', (e, 
   const figure = mapper.toViewElement(data.item);
   const img = figure.getChild(0);
 
-  console.log('e >', data);
-    
   writer.setAttribute('src', data.attributeNewValue, img);
   writer.setAttribute('data-src', data.attributeNewValue, img);
 });
