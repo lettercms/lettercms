@@ -36,10 +36,10 @@ function ErrorPage(props) {
         flex-direction: column;
         justify-content: space-evenly;
         align-items: center;
-        background: #f7f7f7;
+        background: #fff;
       }
       #container img {
-        max-width: 400px;
+        height: 400px;
       }
   `}</style>
   </div>

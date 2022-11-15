@@ -1,4 +1,3 @@
-import {withSentry} from '@sentry/nextjs';
 import cors from './cors';
 import connect from './connection';
 import jobs from '@lettercms/models/jobs';
@@ -31,7 +30,7 @@ import bcrypt from 'bcrypt';
  *
  */
 export default function manageMethods(methods) {
-  const handler = async function(req, res) {
+  return async function handler(req, res) {
     try {
 
       //Added CORS Headers
@@ -144,7 +143,7 @@ export default function manageMethods(methods) {
           //Delete Job ID
           await jobs.deleteOne({jobId});
 
-          // Commented because usage will reset every month, this behaviour will change
+          // Commented because usage will reset every month, this behaviour can change
           // await usage.updateOne({subdomain}, {$inc: {socialSchedule: -1}});
         }
       }
@@ -156,6 +155,4 @@ export default function manageMethods(methods) {
       throw err;
     }
   };
-
-  return withSentry(handler);
 };

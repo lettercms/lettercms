@@ -61,7 +61,7 @@ export default async function() {
         revalidate(subdomain, url);
       });
   }
-  console.log(body.tags);
+
   updateTags(subdomain, updatedPost.tags, body.tags);
 
   res.json({
