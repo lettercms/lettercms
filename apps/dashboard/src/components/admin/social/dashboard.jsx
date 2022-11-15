@@ -6,6 +6,7 @@ import NoAccount from './noAccount';
 import {useUser} from '@/components/layout';
 import Button from '@/components/button';
 import Top from '../listLayout/top';
+import SocialIco from '@/components/assets/adminSocial';
 
 async function fetchAccounts({setAccounts, setIsLoading, setAuthError, onAccounts}) {
   sdk.social.accounts([
@@ -76,7 +77,7 @@ export default function SocialDashboard({newPost, onAccounts}) {
         create={newPost}
         disabled={!hasAccounts}
         buttonText='Nueva Entrada'
-        topImg={`${process.env.ASSETS_BASE}/illustrations/135.svg`}
+        ico={<SocialIco/>}
         topText='Redes sociales'
       >
         <Button type='outline' onClick={newPost} disabled={!hasAccounts}>Nueva Entrada</Button>

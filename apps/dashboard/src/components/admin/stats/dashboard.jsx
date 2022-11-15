@@ -1,6 +1,7 @@
 ﻿import {useState} from 'react';
 import dynamic from 'next/dynamic';
 import Top from '../listLayout/top';
+import StatsIco from '@/components/assets/adminStats';
 
 import Base from './base';
 import GeneralPanel from './general';
@@ -51,7 +52,7 @@ const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days,
 
   return <div>
     <Top
-      topImg={`${process.env.ASSETS_BASE}/illustrations/72.svg`}
+      ico={<StatsIco/>}
       topText='Datos del Blog'
       disableTopButton={true}
     >
@@ -61,7 +62,7 @@ const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days,
           <option value='2'>Ultimo mes</option>
           <option value='3'>Ultimos 3 meses</option>
           <option value='4'>Ultimos 6 meses</option>
-          <option value='5'>Desde la creacion del blog</option>
+          <option value='5'>Desde el inicio</option>
         </select>
       </div>
     </Top>

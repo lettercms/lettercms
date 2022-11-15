@@ -3,7 +3,6 @@ import {useUser} from '@/components/layout';
 import sdk from '@lettercms/sdk';
 import CardLoad from './baseLoad';
 import dynamic from 'next/dynamic';
-import ReloadBar from '@/components/loadBar';
 
 const Load = () => {
   return <div style={{display: 'flex', flexWrap: 'wrap', width: '100%'}}>
@@ -92,10 +91,7 @@ export default function Stats() {
 
 
   if (hasData)
-    return <>
-      {isReload && <ReloadBar color='var(--main)'/>}
-      <Dashboard {...data} onChange={reload}/>
-    </>;
+    return <Dashboard {...data} onChange={reload}/>
 
   else
     return <NoData/>;
