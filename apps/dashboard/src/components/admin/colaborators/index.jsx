@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Invitation from './invitationModal';
 import Collab from './collab';
 import Layout from '../listLayout';
-import Ico from '@/components/assets/adminCollabs'
+import Ico from '@/components/assets/adminCollabs';
 
 export default function Accounts() {
   const [showInvitation, setShowInvitation] = useState(false);

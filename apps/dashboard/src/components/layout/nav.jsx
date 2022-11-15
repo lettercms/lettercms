@@ -45,5 +45,5 @@ export default function Nav({role, blog}) {
       </span>
       <span>Cerrar Sesión</span>
     </li>
-  </>
+  </>;
 }

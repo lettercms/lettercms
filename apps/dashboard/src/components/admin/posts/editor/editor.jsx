@@ -59,7 +59,7 @@ export default function Editor({onOpenModal}) {
           }
         }}
         onChange={ ( event, editor ) => {
-          console.log('event', event)
+          console.log('event', event);
 
           const content = inputRef.current;
           

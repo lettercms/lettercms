@@ -52,5 +52,5 @@ export default function List() {
         }
       `}</style>
     </ul>
-  </div>
+  </div>;
 };

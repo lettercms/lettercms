@@ -18,5 +18,5 @@ export default function TagList({tags}) {
         tags.map(e => <li className={tag} key={e}>{e}</li>)
       }
     </ul>
-  </div>
+  </div>;
 }

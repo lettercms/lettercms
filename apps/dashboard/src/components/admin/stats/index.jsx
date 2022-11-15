@@ -91,7 +91,7 @@ export default function Stats() {
 
 
   if (hasData)
-    return <Dashboard {...data} onChange={reload}/>
+    return <Dashboard {...data} onChange={reload}/>;
 
   else
     return <NoData/>;

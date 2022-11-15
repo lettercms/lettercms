@@ -82,5 +82,5 @@ export default function CollabIco() {
   <path fill="#fff" d="M0 0h900v600H0z"/>
   </clipPath>
   </defs>
-  </svg>
+  </svg>;
 }

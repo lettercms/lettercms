@@ -49,6 +49,6 @@ const  EditorPlugin = (closeModal, data, setData) => editor => {
     closeModal();
   });
 
-}
+};
 
 export default EditorPlugin;

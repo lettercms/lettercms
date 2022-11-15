@@ -20,14 +20,14 @@ import Ico from '@/components/assets/adminPost';
 const Editor = dynamic(() => import('./editor'), {
   loading: EditorLoad,
   ssr: false
-})
+});
 
 const promote = {};
 
 const changes = {};
 const handleChanges = (field, value) => {
   changes[field] = value;
-}
+};
 
 const EditorContext = createContext();
 
@@ -58,7 +58,7 @@ const draft = async (id, {clearTimeout, setLoading, setData}) => {
 
     setData('postStatus', 'draft');
     setLoading(false);
-  }
+  };
   const publish = async (id, {clearTimeout, setLoading, setData, status}) => {
     clearTimeout();
     
@@ -79,8 +79,8 @@ const draft = async (id, {clearTimeout, setLoading, setData}) => {
       alert('Actualizado con exito');
     }
 
-    Router.push('/dashboard/posts')
-  }
+    Router.push('/dashboard/posts');
+  };
 
   const update = async (id, {clearTimeout, setLoading}) => {
     clearTimeout();
@@ -96,7 +96,7 @@ const draft = async (id, {clearTimeout, setLoading, setData}) => {
     alert('Actualizado con exito');
 
     setLoading(false);
-  }
+  };
 
   const preview = async (id, {clearTimeout, setLoading, domain}) => {
     clearTimeout();
@@ -112,7 +112,7 @@ const draft = async (id, {clearTimeout, setLoading, setData}) => {
     setLoading(false);
 
     window.open(`https://${domain}/api/preview?id=${id}`);
-  }
+  };
 
 export default function EditorContainer({post, blog, hasFacebook, hasInstagram}) {
   const [showImages, setShowImages] = useState(false);
@@ -230,5 +230,5 @@ export default function EditorContainer({post, blog, hasFacebook, hasInstagram})
       />
       <ImagesModal show={showImages} onClose={() => setShowImages(false)}/>
     </div>
-  </EditorContext.Provider>
+  </EditorContext.Provider>;
 }

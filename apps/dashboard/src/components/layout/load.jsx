@@ -6,5 +6,5 @@ export default function Load() {
     <div/>
     <div/>
     <div/>
-  </div>
+  </div>;
 }

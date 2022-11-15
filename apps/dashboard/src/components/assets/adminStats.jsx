@@ -25,5 +25,5 @@ export default function StatsIco() {
   <stop offset="1" stop-color="#EEE"/>
   </linearGradient>
   </defs>
-  </svg>
+  </svg>;
 }

@@ -1,1 +1,1 @@
-thumbnailList.jsx
+thumbnailList.jsx;

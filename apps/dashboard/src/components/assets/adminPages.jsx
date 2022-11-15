@@ -55,5 +55,5 @@ export default function PagesIco() {
   <stop offset="1" stopColor="#EEE"/>
   </linearGradient>
   </defs>
-  </svg>
+  </svg>;
 }
