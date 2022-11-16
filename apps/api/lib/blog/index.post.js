@@ -5,7 +5,7 @@ import blogs from '@lettercms/models/blogs';
 import posts from '@lettercms/models/posts';
 import usage from '@lettercms/models/usages';
 
-export default async function() {
+export default async function CreateBlog() {
   const {
     req,
     res

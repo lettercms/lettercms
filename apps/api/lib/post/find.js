@@ -21,7 +21,7 @@ const generateConditions = query => {
   }
 };
 
-export default async function() {
+export default async function GetPost() {
   const {req: {subdomain, query}, res, findSingle} = this;
 
   const {

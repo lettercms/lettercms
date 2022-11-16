@@ -1,7 +1,7 @@
 import pages from '@lettercms/models/pages';
 import usage from '@lettercms/models/usages';
 
-export default async function() {
+export default async function CreatePage() {
   const {req, res} = this;
 
   const {subdomain} = req;

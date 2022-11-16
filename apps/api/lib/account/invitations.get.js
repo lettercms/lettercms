@@ -1,7 +1,7 @@
 import {Invitations} from '@lettercms/models/accounts';
 import {find} from '@lettercms/utils/lib/findUtils';
 
-export default async function() {
+export default async function GetInvitations() {
   const {
     req: {
       subdomain,

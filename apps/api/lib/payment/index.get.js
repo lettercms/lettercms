@@ -1,6 +1,6 @@
 import {Payment} from '@lettercms/models/payments';
 
-export default async function() {
+export default async function GetPayment() {
   const {
     req: {
       subdomain,

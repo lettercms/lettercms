@@ -1,7 +1,7 @@
 import posts from '@lettercms/models/posts';
 import {Ratings, Users} from '@lettercms/models/users';
 
-export default async function() {
+export default async function CreateUser() {
   const {req: {subdomain, body}, res} = this;
 
   const {_id: id} = await Users.create({...body, subdomain});

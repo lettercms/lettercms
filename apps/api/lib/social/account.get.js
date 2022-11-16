@@ -1,7 +1,7 @@
 import * as socialModel from '@lettercms/models/socials';
 import Base from '@lettercms/utils/lib/social/base';
 
-export default async function() {
+export default async function GetAccounts() {
   const {req, res} = this;
 
   const {include} = req.query;

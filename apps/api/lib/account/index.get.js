@@ -1,7 +1,7 @@
 import {Accounts} from '@lettercms/models/accounts';
 import {find} from '@lettercms/utils/lib/findHelpers/accounts';
 
-export default async function() {
+export default async function GetAccounts() {
   const {
     req: {query, subdomain},
     res

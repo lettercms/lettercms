@@ -1,7 +1,7 @@
 import captureOrder from './paypal/captureOrder';
 import {Payment} from '@lettercms/models/payments';
 
-export default async function() {
+export default async function VerifyPayment() {
   const {req: {body: {orderID, type}, subdomain}, res} = this;
 
   //Check exists order on DB

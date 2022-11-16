@@ -1,7 +1,7 @@
 import * as socials from '@lettercms/models/socials';
 import Base from '@lettercms/utils/lib/social/base';
 
-export default async function() {
+export default async function PostAccount() {
   const {req, res} = this;
 
   const {type, accessToken, pageID, subdomain} = req.body;

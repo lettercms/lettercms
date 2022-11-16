@@ -9,7 +9,7 @@ import FB from '@lettercms/utils/lib/social/Facebook';
 import revalidate from '@lettercms/utils/lib/revalidate';
 import updateTags from './updateTags';
 
-export default async function() {
+export default async function PublishPost() {
   const {req, res} = this;
 
   const {url} = req.query;

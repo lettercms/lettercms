@@ -3,7 +3,7 @@ import {Accounts, Invitations} from '@lettercms/models/accounts';
 import sendMail from '@lettercms/utils/lib/sendMail';
 import jwt from 'jsonwebtoken';
 
-export default async function() {
+export default async function PostInvitations() {
   const {
     req: {subdomain, body, account},
     res

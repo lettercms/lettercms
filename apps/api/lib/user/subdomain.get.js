@@ -1,7 +1,7 @@
 import {Users} from '@lettercms/models/users';
 import {find} from '@lettercms/utils/lib/findUtils';
 
-export default async function() {
+export default async function GetUser() {
   const {req: {query, subdomain}, res} = this;
 
   const condition = {

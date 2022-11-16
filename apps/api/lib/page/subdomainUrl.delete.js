@@ -3,7 +3,7 @@ import usage from '@lettercms/models/usages';
 
 import {isValidObjectId} from 'mongoose';
 
-export default async function() {
+export default async function DeletePage() {
   const {req, res} = this;
 
   const {url} = req.query;

@@ -3,7 +3,7 @@ import posts from '@lettercms/models/posts';
 import revalidate from '@lettercms/utils/lib/revalidate';
 import {getFullUrl} from '@lettercms/utils/lib/posts';
 
-export default async function() {
+export default async function PatchBlog() {
   const {
     req,
     res

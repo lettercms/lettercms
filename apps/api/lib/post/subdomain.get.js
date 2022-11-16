@@ -3,7 +3,7 @@ import blogs from '@lettercms/models/blogs';
 import '@lettercms/models/accounts';
 import {find} from '@lettercms/utils/lib/findHelpers/posts';
 
-export default async function() {
+export default async function GetSinglePost() {
   const {
     req: {
       subdomain,

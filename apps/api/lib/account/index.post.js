@@ -2,7 +2,7 @@ import {Accounts} from '@lettercms/models/accounts';
 import sendMail from '@lettercms/utils/lib/sendMail';
 import {sign} from '@lettercms/utils/lib/crypto';
 
-export default async function() {
+export default async function PostAcounts() {
   const {req,res} = this;
   const {
     isAdmin

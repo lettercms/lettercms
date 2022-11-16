@@ -1,7 +1,7 @@
 import pages from '@lettercms/models/pages';
 import {isValidObjectId} from 'mongoose';
 
-export default async function() {
+export default async function PatchPage() {
   const {req, res} = this;
 
   const {url} = req.query;

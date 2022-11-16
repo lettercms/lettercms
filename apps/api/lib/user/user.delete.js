@@ -1,7 +1,7 @@
 import comments from '@lettercms/models/comments';
 import {Ratings, Users} from '@lettercms/models/users';
 
-export default async function() {
+export default async function DeleteUser() {
   const {req: {
     subdomain,
     query: {

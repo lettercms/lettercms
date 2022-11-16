@@ -6,7 +6,7 @@ import revalidate from '@lettercms/utils/lib/revalidate';
 import {getFullUrl} from '@lettercms/utils/lib/posts';
 import updateTags from './updateTags';
 
-export default async function() {
+export default async function UpdatePost() {
   const {req, res} = this;
 
   const {url} = req.query;

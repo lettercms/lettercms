@@ -62,7 +62,7 @@ const generateRanges = (start, end) => {
   };
 };
 
-export default async function() {
+export default async function GetStats() {
   const {
     req: {
       query,

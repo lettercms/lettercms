@@ -2,7 +2,7 @@ import {isValidObjectId} from 'mongoose';
 import {Accounts} from '@lettercms/models/accounts';
 import {findOne} from '@lettercms/utils/lib/findHelpers/accounts';
 
-export default async function() {
+export default async function GetEmailHex() {
   const {
     req,
     res

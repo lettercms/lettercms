@@ -5,7 +5,7 @@ import {find as findRecommendations} from '@lettercms/utils/lib/findHelpers/reco
 import {find as findPosts} from '@lettercms/utils/lib/findHelpers/posts';
 import {isValidObjectId} from 'mongoose';
 
-export default async function() {
+export default async function GetRecommendation() {
   const {
     req,
     res,

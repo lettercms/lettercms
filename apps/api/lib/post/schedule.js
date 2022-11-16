@@ -4,7 +4,7 @@ import pages from '@lettercms/models/pages';
 import usage from '@lettercms/models/usages';
 import schedule from '@lettercms/utils/lib/schedule';
 
-export default async function() {
+export default async function SchedulePost() {
   const {req, res} = this;
 
   const {url} = req.query;

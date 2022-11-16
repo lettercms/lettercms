@@ -4,7 +4,7 @@ import {Facebook, Instagram} from '@lettercms/utils/lib/social';
 import schedule from '@lettercms/utils/lib/schedule';
 import jwt from 'jsonwebtoken';
 
-export default async function() {
+export default async function PublishSocial() {
   const {req, res} = this;
 
   const {subdomain} = req;

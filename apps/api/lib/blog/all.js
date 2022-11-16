@@ -1,7 +1,7 @@
 import blogs from '@lettercms/models/blogs';
 import {find} from '@lettercms/utils/lib/findUtils';
 
-export default async function() {
+export default async function GetBlogs() {
   const {
     req: {isAdmin, query, path},
     res

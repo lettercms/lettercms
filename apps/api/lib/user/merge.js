@@ -1,7 +1,7 @@
 import {Users, Ratings} from '@lettercms/models/users';
 import comments from '@lettercms/models/comments';
 
-export default async function() {
+export default async function MergeUser() {
   const {
     req: {
       body: {

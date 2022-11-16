@@ -3,7 +3,7 @@ import posts from '@lettercms/models/posts';
 import {Users} from '@lettercms/models/users';
 import {Stats} from '@lettercms/models/stats';
 
-export default async function() {
+export default async function GetAllComments() {
   const {
     req: {
       subdomain,

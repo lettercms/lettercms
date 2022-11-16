@@ -5,7 +5,7 @@ import {isValidObjectId} from 'mongoose';
 import revalidate from '@lettercms/utils/lib/revalidate';
 import {getFullUrl} from '@lettercms/utils/lib/posts';
 
-export default async function() {
+export default async function DeletePost() {
   const {req, res} = this;
 
   const {url} = req.query;

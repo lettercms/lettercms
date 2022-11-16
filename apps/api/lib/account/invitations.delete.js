@@ -1,6 +1,6 @@
 import {Invitations} from '@lettercms/models/accounts';
 
-export default async function() {
+export default async function DeleteInvitations() {
   const {
     req: {
       body: {

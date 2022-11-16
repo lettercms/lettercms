@@ -1,7 +1,7 @@
 import {Accounts} from '@lettercms/models/accounts';
 import {compare} from '@lettercms/utils/lib/crypto';
 
-export default async function() {
+export default async function Verify() {
   const {
     req,
     res
