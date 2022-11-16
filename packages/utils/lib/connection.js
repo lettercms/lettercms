@@ -17,7 +17,7 @@ const opts = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
-  bufferCommands: false,
+  //bufferCommands: false,
   useCreateIndex: true
 };
 
