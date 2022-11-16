@@ -67,11 +67,11 @@ export function DashboardProvider({userID, children, hideMenu}) {
       const now = new Date();
 
       const {user: {firebaseToken, accessToken}} = data;
-/*
+
       const app = createFirebaseApp();
       const auth = getAuth(app);
 
-      signInWithCustomToken(auth, firebaseToken);*/
+      signInWithCustomToken(auth, firebaseToken);
       
       sdk.setAccessToken(accessToken);
       
