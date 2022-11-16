@@ -35,7 +35,7 @@ export default function Tags({blogTags: _bt}) {
     }
     <ul className={tagUl}>
       <li>
-          <input disabled={data.loading} onBlur={() => setShowTags(false)} className={inputTag} placeholder='Etiqueta' value={text} onChange={({target: {value}}) => setText(value)}/>
+          <input disabled={data.loading.toString()} onBlur={() => setShowTags(false)} className={inputTag} placeholder='Etiqueta' value={text} onChange={({target: {value}}) => setText(value)}/>
       </li>
       {
         tags.map((e, i) => <li key={e + i} className={tagList}>{e}</li>)

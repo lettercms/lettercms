@@ -11,11 +11,19 @@ const  EditorPlugin = (closeModal, data, setData) => editor => {
   editor.conversion.for( 'editingDowncast' ).add(imageToEditFigure);
 
   window.editorEventEmitter.on('insert', source => {
+    console.log(source)
+    const frag = editor.model.change( writer => {
 
-    editor.execute( 'insertImage', {
-      source:  [source]
+      const image = writer.createElement('imageBlock', source);
+      const docFrag = writer.createDocumentFragment();
+
+      writer.append(image, docFrag);
+
+      return docFrag;
     });
-    
+
+    editor.model.insertContent(frag, editor.model.document.selection);
+
     closeModal();
   });
   

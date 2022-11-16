@@ -45,6 +45,7 @@ export default function ImageModal({show, img, meta, onClose, onSelect}) {
         justify-content: center;
         align-items: center;
         background: #0005;
+        z-index: 3;
       }
       #modal-image-container {
         width: 80%;

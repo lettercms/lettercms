@@ -6,12 +6,13 @@ import BlogSearch from './images/search';
 import ModalTabs from './images/tabs';
 
 const generateUnsplashSrc = (raw, width, height) => {
+  console.log(arguments)
   return {
     width,
     class: 'image',
     src: raw,
     'data-src': raw,
-    srcSet: `${raw}&w=480&q=40 480w, ${raw}&w=720&q=50 720w, ${raw}&w=1024&q=75 1024w, ${raw}&w=2048&q=75 1400w`
+    srcset: `${raw}&w=480&q=40 480w, ${raw}&w=720&q=50 720w, ${raw}&w=1024&q=75 1024w, ${raw}&w=2048&q=75 1400w`
   };
 };
 
@@ -21,7 +22,7 @@ const generateLetterSrc = (raw, width, height) => {
     class: 'image',
     src: raw,
     'data-src': raw,
-    srcSet: `${raw}&w=480&q=40 480w, ${raw}&w=720&q=50 720w, ${raw}&w=1024&q=75 1024w, ${raw}&w=2048&q=75 1400w`
+    srcset: `${raw}&w=480&q=40 480w, ${raw}&w=720&q=50 720w, ${raw}&w=1024&q=75 1024w, ${raw}&w=2048&q=75 1400w`
   };
 };
 
@@ -49,7 +50,7 @@ export default function ImagesModal({onClose, show}) {
     });
   };
 
-  const appendImage = (raw, width, height) => {
+  const appendImage = ({raw, width, height}) => {
     const obj = generateLetterSrc(raw, width, height);
     window.editorEventEmitter.emit('insert', obj);
   };

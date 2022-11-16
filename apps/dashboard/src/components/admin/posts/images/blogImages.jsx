@@ -13,6 +13,7 @@ export default function BlogImages({onSelect, isHidden}) {
   const [isLoading, setLoadState] = useState(true);
 
   const upload = () => createUploader({
+    subdomain: blog.subdomain,
     onLoadStart() {
       setLoadState(true);
     },
