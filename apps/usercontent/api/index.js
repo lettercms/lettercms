@@ -4,12 +4,12 @@ import sharp from 'sharp';
 
 let cacheBucket = null;
 
-export default function usercontent(req, res) {
+export default async function usercontent(req, res) {
   const {w, q, h} = req.query
   let transformOpts = {};
   
   const bucket = cacheBucket ? cacheBucket : await getBucket();
-  const remote = bucket.file(req.url.split('?')[0]);
+  const remote = bucket.file(req.url.split('?')[0].slice(1));
 
   const transform = sharp().webp({
     quality: parseInt(q || '75')
@@ -26,7 +26,7 @@ export default function usercontent(req, res) {
   res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
 
   remote
-    .createReadStream();
+    .createReadStream()
     .pipe(transformPipe)
     .pipe(res);
 }
