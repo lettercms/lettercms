@@ -126,7 +126,8 @@ export default function EditorContainer({post, blog, hasFacebook, hasInstagram})
   const value = [
     {
       ...data,
-      loading
+      loading,
+      promote
     },
     (key, value) => {
 
@@ -171,6 +172,9 @@ export default function EditorContainer({post, blog, hasFacebook, hasInstagram})
           setLoading: console.log
         });
       }, 5000);
+    },
+    (key, value) => {
+      promote[ke] = value;
     }
   ];
 
