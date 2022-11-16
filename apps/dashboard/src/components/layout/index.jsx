@@ -3,9 +3,9 @@ import {useRouter} from 'next/router';
 import dynamic from 'next/dynamic';
 import sdk from '@lettercms/sdk';
 import Cookie from 'js-cookie'; 
-import {signOut, useSession} from 'next-auth/react';
-import { createFirebaseApp } from '@/firebase/client';
-import { getAuth, signInWithCustomToken  } from 'firebase/auth';
+import {useSession} from 'next-auth/react';
+import {createFirebaseApp } from '@/firebase/client';
+import {getAuth, signInWithCustomToken} from 'firebase/auth';
 import {
   dashboardSpinner,
   navBar,

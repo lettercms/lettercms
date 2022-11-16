@@ -3,7 +3,7 @@ import { cert, initializeApp, getApps } from 'firebase-admin/app';
 const apps = getApps();
 
 let app = null;
-  
+
 if (!apps.length)
   app = initializeApp({
     credential: cert({

@@ -1,4 +1,5 @@
 import {Fragment} from 'react';
+import {signOut} from 'next-auth/react';
 import {option} from './option.module.css';
 import Option from './option';
 import Home from '@/components/svg/home';
