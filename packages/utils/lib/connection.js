@@ -9,9 +9,9 @@ const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/blog';
  */
 let cached = global.__mongoCache;
 
-if (!cached) {
+if (!cached)
   cached = global.__mongoCache = { conn: null, promise: null };
-}
+
 
 const opts = {
   useNewUrlParser: true,
@@ -22,9 +22,8 @@ const opts = {
 };
 
 export default async function dbConnect() {
-  if (cached.conn) {
+  if (cached.conn)
     return cached.conn;
-  }
 
   if (!cached.promise)
     cached.promise = mongoose.connect(MONGO_URL, opts).then(m => m);
