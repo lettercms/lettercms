@@ -12,7 +12,7 @@ LetterCMS is a CMS focused on improving content creation and integrating a built
 
 ## Built With
 
-- [NextJS](https://nextjs.org) - The web framework used
+- [NextJS](https://nextjs.org) - React Framework
 - [Vercel](https://vercel.com) - Serverless Platform
 - [MongoDB](https://www.mongodb.com) - Database
 - [CKEditor](https://ckeditor.com) - WYSIWYG Editor
