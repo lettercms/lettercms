@@ -5,7 +5,7 @@ export default function header({title, description}) {
       <h2 className='text-main-700 w-4/5 md:w-2/3'>{description}</h2>
     </div>
     <div className='hidden md:block md:basis-3/5'>
-      <img src='http://localhost:3003/illustrations/72.svg'/>
+      <img src={`${process.env.ASSETS_BASE}/illustrations/72.svg`}/>
     </div>
   </div>
 }
