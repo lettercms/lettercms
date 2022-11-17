@@ -1,8 +1,6 @@
 import blogs from '@lettercms/models/blogs';
 
 export default async function updateTags(subdomain, prev, next) {
-  console.log(prev, next);
-
   if (!next)
     return Promise.resolve();
 

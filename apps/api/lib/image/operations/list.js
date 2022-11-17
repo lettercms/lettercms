@@ -19,7 +19,6 @@ const list = async (subdomain, query = {}) => {
     const bucket = getBucket();
 
     const [__, _, data] = await bucket.getFiles(bucketOpts);
-    console.log(data);
 
     const paging = {
       cursors: {}

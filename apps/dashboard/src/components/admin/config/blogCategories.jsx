@@ -1,12 +1,12 @@
 import sdk from '@lettercms/sdk';
 import Image from 'next/image';
-import Cross from '@/components/svg/cross';
+import Trash from '@/components/svg/trash';
 
 const Categories = ({categories, onDelete}) => <ul id="categories">
   {categories.map((name) => (
     <li key={name}>
       <span className="name">{name}</span>
-      <Cross style={{cursor: 'pointer'}} width='24' height='24' fill='#999' onClick={() => onDelete(name)}/>
+      <Trash style={{cursor: 'pointer'}} width='20' height='20' fill='#999' onClick={() => onDelete(name)}/>
     </li>
   ))}
   <style jsx>{`

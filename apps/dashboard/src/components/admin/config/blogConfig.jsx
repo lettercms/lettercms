@@ -28,7 +28,7 @@ export default function BlogConfig() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [isVisible, setIsVisible] = useState(false);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState({});
   const [urlID, setUrl] = useState('');
 
   const [load, setLoad] = useState(true);
@@ -49,7 +49,7 @@ export default function BlogConfig() {
         setTitle(data.title);
         setDescription(data.description);
         setIsVisible(data.isVisible);
-        setCategories(data.categories || []);
+        setCategories(Object.keys(data.categories) || []);
         setUrl(data.url);
         setLoad(false);
       });
@@ -67,9 +67,9 @@ export default function BlogConfig() {
   };
 
   const deleteCategory = cat => {
-    changes.categories = changes.categories.filter(e => e !== cat);
+      changes.categories = categories.filter(e => e !== cat);
 
-    if (changes.categories.length === 0 && urlID == '2') {
+    if (categories.length === 0 && urlID == '2') {
       setUrl('1');
       changes.url = '1';
     }

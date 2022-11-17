@@ -12,7 +12,7 @@ export default function BlogCategories({categories, onAdd, onDelete}) {
   };
 
   return <div>
-    <Input id='category' value={categoryName} onChange={({target: {value}}) => setName(value)} label='CategorÍa'/>
+    <Input id='category' value={categoryName} onChange={({target: {value}}) => setName(value.toLowerCase())} label='CategorÍa'/>
     <Button type='solid' onClick={addCategory}>Añadir</Button>
     {
       categories?.length > 0
