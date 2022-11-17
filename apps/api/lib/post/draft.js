@@ -6,6 +6,7 @@ import {isValidObjectId} from 'mongoose';
 import revalidate from '@lettercms/utils/lib/revalidate';
 import {getFullUrl} from '@lettercms/utils/lib/posts';
 import updateTags from './updateTags';
+import updateCategories from './updateCategories';
 
 export default async function DraftPost() {
   const {req, res} = this;
@@ -46,6 +47,7 @@ export default async function DraftPost() {
   revalidate(subdomain, mainUrl);
 
   updateTags(subdomain, tags, body.tags);
+  updateCategories(subdomain, category, body.category);
 
 
   res.json({

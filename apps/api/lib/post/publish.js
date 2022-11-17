@@ -8,6 +8,7 @@ import brain from '@/lib/brain';
 import FB from '@lettercms/utils/lib/social/Facebook';
 import revalidate from '@lettercms/utils/lib/revalidate';
 import updateTags from './updateTags';
+import updateCategories from './updateCategories';
 
 export default async function PublishPost() {
   const {req, res} = this;
@@ -55,7 +56,7 @@ export default async function PublishPost() {
     postStatus: 'published'
   };
 
-  const {tags, _id: postID, url: _url, description} = await posts.findOneAndUpdate(updateCondition, newData, {select: 'description _id tags url'});
+  const {tags, _id: postID, url: _url, description, category} = await posts.findOneAndUpdate(updateCondition, newData, {select: 'description _id tags url category'});
 
   if (body.promote?.facebook) {
     //Promote on Facebook
@@ -101,6 +102,7 @@ export default async function PublishPost() {
   });
 
   updateTags(subdomain, tags, body.tags || []);
+  updateCategories(subdomain, category, body.category);
 
   res.json({
     status: 'OK',

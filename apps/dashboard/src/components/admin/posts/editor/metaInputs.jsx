@@ -10,11 +10,15 @@ export default function MetaInputs({categories, onFocus, onBlur, onChange}) {
     <Input disabled={data.loading} label='Descripción' type='textarea' onChange={({target: {value}}) => setData('description', value)} onFocus={onFocus} onBlur={onBlur} value={data.description}/>
     {
       categories?.length > 0 &&
-      <select onFocus={onFocus} onBlur={onBlur} onChange={({target: {value}}) => setData('category', value)}>
-        {
-          categories.map(e => <option key={e}/>)
-        }
-      </select>
+      <>
+        <span>Categoría</span>
+        <select value={data.category} onFocus={onFocus} onBlur={onBlur} onChange={({target: {value}}) => setData('category', value)}>
+           <option value=''>Sin Categoría</option>
+          {
+            categories.map(e => <option key={e} value={e}>{e}</option>)
+          }
+        </select>
+      </>
     }
   </div>;
 }
