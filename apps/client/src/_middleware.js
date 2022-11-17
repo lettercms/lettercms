@@ -1,7 +1,17 @@
 import { NextResponse } from 'next/server';
 
 export default function middleware(req) {
-  const url = req.nextUrl;
+   const url = req.nextUrl;
+
+   if (url.pathname.includes('/test')) {
+     url.pathname = '/test';
+
+     return NextResponse.rewrite(url);
+   }
+
+   return url;
+
+  /*const url = req.nextUrl;
 
   if (url.pathname === '/feed') {
     url.pathname = '/api/feed';
@@ -20,7 +30,7 @@ export default function middleware(req) {
     return NextResponse.rewrite(url);
   }
 
-  if (url.pathname.startsWith('/_next') || url.pathname.startsWith('/api') || url.pathname.includes('.')) {
+  if (url.pathname.startsWith('/test') || url.pathname.startsWith('/_next') || url.pathname.startsWith('/api') || url.pathname.includes('.')) {
 
    return NextResponse.next();
   }
@@ -39,7 +49,7 @@ export default function middleware(req) {
     return NextResponse.rewrite(url);  
   }
 
-  url.pathname = `/_blogs/${currentHost}${url.pathname}`;
+  url.pathname = `/_blog/${currentHost}${url.pathname}`;
   return NextResponse.rewrite(url);
   /*const userID = req.cookies.get('userID');
   

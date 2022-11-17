@@ -1,6 +1,5 @@
 import connect from '@lettercms/utils/lib/connection';
 import blogs from '@lettercms/models/blogs';
-import { withSentry } from '@sentry/nextjs';
 
 async function Manifest(req, res) {
   const hostname = req.headers.host;
@@ -24,4 +23,4 @@ async function Manifest(req, res) {
   });
 }
 
-export default withSentry(Manifest);
+export default Manifest;

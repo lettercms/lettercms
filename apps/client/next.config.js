@@ -13,7 +13,7 @@ const isDev = process.env.NODE_ENV !== 'production';
 const cfg = withTM({
   swcMinify: true,
   compiler: {
-    removeConsole: true,
+    removeConsole: !isDev,
   },
   eslint: {
     ignoreDuringBuilds: true

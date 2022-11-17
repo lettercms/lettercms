@@ -1,5 +1,8 @@
-import {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
+import Fallback from '@/components/fallback';
+import '@/styles/global.css';
+import Footer from '@/components/footer';
+/*import {useEffect, useState} from 'react';
 import Head from 'next/head';
 import sdk from '@lettercms/sdk';
 import Cookies from 'js-cookie';
@@ -7,14 +10,34 @@ import {UserProvider} from '@/lib/userContext';
 import Facebook from '@/lib/client/FacebookSDK';
 import Load from '@/components/loadBar';
 import Nav from '@/components/nav';
-import Footer from '@/components/index/footer';
-import '@/styles/global.css';
-import Fallback from '@/components/fallback';
+import {ClientProvider} from '@/components/userContext';
 
+//Sobreescribir el punto de acceso a la API, para usar la ultima version
+//sdk.endpoint = 'https://lettercms-api-development.vercel.app';
+sdk.endpoint = 'http://localhost:3009';
+
+/**
+ * Funcion que obtiene el token de acceso publico de la API de LetterCMS
+ *
+const renovateToken = async () => {
+  const res = await fetch('/api/generate-token', {method: 'POST'});
+
+  if (res.ok) {
+    const {accessToken} = await res.json();
+    
+    //Añadir el token de acceso globalmente para el SDK
+    sdk.setAccessToken(accessToken);
+  } else {
+    //si falla el obtener el token reintenta cada 10s
+    setTimeout(renovateToken, 10000);
+  }
+}
+*/
 const CustomApp = ({pageProps, Component}) => {
+  const router = useRouter();
+/*
   const [showLoad, setLoad] = useState(false);
   const [tracingInit, setTracing] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     if (pageProps.accessToken && !router.isFallback) {
@@ -73,11 +96,16 @@ const CustomApp = ({pageProps, Component}) => {
       setLoad(false);
     });
   }, []);
-
+*/
   if (router.isFallback)
     return <Fallback/>;
+
+  return <>
+    <Component {...pageProps}/>
+    <Footer/>
+  </>
   
-  return <div>
+  /*return <div>
     <Head>
       {
         pageProps?.next
@@ -93,11 +121,10 @@ const CustomApp = ({pageProps, Component}) => {
       && <Load />
     }
     <Nav subdomain={router.query.subdomain} main={pageProps.mainUrl}/>
-    <UserProvider ready={pageProps.accessToken && !router.isFallback}>
+    <ClientProvider ready={!router.isFallback}>
       <Component {...pageProps} />
-    </UserProvider>
-    <Footer title={pageProps.blog?.title}/>
-  </div>;
+    </ClientProvider>
+  </div>;*/
 };
 
 export default CustomApp;
