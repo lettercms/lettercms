@@ -13,13 +13,27 @@ import Filter from './filters';
 let actual = {};
 let cursor = '';
 
-const fetchData = async ({type, fields, pageToken, status,  setData, setBefore, setLoading, setLoadMore, setCount, setStatus}) => {
-      
-  if (!pageToken) {
-    setData([]);
-    setLoading(true);
-  } else
-    setLoadMore(true);
+
+const fetchInit = async ({type, fields, status}) => {
+  const opts = {
+    fields,
+    limit: 10
+  };
+
+  if (type === 'accounts')
+    opts.role = 'collaborator';
+
+  if (type === 'pages' || type === 'posts')
+    opts.sort = 'created';
+
+  if (status && status !== '*')
+    opts.status = status;
+
+  return sdk[type].all(opts);
+}
+
+const fetchMore = async ({type, fields, pageToken, status,  setData, setLoadMore, setCount}) => {
+  setLoadMore(true);
 
   const opts = {
     fields,
@@ -41,77 +55,54 @@ const fetchData = async ({type, fields, pageToken, status,  setData, setBefore, 
   sdk[type].all(opts)
     .then(({ total, data, paging: {cursors: {before}} }) => {
       setData(prev => prev.concat(data));
-      setLoading(false);
       setLoadMore(false);
       setCount(total);
       cursor = before;
     });
 };
 
-  const _delete = async (id, type, cb) => {
-    try {
-      if (!confirm('¿Esta seguro de eliminar?'))
-        return;
+const _delete = async (id, type, cb) => {
+  try {
+    if (!confirm('¿Esta seguro de eliminar?'))
+      return;
 
-      const { status, message } = await sdk[type].delete(id);
+    const { status, message } = await sdk[type].delete(id);
 
-      if (status === 'OK') {
-        alert('Eliminado con Exito');
-        cb(prev => prev.filters(({_id}) => _id !== id));
-      } else
-        alert(message);
-    } catch (err) {
-      alert('Error al Eliminar entrada');
-      throw err;
-    }
-  };
+    if (status === 'OK') {
+      alert('Eliminado con Exito');
+      cb(prev => prev.filters(({_id}) => _id !== id));
+    } else
+      alert(message);
+  } catch (err) {
+    alert('Error al Eliminar entrada');
+    throw err;
+  }
+};
 
 
 function Layout(props) {
   const user = useUser();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [before, setBefore] = useState(null);
   const [isLoadingMore, setLoadMore] = useState(false);
   const [count, setCount] = useState(0);
   const [status, setStatus] = useState('*');
 
   const router = useRouter();
 
-  const fetchOpts = useMemo(() => ({
-    type: props.type,
-    fields: props.fields,
-    pageToken: cursor,
-    status,
-    setData,
-    setBefore,
-    setLoading,
-    setLoadMore,
-    setCount,
-    setStatus
-  }), [props.type, props.fields, before, status]);
-
   useEffect(() => {
-    if (
-      user.status === 'done' && 
-      !router.pathname.includes('/edit/') &&
-      (
-        actual.pageToken !== fetchOpts.pageToken ||
-        actual.status !== fetchOpts.status ||
-        router.pathname !== actual.pathname
-      )
-    ) {
-
-      fetchData(fetchOpts);
-
-      actual = {
-        pageToken: fetchOpts.pageToken,
-        status: fetchOpts.status,
-        pathname: router.pathname
-      };
-    }
-
-  }, [fetchOpts, user.status, router.pathname]);
+    if (user.status === 'done')
+      fetchInit({
+        type: props.type,
+        fields: props.fields
+      })
+        .then(({ total, data, paging: {cursors: {before}} }) => {
+          setData(data);
+          setLoading(false);
+          setCount(total);
+          cursor = before;
+        });
+  }, [user.status, props.type, props.fields]);
 
   let ui;
 
@@ -121,7 +112,25 @@ function Layout(props) {
     </ul>;
   }
   else if (data.length > 0) {
-    ui = <ListContainer type={props.type} data={data} before={cursor} setBefore={setBefore} onDelete={_delete} onEdit={props.onEdit} isLoadingMore={isLoadingMore}/>;
+    ui = <ListContainer
+      type={props.type}
+      data={data}
+      before={cursor}
+      onLoadMore={() => {
+        fetchMore({
+          type: props.type,
+          fields: props.fields,
+          pageToken: cursor,
+          status,
+          setData,
+          setLoadMore,
+          setCount
+        })
+      }}
+      onDelete={_delete}
+      onEdit={props.onEdit}
+      isLoadingMore={isLoadingMore}
+    />;
   } else {
     ui = <NoData action={props.onCreate} picture={props.picture} buttonText={props.buttonText}/>;
   }
@@ -141,10 +150,22 @@ function Layout(props) {
         loading={!count}
         countTabs={props.tabs}
         create={props.onCreate}
-        onFilter={status => {
-          setData([]);
+        onFilter={_status => {
           setLoading(true);
-          setStatus(status);
+          setStatus(_status);
+
+          fetchInit({
+            type: props.type,
+            fields: props.fields,
+            status: _status
+          })
+            .then(({ total, data, paging: {cursors: {before}} }) => {
+              setData(data);
+              setLoading(false);
+              setCount(total);
+
+              cursor = before;
+            });
         }}
         count={count}
         buttonText={props.buttonText}

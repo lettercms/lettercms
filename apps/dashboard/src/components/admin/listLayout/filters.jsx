@@ -18,7 +18,7 @@ export default function Top(props) {
         <Button
           className={active === '*' ? focus : ''}
           type='outline'
-          disabled={!count.all}
+          disabled={!count.all || active === '*'}
           onClick={() => props.onFilter('*') }
           >
           {`Todos (${count.all})`}

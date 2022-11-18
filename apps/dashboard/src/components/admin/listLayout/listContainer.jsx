@@ -13,7 +13,7 @@ const Collabs = dynamic(() => import('./collabCard'), {
   ssr: false,
 });
 
-export default function ListContainer({type, data, before, cursor, onDelete, onEdit, setBefore, isLoadingMore, setData}) {
+export default function ListContainer({type, data, before, onDelete, onEdit, onLoadMore, isLoadingMore, setData}) {
   return <>
     <ul className={container}>
       {
@@ -29,7 +29,7 @@ export default function ListContainer({type, data, before, cursor, onDelete, onE
     </ul>
     {
       before &&
-      <Button style={{margin: 'auto'}} type='outline' onClick={() => setBefore(before)} loading={isLoadingMore}>Cargar Más</Button>
+      <Button style={{margin: 'auto'}} type='outline' onClick={onLoadMore} loading={isLoadingMore}>Cargar Más</Button>
     }
   </>;
 }
