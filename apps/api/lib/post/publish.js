@@ -9,6 +9,7 @@ import FB from '@lettercms/utils/lib/social/Facebook';
 import revalidate from '@lettercms/utils/lib/revalidate';
 import updateTags from './updateTags';
 import updateCategories from './updateCategories';
+import checkCategory from './checkCategory';
 
 export default async function PublishPost() {
   const {req, res} = this;
@@ -41,6 +42,17 @@ export default async function PublishPost() {
       return res.status(400).json({
         status: 'posts/already-published',
         message: 'Post already published'
+      });
+  }
+
+  if (body.category) {
+
+    const existsCategory = await checkCategory(subdomain, body.category);
+
+    if (!existsCategory)
+      return res.status(400).json({
+        status: 'bad-request',
+        message: 'Category does not exists'
       });
   }
 

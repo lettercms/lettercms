@@ -7,6 +7,7 @@ import revalidate from '@lettercms/utils/lib/revalidate';
 import {getFullUrl} from '@lettercms/utils/lib/posts';
 import updateTags from './updateTags';
 import updateCategories from './updateCategories';
+import checkCategory from './checkCategory';
 
 export default async function DraftPost() {
   const {req, res} = this;
@@ -23,6 +24,16 @@ export default async function DraftPost() {
   else {
     updateCondition.url = url;
     updateCondition.subdomain = subdomain;
+  }
+
+  if (req.body.category) {
+    const existsCategory = await checkCategory(subdomain, req.body.category);
+
+    if (!existsCategory)
+      return res.status(400).json({
+        status: 'bad-request',
+        message: 'Category does not exists'
+      });
   }
 
   const {_id: postID, url: _url, postStatus, category, published, views, tags} = await posts.findOneAndUpdate(updateCondition, {postStatus: 'draft'}, {select: '_id url postStatus category published views tags'});

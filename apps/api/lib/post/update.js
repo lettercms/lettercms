@@ -6,6 +6,7 @@ import revalidate from '@lettercms/utils/lib/revalidate';
 import {getFullUrl} from '@lettercms/utils/lib/posts';
 import updateTags from './updateTags';
 import updateCategories from './updateCategories';
+import checkCategory from './checkCategory';
 
 export default async function UpdatePost() {
   const {req, res} = this;
@@ -39,6 +40,16 @@ export default async function UpdatePost() {
       return res.status(400).json({
         status: 'posts/url-mismatch',
         message: 'A post with same URL already exists'
+      });
+  }
+
+  if (body.category) {
+    const existsCategory = await checkCategory(subdomain, req.body.category);
+
+    if (!existsCategory)
+      return res.status(400).json({
+        status: 'bad-request',
+        message: 'Category does not exists'
       });
   }
 
