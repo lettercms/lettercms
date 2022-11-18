@@ -1,85 +1,87 @@
-
-const {argv} = require('yargs');
-const {workspaces} = argv;
-
-process.env.DEBUG =  workspaces + ',' + (process.env.DEBUG ||  '');
-
 const { spawn, execSync } = require('child_process');
 const { appendFile } = require('fs/promises');
-const { existsSync, mkdirSync } = require('fs');
+const { existsSync, mkdirSync, readFileSync } = require('fs');
 const { join } = require('path');
-const debug = require('debug');
+const dotenv = require('dotenv');
 
-const workspaceArray = workspaces.split(','); 
+const {argv} = require('yargs');
+const {workspaces, silent, disableLog} = argv;
+
+process.env.DEBUG =  workspaces + ',info,' + (process.env.DEBUG ||  '');
+const debug = require('debug');
 
 const base = process.cwd();
 const logPath = join(base, '.logs');
+const envPath = join(base, '.env.local');
 
-//TODO: add shared env vars on development
-//require('dotenv').config({ path: join(base, '.env')});
+//Load values
+const workspaceArray = workspaces ? workspaces.split(',') : ['api', 'dashboard', 'client']; 
 
 const logger = async (workspace, text) => {
-  const date = new Date();
+  if (disableLog && silent)
+    return;
 
-  const filename = `${workspace}-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}.log`;
-  const log = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} > ${text}`;
+  if (!disableLog) {
+    const date = new Date();
 
-  const path = join(logPath, filename);
+    const filename = `${workspace}-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}.log`;
+    const log = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} > ${text}`;
 
-  await appendFile(path, log);
-  
-  debug(workspace)(text.toString().replace(/\r?\n?$/, ''));
+    const path = join(logPath, filename);
+
+    await appendFile(path, log);
+  }
+
+  if (!silent)
+    debug(workspace)(text.toString().replace(/\r?\n?$/, ''));
 }
+
+const envPorts = {
+  client: '3002',
+  dashboard: '3000',
+  api: '3009'
+};
 
 (async function() {
   if (!existsSync(logPath))
     mkdirSync(logPath);
 
-  const cdn = spawn('node', [join(base, 'scripts', 'serve-files')]);
 
-  if (workspaceArray.includes('api')) {
-    const api = spawn(join(base, 'node_modules', '.bin', 'next.cmd'), ['dev', join(base, 'apps', 'api'), '--port', '3009']);
-    api.stdout.on('data', (data) => {
-      logger('api', data);
-    });
+  //Check is workspace exists
+  workspaceArray.forEach(e => {
+    if (!(e in envPorts))
+      throw new Error(`Workspace ${e} does not exists`);
+  });
 
-    api.stderr.on('data', (data) => {
-      logger('api', data);
-    });
+  // Init CDN server
+  spawn('node', [join(base, 'scripts', 'serve-files')]);
 
-    api.on('close', (code) => {
-      logger('api', `child process exited with code ${code}`);
-    });
-  }
-  
-  if (workspaceArray.includes('dashboard')) {
-    const dashboard = spawn(join(base, 'node_modules', '.bin', 'next.cmd'), ['dev', join(base, 'apps', 'dashboard'), '--port', '3000']);
-    dashboard.stdout.on('data', (data) => {
-      logger('dashboard', data);
-    });
+  let envVars = {};
 
-    dashboard.stderr.on('data', (data) => {
-      logger('dashboard', data);
-    });
+  if (existsSync(envPath)) {
+    console.log(envPath, existsSync(envPath));
 
-    dashboard.on('close', (code) => {
-      logger('dashboard', `child process exited with code ${code}`);
-    });
+    debug('info')('Loaded .env.local');
+
+    const env = readFileSync(envPath);
+
+    if (env) 
+      envVars = dotenv.parse(env);
   }
 
-  if (workspaceArray.includes('client')) {
-    const client = spawn(join(base, 'node_modules', '.bin', 'next.cmd'), ['dev', join(base, 'apps', 'client'), '--port', '3002']);
-    client.stdout.on('data', (data) => {
-      logger('client', data);
+  workspaceArray.forEach(e => {
+    const _child = spawn(join(base, 'node_modules', '.bin', 'next.cmd'), ['dev', join(base, 'apps', e), '--port', envPorts[e]], {
+      env: {
+        ...process.env,
+        ...envVars,
+        DEBUG: undefined
+      }
     });
 
-    client.stderr.on('data', (data) => {
-      logger('client', data);
-    });
+    _child.stdout.on('data', data => logger(e, data));
 
-    client.on('close', (code) => {
-      logger('client', `child process exited with code ${code}`);
-    });
-  }
+    _child.stderr.on('data', data => logger(e, data));
 
-})()
+    _child.on('close', code => logger(e, `child process exited with code ${code}`));
+  });
+})();
