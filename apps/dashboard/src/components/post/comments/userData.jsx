@@ -58,5 +58,5 @@ export default function UserData({onSetName}) {
       }
     }
     >Utilizar Nombre</Button>
-  </div>
+  </div>;
 }

@@ -26,7 +26,6 @@ export default function CommentContent({data, user, postID, onPublish}) {
   const hide = id => setHidden(Object.assign([id], hides));
   const show = id => setHidden(hides.filter(e => e !== id));
 
-  console.log(user)
   return <> {
     comments.map(e => {
       return <Fragment key={e._id}>

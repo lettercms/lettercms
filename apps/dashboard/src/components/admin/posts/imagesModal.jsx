@@ -4,9 +4,10 @@ import ImageUploader from '@/lib/ImageHandler';
 import BlogImages from './images/blogImages';
 import BlogSearch from './images/search';
 import ModalTabs from './images/tabs';
+import Cross from '@/components/cross';
 
 const generateUnsplashSrc = (raw, width, height) => {
-  console.log(arguments)
+  console.log(arguments);
   return {
     width,
     class: 'image',
@@ -31,7 +32,7 @@ export default function ImagesModal({onClose, show}) {
   const [opacity, setOpacity] = useState('0');
   const [tab, setTab] = useState('photos');
 
-  const close = () => {
+  function close() {
     setOpacity('0');
     setTimeout(() => {
       setDisplay('none');
@@ -60,14 +61,30 @@ export default function ImagesModal({onClose, show}) {
       setDisplay('block');
       setTimeout(() => setOpacity('1'), 0);
     } else {
-      close();
+      setOpacity('0');
+
+      setTimeout(() => {
+        setDisplay('none');
+        onClose();
+      }, 610);
     }
-  }, [show]);
+  }, [show, onClose]);
 
   return <div style={{ display, opacity, transition: 'ease .6s' }}>
     <div id="shadow">
       <div id="images-main">
-        <img id="cross" alt='Asset' src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/cross.svg" onClick={close} />
+        <Cross
+          id="cross"
+          width='20'
+          onClick={() => {
+            setOpacity('0');
+
+            setTimeout(() => {
+              setDisplay('none');
+              onClose();
+            }, 610);
+          }}
+        />
         <div id="images-container">
           <ModalTabs onChange={setTab}/>
           <div id='wrapper'>
@@ -117,7 +134,6 @@ export default function ImagesModal({onClose, show}) {
         position: absolute;
         right: 30px;
         top: 20px;
-        width: 20px;
         cursor: pointer;
       }
       #shadow #images-main button {

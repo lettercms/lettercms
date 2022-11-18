@@ -38,7 +38,7 @@ export default function Nav () {
       setLoad(false);
     }
 
-  }, [status, router.pathname]);
+  }, [status, router.pathname, data.user.accessToken, profilePicture]);
   
   useEffect(() => {
     const handleScroll = () => {

@@ -13,7 +13,6 @@ import Filter from './filters';
 let actual = {};
 let cursor = '';
 
-
 const fetchInit = async ({type, fields, status}) => {
   const opts = {
     fields,
@@ -30,7 +29,7 @@ const fetchInit = async ({type, fields, status}) => {
     opts.status = status;
 
   return sdk[type].all(opts);
-}
+};
 
 const fetchMore = async ({type, fields, pageToken, status,  setData, setLoadMore, setCount}) => {
   setLoadMore(true);
@@ -79,7 +78,6 @@ const _delete = async (id, type, cb) => {
   }
 };
 
-
 function Layout(props) {
   const user = useUser();
   const [data, setData] = useState([]);
@@ -91,10 +89,11 @@ function Layout(props) {
   const router = useRouter();
 
   useEffect(() => {
-    if (user.status === 'done')
+    if (user.status === 'done' && props.fields && props.type)
       fetchInit({
         type: props.type,
-        fields: props.fields
+        fields: props.fields,
+        status: props.status
       })
         .then(({ total, data, paging: {cursors: {before}} }) => {
           setData(data);
@@ -102,7 +101,7 @@ function Layout(props) {
           setCount(total);
           cursor = before;
         });
-  }, [user.status, props.type, props.fields]);
+  }, [user.status, props.type, props.fields, props.status]);
 
   let ui;
 
@@ -125,7 +124,7 @@ function Layout(props) {
           setData,
           setLoadMore,
           setCount
-        })
+        });
       }}
       onDelete={_delete}
       onEdit={props.onEdit}

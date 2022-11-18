@@ -5,7 +5,8 @@ import sharp from 'sharp';
 let cacheBucket = null;
 
 export default async function usercontent(req, res) {
-  const {w, q, h} = req.query
+  const {w, q, h} = req.query;
+
   let transformOpts = {};
   
   const bucket = cacheBucket ? cacheBucket : await getBucket();
@@ -22,7 +23,7 @@ export default async function usercontent(req, res) {
 
   const transformPipe = transform.resize(transformOpts);
 
-  //Define Inmutable to Cloudflare Proxy
+  //Define Inmutable cache to Cloudflare Proxy
   res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
 
   remote

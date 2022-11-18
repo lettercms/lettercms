@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {useRouter} from 'next/router';
+import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import Facebook from '../lib/client/FacebookSDK';
 import { SessionProvider } from 'next-auth/react';
@@ -12,9 +12,26 @@ import '@/styles/global.css';
 //Dynamics
 const Nav = dynamic(() => import('../components/nav'));
 
+const initApp = setLoad => {
+  Router.events.on('routeChangeStart', () => {
+    html.style.scrollBehavior = '';
+
+    setLoad(true);
+  });
+
+  Router.events.on('routeChangeComplete', () => {
+    Facebook.init();
+
+    window.scrollTo(0, 0);
+    html.style.scrollBehavior = 'smooth';
+
+    setLoad(false);
+  });
+};
+
 export default function App({Component, pageProps: { session, ...pageProps }}) {
   const [showLoad, setLoad] = useState(false);
-  const router = useRouter();
+  const router = Router.useRouter();
 
   useEffect(() => {
     const html = document.getElementsByTagName('html')[0];
@@ -22,21 +39,7 @@ export default function App({Component, pageProps: { session, ...pageProps }}) {
 
     Facebook.init();
 
-    router.events.on('routeChangeStart', () => {
-      html.style.scrollBehavior = '';
-
-      setLoad(true);
-    });
-
-    router.events.on('routeChangeComplete', () => {
-      Facebook.init();
-
-      window.scrollTo(0, 0);
-      html.style.scrollBehavior = 'smooth';
-
-      setLoad(false);
-    });
-
+    initApp(setLoad);
   }, []);
 
   const getLayout = Component.getLayout || ((page) => page);
@@ -46,13 +49,18 @@ export default function App({Component, pageProps: { session, ...pageProps }}) {
         <ClientProvider accessToken={pageProps.accessToken}>
           <SessionProvider session={session}>
             {
-              (showLoad && !pageProps.hideLayout)
-              && <Load />
+              (
+                showLoad &&
+                !pageProps.hideLayout
+              ) &&
+              <Load />
             }
             {
-              (!router.asPath.startsWith('/dashboard')
-              && !Component.hideMenu)
-              && <Nav />
+              (
+                !router.asPath.startsWith('/dashboard') &&
+                !Component.hideMenu
+              ) &&
+              <Nav />
             }
             {getLayout(<Component {...pageProps} />, pageProps.user)}
           </SessionProvider>

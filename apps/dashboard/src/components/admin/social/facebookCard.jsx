@@ -10,7 +10,7 @@ const FacebookCard = ({ content, pageName, pageImage, created, images}) =>
   <div className="card">
     <div id="head">
       <div id="photo">
-        <img alt='Asset' width='50' height='50' src={`${pageImage}?width=50`} style={{ border: 'solid 1px rgba(0,0,0,.1)', borderRadius: '50%', margin: '-5px 5px 0' }} />
+        <img alt='' width='50' height='50' src={`${pageImage}?width=50`} style={{ border: 'solid 1px rgba(0,0,0,.1)', borderRadius: '50%', margin: '-5px 5px 0' }} />
       </div>
       <div id="name">
         <div>
@@ -44,7 +44,7 @@ const FacebookCard = ({ content, pageName, pageImage, created, images}) =>
   {
     images.length > 0 &&
     <div id='image'>
-      <img src={images[0]} />
+      <img src={images[0]} alt=''/>
     </div>
   }
   <div id="buttons">

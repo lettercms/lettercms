@@ -94,7 +94,7 @@ function PageEditor() {
       });
       delete window.grapesjs;
     };
-  }, [status]);
+  }, [status, pageID]);
   
   return <div style={{height: '100%'}}>
     <Head>

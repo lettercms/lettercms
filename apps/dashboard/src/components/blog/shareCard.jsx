@@ -1,3 +1,7 @@
+import Facebook from '@/components/svg/facebook';
+import Twitter from '@/components/svg/twitter';
+import Linkedin from '@/components/svg/linkedin';
+
 const ShareCard = ({ url, title, style }) => {
   const encodedURL = encodeURI(url);
   return (
@@ -7,21 +11,21 @@ const ShareCard = ({ url, title, style }) => {
         target="_blank"
         rel='noreferrer'
       >
-        <img src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/facebook.svg" />
+        <Facebook height='50'/>
       </a>
       <a
         href={`https://twitter.com/intent/tweet?original_referer=${encodedURL.split('vercel.app')[0] + 'vercel.app'}&ref_src=twsrc%5Etfw&text=${encodeURI('Esta entrada me gusto, puede que a ti también te interese.')}&tw_p=tweetbutton&url=${encodedURL}&via=lettercms`}
         target="_blank"
         rel='noreferrer'
       >
-        <img src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/twitter.svg" />
+        <Twitter height='50' />
       </a>
       <a
         href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodedURL}`}
         target="_blank"
         rel='noreferrer'
       >
-        <img src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/linkedin.svg" />
+        <Linkedin height='50'/>
       </a>
       <style jsx>
         {`

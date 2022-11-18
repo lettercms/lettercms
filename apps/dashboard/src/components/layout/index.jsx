@@ -1,5 +1,5 @@
 import {useState, useEffect, createContext, useContext, memo} from 'react';
-import {useRouter} from 'next/router';
+import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import sdk from '@lettercms/sdk';
 import Cookie from 'js-cookie'; 
@@ -43,6 +43,10 @@ export function useUser() {
   return value;
 }
 
+const initLoader = setLoad => {
+  Router.events.on('routeChangeStart', () => setLoad(true));
+  Router.events.on('routeChangeComplete', () => setLoad(false));
+};
 
 export function DashboardProvider({userID, children, hideMenu}) {
   const {status, data} = useSession();
@@ -54,13 +58,11 @@ export function DashboardProvider({userID, children, hideMenu}) {
 
   const ctx = useContext(DashboardContext);
 
-  const router = useRouter();
+  const router = Router.useRouter();
 
   useEffect(() => {
     if (!ctx && status === 'authenticated') {
-
-      router.events.on('routeChangeStart', () => setLoad(true));
-      router.events.on('routeChangeComplete', () => setLoad(false));
+      initLoader(setLoad);
 
       window.setLoad = setLoad;
 
@@ -93,7 +95,7 @@ export function DashboardProvider({userID, children, hideMenu}) {
           setLoading(false);
         });
     }
-  }, [ctx, status]);
+  }, [ctx, status, data, userID]);
 
   const value = isLoading
     ? {status: 'loading'}
@@ -128,7 +130,7 @@ export function DashboardProvider({userID, children, hideMenu}) {
           }
         </ul>
         <div className={asideFooter}>
-           <img src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} className={footerImg}/>
+           <img src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt='LetterCMS linear Logo' className={footerImg}/>
         </div>
       </aside>
       <div className={content} style={{width: hideMenu ? '100%' : '85%', left: hideMenu ? 0 : '15%'}}>

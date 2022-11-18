@@ -16,7 +16,7 @@
   </header>
   <div className='ig-content'>
     {
-      images.map((e, i) => <img key={`ig-image-${i}`} src={e}/>)
+      images.map((e, i) => <img key={`ig-image-${i}`} src={e} alt=''/>)
     }
   </div>
   <div id='footer'>

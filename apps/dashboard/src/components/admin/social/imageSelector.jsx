@@ -216,7 +216,7 @@ const ImageSelector = ({show, onAppend}) => {
     }
     {
       step !== 'upload' &&
-      <img id='cropper' style={{height: step === 'edit' ? 300 : null}}/>
+      <img id='cropper' style={{height: step === 'edit' ? 300 : null}} alt=''/>
     }
     {
       step === 'edit' &&
@@ -225,7 +225,7 @@ const ImageSelector = ({show, onAppend}) => {
     {
       step === 'upload' &&
       <>
-        <img src={croppedImg} style={{height: 300}}/>
+        <img src={croppedImg} style={{height: 300}} alt=''/>
         <button onClick={() => uploadImage(onAppend)}>Listo</button>
         <br/>
         <button onClick={() => cancelCrop(() => changeStep('edit'))}>Cancelar</button>

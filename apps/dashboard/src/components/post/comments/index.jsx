@@ -4,7 +4,6 @@ import Input from '@/components/input';
 import Base from '@/components/admin/stats/base';
 import HandleDate from '@/lib/handleDate';
 import Cookie from 'js-cookie';
-import {Fragment} from 'react';
 import Spinner from '@/components/svg/spinner';
 import {useToken} from '@/lib/userContext';
 import CommentForm from './form';
@@ -33,7 +32,7 @@ export default function Comments({id, numPosts = 10, user}) {
       setData(data);
       setLoad(false);
     });
-  }, [id, accessToken]);
+  }, [id, accessToken, numPosts]);
 
   const onPublish = (d) => {
     const newData = data.concat([{
