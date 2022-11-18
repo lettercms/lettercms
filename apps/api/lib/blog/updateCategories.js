@@ -8,17 +8,14 @@ export default async function updateCategories(subdomain, newCategories) {
   const data = {};
   const diff = getDiff(categories, newCategories);
 
-  console.log(diff)
-
   if (diff.toAdd?.length > 0 || diff.toDelete?.length > 0) {
     diff.toAdd.forEach(cat => categories.set(cat, 0));
 
-    diff.toDelete.forEach(cat => {
+    diff.toDelete.forEach(async cat => {
       //Delete category count
       categories.delete(cat);
-
       //Delete category on entries
-      posts.update({category: cat}, {category: ''});
+      await posts.updateMany({subdomain, category: cat}, {$set: {category: ''}});
 
       //TODO: Revalidate
     });

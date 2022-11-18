@@ -66,7 +66,6 @@ export default async function UpdatePost() {
   updateTags(subdomain, updatedPost.tags, body.tags);
   updateCategories(subdomain, updatedPost.category, body.category);
 
-
   res.json({
     status: 'OK',
     id: updatedPost._id

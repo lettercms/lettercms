@@ -5,7 +5,6 @@ import {useData} from './index';
 export default function Tags({blogTags: _bt}) {
   const[data, setData] = useData();
 
-  const [tags,  setTags] = useState(data.tags ? data.tags : []);
   const [blogTags, setBlogTags] = useState(_bt || []);
   const [text,  setText] = useState('');
   const [showTags, setShowTags] = useState(false);
@@ -28,17 +27,33 @@ export default function Tags({blogTags: _bt}) {
       <div className={blogTagsStyles}>
         <ul>
           {
-            blogTags.map(e => <li key={e}>{e}</li>)
+            blogTags.filter(t => !data.tags.includes(t)).map(e => <li key={e} onClick={() => {
+              setData('tags', [...data.tags, e]);
+              setText('');
+          }}>{e}</li>)
           }
         </ul>
       </div>
     }
     <ul className={tagUl}>
       <li>
-          <input disabled={data.loading} onBlur={() => setShowTags(false)} className={inputTag} placeholder='Etiqueta' value={text} onChange={({target: {value}}) => setText(value)}/>
+        <input
+          onKeyUp={({key}) => {
+            if (key === 'Enter' && text) {
+              setData('tags', [...data.tags, text]);
+              setText('');
+            }
+          }}
+          disabled={data.loading}
+          onBlur={() => setTimeout(() => setShowTags(false), 0)}
+          className={inputTag}
+          placeholder='Etiqueta'
+          value={text}
+          onChange={({target: {value}}) => setText(value)}
+        />
       </li>
       {
-        tags.map((e, i) => <li key={e + i} className={tagList}>{e}</li>)
+        data.tags?.map((e, i) => <li key={e + i} className={tagList} onClick={() => setData('tags', data.tags.filter(t => t !== e))}>{e}</li>)
       }
     </ul>
   </div>;
