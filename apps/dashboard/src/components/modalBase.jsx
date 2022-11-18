@@ -39,7 +39,7 @@ export default class ModalBase extends Component {
       <div id="shadow" style={{ display, opacity }}>
         <div id="subscription-main" style={{width, height}}>
           <div id='modal-top'>
-            <div id='close-image-container'>
+            <div id='close-image-container' onClick={this.props.close}>
               <Cross fill='#fff' height='30'/>
             </div>
           </div>
