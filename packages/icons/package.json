@@ -1,0 +1,15 @@
+{
+  "name": "@lettercms/icons",
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "scripts": {
+    "lint": "eslint *.jsx"
+  },
+  "peerDependecies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@lettercms/eslint-config": "*"
+  }
+}

@@ -20,7 +20,7 @@ const schedule = async (date, req) => {
 
     const time = generateTime(date);
 
-    const res = await fetch(`https://qstash.upstash.io/v1/publish/${url}`, {
+    const res = await fetch(`https://qstash.upstash.io/v1/publish/${req.url}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

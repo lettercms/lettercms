@@ -25,8 +25,6 @@ export const find = async (model, filter, opts = {}) => {
         splitted.push('post.category');
       if (!hasPublished)
         splitted.push('post.published');
-      if (!hasStatus)
-        splitted.push('post.postStatus');
     }
 
     opts.fields = splitted.join(',');
@@ -51,13 +49,11 @@ export const find = async (model, filter, opts = {}) => {
       delete post.category;
     if (!hasPublished)
       delete post.published;
-    if (!hasStatus)
-      delete post.postStatus;
 
     return post;
   });
 
-  return data;
+  return posts;
 };
 
 export const findOne = async (model, filter, query) => {
@@ -81,8 +77,6 @@ export const findOne = async (model, filter, query) => {
         splitted.push('category');
       if (!hasPublished)
         splitted.push('published');
-      if (!hasStatus)
-        splitted.push('postStatus');
     }
 
     query.fields = splitted.join(',');
@@ -100,8 +94,6 @@ export const findOne = async (model, filter, query) => {
     delete data.category;
   if (!hasPublished)
     delete data.published;
-  if (!hasStatus)
-    delete data.postStatus;
 
   return data;
 };

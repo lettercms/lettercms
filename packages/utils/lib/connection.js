@@ -28,11 +28,6 @@ export default async function dbConnect() {
   if (!cached.promise)
     cached.promise = mongoose.connect(MONGO_URL, opts).then(m => m);
 
-  try {
-
-    cached.conn = await cached.promise;
-    return cached.conn;
-  } catch(err) {
-    throw err;
-  }
+  cached.conn = await cached.promise;
+  return cached.conn;
 }

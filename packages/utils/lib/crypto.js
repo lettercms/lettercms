@@ -1,14 +1,11 @@
 import {randomBytes, scrypt, timingSafeEqual} from 'crypto';
 
-export const generateKey = (size = 32, format = 'base64') => {
-  const buffer = crypto.randomBytes(size);
-  return buffer.toString(format);
-};
 
 export const sign = key => {
   return new Promise((resolve, reject) => {
     const salt = randomBytes(16);
-    const buffer = scrypt(Buffer.from(key.normalize()), salt, 32, { N: 1024, p: 2 }, (err, buffer) => {
+
+    scrypt(Buffer.from(key.normalize()), salt, 32, { N: 1024, p: 2 }, (err, buffer) => {
       if (err)
         return reject(err);
 

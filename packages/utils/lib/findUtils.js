@@ -42,12 +42,12 @@ export const parseFields = fields => {
   const splittedFields = fields.split(',').map(e => '_base.' + e);
 
   const getFields = f => {
-    let path = f[0];
+    const [path, value] = f;
 
-    if (!populationSelect[f[0]])
-      populationSelect[f[0]] = [f[1]];
+    if (!populationSelect[path])
+      populationSelect[path] = [value];
     else
-      populationSelect[f[0]].push(f[1]);
+      populationSelect[path].push(value);
 
     if (f.length > 1) {
       getFields(f.slice(1));

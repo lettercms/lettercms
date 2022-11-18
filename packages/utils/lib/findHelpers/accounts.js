@@ -1,7 +1,5 @@
 import {find as baseFind, parseQuery} from '../findUtils';
 
-const accountsUtils = {};
-
 export const find = async (model, filter, opts = {}) => {
   if (!opts.fields) {
 

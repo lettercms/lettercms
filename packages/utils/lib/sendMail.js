@@ -1,12 +1,10 @@
-import {readFile} from 'fs';
-import {join} from 'path';
 import https from 'https';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
 const getTemplate = async type => {
   return new Promise((resolve, reject) => {
-    if (/verify|invitation/) {
+    if (/verify|invitation/.test(type)) {
       const req = https.get(`https://cdn.jsdelivr.net/gh/lettercms/lettercms/packages/utils/templates/${type}.html`, res => {
         let chunks = '';
 
@@ -19,6 +17,8 @@ const getTemplate = async type => {
       });
         
       req.on('error', reject);
+    } else {
+      return reject(`Incorrect type"${type}"`);
     }
   });
 };
