@@ -9,7 +9,8 @@ async function POST() {
   const {data} = req.body;
 
   if (isAdmin) {
-    const {template, email, name, role} = data;
+    const {template, email, name} = data;
+    let {role} = data;
 
     if (template === 'verify') {
       role = 'admin';
