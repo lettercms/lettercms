@@ -8,7 +8,7 @@ async function POST() {
   const {subdomain} = req;
 
 
-  const {owner, title} = await blogs.findOne({subdomain}, 'owner title', {populate: 'owner', select: 'email'})
+  const {owner, title} = await blogs.findOne({subdomain}, 'owner title', {populate: 'owner', select: 'email'});
 
   await sendMail(owner.email, `Contacto para ${title} - LetterCMS`, {
     type: 'contact',

@@ -59,8 +59,6 @@ const envPorts = {
   let envVars = {};
 
   if (existsSync(envPath)) {
-    console.log(envPath, existsSync(envPath));
-
     debug('info')('Loaded .env.local');
 
     const env = readFileSync(envPath);

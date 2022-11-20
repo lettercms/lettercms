@@ -46,42 +46,38 @@ const filterTemplate = (template, data) => {
 };
 
 const sendMail = async (to, subject, data) => {
-  try {
-    if (isDev)
-      return console.log(to, subject, data);
+  if (isDev)
+    return console.log(to, subject, data);
 
-    const template = await getTemplate(data.type);
+  const template = await getTemplate(data.type);
 
-    const mailOptions = {
-      sender: {  
-        name: 'LetterCMS',
-        email: 'davidsdevel@gmail.com'
-      },
-      to:[  
-        {  
-          email: to,
-          name:`${data.name} ${data.lastname}`
-        }
-      ],
-      subject,
-      tags:[data.type],
-      htmlContent: filterTemplate(template, data),
-    };
+  const mailOptions = {
+    sender: {  
+      name: 'LetterCMS',
+      email: 'davidsdevel@gmail.com'
+    },
+    to:[  
+      {  
+        email: to,
+        name:`${data.name} ${data.lastname}`
+      }
+    ],
+    subject,
+    tags:[data.type],
+    htmlContent: filterTemplate(template, data),
+  };
 
-      const res = await fetch('https://api.sendinblue.com/v3/smtp/email', {
-        method:'POST',
-        headers: {
-          accept: 'application/json',
-          'api-key': process.env.SENDINBLUE_API_KEY,
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(mailOptions)
-      });
+  const res = await fetch('https://api.sendinblue.com/v3/smtp/email', {
+    method:'POST',
+    headers: {
+      accept: 'application/json',
+      'api-key': process.env.SENDINBLUE_API_KEY,
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify(mailOptions)
+  });
 
-    return res.json();
-  } catch(err) {
-    throw err;
-  }
+  return res.json();
 };
 
 export default sendMail;
