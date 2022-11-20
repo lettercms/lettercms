@@ -4,7 +4,7 @@ import ImageUploader from '@/lib/ImageHandler';
 import BlogImages from './images/blogImages';
 import BlogSearch from './images/search';
 import ModalTabs from './images/tabs';
-import Cross from '@/components/cross';
+import Cross from '@/components/svg/cross';
 
 const generateUnsplashSrc = (raw, width, height) => {
   console.log(arguments);
