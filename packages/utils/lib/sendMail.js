@@ -17,6 +17,8 @@ const getTemplate = async type => {
       });
         
       req.on('error', reject);
+    } else if (type === 'contact') {
+      return resolve('<h1>Contacto para %title%</h1><br/><br/><br/>%data%');
     } else {
       return reject(`Incorrect type"${type}"`);
     }
@@ -24,6 +26,16 @@ const getTemplate = async type => {
 };
 
 const filterTemplate = (template, data) => {
+  if (data.type === 'contact') {
+    let filtered = template.replace('%title%', data.__title);
+
+    delete data.__title;
+    delete data.type;
+
+    const generatedData = Object.entries(data).map(([key, value]) => `<b>${key[0].toUpperCase() + key.slice(1).toLowerCase()}</b><br/>${value}<br/><br/>`);
+
+    return filtered.replace('%data%', generatedData.join(''));
+  }
   const dataEntries = Object.entries(data);
 
   let filteredTemplate = template;
@@ -52,8 +64,8 @@ const sendMail = async (to, subject, data) => {
         }
       ],
       subject,
+      tags:[data.type],
       htmlContent: filterTemplate(template, data),
-      tags:[data.type]
     };
 
       const res = await fetch('https://api.sendinblue.com/v3/smtp/email', {
@@ -68,7 +80,7 @@ const sendMail = async (to, subject, data) => {
 
     return res.json();
   } catch(err) {
-    return Promise.reject(err);
+    throw err;
   }
 };
 

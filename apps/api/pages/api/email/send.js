@@ -2,7 +2,7 @@ import manageMethods from '@lettercms/utils/lib/manageMethods';
 import sendMail from '@lettercms/utils/lib/sendMail';
 import jwt from 'jsonwebtoken';
 
-const POST = async function() {
+async function POST() {
   const {req, res} = this;
   const {isAdmin} = req;
 
