@@ -171,11 +171,77 @@ class Nav extends Component {
 
     return (
       <nav id="nav">
-        <div id="mobile-bar" style={mobileBar}>
-          <img onClick={this.toggleMenu} id="menu-icon" src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/menu.svg" />
-          <div id="input" style={{ background: inputBackground }}>
-            <img className="inline" onClick={this.toggleSearch} style={{ float: 'left' }} src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/search.svg" />
-            <input onKeyUp={this.find} value={search} className="inline search" style={inputStyle} type="text" placeholder="Busqueda" onInput={this.handleInput} />
+        <div
+          style={mobileBar}
+          className='
+            shadow
+            shadowy-1
+            shadowx-2
+            bg-white
+            h-12
+            px-[5%]
+            py-8
+            fixed
+            w-full
+            transition-ease
+            transition-4
+          '>
+          <img
+            onClick={this.toggleMenu}
+            className='
+              absolute
+              top-4
+              left-[5%]
+              cursor-pointer
+            '
+            src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/menu.svg"
+          />
+          <div className='
+            rounded-full
+            absolute
+            right-[2.5%]
+            top-4;
+            transition-ease
+            transition-5
+            bg-slate-100
+          '
+          style={{ background: inputBackground }}>
+            <img
+              className="
+                inline
+                h-4
+                m-2
+                transition-ease
+                transition-5s
+                cursor-pointer
+              "
+              onClick={this.toggleSearch}
+              style={{ float: 'left' }}
+              src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/search.svg"
+            />
+            <input
+              onKeyUp={this.find}
+              value={search}
+              className="
+                inline
+                bg-slate-100
+                border-none
+                h-8
+                transition-ease
+                transition-5
+
+
+                :placeholder:color-black
+                :placeholder:opacity-1
+
+                :focus:outline-0
+                :focus:text-black
+              "
+              style={inputStyle}
+              type="text"
+              placeholder="Busqueda"
+              onInput={this.handleInput}
+            />
             <Link preload={false} href={`/search?q=${search}`}>
               <a>
                 <img className="inline" id="arrow" style={{ ...arrowStyle, float: 'right' }} src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/arrow.svg" />
@@ -183,10 +249,40 @@ class Nav extends Component {
             </Link>
           </div>
         </div>
-        <div id="shadow" style={shadowStyle} onClick={this.toggleMenu} />
-        <ul id="menu" style={menuStyle}>
+        <div
+          className='
+            fixed
+            w-full
+            h-full
+            bg-[#0004]
+            top-0
+          '
+          style={shadowStyle}
+          onClick={this.toggleMenu}
+        />
+        <ul
+          className='
+            m-0
+            fixed
+            bg-white
+            w-1/4
+            h-full
+            top-0
+            mw-100
+          '
+          style={menuStyle}
+        >
           <button style={{ float: 'right' }} onClick={this.toggleMenu}>
-            <img src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/cross.svg" />
+            <img
+              className='
+                w-1/4
+                mt-4
+                mb-10
+                mx-auto
+                block
+              '
+              src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/cross.svg"
+            />
           </button>
           <img src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/davidsdevel-black.png" />
           <li>
@@ -204,88 +300,6 @@ class Nav extends Component {
         </ul>
         <style jsx>
           {`
-				#nav #mobile-bar {
-					background: white;
-					box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
-					width: 90%;
-					height: 40px;
-					padding: 15px 5%;
-					position: fixed;
-					z-index: 1;
-					transition: ease .4s;
-				}
-				#nav .inline {
-					display: inline-block;
-				}
-				#nav #menu-icon {
-					position: absolute;
-					top: 17px;
-					left: 5%;
-					z-index: 2;
-					cursor: pointer;
-				}
-				#nav #input {
-					border-radius: 50px;
-					position: absolute;
-					right: 2.5%;
-					top: 17px;
-
-					transition: ease .5s;
-				}
-				#nav #input img {
-					height: 18px;
-					margin: 10px 10px;
-					
-					transition: ease .5s;
-					cursor: pointer;
-				}
-				#nav #input input {
-					background: none;
-					border: none;
-					height: 34px;
-					color: gray;
-
-					transition: ease .5s;
-				}
-				#nav #input input::placeholder {
-					color: black;
-					opacity: 1;
-				}
-				#nav #input input::-ms-input-placeholder {
-					color: black;
-				}
-				#nav #input input:focus {
-					outline: none;
-					color: black;
-				}
-				#nav #input #arrow {
-					transform: rotate(270deg);
-				}
-				#nav #shadow, #nav #menu {
-					transition: ease .3s;
-				}
-				#nav #shadow {
-					position: fixed;
-					width: 100%;
-					height: 100%;
-					background: rgba(0, 0, 0, .3);
-					top: 0;
-					z-index: 1;
-				}
-				#nav #menu {
-					margin: 0;
-					position: fixed;
-					background: white;
-					width: 70%;
-					height: 100%;
-					top: 0;
-					z-index: 1;
-				}
-				#nav #menu > img {
-					width: 25%;
-					margin: 15px auto 45px;
-					display: block;
-				}
 				#nav #menu li {
 					transition: ease .3s;
 					margin-left: -40px;
@@ -311,21 +325,6 @@ class Nav extends Component {
 				}
 				#nav #menu button img {
 					width: 100%;
-				}
-				@media screen and (min-width: 480px) {
-					#nav #menu {
-						width: 55%;
-					}
-				}
-				@media screen and (min-width: 720px) {
-					#nav #menu {
-						width: 40%;
-					}
-				}
-				@media screen and (min-width: 960px) {
-					#nav #menu {
-						width: 30%;
-					}
 				}
 			`}
         </style>

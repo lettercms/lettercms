@@ -1,4 +1,4 @@
-export default function RecommendedCard({title, thumbnail}) {
+export default function RecommendedCard({title, thumbnail, author}) {
   return <div className='
     flex
     justify-center
@@ -13,19 +13,26 @@ export default function RecommendedCard({title, thumbnail}) {
       flex
       flex-row
       w-full
-      h-28
       items-center
-      rounded-full
-      overflow-hidden
-      border
-      border-solid
-      border-main-100
-      md:w-5/6
-    '>
-      <div className='w-28 h-28 bg-center shrink-0 bg-cover rounded-full' style={{backgroundImage: `url(${thumbnail}&h=120)`}}/>
-      <div className='w-3/5 p-2'>
-        <h3 className='break-words text-sm align-middle'>{title}</h3>
+      justify-center
+      items-center
+      rounded
+
+      bg-cover
+      bg-center
+      px-12
+      py-8
+      md:w-5/6'
+      style={{backgroundImage: `url(${thumbnail})`}}
+    >
+      <div className='h-48 w-full bg-slate-50 flex flex-col items-center justify-center'>
+        <h3 className='break-words text-lg font-bold text-center'>{title}</h3>
+        <hr className='w-2/3 my-2 border-main-100' />
+        <div className='flex items-center mt-4'>
+          <img src={author.photo} className='w-8 h-8 rounded-full mr-2'/>
+          <h4 className='text-sm'>{author.name} {author.lastname}</h4>
+        </div>
       </div>
     </div>
-  </div>
+  </div>;
 }

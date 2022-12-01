@@ -22,7 +22,7 @@ const renovateToken = async () => {
     //si falla el obtener el token reintenta cada 10s
     setTimeout(renovateToken, 10000);
   }
-}
+};
 
 const ClientContext = createContext();
 

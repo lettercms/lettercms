@@ -1,17 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export default function middleware(req) {
-   const url = req.nextUrl;
-
-   if (url.pathname.includes('/test')) {
-     url.pathname = '/test';
-
-     return NextResponse.rewrite(url);
-   }
-
-   return url;
-
-  /*const url = req.nextUrl;
+  const url = req.nextUrl;
 
   if (url.pathname === '/feed') {
     url.pathname = '/api/feed';
@@ -51,6 +41,7 @@ export default function middleware(req) {
 
   url.pathname = `/_blog/${currentHost}${url.pathname}`;
   return NextResponse.rewrite(url);
+
   /*const userID = req.cookies.get('userID');
   
   if (!userID || url.pathname === '/search') {

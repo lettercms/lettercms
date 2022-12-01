@@ -1,18 +1,18 @@
 import dynamic from 'next/dynamic';
-import {getPathType, getBlog} from '@/lib/mongo/blogs';
-import {getPost} from '@/lib/mongo/posts';
-import {captureException} from '@sentry/nextjs';
 import Fallback from '@/components/fallback';
+import {captureException} from '@sentry/nextjs';
 
-const Post = dynamic(() => import('@/components/post'), {
+/*const Post = dynamic(() => import('@/components/post'), {
+  ssr: true,
+  loading: () => <Fallback/>
+});*/
+
+const Home = dynamic(() => import('@/components/home'), {
   ssr: true,
   loading: () => <Fallback/>
 });
 
-const Home = dynamic(() => import('@/components/index'), {
-  ssr: true,
-  loading: () => <Fallback/>
-});
+const isDev = process.env.NODE_ENV !== 'production';
 
 export function getStaticPaths() {
   return {
@@ -23,9 +23,16 @@ export function getStaticPaths() {
 
 export async function getStaticProps({params: {subdomain, paths}}) {
   try {
-    const pathType = await getPathType(subdomain, paths);
+    let apiPath =  `http${isDev ? '' : 's'}://${isDev ? 'localhost:3002' : `${subdomain}.lettercms.vercel.app`}/api/data/blog?subdomain=${subdomain}`;
+    if (paths?.length > 0)
+      apiPath += `&paths=${paths.join(',')}`;
 
-    if (pathType === 'no-blog')
+    console.log(apiPath);
+
+    const dataRes = await fetch(apiPath);
+    const data = await dataRes.json();
+
+    if (data.type === 'no-blog')
       return {
         redirect: {
           permanent: true,
@@ -33,35 +40,31 @@ export async function getStaticProps({params: {subdomain, paths}}) {
         }
       };
 
-    let props = null;
-    
-    if (pathType === 'main')
-      props = await getBlog(subdomain);
-    if (pathType === 'post')
-      props = await getPost(subdomain, paths);
-    if (pathType === 'not-found')
+    if (data.type === 'not-found')
       return {
         notFound: true
       };
 
     return {
-      props: {
-        pathType,
-        ...props
-      }
+      props: data
     };
   } catch(err) {
+    console.log(err);
     captureException(err);
+
+    return {
+      notFound: true
+    };
   }
 }
 
 export default function PageWraper(props) { 
   let UI = null;
 
-  if (props.pathType === 'main')
-    UI = <Home {...props}/>;
+  if (props.type === 'main')
+    UI = <Home {...props}/>;/*
   if (props.pathType === 'post')
-    UI = <Post {...props}/>;
+    UI = <Post {...props}/>;*/
 
   return UI;
 }

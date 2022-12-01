@@ -12,6 +12,6 @@ export default function GenerateToken(req, res) {
       : hostname.replace('.localhost:3002', '');
 
   const accessToken = jwt.sign({subdomain}, process.env.JWT_AUTH, {expiresIn: 1800});
-  console.log(subdomain, accessToken)
+  console.log(subdomain, accessToken);
   res.json({accessToken});
 }

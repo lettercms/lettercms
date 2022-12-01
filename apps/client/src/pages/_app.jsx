@@ -2,6 +2,7 @@ import {useRouter} from 'next/router';
 import Fallback from '@/components/fallback';
 import '@/styles/global.css';
 import Footer from '@/components/footer';
+//import Nav from '@/components/nav';
 /*import {useEffect, useState} from 'react';
 import Head from 'next/head';
 import sdk from '@lettercms/sdk';
@@ -9,7 +10,6 @@ import Cookies from 'js-cookie';
 import {UserProvider} from '@/lib/userContext';
 import Facebook from '@/lib/client/FacebookSDK';
 import Load from '@/components/loadBar';
-import Nav from '@/components/nav';
 import {ClientProvider} from '@/components/userContext';
 
 //Sobreescribir el punto de acceso a la API, para usar la ultima version
@@ -103,10 +103,11 @@ const CustomApp = ({pageProps, Component}) => {
   return <>
     <Component {...pageProps}/>
     <Footer/>
-  </>
+  </>;
   
   /*return <div>
     <Head>
+    <Nav subdomain={router.query.subdomain} main={pageProps.mainUrl}/>
       {
         pageProps?.next
         && <link rel="next" />
@@ -120,7 +121,6 @@ const CustomApp = ({pageProps, Component}) => {
       showLoad
       && <Load />
     }
-    <Nav subdomain={router.query.subdomain} main={pageProps.mainUrl}/>
     <ClientProvider ready={!router.isFallback}>
       <Component {...pageProps} />
     </ClientProvider>

@@ -5,5 +5,5 @@ export default function Recommended({posts}) {
     {
       posts.map(e => <Card key={e._id} {...e}/>)
     }
-  </div>
+  </div>;
 }
