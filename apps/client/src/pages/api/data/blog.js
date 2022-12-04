@@ -18,9 +18,9 @@ export default async function getData(req, res) {
   let props = null;
     
   if (pathType === 'main')
-    props = await getBlog(subdomain);/*
+    props = await getBlog(subdomain);
   if (pathType === 'post')
-    props = await getPost(subdomain, paths);*/
+    props = await getPost(subdomain, paths);
   if (pathType === 'not-found')
     return res.json({
       type: 'not-found'

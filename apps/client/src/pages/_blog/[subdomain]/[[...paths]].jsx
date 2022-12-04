@@ -2,10 +2,15 @@ import dynamic from 'next/dynamic';
 import Fallback from '@/components/fallback';
 import {captureException} from '@sentry/nextjs';
 
-/*const Post = dynamic(() => import('@/components/post'), {
+const Post = dynamic(() => import('@/components/article'), {
   ssr: true,
   loading: () => <Fallback/>
-});*/
+});
+
+const NotFound = dynamic(() => import('@/pages/404'), {
+  ssr: true,
+  loading: () => <Fallback/>
+});
 
 const Home = dynamic(() => import('@/components/home'), {
   ssr: true,
@@ -24,13 +29,14 @@ export function getStaticPaths() {
 export async function getStaticProps({params: {subdomain, paths}}) {
   try {
     let apiPath =  `http${isDev ? '' : 's'}://${isDev ? 'localhost:3002' : `${subdomain}.lettercms.vercel.app`}/api/data/blog?subdomain=${subdomain}`;
+
     if (paths?.length > 0)
       apiPath += `&paths=${paths.join(',')}`;
 
-    console.log(apiPath);
-
     const dataRes = await fetch(apiPath);
     const data = await dataRes.json();
+
+    console.log(data);
 
     if (data.type === 'no-blog')
       return {
@@ -49,7 +55,6 @@ export async function getStaticProps({params: {subdomain, paths}}) {
       props: data
     };
   } catch(err) {
-    console.log(err);
     captureException(err);
 
     return {
@@ -58,13 +63,13 @@ export async function getStaticProps({params: {subdomain, paths}}) {
   }
 }
 
-export default function PageWraper(props) { 
-  let UI = null;
-
-  if (props.type === 'main')
-    UI = <Home {...props}/>;/*
-  if (props.pathType === 'post')
-    UI = <Post {...props}/>;*/
-
-  return UI;
+export default function PageWraper(props) {
+  switch(props.type) {
+    case 'main':
+      return <Home {...props}/>;
+    case 'post':
+      return <Post {...props}/>;
+    default:
+      return <NotFound/>
+  }
 }

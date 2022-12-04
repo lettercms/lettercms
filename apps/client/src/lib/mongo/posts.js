@@ -1,19 +1,14 @@
 import connect from '@lettercms/utils/lib/connection';
 import posts from '@lettercms/models/posts';
 import blogs from '@lettercms/models/blogs';
-import {Users} from '@lettercms/models/users';
-import {findOne as findPost} from '@lettercms/utils/lib/findHelpers/posts';
-import {find as findRecommendations} from '@lettercms/utils/lib/findHelpers/recommendations';
+import {findOne as findPost, find as findAll} from '@lettercms/utils/lib/findHelpers/posts';
 
-import jwt from 'jsonwebtoken';
-import sdk from '@lettercms/sdk';
-
-export async function getPosts(subdomain, url, userID) {
+export async function getPost(subdomain, url, userID) {
   await connect();
 
-  const fields = 'subdomain,title,description,thumbnail,content,url,published,updated,tags,postStatus';
+  const fields = 'subdomain,title,description,thumbnail,content,url,published,updated,tags,postStatus,author.*';
 
-  const {url: urlID, mainUrl} = await blogs.findOne({subdomain}, 'mainUrl url', {lean: true});
+  const {url: urlID, mainUrl, tags, categories} = await blogs.findOne({subdomain}, 'mainUrl url tags categories', {lean: true});
 
   const post = await findPost(posts, {url, subdomain}, {
     fields,
@@ -21,14 +16,25 @@ export async function getPosts(subdomain, url, userID) {
     mainUrl
   });
 
+  const popular = await findAll(posts, {subdomain}, {
+    mainUrl,
+    urlID,
+    fields: 'subdomain,title,thumbnail,fullUrl',
+    limit: 3,
+    sort: 'views'
+  });
+
   if (post?.postStatus !== 'published')
     return {
       notFound: true
     };
 
-
   return JSON.parse(JSON.stringify({
-    posts,
-    blog
+    post,
+    popular: popular.data,
+    blog: {
+      tags,
+      categories
+    }
   }));
 }
