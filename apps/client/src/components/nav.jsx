@@ -53,7 +53,7 @@ export default function Nav() {
     <button onFocus={() => setViewMenu(true)} onBlur={() => setViewMenu(false)}>
       <Bars height='32' fill='#362e6f'/>
     </button>
-  </>
+  </>;
 
   return <nav className='relative'>
     <div className='absolute right-0 top-0 z-20 flex justify-between w-full py-4 px-2 lg:px-8 items-center'>
@@ -66,5 +66,5 @@ export default function Nav() {
       <div style={{opacity}} className='transition-all ease-in duration-300 bg-black absolute h-full w-full'/>
       <div style={{left}} className='transition-all ease-in duration-300 bg-white w-4/5 max-w-md h-full absolute top-0'/>
     </div>
-  </nav>
+  </nav>;
 }
