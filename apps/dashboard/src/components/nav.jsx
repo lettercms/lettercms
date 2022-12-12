@@ -22,10 +22,9 @@ export default function Nav () {
 
   const {status, data} = useSession();
 
-
   useEffect(() => {
     if (status === 'authenticated' && !profilePicture) {
-      let _sdk = new sdk.Letter(data.user.accessToken);
+      let _sdk = new sdk.Letter(data?.user.accessToken);
 
       _sdk.accounts.me([
         'photo'
@@ -38,7 +37,7 @@ export default function Nav () {
       setLoad(false);
     }
 
-  }, [status, router.pathname, data.user.accessToken, profilePicture]);
+  }, [status, router.pathname, data?.user.accessToken, profilePicture]);
   
   useEffect(() => {
     const handleScroll = () => {
