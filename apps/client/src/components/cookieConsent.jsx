@@ -4,5 +4,5 @@ export default function Consent() {
       <span>Consentimiento del uso de Cookies</span>
     </div>
     <p>Nuestro blog usa cookies para recolectar datos para mejorar su experiencia dentro del sitio.</p>
-  </div>
+  </div>;
 }

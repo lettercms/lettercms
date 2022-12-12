@@ -112,9 +112,6 @@ export default async function GetRecommended() {
       limit: 2
     });
 
-    console.log(fallBack);
-
-
     recommended = fallBack.data[0];
     similar = fallBack.data[1];
 

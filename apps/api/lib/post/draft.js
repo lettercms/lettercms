@@ -57,9 +57,8 @@ export default async function DraftPost() {
   //Revalidate Home path
   revalidate(subdomain, mainUrl);
 
-  updateTags(subdomain, tags, body.tags);
-  updateCategories(subdomain, category, body.category);
-
+  updateTags(subdomain, tags, req.body.tags);
+  updateCategories(subdomain, category, req.body.category);
 
   res.json({
     status: 'OK',

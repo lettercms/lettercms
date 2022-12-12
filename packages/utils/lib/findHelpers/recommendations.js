@@ -1,6 +1,6 @@
 import {find as baseFind, parseQuery} from '../findUtils';
 import {getFullUrl} from '../posts';
-import {find as findPosts, findOne as findPost} from './posts';
+import {find as findPosts} from './posts';
 
 export const find = async (model, filter, opts = {}) => {
   let hasUrl = false;
@@ -163,4 +163,4 @@ export const findSimilars = async (model, query) => {
   }
 
   return ordered;
-}
+};

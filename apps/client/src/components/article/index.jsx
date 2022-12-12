@@ -12,7 +12,7 @@ export default function Article({blog, popular, post, recommended}) {
     <NextSeo
       title={ogTitle}
       description={post.description}
-      canonical={``}
+      canonical={''}
       openGraph={{
         type: 'article',
         url: `/${post.url}`,

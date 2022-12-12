@@ -40,7 +40,7 @@ const initRouterEvents = setLoad => {
 
     setLoad(false);
   });
-}
+};
 
 const ClientContext = createContext();
 

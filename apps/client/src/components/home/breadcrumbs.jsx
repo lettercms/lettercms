@@ -11,5 +11,5 @@ export default function Breadcrumbs({title}) {
     </Link>
     <Angle height='20' className='mx-2' fill='#837bbf'/>
     <span className='font-bold text-main-700'>{title}</span>
-  </div>
+  </div>;
 }

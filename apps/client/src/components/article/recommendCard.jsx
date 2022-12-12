@@ -42,5 +42,5 @@ export default function RecommendCard({title, description, thumbnail, url, autho
       </div>
     </div>
     <ShareButtons show={showShare}/>
-  </div>
+  </div>;
 }

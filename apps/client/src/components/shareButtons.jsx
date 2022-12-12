@@ -30,5 +30,5 @@ export default function ShareButton({url, show}) {
     <button className='mx-2'>
       <Linkedin height='32'/>
     </button>
-  </div>
+  </div>;
 }
