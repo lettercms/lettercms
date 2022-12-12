@@ -1,6 +1,12 @@
 .content {
-  padding: 0 5%;
+  padding: 0 2.5%;
 }
 .content p {
   margin: 1rem 0;
+}
+.content a {
+  color: #5f4dee;
+}
+.content b {
+  color: #362e6f;
 }

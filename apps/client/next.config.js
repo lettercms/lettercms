@@ -5,7 +5,7 @@ const withTM = require("next-transpile-modules")([
   "@lettercms/ui",
   "@lettercms/models",
   "@lettercms/sdk",
-  '@lettercms/eslint-config'
+  "@lettercms/icons"
 ]);
 
 const isDev = process.env.NODE_ENV !== 'production';

@@ -10,9 +10,12 @@ async function Manifest(req, res) {
   const {title, description, customDomain} = await blogs.findOne({subdomain}, 'description title customDomain', {lean: true});
 
   res.json({
-    start_url: customDomain || `https://${subdomain}.lettercms.vercel.app`,
+    //start_url: customDomain || `https://${subdomain}.lettercms.vercel.app`,
+    start_url: '/',
     description,
-    icons: [{ src: '/touch-icon.png', sizes: '192x192', type: 'image/png' }],
+    icons: [
+      { src: '/touch-icon.png', sizes: '192x192', type: 'image/png' }
+    ],
     name: title,
     short_name: title,
     orientation: 'portrait',

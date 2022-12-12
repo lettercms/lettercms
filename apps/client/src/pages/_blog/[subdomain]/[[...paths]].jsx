@@ -36,8 +36,6 @@ export async function getStaticProps({params: {subdomain, paths}}) {
     const dataRes = await fetch(apiPath);
     const data = await dataRes.json();
 
-    console.log(data);
-
     if (data.type === 'no-blog')
       return {
         redirect: {
@@ -70,6 +68,6 @@ export default function PageWraper(props) {
     case 'post':
       return <Post {...props}/>;
     default:
-      return <NotFound/>
+      return <NotFound/>;
   }
 }

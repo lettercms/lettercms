@@ -14,9 +14,9 @@ export default function AsideCategories({categories}) {
               <span className='font-bold'>{name}</span>
               <span>{count}</span>
             </li>
-          </Fragment>
+          </Fragment>;
         })
       }
     </ul>
-  </div>
+  </div>;
 }

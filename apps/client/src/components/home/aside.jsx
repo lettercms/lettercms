@@ -14,7 +14,7 @@ export default function Aside({entries, tags, categories, author}) {
     return [
       capitalize,
       value
-    ]
+    ];
   }), [categories]);
 
   return <aside className='flex flex-col w-full lg:w-1/3 bg-slate-50 py-8 items-center rounded-lg h-fit'>
@@ -28,7 +28,7 @@ export default function Aside({entries, tags, categories, author}) {
       <>
         <hr className='w-3/4 my-8'/>
         <div className='w-full text-center mb-4'>
-          <span className='font-bold text-sm'>Entradas Populares</span>
+          <span className='font-bold text-sm text-main-700'>Entradas Populares</span>
         </div>
         {entries.map(e => <Card key={e._id} {...e}/>)}
       </>
@@ -44,7 +44,7 @@ export default function Aside({entries, tags, categories, author}) {
       _tags.length > 0 && <>
         <hr className='w-3/4 my-8'/>
         <div className='w-4/5 text-center'>
-          <span className='font-bold text-sm'>Etiquetas</span>
+          <span className='font-bold text-sm text-main-700'>Etiquetas</span>
           <ul className='flex mx-auto flex-wrap mt-4'>
             {
               _tags.map(([key, value]) => <li key={`tag-${key}`} className='m-1 p-2 text-left bg-main-500 text-white rounded-lg'>{key} ({value})</li>)

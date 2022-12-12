@@ -20,7 +20,7 @@ export default function middleware(req) {
     return NextResponse.rewrite(url);
   }
 
-  if (url.pathname.startsWith('/test') || url.pathname.startsWith('/_next') || url.pathname.startsWith('/api') || url.pathname.includes('.')) {
+  if (url.pathname.startsWith('/_next') || url.pathname.startsWith('/api') || url.pathname.includes('.')) {
 
    return NextResponse.next();
   }

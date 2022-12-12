@@ -3,7 +3,7 @@ import {getSearch} from '@/lib/mongo/search';
 import sdk from '@lettercms/sdk';
 import Router from 'next/router';
 //import Input from '@/components/input';
-import Card from '@/components/index/card';
+//import Card from '@/components/index/card';
 import Head from 'next/head';
 
 const Search = ({q, accessToken}) => {
@@ -66,10 +66,9 @@ const Search = ({q, accessToken}) => {
       {
         !hasPosts && !isLoading && q && <span>No se encrontraron entradas con el termino &quot;<b>{q}</b>&quot;</span> 
       }
-      {
+      {/*
         hasPosts && !isLoading &&
-        data.map(e =>  <Card key={`blog-index-${e.title}`} ID={e._id} content={e.description} {...e}/>)
-
+        data.map(e =>  <Card key={`blog-index-${e.title}`} ID={e._id} content={e.description} {...e}/>)*/
       }
       {
         isLoading &&

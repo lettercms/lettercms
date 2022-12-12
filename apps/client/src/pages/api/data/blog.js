@@ -6,7 +6,7 @@ export default async function getData(req, res) {
   if (req.method !== 'GET')
     return res.status(405);
 
-  const {subdomain, paths} = req.query;
+  const {paths, subdomain} = req.query;
 
   const pathType = await getPathType(subdomain, paths?.split(',') || []);
 
