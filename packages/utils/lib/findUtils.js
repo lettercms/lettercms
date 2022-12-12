@@ -18,9 +18,9 @@ const generateCursorPagination = async (model, filter, opts) => {
 
   const hasMore = data.length === options.limit;
 
-  if (hasMore) {
-    data.pop();
-      
+  data.pop();
+  
+  if (hasMore) {    
     const beforeCursor = data[data.length - 1]._id;
       
     paging.cursors.before = beforeCursor.toString();

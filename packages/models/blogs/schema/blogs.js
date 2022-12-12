@@ -62,7 +62,7 @@ const blog = new Schema({
   },
   mainUrl: {
     type: String,
-    default: '/'
+    default: ''
   },
   title: {
     type: String,

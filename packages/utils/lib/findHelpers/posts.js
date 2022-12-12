@@ -37,7 +37,6 @@ export const find = async (model, filter, opts = {}) => {
 
   const posts = await baseFind(model, filter, opts);
 
-  console.log(opts);
   posts.data = posts.data.map(e => {
     if (e.postStatus !== 'published')
       return e;
