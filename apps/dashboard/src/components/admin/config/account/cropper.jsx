@@ -81,7 +81,7 @@ export default function CropperModal({file, onChange}) {
     const uploader = new ImageUploader();
     canvas.toBlob(async file => {
       try {
-        const url = await uploader.upload(file, blog.subdomain, `${user._id}/profile`);
+        const {url} = await uploader.upload(file, blog.subdomain, `${user._id}/profile`);
         
         await sdk.accounts.update(user._id, {
           photo: url
