@@ -15,8 +15,8 @@ export default function Header({title, description, thumbnail, breadcrumbs}) {
       md:py-56'
     >
       <div className='flex flex-col items-center justify-center'>
-        <h1 className='text-center text-main-500 w-4/5 md:w-2/3 text-5xl'>{title}</h1>
-        <h2 className='text-center text-main-700 w-4/5 md:w-2/3 text-lg mt-2'>{description}</h2>
+        <h1 className='text-center text-main-500 px-1 w-full sm:px-0 sm:w-4/5 md:w-2/3 text-5xl'>{title}</h1>
+        <h2 className='text-center text-main-700 px-1 w-full sm:px-0 pt-2 sm:w-4/5 md:w-2/3 text-lg mt-2'>{description}</h2>
     </div>
     </div>
     {
