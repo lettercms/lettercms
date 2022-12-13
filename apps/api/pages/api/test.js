@@ -1,8 +1,17 @@
-import {Accounts} from '@lettercms/models/accounts';
+import countries from 'i18n-iso-countries';
 
-export default async function Test(req, res)  {
-  const r = await Accounts.deleteMany({role: 'collaborator'});
+export default async function SetView(req, res) {
 
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(r), null, 2);
-}
+  const {
+    headers
+  } = req;
+
+  const country = headers['x-vercel-ip-country'];
+
+  const countryName = country ? countries.getName(country, 'es') : 'Unknown';
+
+  res.json({
+    country,
+    countryName
+  });
+};
