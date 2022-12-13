@@ -33,7 +33,7 @@ export default function RecommendedCard({title, thumbnail, author, url}) {
             <h3 className='break-words text-lg font-bold text-center text-main-700'>{title}</h3>
             <hr className='w-2/3 my-2 border-main-100' />
             <div className='flex items-center mt-4'>
-              <img src={author.photo} className='w-8 h-8 rounded-full mr-2'/>
+              <img src={author.photo + '?w=35&h=35&q=25'} className='w-8 h-8 rounded-full mr-2'/>
               <h4 className='text-sm'>{author.name} {author.lastname}</h4>
             </div>
           </div>

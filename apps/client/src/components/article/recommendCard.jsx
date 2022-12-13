@@ -31,7 +31,7 @@ export default function RecommendCard({title, description, thumbnail, url, autho
         </div>
         <div className='flex items-center'>
           <span className='font-bold text-sm text-main-700'>{author.name} {author.lastname}</span>
-          <img src={author.photo} className='rounded-full h-12 ml-2'/>
+          <img src={author.photo + '?w=50&h=50&q=50'} className='rounded-full h-12 ml-2'/>
         </div>
       </div>
       <div className='flex items-center mt-4'>

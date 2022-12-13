@@ -25,7 +25,7 @@ export default function Aside({owner, mostViewed}) {
     <Base row={1}>
       <div id='user-container' className='flex flex-column'>
         <div>
-          <img width='160' height='160' id='user-picture' src={owner.photo} alt={`${owner.name} ${owner.lastname} profile picture - LetterCMS`} />
+          <img width='160' height='160' id='user-picture' src={owner.photo + '?w=160&h=160&q=50'} alt={`${owner.name} ${owner.lastname} profile picture - LetterCMS`} />
         </div>
         <div>
           <span className='user-name'>{owner.name} {owner.lastname}</span>

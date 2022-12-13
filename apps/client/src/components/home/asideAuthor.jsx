@@ -13,7 +13,7 @@ export default function Author({name, lastname, photo, ocupation, description, f
       flex-col
       items-center'
     >
-      <img src={photo} className='rounded-full w-40 h-40'/>
+      <img src={photo + '?w=165&h=165&q=50'} className='rounded-full w-40 h-40'/>
       <div className='mt-4 mb-2'>
         <span className='font-bold text-sm text-main-700'>{name} {lastname}</span>
       </div>

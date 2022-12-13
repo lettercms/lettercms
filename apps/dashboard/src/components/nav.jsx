@@ -116,7 +116,7 @@ export default function Nav () {
             !load && profilePicture &&
             <Link href='/dashboard'>
               <a>
-                <img className='picture' src={profilePicture} width={32} height={32} alt='Profile picture'/>
+                <img className='picture' src={profilePicture + '?w=38&h=38&q=25'} width={32} height={32} alt='Profile picture'/>
               </a>
             </Link>
           }

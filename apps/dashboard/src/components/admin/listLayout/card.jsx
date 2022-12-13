@@ -43,7 +43,7 @@ const Card = ({
         <span>{title ? title : postStatus ? '(Nueva Entrada)' : '(Nueva Pagina)'}</span>
         {
           author &&
-          <img src={`${author.photo}&w=36&q=50`} className={styles.authorPicture} alt=''/>
+          <img src={`${author.photo}?h=36&w=36&q=25`} className={styles.authorPicture} alt=''/>
         }
       </div>
       <div className={styles.tags}>

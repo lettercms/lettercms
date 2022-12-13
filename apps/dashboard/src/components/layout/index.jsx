@@ -115,7 +115,7 @@ export function DashboardProvider({userID, children, hideMenu}) {
         {
           isLoading
             ? <div className={asideImg} style={{background: '#ccd7ec'}}/>
-            : <img src={user.photo} className={asideImg} alt={`${user.name} ${user.lastname} profile picture`}/>
+            : <img src={user.photo + '?w=100&h=100&q=50'} className={asideImg} alt={`${user.name} ${user.lastname} profile picture`}/>
         }
         {
           isLoading

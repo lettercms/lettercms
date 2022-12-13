@@ -33,7 +33,7 @@ export default function EntryCard({title, thumbnail, description, author, tags, 
           <span className='ml-2'>{comments}</span>
         </div>
         <div className='flex flex-row-reverse items-end lg:px-4 lg:items-center'>
-          <div className='w-12 h-12 bg-cover bg-center rounded-full shrink-0' style={{backgroundImage: `url(${author.photo})`}}/>
+          <div className='w-12 h-12 bg-cover bg-center rounded-full shrink-0' style={{backgroundImage: `url(${author.photo}?w=50&h=50&q=30)`}}/>
           <h4 className='mx-2 text-sm'>{author.name} {author.lastname}</h4>
         </div>
       </div>
