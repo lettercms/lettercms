@@ -42,7 +42,6 @@ function generateKey() {
 export default async function SetView() {
   const {
     req: {
-      geo,
       subdomain,
       body: {
         url,
@@ -180,6 +179,8 @@ export default async function SetView() {
   await Stats.updateOne({subdomain}, {$inc: {totalViews: 1}});
 
   res.json({
-    status: 'OK'
+    status: 'OK',
+    country,
+    countryName
   });
 };
