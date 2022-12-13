@@ -22,11 +22,22 @@ export async function getBlog(subdomain, page = '1') {
   };
 
   const postsData = await findPosts(posts, {subdomain, postStatus: 'published'}, postsOptions);
+  
+  const popular = await findPosts(posts, {subdomain, postStatus: 'published'}, {
+    mainUrl: blog.mainUrl,
+    urlID: blog.url,
+    fields: 'subdomain,title,thumbnail,fullUrl,url',
+    limit: 3,
+    sort: 'views'
+  });
+
+  console.log(popular)
 
   return JSON.parse(JSON.stringify({
     posts: postsData.data,
     blog,
-    paging: postsData.paging
+    paging: postsData.paging,
+    popular: popular.data
   }));
 }
 

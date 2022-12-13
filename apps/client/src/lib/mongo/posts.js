@@ -17,7 +17,7 @@ export async function getPost(subdomain, url, userID) {
     mainUrl
   });
 
-  const popular = await findAll(posts, {subdomain}, {
+  const popular = await findAll(posts, {subdomain, postStatus: 'published', url: {$ne: url}}, {
     mainUrl,
     urlID,
     fields: 'subdomain,title,thumbnail,fullUrl,url',

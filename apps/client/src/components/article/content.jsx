@@ -12,9 +12,9 @@ export default function Content({html, published, tags}) {
       <div className='mb-4'>
         <span className='ml-2 text-sm font-bold text-main-700'>Etiquetas</span>
       </div>
-      <ul className='flex'>
+      <ul className='flex flex-wrap'>
         {
-          tags.map(e => <li key={e} className='bg-main-500 text-white px-2 py-1 rounded mx-2'>{e}</li>)
+          tags.map(e => <li key={e} className='bg-main-500 text-white px-2 py-1 rounded my-1 mx-2'>{e}</li>)
         }
       </ul>
     </div>

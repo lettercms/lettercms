@@ -21,7 +21,7 @@ export default function RecommendCard({title, description, thumbnail, url, autho
     <div>
       <ul className='flex flex-wrap my-2'>
         {
-          tags.map(key => <li key={url + key} className='px-2 py-1 mx-2 text-sm font-bold bg-main-500 rounded text-white'>{key}</li>)
+          tags.map(key => <li key={url + key} className='my-1 px-2 py-1 mx-2 text-sm font-bold bg-main-500 rounded text-white'>{key}</li>)
         }
       </ul>
       <div className='flex justify-between mt-2'>

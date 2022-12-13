@@ -29,10 +29,10 @@ const isDev = process.env.NODE_ENV !== 'production';
 export async function getServerSideProps({query: {subdomain, paths}}) {
   try {
     let apiPath =  `http${isDev ? '' : 's'}://${isDev ? 'localhost:3002' : `${subdomain}.lettercms.vercel.app`}/api/data/blog?subdomain=${subdomain}`;
-
     if (paths?.length > 0)
       apiPath += `&paths=${paths.join(',')}`;
 
+    console.log(apiPath)
     const dataRes = await fetch(apiPath);
     const data = await dataRes.json();
 
