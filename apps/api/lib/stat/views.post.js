@@ -180,7 +180,6 @@ export default async function SetView() {
 
   res.json({
     status: 'OK',
-    country,
-    countryName
+    headers
   });
 };
