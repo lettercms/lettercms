@@ -33,6 +33,7 @@ export default function Comments() {
       buttonText='Crear'
       ico={<Ico/>}
       topText='Comentarios'
+      disableTopButton={true}
     />
   </>;
 }

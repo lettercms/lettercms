@@ -142,6 +142,7 @@ function Layout(props) {
       topImg={props.topImg}
       topText={props.topText}
       ico={props.ico}
+      disableTopButton={props.disableTopButton}
     >
       <Filter
         active={status}

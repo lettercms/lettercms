@@ -10,19 +10,19 @@ const menu = [
     title: 'Entradas',
     icon: <Cross fill='#362e6f' height='12' width='32'/>,
     href: '/dashboard/posts',
-    sub: [
+    /*sub: [
       {
         label: 'Comentarios',
         href: '/dashboard/posts/comments'
       }
-    ]
-  },
+    ]*/
+  },/*
   {
     name: 'pages',
     title: 'Paginas',
         href: '/dashboard/pages',
     icon: <Cross fill='#362e6f' height='12' width='32'/>,
-  },
+  },*/
   {
     name: 'stats',
     title: 'Analiticas',

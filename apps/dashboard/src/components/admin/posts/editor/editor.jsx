@@ -1,12 +1,17 @@
 import {useState, useRef} from 'react';
 import {useData} from './index';
 import EditorLoad from './editorLoad';
-
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import BallonEditor from '@ckeditor/ckeditor5-build-balloon-block';
+import dynamic from 'next/dynamic';
 import plugin from './lib/plugin';
+import BallonEditor from '@ckeditor/ckeditor5-build-balloon-block';
 
-let editor = null;
+const CKEditor = dynamic(async () => {
+  const ck = await import('@ckeditor/ckeditor5-react');
+
+  return ck.CKEditor;
+}, {
+  ssr: false
+});
 
 export default function Editor({onOpenModal}) {
   const [loading, setLoading] = useState(true);

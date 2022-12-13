@@ -4,7 +4,8 @@ const withTM = require("next-transpile-modules")([
   "@lettercms/ui",
   "@lettercms/models",
   "@lettercms/utils",
-  "@lettercms/admin"
+  "@lettercms/admin",
+  "@lettercms/icons"
 ]);
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -64,9 +65,9 @@ const sentryWebpackPluginOptions = {
   silent: true
 }
 
-if (isDev)
+//if (isDev)
   module.exports = appConfig;
-else
+/*else
   module.exports = withSentryConfig({
     ...appConfig,
     sentry: {
@@ -74,3 +75,4 @@ else
       widenClientFileUpload: true
     },
   }, sentryWebpackPluginOptions);
+*/

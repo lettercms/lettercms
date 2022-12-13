@@ -22,6 +22,10 @@ const Editor = dynamic(() => import('./editor'), {
   ssr: false
 });
 
+/*const Thumbnails = dynamic(() => import (""), {
+  ssr: false
+});*/
+
 const promote = {};
 
 let changes = {};
@@ -172,15 +176,17 @@ export default function EditorContainer({post, blog, hasFacebook, hasInstagram})
         [key]: value
       }));
 
-      timer.current = setTimeout(() => {
-        update(data._id, {
-          clearTimeout: () => clearTimeout(timer.current),
-          setLoading: console.log
-        });
-      }, 5000);
+      if (data.postStatus !== 'published') {
+        timer.current = setTimeout(() => {
+          update(data._id, {
+            clearTimeout: () => clearTimeout(timer.current),
+            setLoading: console.log
+          });
+        }, 5000);
+      }
     },
     (key, value) => {
-      promote[ke] = value;
+      promote[key] = value;
     }
   ];
 

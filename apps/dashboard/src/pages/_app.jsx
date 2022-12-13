@@ -7,12 +7,13 @@ import toast, { Toaster } from 'react-hot-toast';
 import Load from '../components/loadBar';
 import {ClientProvider} from '@/lib/userContext'; 
 import '@/styles/global.scss';
-import '@/styles/global.css';
 
 //Dynamics
 const Nav = dynamic(() => import('../components/nav'));
 
 const initApp = setLoad => {
+  const html = document.getElementsByTagName('html')[0];
+
   Router.events.on('routeChangeStart', () => {
     html.style.scrollBehavior = '';
 
@@ -34,7 +35,6 @@ export default function App({Component, pageProps: { session, ...pageProps }}) {
   const router = Router.useRouter();
 
   useEffect(() => {
-    const html = document.getElementsByTagName('html')[0];
     window.alert = msg => toast(msg);
 
     Facebook.init();
