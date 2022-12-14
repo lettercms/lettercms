@@ -42,7 +42,7 @@ export default function Article({blog, popular, post, recommended}) {
         }
       }}
       facebook={{
-        appId: process.env.FB_APP_ID
+        appId: process.env.FACEBOOK_APP_ID
       }}
       additionalLinkTags={[
         {

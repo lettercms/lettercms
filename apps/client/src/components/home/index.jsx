@@ -20,7 +20,7 @@ export default function Home({blog, posts, popular}) {
         site_name: blog.title
       }}
       facebook={{
-        appId: process.env.FB_APP_ID
+        appId: process.env.FACEBOOK_APP_ID
       }}
       additionalLinkTags={[
         {
