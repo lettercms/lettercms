@@ -1,6 +1,9 @@
 import {createContext, useContext, useEffect, useState} from 'react';
 import sdk from '@lettercms/sdk';
 import Router from 'next/router';
+import Consent from '@/components/cookieConsent';
+import Cookie from 'js-cookie';
+
 
 //Sobreescribir el punto de acceso a la API, para usar la ultima version
 sdk.endpoint = process.env.NODE_ENV !== 'development' ? 'https://lettercms-api-development.vercel.app' : 'http://localhost:3009';
@@ -62,9 +65,18 @@ export function useToken() {
 export function ClientProvider({children}) {
   const [loading, setLoading] = useState(true);
   const [ready, setReady] = useState(false);
+  const [showConsent, setShowConsent] = useState(false);
+  const [consent, setConsent] = useState(null);
   const router = Router.useRouter();
   
   useEffect(() => {
+    const hasConsent = Cookie.get('__lettercms_cookie_consent');
+
+    if (!hasConsent) {
+      setShowConsent(true);
+    } else {
+      setConsent(hasConsent === 'true' ? true : false);
+    }
     //Obtiene el token de acceso al montar el componente, despues refresca el token cada 25min
     renovateToken()
       .then(() => setReady(true));
@@ -91,5 +103,14 @@ export function ClientProvider({children}) {
 
   const status = loading ? {status: 'loading'} : {status: 'done'};
 
-  return <ClientContext.Provider value={status}>{children}</ClientContext.Provider>;
+  return <ClientContext.Provider value={status}>
+    {children}
+    {
+      showConsent &&
+      <Consent setConsent={_consent => {
+        setConsent(_consent);
+        setShowConsent(false);
+      }}/>
+    }
+  </ClientContext.Provider>;
 }
