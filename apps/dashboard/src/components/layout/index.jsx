@@ -1,5 +1,6 @@
 import {useState, useEffect, createContext, useContext, memo} from 'react';
 import Router from 'next/router';
+import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import sdk from '@lettercms/sdk';
 import Cookie from 'js-cookie'; 
@@ -130,7 +131,11 @@ export function DashboardProvider({userID, children, hideMenu}) {
           }
         </ul>
         <div className={asideFooter}>
-           <img src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt='LetterCMS linear Logo' className={footerImg}/>
+          <Link href='/'>
+            <a>
+             <img src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt='LetterCMS linear Logo' className={footerImg}/> 
+            </a>
+          </Link>
         </div>
       </aside>
       <div className={content} style={{width: hideMenu ? '100%' : '85%', left: hideMenu ? 0 : '15%'}}>

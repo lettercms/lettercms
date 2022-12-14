@@ -46,7 +46,8 @@ export default async function SetView() {
       body: {
         url,
         referrer
-      }headers
+      },
+      headers
     },
     res
   }  = this;

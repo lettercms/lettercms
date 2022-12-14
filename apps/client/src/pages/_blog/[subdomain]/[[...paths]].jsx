@@ -28,7 +28,7 @@ const isDev = process.env.NODE_ENV !== 'production';
 
 export async function getServerSideProps({query: {subdomain, paths}}) {
   try {
-    let apiPath =  `${isDev ? `http://localhost:3002` : `https://${subdomain}.lettercms.vercel.app`}/api/data/blog?subdomain=${subdomain}`;
+    let apiPath =  `${isDev ? 'http://localhost:3002' : `https://${subdomain}.lettercms.vercel.app`}/api/data/blog?subdomain=${subdomain}`;
 
     if (paths?.length > 0)
       apiPath += `&paths=${paths.join(',')}`;
@@ -53,7 +53,7 @@ export async function getServerSideProps({query: {subdomain, paths}}) {
       props: data
     };
   } catch(err) {
-    console.log(err)
+    console.log(err);
     captureException(err);
 
     return {
