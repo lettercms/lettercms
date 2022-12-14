@@ -18,7 +18,7 @@ export default function Author({name, lastname, photo, ocupation, description, f
         <span className='font-bold text-sm text-main-700'>{name} {lastname}</span>
       </div>
       <div>
-        <span className='my-2 text-lg'>{ocupation}</span>
+        <span className='my-2 text-xl text-main-500'>{ocupation}</span>
       </div>
       <p className='mt-4 px-8 text-center'>{description}</p>
       <div className='flex margin-auto justify-between w-2/3 mt-8'>

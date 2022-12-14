@@ -49,6 +49,6 @@ export default function EntryCard({title, thumbnail, description, author, tags, 
         </button>
       </div>
     </div>
-    <ShareButtons show={showShare}/>
+    <ShareButtons show={showShare} title={title} url={url}/>
   </div>;
 }

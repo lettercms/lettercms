@@ -5,14 +5,17 @@ import Aside from './aside';
 import Entries from './entries';
 
 export default function Home({blog, posts, popular}) {
+  const url = `https://${blog.customDomain || `${blog.subdomain}.lettercms.vercel.app`}`;
+
   return <div>
     <NextSeo
       title={blog.title}
       description={blog.description}
-      canonical="https://www.canonical.ie/"
+      canonical={url}
       openGraph={{
-        url: 'https://www.url.ie/a',
+        type: 'article',
         title: blog.title,
+        url,
         description: blog.description,
         images: [
           { url: blog.thumbnail },

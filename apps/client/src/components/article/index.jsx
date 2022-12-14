@@ -7,15 +7,16 @@ import Card from './recommendCard';
 
 export default function Article({blog, popular, post, recommended}) {
   const ogTitle =  `${post.title} | ${blog.title}`;
+  const url = `https://${blog.customDomain || `${blog.subdomain}.lettercms.vercel.app`}/${post.url}`;
 
   return <div>
     <NextSeo
       title={ogTitle}
       description={post.description}
-      canonical={''}
+      canonical={url}
       openGraph={{
         type: 'article',
-        url: `/${post.url}`,
+        url,
         title: ogTitle,
         description: post.description,
         images: [
