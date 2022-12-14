@@ -3,8 +3,7 @@ import sdk from '@lettercms/sdk';
 import Router from 'next/router';
 
 //Sobreescribir el punto de acceso a la API, para usar la ultima version
-sdk.endpoint = 'https://lettercms-api-development.vercel.app';
-//sdk.endpoint = process.env.NODE_ENV !== 'development' ? 'https://lettercms-api-development.vercel.app' : 'http://localhost:3009';
+sdk.endpoint = process.env.NODE_ENV !== 'development' ? 'https://lettercms-api-development.vercel.app' : 'http://localhost:3009';
 
 /**
  * Funcion que obtiene el token de acceso publico de la API de LetterCMS
