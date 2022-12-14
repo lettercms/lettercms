@@ -46,8 +46,7 @@ export default async function SetView() {
       body: {
         url,
         referrer
-      },
-      headers
+      }headers
     },
     res
   }  = this;
@@ -179,7 +178,6 @@ export default async function SetView() {
   await Stats.updateOne({subdomain}, {$inc: {totalViews: 1}});
 
   res.json({
-    status: 'OK',
-    headers
+    status: 'OK'
   });
 };
