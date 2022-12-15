@@ -18,7 +18,7 @@ export default class FacebookSDK {
           appId: process.env.FACEBOOK_APP_ID,
           xfbml: true,
           autoLogAppEvents: false,
-          version: 'v8.0',
+          version: 'v13.0',
         });
         console.log('Init');
       };
