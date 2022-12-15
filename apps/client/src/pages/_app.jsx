@@ -55,24 +55,6 @@ const CustomApp = ({pageProps, Component}) => {
     </ClientProvider>
     <Footer/>
   </>;
-  
-  /*return <div>
-    <Head>
-    <Nav subdomain={router.query.subdomain} main={pageProps.mainUrl}/>
-      {
-        pageProps?.next
-        && <link rel="next" />
-      }
-      {
-        pageProps?.prev
-        && <link rel="prev" />
-      }
-    </Head>
-    {
-    }
-      showLoad
-      && <Load />
-  </div>;*/
 };
 
 export default CustomApp;

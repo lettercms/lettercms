@@ -1,13 +1,24 @@
 import { NextSeo } from 'next-seo';
 import Header from './header';
+import Head from 'next/head';
 import Recommended from './recommended';
 import Aside from './aside';
 import Entries from './entries';
 
-export default function Home({blog, posts, popular}) {
+export default function Home({blog, posts, popular, pagination}) {
   const url = `https://${blog.customDomain || `${blog.subdomain}.lettercms.vercel.app`}`;
 
   return <div>
+      <Head>
+      {
+        pagination.page < pagination.total
+        && <link rel="next" />
+      }
+      {
+        pagination.page > 1
+        && <link rel="prev" />
+      }
+    </Head>
     <NextSeo
       title={blog.title}
       description={blog.description}
@@ -39,7 +50,7 @@ export default function Home({blog, posts, popular}) {
     <Header title={blog.title} description={blog.description} thumbnail={blog.thumbnail}/>
     <Recommended posts={posts.slice(0, 3)}/>
     <div className='flex flex-col md:flex-row mt-24 px-8 pb-12'>
-      <Entries posts={posts}/>
+      <Entries posts={posts} actual={pagination.page} pages={pagination.total}/>
       <Aside entries={popular} tags={blog.tags} categories={blog.categories}/>
     </div>
   </div>;

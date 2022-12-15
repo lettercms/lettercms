@@ -7,7 +7,7 @@ export default async function getData(req, res) {
     return res.status(405);
   
   try {
-    const {paths, subdomain} = req.query;
+    const {paths, subdomain, page} = req.query;
 
     const pathType = await getPathType(subdomain, paths?.split(',') || []);
 
@@ -19,7 +19,7 @@ export default async function getData(req, res) {
     let props = null;
       
     if (pathType === 'main')
-      props = await getBlog(subdomain);
+      props = await getBlog(subdomain, page);
     if (pathType === 'post')
       props = await getPost(subdomain, paths);
     if (pathType === 'not-found')

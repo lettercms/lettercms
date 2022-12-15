@@ -26,9 +26,9 @@ const isDev = process.env.NODE_ENV !== 'production';
   };
 }*/
 
-export async function getServerSideProps({query: {subdomain, paths}}) {
+export async function getServerSideProps({query: {subdomain, paths, page = '1'}}) {
   try {
-    let apiPath =  `${isDev ? 'http://localhost:3002' : `https://${subdomain}.lettercms.vercel.app`}/api/data/blog?subdomain=${subdomain}`;
+    let apiPath =  `${isDev ? 'http://localhost:3002' : `https://${subdomain}.lettercms.vercel.app`}/api/data/blog?subdomain=${subdomain}&page=${page}`;
 
     if (paths?.length > 0)
       apiPath += `&paths=${paths.join(',')}`;
@@ -53,12 +53,9 @@ export async function getServerSideProps({query: {subdomain, paths}}) {
       props: data
     };
   } catch(err) {
-    console.log(err);
     captureException(err);
 
-    return {
-      notFound: true
-    };
+    throw err;
   }
 }
 

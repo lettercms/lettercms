@@ -31,10 +31,9 @@ export async function getBlog(subdomain, page = '1') {
     sort: 'views'
   });
 
-  console.log(popular);
-
   return JSON.parse(JSON.stringify({
     posts: postsData.data,
+    pagination: postsData.paging,
     blog,
     paging: postsData.paging,
     popular: popular.data

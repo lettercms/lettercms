@@ -68,9 +68,9 @@ export default function Nav() {
       <div style={{left}} className='transition-all ease-in duration-300 bg-white w-4/5 max-w-md h-full absolute top-0 flex flex-col'>
         <img className='h-20 mt-12 mb-8' src={`${process.env.ASSETS_BASE}/assets/lettercms-logo.svg`}/>
         <ul className='mx-12'>
-          <li className='text-center bg-slate-50 rounded-lg py-4 text-main-500 my-1 cursor-pointer hover:bg-main-500 hover:text-white transition-all duration-150 ease-in'>
+          <li className='text-center bg-slate-50 rounded-lg text-main-500 my-1 cursor-pointer hover:bg-main-500 hover:text-white transition-all duration-150 ease-in'>
             <Link href='/'>
-              <a>Inicio</a>
+              <a className='h-full w-full block py-4'>Inicio</a>
             </Link>
           </li>
         </ul>
