@@ -5,7 +5,7 @@ import {parse as cookieParser} from 'cookie';
 import Header from './header';
 import Breadcrumbs from './breadcrumbs';
 import Tags from './tags';
-import Comments from './comments';
+import Comments from './comments/index';
 import Subscription from './subscription';
 
 import Head from '@/components/headPost';
@@ -33,7 +33,7 @@ const BlogPost = ({isAdmin, isPreview, user, recommendation: {recommended, simil
       
       _sdk.stats.setView(url, referrer);
 
-      if (userID && userID !== 'undefined')
+      if (userID && userID !== 'undefined' && userID !== 'null' && userID !== 'no-user')
         _sdk.createRequest(`/user/${userID}/recommendation`, 'POST', {url});
     }
   }, [url, isAdmin, referrer, notFound, accessToken, isPreview]);

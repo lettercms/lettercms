@@ -5,7 +5,7 @@ import revalidate from '@lettercms/utils/lib/revalidate';
 import {getFullUrl} from '@lettercms/utils/lib/posts';
 import {isValidObjectId} from 'mongoose';
 
-export default async function() {
+export default async function PatchEmailHex() {
   const {
     req,
     res

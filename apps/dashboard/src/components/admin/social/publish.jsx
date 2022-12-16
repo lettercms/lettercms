@@ -8,6 +8,7 @@ import ModalBase from '../../modalBase';
 import ImageSelector from './imageSelector';
 import ImageList from './imagesList';
 import sdk from '@lettercms/sdk';
+import Button from '@/components/button';
 import 'react-datetime/css/react-datetime.css';
 import 'moment/locale/es';
 
@@ -72,7 +73,7 @@ const renderInput =  (isOpen, date, clearDate) => {
           position: relative;
           background: none;
           border: none;
-          padding: .8rem; 
+          padding: .5rem .8rem;
         }
         :global(#date-button path) {
           fill: white;
@@ -147,14 +148,20 @@ const Publish = ({accounts}) => {
     <div id='publish-main' className='middle flex flex-column'>
       <div>
         <div id='selections'>
-            <div className='selection'>
-              <input type='checkbox' name='checkFacebook' id='checkFacebook' checked={hasFacebook} onChange={() => setFb(!hasFacebook)}/>
-              <label className='option' htmlFor='checkFacebook'><img alt='' src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/facebook.svg'/><span>Facebook</span></label>
-            </div>
-            <div className='selection'>
-              <input type='checkbox' name='checkInstagram' id='checkInstagram' checked={hasInstagram} onChange={() => setIg(!hasInstagram)}/>
-              <label className='option' htmlFor='checkInstagram'><img alt='' src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/instagram.svg'/><span>Instagram</span></label>
-            </div>
+            {
+              accounts.facebook &&
+              <div className='selection'>
+                <input type='checkbox' name='checkFacebook' id='checkFacebook' checked={hasFacebook} onChange={() => setFb(!hasFacebook)}/>
+                <label className='option' htmlFor='checkFacebook'><img alt='' src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/facebook.svg'/><span>Facebook</span></label>
+              </div>
+            }
+            {
+              accounts.instagram && 
+              <div className='selection'>
+                <input type='checkbox' name='checkInstagram' id='checkInstagram' checked={hasInstagram} onChange={() => setIg(!hasInstagram)}/>
+                <label className='option' htmlFor='checkInstagram'><img alt='' src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/instagram.svg'/><span>Instagram</span></label>
+              </div>
+            }
           </div>
       </div>
       <div id='publish-buttons' className='bg-blue'>
@@ -162,24 +169,24 @@ const Publish = ({accounts}) => {
         <Input type='textarea' id='content' value={content} label='Contenido' onInput={({target: {value}}) => setContent(value)}/>
         <div className='flex flex-row' style={{justifyContent: 'space-between'}}>
           <div className='date-container'>
-            {//TODO: Finish Scheduler
-              /*<Datetime
+            {
+              <Datetime
                 onClose={() => setDateOpen(false)}
                 onOpen={() => setDateOpen(true)}
                 value={date}
                 locale="es"
                 onChange={e => setDate(e.toDate())}
                 renderInput={renderInput(isDateOpen, date, () => setDate(null))}
-              />*/
+              />
             }
           </div>
           <div className='flex flex-row' style={{width: 'auto'}}>
-            <button className='btn-outline-sm alter' onClick={() => publishPost({
+            <Button disabled={!content || !hasFacebook || !hasInstagram} type='outline' alt onClick={() => publishPost({
               message: content,
               schedule: date !== null && date,
               images,
               feeds: [hasFacebook && 'facebook', hasInstagram && 'instagram'].filter(e => e) 
-            }, clearData)}>{ !date ? 'Publicar' : 'Programar'}</button>
+            }, clearData)}>{ !date ? 'Publicar' : 'Programar'}</Button>
           </div>
         </div>
       </div>
@@ -192,7 +199,7 @@ const Publish = ({accounts}) => {
             <img alt='' src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/facebook.svg'/>
             <span>Facebook</span>
           </div>
-          <Facebook content={content} images={images}/>
+          <Facebook content={content} images={images} pageImage={accounts.facebook.picture} pageName={accounts.facebook.name}/>
         </>
       }
       {
@@ -202,7 +209,7 @@ const Publish = ({accounts}) => {
             <img alt='' src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/instagram.svg'/>
             <span>Instagram</span>
           </div>
-          <Instagram content={content} images={images}/>
+          <Instagram content={content} images={images} pageImage={accounts.instagram.picture} pageName={accounts.instagram.name}/>
         </>
       }
       {

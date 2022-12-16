@@ -4,7 +4,7 @@ import posts from '@lettercms/models/posts';
 import '@lettercms/models/users';
 import {find} from '@lettercms/utils/lib/findUtils';
 
-export default async function() {
+export default async function GetComment() {
   const {
     req: {
       subdomain,

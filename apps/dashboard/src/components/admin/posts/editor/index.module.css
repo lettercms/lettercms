@@ -1,0 +1,15 @@
+.configButtons button,
+.backButton {
+  background: none;
+  border: none;
+}
+.configButtons button svg,
+.backButton svg {
+  color: #333;
+}
+
+
+.configButtons {
+  display: flex;
+  flex-direction: row;
+}

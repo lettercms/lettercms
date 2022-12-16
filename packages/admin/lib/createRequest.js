@@ -1,5 +1,4 @@
 import toQuery from './toQuery';
-import {join} from 'path';
 import fetch from 'isomorphic-unfetch';
 
 export default async function createRequest(path, method, data) {

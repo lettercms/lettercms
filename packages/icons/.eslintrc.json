@@ -1,0 +1,4 @@
+{
+  "root": true,
+  "extends": ["@lettercms/eslint-config/react"]
+}

@@ -1,5 +1,5 @@
 const Header = ({title, thumbnail}) => {
-  return <header id="header" className="ex-header" style={{backgroundImage: `url(${thumbnail})`}}>
+  return <header id="header" className="ex-header" style={{backgroundImage: `url(${thumbnail}&w=1400&q=50)`}}>
     <div className="header-shadow" style={{backgroundColor: !thumbnail ? '' : '#000a'}}>
       <div className="container">
         <div className="row">

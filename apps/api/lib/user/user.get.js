@@ -1,7 +1,7 @@
 import {Users} from '@lettercms/models/users';
 import {findOne} from '@lettercms/utils/lib/findUtils';
 
-export default async function() {
+export default async function GetUser() {
   const {req, res} = this;
 
   const {id} = req.query;

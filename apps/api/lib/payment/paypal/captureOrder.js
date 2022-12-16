@@ -1,7 +1,7 @@
 import getAccessToken from './getAccessToken';
 import config from './config';
 
-export default async orderID => {
+export default async function CaptureOrder(orderID) {
   const accessToken = await getAccessToken();
 
   const res = await fetch(`https://api.${config.environment === 'sandbox' ? 'sandbox.' : ''}paypal.com/v2/checkout/orders/${orderID}/capture`, {

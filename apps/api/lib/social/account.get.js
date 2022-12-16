@@ -1,7 +1,7 @@
 import * as socialModel from '@lettercms/models/socials';
 import Base from '@lettercms/utils/lib/social/base';
 
-export default async function() {
+export default async function GetAccounts() {
   const {req, res} = this;
 
   const {include} = req.query;
@@ -21,6 +21,7 @@ export default async function() {
     const {token, pageId} = await socialModel.Facebook.findOne({
       subdomain
     }, 'token pageId');
+    console.log(token);
 
     const {cover, name, username, error} = await Base.api(`/${pageId}`, {
       access_token: token,

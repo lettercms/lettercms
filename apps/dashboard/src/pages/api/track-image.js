@@ -1,11 +1,15 @@
-import {withSentry} from '@sentry/nextjs';
 import { createApi } from 'unsplash-js';
 
 const api = createApi({
   accessKey: process.env.UNSPLASH_KEY
 });
 
-async function trackImage(req, res) {
+
+/**
+ * Send download notification to Unsplash when put an image on post
+ * See https://help.unsplash.com/api-guidelines/unsplash-api-guidelines 
+ */
+export default async function trackImage(req, res) {
 
   if (req.method !== 'GET')
     return res.status(405).send('Method not allowed');
@@ -16,5 +20,3 @@ async function trackImage(req, res) {
 
   res.json({});
 }
-
-export default withSentry(trackImage);

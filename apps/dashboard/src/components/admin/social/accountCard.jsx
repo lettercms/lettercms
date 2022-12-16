@@ -1,4 +1,4 @@
-const AccountCard = ({cover, name, username, picture, type, show}) => <li onClick={() => show(type)}>
+const AccountCard = ({cover, name, username, picture, type, show}) => <li>
   <div className='social-icon'>
     <div className='social-image-banner' style={cover ? {backgroundImage: `url(${cover})`} : {backgroundColor: '#000'}}>
       <img src={`https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/${type}-white.svg`} alt={` ${type} logo`}/>
@@ -21,7 +21,6 @@ const AccountCard = ({cover, name, username, picture, type, show}) => <li onClic
       border-radius: 10px;
       background: white;
       border: solid 1px rgba(0,0,0,.2);
-      cursor: pointer;
       overflow: hidden;
     }
     li .social-icon {

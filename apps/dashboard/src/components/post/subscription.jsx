@@ -3,6 +3,7 @@ import Modal from '../modalBase';
 import Input from '../input';
 import _sdk from '@lettercms/sdk';
 import Cookie from 'js-cookie';
+import Button from '@/components/button';
 
 const sdk = new _sdk.Letter(process.env.TRACK_TOKEN);
 
@@ -58,13 +59,13 @@ const Subscription = ({user, onSubscribe}) => {
       <br/>
       <span>Tenemos contenido de calidad esperando por ti</span>
     </div>
-    <button className='btn-outline-sm alter' onClick={() => setModal(true)}>Suscribirse</button>
+    <Button style={{width: '100%'}} type='outline' alt onClick={() => setModal(true)}>Suscribirse</Button>
     <Modal show={showModal} close={() => setModal(false)} width='auto' height='auto'>
       <form onSubmit={e => {e.preventDefault(); subscribe(user._id, data, cb);}}>
         <Input value={name} onInput={e => setName(e.target.value)} label='Nombre'/>
         <Input value={lastname} onInput={e => setLastname(e.target.value)} label='Apellido'/>
         <Input value={email} onInput={e => setEmail(e.target.value)} label='Email' type='email'/>
-        <button className='btn-outline-sm'>Suscribirse</button>
+        <Button style={{width: '100%'}} type='outline'>Suscribirse</Button>
       </form>
     </Modal>
     <style jsx>{`

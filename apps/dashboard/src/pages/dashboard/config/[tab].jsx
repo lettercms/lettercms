@@ -1,13 +1,14 @@
 import {useEffect, useState} from 'react';
 import Head from 'next/head';
 import {getSession} from 'next-auth/react';
-import {DashboardProvider} from '@/lib/dashboardContext';
+import {DashboardProvider} from '@/components/layout';
 import Config from '@/components/admin/config';
 
 const tabs = [
   'blog',
   'account',
-  'usage'
+  'usage',
+  'developers'
 ];
 
 export async function getServerSideProps({ req, res, query }) {

@@ -1,0 +1,76 @@
+.navBar {
+  padding: 0;
+}
+.menuAside {
+  position: fixed;
+  width: 15%;
+  display: inline-block;
+  height: 100%;
+  left: 0;
+  background: #f7f7f7;
+  color: #5f4dee;
+  z-index: 1000;
+}
+.asideHr {
+  width: 70%;
+  margin: auto;
+}
+.asideImg {
+  width: 6rem;
+  height: 6rem;
+  margin: 1rem auto;
+  display: block;
+  border-radius: 50%;
+}
+.content {
+  position: absolute;
+  width: 85%;
+  display: inline-flex;
+  height: 100%;
+  justify-content: center;
+  padding: 0;
+  left: 15%;
+}
+
+.asideFooter {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 1rem;
+}
+
+.footerImg {
+  width: 80%;
+  margin: auto;
+  display: block;
+}
+
+.accountName {
+  text-align: center;
+  width: 100%;
+  display: block;
+  color: var(--main-alt);
+  margin: 1rem auto 2rem;
+}
+
+
+.asideNameLoad {
+  width: 90%;
+  height: 1.2rem;
+  background: var(--load-main);
+  margin: auto;
+  border-radius: 5px;
+  margin: 1rem auto;
+}
+
+.dashboardSpinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: solid 2px var(--main);
+  border-radius: 50%;
+  border-bottom: none;
+  border-left: none;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}

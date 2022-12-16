@@ -1,7 +1,7 @@
 import blogs from '@lettercms/models/blogs';
 import {findOne} from '@lettercms/utils/lib/findUtils';
 
-export default async function() {
+export default async function GetBlog() {
   const {
     req: {
       subdomain,

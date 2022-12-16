@@ -39,10 +39,9 @@ function generateKey() {
   return `${year}-${month < 10 ? `0${month}` : month}-${date < 10 ? `0${date}` : date}`;
 }
 
-export default async function() {
+export default async function SetView() {
   const {
     req: {
-      geo,
       subdomain,
       body: {
         url,

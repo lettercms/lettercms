@@ -3,6 +3,7 @@ import Template from '../config/selectAccountTemplate';
 import ModalBase from '../../modalBase';
 import sdk from '@lettercms/sdk';
 import * as admin from '@lettercms/admin';
+import Button from '@/components/button';
 
 const updateAccounts = async (type, cb) => {
   try {
@@ -193,14 +194,22 @@ function NoAccount({onAddAccount, authError}) {
   useEffect(() => {
     if (authError)
       setTimeout(() => setModal(true), 500);
-  }, []);
+  }, [authError]);
 
   return <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '-75px', margin: 'auto'}}>
-    <img src={`${process.env.ASSETS_BASE}/public/assets/social.svg`} alt='social'/>
+    <img src={`${process.env.ASSETS_BASE}/assets/social.svg`} alt='social'/>
     <div>
-      <button className='btn-outline-lg' onClick={() => setModal(true)}>Añadir</button>
+      <Button type='outline' onClick={() => setModal(true)}>Agregar Red Social</Button>
     </div>
-    <ModalBase show={showModal} close={() => {setModal(false); setTimeout(() => setActive(1), 700);}} width='auto' height='auto'>
+    <ModalBase
+      show={showModal}
+      close={() => {
+        setModal(false);
+        setTimeout(() => setActive(1), 700);
+      }}
+      width='auto'
+      height='auto'
+    >
       {
         authError && <UpdateButtons className={className} onUpdate={onAddAccount}/>
       }

@@ -1,4 +1,4 @@
-export default {
+const usage = {
   posts: {
     versioning: {
       limit: 10, //versions
@@ -47,3 +47,5 @@ export default {
     }
   }
 };
+
+export default usage;

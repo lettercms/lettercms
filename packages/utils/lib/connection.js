@@ -9,31 +9,25 @@ const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/blog';
  */
 let cached = global.__mongoCache;
 
-if (!cached) {
+if (!cached)
   cached = global.__mongoCache = { conn: null, promise: null };
-}
+
 
 const opts = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
-  bufferCommands: false,
+  //bufferCommands: false,
   useCreateIndex: true
 };
 
 export default async function dbConnect() {
-  if (cached.conn) {
+  if (cached.conn)
     return cached.conn;
-  }
 
   if (!cached.promise)
     cached.promise = mongoose.connect(MONGO_URL, opts).then(m => m);
 
-  try {
-
-    cached.conn = await cached.promise;
-    return cached.conn;
-  } catch(err) {
-    throw err;
-  }
+  cached.conn = await cached.promise;
+  return cached.conn;
 }

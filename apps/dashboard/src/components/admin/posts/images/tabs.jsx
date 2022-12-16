@@ -1,17 +1,14 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 
 export default function Tabs({onChange}) {
   const [active, setActive] = useState('photos');
-
-  useEffect(() => {
-    onChange(active);
-  }, [active]);
 
   const changeTab = tab => {
     if (tab === active)
       return;
 
     setActive(tab);
+    onChange(tab);
   };
 
   return <div id='modal-tab'>

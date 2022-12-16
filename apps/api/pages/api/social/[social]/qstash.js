@@ -6,4 +6,6 @@ const handler = manageMethods({
   POST
 });
 
-export default verifySignature(handler);
+export default async function Schedule(req, res) {
+  return verifySignature(handler)(req, res);
+}

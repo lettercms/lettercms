@@ -4,7 +4,7 @@ import FacebookCard from './facebookCard';
 import InstagramCard from './instagramCard';
 import Load from '../../logoLoad';
 import SocialFeed from './createFeed';
-import asyncImport from '../../../lib/asyncImportScript';
+import asyncImport from '@/lib/asyncImportScript';
 
 const isDev = process.env.NODE_ENV !== 'production';
 

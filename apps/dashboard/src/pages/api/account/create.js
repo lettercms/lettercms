@@ -1,9 +1,8 @@
 import connect from '@lettercms/utils/lib/connection';
 import {Accounts, Codes} from '@lettercms/models/accounts';
 import sendMail from '@lettercms/utils/lib/sendMail';
-import {withSentry} from '@sentry/nextjs';
 
-async function create(req, res) {
+export default async function create(req, res) {
   if (req.method !== 'POST')
     return res.status(405).json({
       status: 'method-not-allowed'
@@ -41,7 +40,8 @@ async function create(req, res) {
 
     } catch(err) {
       return res.status(500).json({
-        message: 'Error al subscribir'
+        status: 'subscription-error',
+        message: 'Error on supscription'
       });
     }
   }
@@ -49,6 +49,7 @@ async function create(req, res) {
   //delete expired codes
   await Codes.deleteMany({expiresAt: {$lt: Date.now()}});
 
+  //Generate 4 digit verification code
   let code = '';
 
   for (let i = 0; i < 4; i++) {
@@ -68,7 +69,7 @@ async function create(req, res) {
     });
   } catch(err) {
     return res.status(500).json({
-      status: 'error',
+      status: 'email-error',
       message: 'Error Sending Email'
     });
   }
@@ -78,5 +79,3 @@ async function create(req, res) {
   });
 };
 
-
-export default withSentry(create);

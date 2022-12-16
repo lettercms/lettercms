@@ -1,23 +1,25 @@
+import Button from '@/components/button';
+
 const NoData = ({action, picture = `${process.env.ASSETS_BASE}/assets/posts.svg`, buttonText = 'Crear'}) => <div className="center">
-  <img src={picture} alt='Post icon' />
-  <button className='btn-outline-lg' onClick={action}>{buttonText}</button>
+  <div className='data-text'>
+    <span>Aún no tenemos nada por aqui</span>
+  </div>
+  <Button type='outline' onClick={action}>{buttonText}</Button>
   <style jsx>{`
+    .data-text {
+      padding: 5rem 0 7rem;
+    }
+    .data-text span {
+      font-size: 2rem;
+      color: var(--main-alt);
+    }
     .center {
       width: 100%;
-      margin-top: -100px !important;
       display: flex;
       flex-direction: column;
       align-items: center;
-      height: 100%;
       justify-content: space-evenly;
-    }
-    img {
-      margin: 50px 0 0 0;
-      width: 80% !important;
-      max-width: 600px;
-    }
-    button {
-      max-width: 300px;
+      padding-bottom: 2rem;
     }
   `}</style>
 </div>;

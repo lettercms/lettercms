@@ -5,9 +5,8 @@ import {Accounts} from '@lettercms/models/accounts';
 import blogs from '@lettercms/models/blogs';
 import posts from '@lettercms/models/posts';
 import usage from '@lettercms/models/usages';
-import { withSentry } from '@sentry/nextjs';
 
-async function createBlog(req, res) {
+export default async function createBlog(req, res) {
   if (req.method !== 'POST')
     return res.status(405).json({
       status: 'method-not-allowed'
@@ -45,8 +44,10 @@ async function createBlog(req, res) {
   //Link subdomain to account 
   await Accounts.updateOne({email: ownerEmail}, {subdomain});
 
-  //TODO: Create Example Page
-  //const pageID = await pages.create();
+  /**
+   * TODO: Create Example Page
+   * const pageID = await pages.create();
+   */
 
   //Publish post
   const {_id} = await posts.createPost(subdomain, {
@@ -67,5 +68,3 @@ async function createBlog(req, res) {
     status: 'OK'
   });
 };
-
-export default withSentry(createBlog);

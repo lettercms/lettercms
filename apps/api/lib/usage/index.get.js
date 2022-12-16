@@ -3,7 +3,7 @@ import {Instagram} from '@lettercms/models/socials';
 import constants from './constants';
 import Base from '@lettercms/utils/lib/social/base';
 
-export default async function() {
+export default async function GetUsage() {
   const {
     req: {
       subdomain

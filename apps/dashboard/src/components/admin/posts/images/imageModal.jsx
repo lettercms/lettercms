@@ -1,5 +1,6 @@
 import {useState, useEffect, useRef} from 'react';
 import Cross from '@/components/svg/cross';
+import Button from '@/components/button';
 
 export default function ImageModal({show, img, meta, onClose, onSelect}) {
   const [opacity, setOpacity] = useState(0);
@@ -21,11 +22,11 @@ export default function ImageModal({show, img, meta, onClose, onSelect}) {
   }, [show]);
 
   return <div id='image-shadow' style={{opacity, display}}>
-    <Cross fill='#fff' id='image-modal-cross' onClick={close}/>
+    <Cross width='32' fill='#fff' id='image-modal-cross' onClick={close}/>
     <div id='modal-image-container'>
-      <img className='lazy-img' src={img}/>
+      <img className='lazy-img' src={img} alt=''/>
     </div>
-    <button className='btn-solid-sm alter' onClick={() => onSelect(meta)}>Seleccionar</button>
+    <Button type='solid' alt onClick={() => onSelect(meta)}>Seleccionar</Button>
     <style jsx>{`
       :global(#image-modal-cross) {
         position: absolute;
@@ -44,6 +45,7 @@ export default function ImageModal({show, img, meta, onClose, onSelect}) {
         justify-content: center;
         align-items: center;
         background: #0005;
+        z-index: 3;
       }
       #modal-image-container {
         width: 80%;

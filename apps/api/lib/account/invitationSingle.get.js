@@ -1,7 +1,7 @@
 import {Invitations} from '@lettercms/models/accounts';
 import {findOne} from '@lettercms/utils/lib/findUtils';
 
-export default async function() {
+export default async function GetSingleInvitation() {
   const {
     req:{query},
     res

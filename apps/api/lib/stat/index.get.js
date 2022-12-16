@@ -32,6 +32,7 @@ const generateDates = (daysCount, dateEnd) => {
 
   for (let i = Math.floor(daysCount); i >= 0; i -= 1) {
       const time = new Date(dateEnd - ((i - 1)* 1000 * 60 * 60 * 24));
+
       const month = time.getMonth() + 1;
       const date = time.getDate();
 
@@ -40,6 +41,7 @@ const generateDates = (daysCount, dateEnd) => {
       dates.push(path);
     }
 
+    console.log(dateEnd);
     return dates;
 };
 
@@ -48,19 +50,19 @@ const generateRanges = (start, end) => {
 
   let parsedStart = +start;
 
-  if (typeof parsedStart !== 'number')
+  if (isNaN(parsedStart))
     parsedStart = start;
 
-  const dateStart = new Date(parsedStart  || dateEnd - (1000 * 60 * 60 * 24 * 30));
- 
+  const dateStart = parsedStart  ? parsedStart : dateEnd - (1000 * 60 * 60 * 24 * 30);
+
   return {
     dateEnd,
-    dateStart,
+    dateStart: new Date(dateStart),
     diff: (dateEnd - dateStart) / (1000 * 60 * 60 * 24)
   };
 };
 
-export default async function() {
+export default async function GetStats() {
   const {
     req: {
       query,
@@ -106,7 +108,7 @@ export default async function() {
   const hasSubscriptors =   fields.all || fields.subscriptors;
 
   if (start === 'historic')
-    start = (await Stats.findOne({subdomain}, 'creationDate', {lean: true})).creationDate;
+    start = (await stats.Stats.findOne({subdomain}, 'creationDate', {lean: true})).creationDate;
 
   const {dateEnd, dateStart, diff} = generateRanges(start, end);
 
@@ -135,15 +137,17 @@ export default async function() {
   }
 
   conditions.date = {
-    $gt: dateStart,
-    $lt: +dateEnd + (1000 * 60 * 60 * 24)
+    $gt: +dateStart,
+    $lt: +dateEnd
   };
 
   if (hasViews || hasDataViews) {
     const viewData = await stats.Views.find(conditions);
 
-    if (hasViews)
-      views = viewData.map(e => e.total).reduce((a, b) => a + b);
+    if (hasViews) {
+
+      views = viewData.length === 0 ? 0 : viewData.map(e => e.total).reduce((a, b) => a + b);
+    }
 
     if (hasDataViews) {
       data = {
@@ -157,7 +161,7 @@ export default async function() {
         referrers: {}
       };
 
-      const defaultDates = generateDates(diff, dateEnd);
+      const defaultDates = generateDates(diff, dateEnd -  (1000 * 60 * 60 * 24));
 
       const dataKeys = viewData.map(e => e.viewKey);
 

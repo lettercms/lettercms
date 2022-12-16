@@ -1,9 +1,8 @@
-import {withSentry} from '@sentry/nextjs';
 import cors from './cors';
 import connect from './connection';
 import jobs from '@lettercms/models/jobs';
 import blogs from '@lettercms/models/blogs';
-import usage from '@lettercms/models/usages';
+//import usage from '@lettercms/models/usages';
 import decodeToken from './decodeJwt';
 import bcrypt from 'bcrypt';
 
@@ -31,7 +30,7 @@ import bcrypt from 'bcrypt';
  *
  */
 export default function manageMethods(methods) {
-  const handler = async function(req, res) {
+  return async function handler(req, res) {
     try {
 
       //Added CORS Headers
@@ -55,6 +54,7 @@ export default function manageMethods(methods) {
       //Check API credentials
       if ((blogId && !blogSecret) || (!blogId && blogSecret))
         return res.status(400).json({
+          status: 'bad-request',
           message: 'Please Provide a valid client ID and client Secret'
         });
 
@@ -65,7 +65,7 @@ export default function manageMethods(methods) {
 
       //Has API Key
       if (blogId && blogSecret) {
-        const blog = await blogs.findOne({_id: blogId}, 'tokenHash subdomain', {lean: true});
+        const blog = await blogs.findOne({_id: blogId}, 'keys subdomain', {lean: true});
 
         if (!blog)
           return res.status(400).json({
@@ -73,12 +73,13 @@ export default function manageMethods(methods) {
             message: 'Invalid Client ID'
           });
 
-        const {tokenHash, subdomain} = blog;
+        const {keys, subdomain} = blog;
 
         req.subdomain = subdomain;
 
-        pass = await bcrypt.compare(blogSecret, tokenHash);
+        const checks = await Promise.all(keys.map(e => bcrypt.compare(blogSecret, e.hash)));
 
+        pass = checks.includes(true);
       }
       //Has Access Token
       else if (accessToken) {
@@ -142,17 +143,16 @@ export default function manageMethods(methods) {
           //Delete Job ID
           await jobs.deleteOne({jobId});
 
-          // Commented because usage will reset every month, this behaviour will change
+          // Commented because usage will reset every month, this behaviour can change
           // await usage.updateOne({subdomain}, {$inc: {socialSchedule: -1}});
         }
       }
     } catch(err) {
-      console.log(err);
       res.status(500).send({
         status: 'server-error'
       });
+
+      throw err;
     }
   };
-
-  return withSentry(handler);
 };

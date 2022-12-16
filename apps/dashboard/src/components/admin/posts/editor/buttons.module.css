@@ -1,0 +1,51 @@
+.buttons {
+  display: flex;
+  flex-direction: column;
+  right: 1rem;
+  transition: ease .6s;
+  position: fixed;
+  bottom: 1rem;
+}
+.buttons button {
+  width: 4.5rem;
+  height: 4.5rem;
+  margin: .5rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.4rem;
+  border-radius: 50%;
+}
+.buttons button:disabled {
+  background: #c4d8dc !important;
+  border-color: #c4d8dc !important;
+  cursor: default;
+}
+.buttons button:disabled path {
+  fill: #fff !important;
+}
+.buttons button {
+  transition: ease .3s;
+}
+
+.send {
+  background: #5f4dee;
+  border: 1px solid #5f4dee;
+}
+.send:hover {
+  background: #fff;
+}
+.send:hover path {
+  fill: #5f4dee;
+}
+
+.save {
+  background: #fff;
+  border: 1px solid #5f4dee;
+}
+.save:hover {
+  background: #5f4dee;
+}
+.save:hover path {
+  fill: #fff;
+}

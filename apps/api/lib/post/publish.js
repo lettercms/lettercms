@@ -7,8 +7,11 @@ import {Facebook} from '@lettercms/models/socials';
 import brain from '@/lib/brain';
 import FB from '@lettercms/utils/lib/social/Facebook';
 import revalidate from '@lettercms/utils/lib/revalidate';
+import updateTags from './updateTags';
+import updateCategories from './updateCategories';
+import checkCategory from './checkCategory';
 
-export default async function() {
+export default async function PublishPost() {
   const {req, res} = this;
 
   const {url} = req.query;
@@ -42,6 +45,17 @@ export default async function() {
       });
   }
 
+  if (body.category) {
+
+    const existsCategory = await checkCategory(subdomain, body.category);
+
+    if (!existsCategory)
+      return res.status(400).json({
+        status: 'bad-request',
+        message: 'Category does not exists'
+      });
+  }
+
   if (body.content)
     body.text = body.content.split('<').map(e => e.split('>')[1]).join('');
 
@@ -54,7 +68,7 @@ export default async function() {
     postStatus: 'published'
   };
 
-  const {tags, _id: postID, url: _url, description} = await posts.findOneAndUpdate(updateCondition, newData, {select: 'description _id tags url'});
+  const {tags, _id: postID, url: _url, description, category} = await posts.findOneAndUpdate(updateCondition, newData, {select: 'description _id tags url category'});
 
   if (body.promote?.facebook) {
     //Promote on Facebook
@@ -98,6 +112,9 @@ export default async function() {
         });
       });
   });
+
+  updateTags(subdomain, tags, body.tags || []);
+  updateCategories(subdomain, category, body.category);
 
   res.json({
     status: 'OK',

@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import Head from 'next/head';
 import sdk from '@lettercms/sdk';
 import {getSession} from 'next-auth/react';
-import {DashboardProvider} from '@/lib/dashboardContext';
+import {DashboardProvider} from '@/components/layout';
 import {getPostData} from '@/lib/mongo/postEdit';
 import Editor from '@/components/admin/posts/editor';
 
@@ -40,12 +40,12 @@ const PostEditor = ({data, user}) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Editor postData={data} accessToken={user.accessToken}/>
+      <Editor {...data} accessToken={user.accessToken}/>
     </>;
 };
 
 PostEditor.getLayout = function getLayout(page, user) {
-  return <DashboardProvider hideMenu={true} accessToken={user.accessToken} userID={user.id}>{page}</DashboardProvider>;
+  return <DashboardProvider accessToken={user.accessToken} userID={user.id}>{page}</DashboardProvider>;
 };
 
 export default PostEditor;

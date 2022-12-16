@@ -1,9 +1,8 @@
-import { withSentry } from '@sentry/nextjs';
 import connect from '@lettercms/utils/lib/connection';
-import * as socials from '@lettercms/models/socials';
+import {Facebook, Instagram} from '@lettercms/models/socials';
 import Base from '@lettercms/utils/lib/social/base';
 
-async function createSocial(req, res) {
+export default async function createSocial(req, res) {
   if (req.method !== 'POST')
     return res.status(405).json({
       status: 'method-not-allowed'
@@ -16,36 +15,36 @@ async function createSocial(req, res) {
   let account;
 
   if (type === 'instagram' || type === 'facebook') {
-    const longLive = await exchangeToken(accessToken);
+    const longLiveToken = await Base.exchangeToken(accessToken);
 
     if (type === 'facebook') {
       account = {
         subdomain,
         pageId: pageID,
-        token: longLive
+        token: longLiveToken
       };
 
-      await socials.Facebook.create(account);
+      await Facebook.create(account);
     }
 
     if (type === 'instagram') {
-      const {instagram_business_account} = await api(`/${pageID}`, {
-        access_token: longLive,
+      const {instagram_business_account} = await Base.api(`/${pageID}`, {
+        access_token: longLiveToken,
         fields: 'instagram_business_account'
       });
 
-      const {id: userId} = await api(`/${instagram_business_account.id}`, {
-        access_token: longLive
+      const {id: userId} = await Base.api(`/${instagram_business_account.id}`, {
+        access_token: longLiveToken
       });
 
       account = {
         userId,
         subdomain,
         pageId: pageID,
-        token: longLive
+        token: longLiveToken
       };
 
-      await socials.Instagram.create(account);
+      await Instagram.create(account);
     }
 
     res.json({
@@ -54,5 +53,3 @@ async function createSocial(req, res) {
     });
   }
 };
-
-export default withSentry(createSocial);

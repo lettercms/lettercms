@@ -1,0 +1,29 @@
+.content {
+  padding: 0 2.5%;
+}
+.content p {
+  margin: 1rem 0;
+}
+.content img {
+  border-radius: 0.5rem;
+}
+.content a {
+  color: #5f4dee;
+}
+.content b,
+.content strong {
+  color: #362e6f;
+}
+.content blockquote {
+  padding: 1rem 2rem;
+  font-style: italic;
+  border-radius: 0.5rem;
+}
+.content blockquote,
+.content blockquote span {
+  background: #f8fafc !important;
+}
+
+.lazy-img {
+  filter: blur(5px);
+}

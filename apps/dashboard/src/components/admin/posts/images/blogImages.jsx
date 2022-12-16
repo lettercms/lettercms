@@ -5,7 +5,7 @@ import NoImage from './blogNoImages';
 import sdk from '@lettercms/sdk';
 import Upload from '@/components/svg/upload';
 import createUploader from '@/lib/createUploader';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
 
 export default function BlogImages({onSelect, isHidden}) {
   const {blog} = useUser();
@@ -13,6 +13,7 @@ export default function BlogImages({onSelect, isHidden}) {
   const [isLoading, setLoadState] = useState(true);
 
   const upload = () => createUploader({
+    subdomain: blog.subdomain,
     onLoadStart() {
       setLoadState(true);
     },
@@ -51,7 +52,7 @@ export default function BlogImages({onSelect, isHidden}) {
 
   return <>
     {ui}
-    <button className='btn-outline-sm upload' onClick={upload}>
+    <button className='upload' onClick={upload}>
       <Upload style={{width: '1.25rem'}}/>
     </button>
     <style jsx>{`
@@ -63,6 +64,12 @@ export default function BlogImages({onSelect, isHidden}) {
         position: absolute;
         bottom: 2rem;
         right: 2rem;
+        background: #fff;
+        border: solid 1px #5f4dee;
+        transition: ease .3s;
+      }
+      button:hover {
+        background: #5f4dee;
       }
       :global(button.upload svg) {
         fill: #5f4dee !important;

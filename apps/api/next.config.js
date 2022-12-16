@@ -31,7 +31,8 @@ else
   module.exports = withSentryConfig({
     ...nextConfig,
     sentry: {
-      hideSourceMaps: true
+      hideSourceMaps: true,
+      widenClientFileUpload: true
     },
   }, sentryWebpackPluginOptions);
 

@@ -19,6 +19,10 @@ const paths = [
 
     name: 'usage',
     alias: 'Uso'
+  },
+  {
+    name: 'developers',
+    alias: 'Desarroladores'
   }
 ];
 

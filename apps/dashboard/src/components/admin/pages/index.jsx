@@ -1,6 +1,7 @@
 import {useRouter} from 'next/router';
 import sdk from '@lettercms/sdk';
 import Layout from '../listLayout';
+import PagesIco from '@/components/assets/adminPages';
 
 function Page() {
   const router = useRouter();
@@ -18,7 +19,6 @@ function Page() {
 
   return <div style={{ width: '90%' }}>
     <Layout
-      picture={`${process.env.ASSETS_BASE}/assets/pages.svg`}
       type='pages'
       fields={[
         'title',
@@ -35,6 +35,8 @@ function Page() {
       onEdit={id => router.push(`/dashboard/pages/edit/${id}`)}
       onCreate={newPage}
       buttonText='Crear'
+      ico={<PagesIco/>}
+      topText='Páginas'
     />
   </div>;
 }

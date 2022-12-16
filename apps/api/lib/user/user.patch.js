@@ -1,6 +1,6 @@
 import {Users} from '@lettercms/models/users';
 
-export default async function() {
+export default async function PatchUser() {
   const {req, res} = this;
 
   const {id} = req.query;

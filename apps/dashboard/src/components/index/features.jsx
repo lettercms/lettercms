@@ -1,25 +1,55 @@
-import {Component} from 'react';
-import Router from 'next/router';
-import Lightbox from './lightbox';
+import {useState} from 'react';
+import {useRouter} from 'next/router';
 import Image from 'next/image';
+import Button from '@/components/button';
 
-export default class Features extends Component {
-  state = {
-    active: 0,
-    tab: 0
+const features = [
+  {
+    title: 'Integra tus redes',
+    description: 'Promociona tus entradas sin demora a travez de los distintos canales. Tu te concentras en crear y nosotros promocionamos por ti',
+    img: `${process.env.ASSETS_BASE}/illustrations/5.svg`,
+    feats: [
+      'Promociona en tus redes sociales',
+      'Envia emails a tus suscriptores',
+      'Envia notificaciones a los dispositivos de tus lectores'
+
+    ]
+  },
+  {
+    title: 'Muestra el contenido correcto',
+    img: `${process.env.ASSETS_BASE}/illustrations/109.svg`,
+    description: 'Nuestros sistema de recomendacion te ayudara a ofrecerle el contenido correcto para cada persona',
+    feats: [
+      'Filtros de similares',
+      'Recomendaciones basada en gustos',
+      'Contenido 100% dinamico'
+    ]
+  },
+  {
+
+    title: 'Pensado para tus lectores',
+    img: `${process.env.ASSETS_BASE}/illustrations/125.svg`,
+    description: 'Nuestra plataforma esta optimizada para ofrecer la mejor experiencia de carga. Reducimos la espera para aumentar tus visitas',
+    feats: [
+      'Reduccion del peso de las imagenes',
+      'Carga asincrona',
+      'Creación de paginas en demanda'
+    ]
   }
-  register = () => Router.push('/signin');
-  changeTab = (e, i) => {
-    e.preventDefault();
+];
 
-    this.setState({
-      tab: i
-    });
-  }
-  render() {
-    const {active, tab} = this.state;
+const changeTab = (e, tab, cb) => {
+  e.preventDefault();
 
-    return <div id="features" className="tabs">
+  cb(tab);
+
+};
+
+export default function Features() {
+  const [tab, setTab] = useState(0);
+  const router = useRouter();
+
+  return <div id="features" className="tabs">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -32,113 +62,48 @@ export default class Features extends Component {
           <div className="col-lg-12">
             <ul className="nav nav-tabs" id="argoTabs" role="tablist">
               <li className="nav-item">
-                <a className={`nav-link${tab === 0 ? ' active' : ''}`} onClick={e => this.changeTab(e, 0)} id="nav-tab-1" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected={tab === 0 ? 'true' : 'false'}><i className="fas fa-list"></i>Promociona</a>
+                <a className={`nav-link${tab === 0 ? ' active' : ''}`} onClick={e => changeTab(e, 0, setTab)} id="nav-tab-1" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected={tab === 0 ? 'true' : 'false'}><i className="fas fa-list"></i>Promociona</a>
               </li>
               <li className="nav-item">
-                <a className={`nav-link${tab === 1 ? ' active' : ''}`} onClick={e => this.changeTab(e, 1)} id="nav-tab-2" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected={tab === 1 ? 'true' : 'false'}><i className="fas fa-envelope-open-text"></i>Deleita</a>
+                <a className={`nav-link${tab === 1 ? ' active' : ''}`} onClick={e => changeTab(e, 1, setTab)} id="nav-tab-2" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected={tab === 1 ? 'true' : 'false'}><i className="fas fa-envelope-open-text"></i>Deleita</a>
               </li>
               <li className="nav-item">
-                <a className={`nav-link${tab === 2 ? ' active' : ''}`} onClick={e => this.changeTab(e, 2)} id="nav-tab-3" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected={tab === 2 ? 'true' : 'false'}><i className="fas fa-chart-bar"></i>Fideliza</a>
+                <a className={`nav-link${tab === 2 ? ' active' : ''}`} onClick={e => changeTab(e, 2, setTab)} id="nav-tab-3" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected={tab === 2 ? 'true' : 'false'}><i className="fas fa-chart-bar"></i>Fideliza</a>
               </li>
             </ul>
             <div className="tab-content" id="argoTabsContent">
-              <div className={`tab-pane fade ${tab === 0 ? ' show active' : ''}`} id="tab-1" role="tabpanel" aria-labelledby="tab-1">
-                <div className="row">
-                  <div className="col-lg-6">
-                    <div className="image-container">
-                      <img className="img-fluid" src={`${process.env.ASSETS_BASE}/illustrations/5.svg`} alt="alternative"/>
+              {
+                features.map((e, i) => {
+                  return <div key={e.title} className={`tab-pane fade ${tab === i ? ' show active' : ''}`} id={`tab-${i}`} role="tabpanel" aria-labelledby={`tab-${i}`}>
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <div className="image-container">
+                        <img className="img-fluid" src={e.img} alt="alternative"/>
+                      </div> 
+                    </div>
+                      <div className="col-lg-6">
+                        <div className="text-container">
+                          <h3>{e.title}</h3>
+                          <p>{e.description}</p>
+                          <ul className="list-unstyled li-space-lg">
+                            {
+                              e.feats.map((f, fi) => <li key={`${e.title}-f-${fi}`} className="media">
+                                <i className="fas fa-square"></i>
+                                <div className="media-body">{f}</div>
+                              </li>)
+                            }
+                          </ul>
+                          <Button type='solid' onClick={() => router.push('/signin')}>REGISTRATE</Button>
+                        </div> 
+                      </div> 
                     </div> 
-                  </div> 
-                  <div className="col-lg-6">
-                    <div className="text-container">
-                      <h3>Integra tus redes</h3>
-                      <p>Promociona tus entradas sin demora a travez de los distintos canales. Tu te concentras en crear y nosotros promocionamos por ti</p>
-                      <ul className="list-unstyled li-space-lg">
-                        <li className="media">
-                          <i className="fas fa-square"></i>
-                          <div className="media-body">Promociona en tus redes sociales</div>
-                        </li>
-                        <li className="media">
-                          <i className="fas fa-square"></i>
-                          <div className="media-body">Envia emails a tus suscriptores</div>
-                        </li>
-                        <li className="media">
-                          <i className="fas fa-square"></i>
-                          <div className="media-body">Envia notificaciones a los dispositivos de tus lectores</div>
-                        </li>
-                      </ul>
-                      <a className="btn-solid-reg popup-with-move-anim" data-tab={1} onClick={this.register}>REGISTRATE</a>
-                    </div> 
-                  </div> 
-                </div> 
-              </div>
-              <div className={`tab-pane fade ${tab === 1 ? ' show active' : ''}`} id="tab-2" role="tabpanel" aria-labelledby="tab-2">
-                <div className="row">
-                  <div className="col-lg-6">
-                    <div className="image-container">
-                      <img className="img-fluid" src={`${process.env.ASSETS_BASE}/illustrations/109.svg`} alt="alternative"/>
-                    </div> 
-                  </div> 
-                  <div className="col-lg-6">
-                    <div className="text-container">
-                      <h3>Muestra el contenido correcto</h3>
-                      <p>Nuestros sistema de recomendacion te ayudara a ofrecerle el contenido correcto para cada persona</p>
-                      <ul className="list-unstyled li-space-lg">
-                        <li className="media">
-                          <i className="fas fa-square"></i>
-                          <div className="media-body">Filtros de similares</div>
-                        </li>
-                        <li className="media">
-                          <i className="fas fa-square"></i>
-                          <div className="media-body">Recomendaciones basada en gustos</div>
-                        </li>
-                        <li className="media">
-                          <i className="fas fa-square"></i>
-                          <div className="media-body">Contenido 100% dinamico</div>
-                        </li>
-                      </ul>
-                      <a className="btn-solid-reg popup-with-move-anim" data-tab={2} onClick={this.register}>REGISTRATE</a>
-                    </div> 
-                  </div> 
-                </div> 
-              </div>
-              <div className={`tab-pane fade ${tab === 2 ? ' show active' : ''}`} id="tab-3" role="tabpanel" aria-labelledby="tab-3">
-                <div className="row">
-                  <div className="col-lg-6">
-                    <div className="image-container">
-                      <img className="img-fluid" src={`${process.env.ASSETS_BASE}/illustrations/125.svg`} alt="alternative"/>
-                    </div> 
-                  </div> 
-                  <div className="col-lg-6">
-                    <div className="text-container">
-                      <h3>Pensado en tus lectores</h3>
-                      <p>Nuestra plataforma esta optimizada para ofrecer la mejor experiencia de carga. Reducimos la espera para aumentar tus visitas</p>
-                      <ul className="list-unstyled li-space-lg">
-                        <li className="media">
-                          <i className="fas fa-square"></i>
-                          <div className="media-body">Reduccion del peso de las imagenes</div>
-                        </li>
-                        <li className="media">
-                          <i className="fas fa-square"></i>
-                          <div className="media-body">Carga asincrona</div>
-                        </li>
-                        <li className="media">
-                          <i className="fas fa-square"></i>
-                          <div className="media-body">Creación de paginas en demanda</div>
-                        </li>
-                      </ul>
-                      <a className="btn-solid-reg popup-with-move-anim" data-tab={3} onClick={this.register}>REGISTRATE</a>
-                    </div> 
-                  </div> 
-                </div> 
-              </div> 
-            </div> 
+                  </div>;
+                })
+              }
+            </div>
           </div> 
         </div> 
       </div>
-      <Lightbox close={() => this.setState({
-        active: false
-      })} active={active}/>
       <style jsx>{`
         .tabs {
           padding-top: 8rem;
@@ -361,4 +326,3 @@ export default class Features extends Component {
       `}</style>
     </div>;
   }
-}

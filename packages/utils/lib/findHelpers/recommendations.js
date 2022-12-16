@@ -1,5 +1,6 @@
 import {find as baseFind, parseQuery} from '../findUtils';
 import {getFullUrl} from '../posts';
+import {find as findPosts} from './posts';
 
 export const find = async (model, filter, opts = {}) => {
   let hasUrl = false;
@@ -25,8 +26,6 @@ export const find = async (model, filter, opts = {}) => {
         splitted.push('post.category');
       if (!hasPublished)
         splitted.push('post.published');
-      if (!hasStatus)
-        splitted.push('post.postStatus');
     }
 
     opts.fields = splitted.join(',');
@@ -51,13 +50,11 @@ export const find = async (model, filter, opts = {}) => {
       delete post.category;
     if (!hasPublished)
       delete post.published;
-    if (!hasStatus)
-      delete post.postStatus;
 
     return post;
   });
 
-  return data;
+  return posts;
 };
 
 export const findOne = async (model, filter, query) => {
@@ -81,8 +78,6 @@ export const findOne = async (model, filter, query) => {
         splitted.push('category');
       if (!hasPublished)
         splitted.push('published');
-      if (!hasStatus)
-        splitted.push('postStatus');
     }
 
     query.fields = splitted.join(',');
@@ -100,8 +95,72 @@ export const findOne = async (model, filter, query) => {
     delete data.category;
   if (!hasPublished)
     delete data.published;
-  if (!hasStatus)
-    delete data.postStatus;
 
   return data;
+};
+
+
+export const findSimilars = async (model, query) => {
+  // Post: {subdomain, url}
+  const {post} = query;
+
+  const {tags, _id} = await model.findOne(post, 'tags', {lean: true});
+
+  const tagsMapped = tags.map(e => ({tags: {$in: e}}));
+
+  const similarOpts = {
+    subdomain: post.subdomain,
+    $nor:[{_id}],
+    postStatus: 'published',
+    ...(tagsMapped.length > 0 ? {$or: tagsMapped} : {})
+  };
+
+  if (query.fields) {
+    const splitted = query.fields.split(',');
+
+    if (!splitted.includes('tags'))
+      splitted.push('tags');
+
+    query.fields = splitted.join(',');
+  }
+
+  const similars = await findPosts(model, similarOpts, query);
+
+  //Order per Commons Similar tags
+  let ordered = similars.data.map(e => {
+    let matches = 0;
+
+    e.tags.forEach(t => {
+      if (tags.includes(t))
+        matches++;
+    });
+
+    e.matches = matches;
+
+    return e;
+  })
+  .sort((a,b) => a.matches > b.matches ? -1 : +1)
+  .map(e => {
+    delete e.matches;
+    return e;
+  });
+
+  //If do not has similar posts returns differ posts
+  if (ordered?.length < query.limit) {
+    let ids = ordered.map(e => ({_id: e._id}));
+
+    const rest = await findPosts(model, {
+      subdomain: post.subdomain,
+      postStatus: 'published',
+      $nor: [{_id}].concat(ids),
+    },
+    {
+      limit: query.limit - ordered.length,
+      ...query
+    });
+
+    ordered = ordered.concat(rest.data);
+  }
+
+  return ordered;
 };

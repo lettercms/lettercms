@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
 import sdk from '@lettercms/sdk';
 import CardLoad from './baseLoad';
 import dynamic from 'next/dynamic';
 
 const Load = () => {
-  return <div style={{display: 'flex', flexWrap: 'wrap'}}>
+  return <div style={{display: 'flex', flexWrap: 'wrap', width: '100%'}}>
     <CardLoad rows={2}/>
     <CardLoad rows={2}/>
     <CardLoad rows={3}/>
@@ -58,6 +58,8 @@ export default function Stats() {
   const [hasData, setHasData] = useState(false);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [isReload, setReload] = useState(false);
+
   const {status} = useUser();
 
   useEffect(() => {
@@ -73,39 +75,24 @@ export default function Stats() {
             setData(e); 
           }
         });
-
   }, [status]);
 
+
   const reload = start => {
-    setLoading(false);
+    window.setLoad(true);
     
     fetchData(start)
       .then(e => {
         setLoading(false); 
+        window.setLoad(false);
         setData(e); 
       });
   };
 
-  return <div>
-    {
-      loading &&
-      <Load/>
-    }
-    {
-      !loading && hasData &&
-      <Dashboard {...data} onChange={reload}/>
-    }
-    {
-      !loading && !hasData &&
-      <NoData/>
-    }
-    <style jsx>{`
-      :global(#content > div) {
-        width: 100%;
-      }
-      :global(#content > div > div) {
-        height: 100%;
-      }
-    `}</style>
-  </div>;
+
+  if (hasData)
+    return <Dashboard {...data} onChange={reload}/>;
+
+  else
+    return <NoData/>;
 }

@@ -10,8 +10,6 @@ export async function getPostData(_id, subdomain) {
 
   const post = await posts.findOne({_id, subdomain}, fields, {lean: true});
 
-  console.log(post);
-
   if (!post)
     return {
       notFound: true
@@ -23,7 +21,10 @@ export async function getPostData(_id, subdomain) {
 
   return JSON.parse(JSON.stringify({
     post,
-    blogs,
+    blog: {
+      tags: Object.keys(blog.tags),
+      categories: Object.keys(blog.categories),
+    },
     hasInstagram,
     hasFacebook
   }));

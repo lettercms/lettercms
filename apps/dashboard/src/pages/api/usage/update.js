@@ -1,9 +1,15 @@
-import { withSentry } from '@sentry/nextjs';
 import usage from '@lettercms/models/usages';
 import jwt from 'jsonwebtoken';
 import connect from '@lettercms/utils/lib/connection';
 
-async function patchUsage(req, res) {
+/**
+ * Update file size and upload usage
+ *
+ * This feature will not be implemented on public API,
+ * to avoid user directly manipulation 
+ *
+ */
+export default async function patchUsage(req, res) {
   const {authorization} = req.headers;
   
   let decoded;
@@ -51,5 +57,3 @@ async function patchUsage(req, res) {
     });
   }
 }
-
-export default withSentry(patchUsage);

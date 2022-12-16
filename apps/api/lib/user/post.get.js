@@ -5,7 +5,7 @@ import {Ratings} from '@lettercms/models/users';
 import {findOne as findRecommendation} from '@lettercms/utils/lib/findHelpers/recommendations';
 import {findOne as findPost, find as findPosts} from '@lettercms/utils/lib/findHelpers/posts';
 
-export default async function() {
+export default async function GetRecommended() {
   const {
     req,
     res
@@ -111,9 +111,6 @@ export default async function() {
       ...req.query,
       limit: 2
     });
-
-    console.log(fallBack);
-
 
     recommended = fallBack.data[0];
     similar = fallBack.data[1];

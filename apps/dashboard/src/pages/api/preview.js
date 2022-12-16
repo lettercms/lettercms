@@ -1,8 +1,7 @@
 import connect from '@lettercms/utils/lib/connection';
 import posts from '@lettercms/models/posts';
-import { withSentry } from '@sentry/nextjs';
 
-async function Preview(req, res) {
+export default async function Preview(req, res) {
   const {id} = req.query;
 
   if (!id) {
@@ -23,5 +22,3 @@ async function Preview(req, res) {
 
   res.redirect(`/blog/${req.query.id}`);
 }
-
-export default withSentry(Preview);

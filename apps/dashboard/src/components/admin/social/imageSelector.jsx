@@ -1,7 +1,9 @@
-import Input from '../../input';
+import Input from '@/components/input';
 import {useState, useEffect} from 'react';
-import asyncImport from '../../../lib/asyncImportScript';
+import asyncImport from '@/lib/asyncImportScript';
 import sdk from '@lettercms/sdk';
+import Button from '@/components/button';
+
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -157,7 +159,7 @@ const SelectRatio = ({onClick, onChange, image}) => <div id='aspect-main'>
 const UploadMethod = ({onClickUpload}) => <div>
   <Input id='url' onKeyUp={e => {onUrlPicture(e, onClickUpload);}} label='Enlace'/>
   <hr/>
-  <button onClick={onClickUpload} >Subir Imagen</button>{/*
+  <Button style={{width: '100%'}} type='solid' onClick={onClickUpload}>Subir Imagen</Button>{/*
     <hr/>
     <button>Seleccionar de la galeria</button>*/}
 </div>;
@@ -214,7 +216,7 @@ const ImageSelector = ({show, onAppend}) => {
     }
     {
       step !== 'upload' &&
-      <img id='cropper' style={{height: step === 'edit' ? 300 : null}}/>
+      <img id='cropper' style={{height: step === 'edit' ? 300 : null}} alt=''/>
     }
     {
       step === 'edit' &&
@@ -223,7 +225,7 @@ const ImageSelector = ({show, onAppend}) => {
     {
       step === 'upload' &&
       <>
-        <img src={croppedImg} style={{height: 300}}/>
+        <img src={croppedImg} style={{height: 300}} alt=''/>
         <button onClick={() => uploadImage(onAppend)}>Listo</button>
         <br/>
         <button onClick={() => cancelCrop(() => changeStep('edit'))}>Cancelar</button>

@@ -1,7 +1,7 @@
 import * as socials from '@lettercms/models/socials';
 import getEntry from './generateEntryChannel';
 
-export default async function() {
+export default async function Session() {
   const {req, res} = this;
 
   const {

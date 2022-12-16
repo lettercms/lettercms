@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import Head from 'next/head';
 import sdk from '@lettercms/sdk';
 import {getSession} from 'next-auth/react';
-import {DashboardProvider} from '@/lib/dashboardContext';
+import {DashboardProvider} from '@/components/layout';
 import Social from '@/components/admin/social';
 
 export async function getServerSideProps({ req, res, query}) {
@@ -15,7 +15,6 @@ export async function getServerSideProps({ req, res, query}) {
         destination: '/login'
       }
     };
-
 
   return {
     props: {

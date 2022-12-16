@@ -11,7 +11,7 @@ const parseTags = arr => {
   return tags;
 };
 
-export default async function() {
+export default async function TrainigRecommendation() {
   const {
     res,
     req: {

@@ -4,7 +4,7 @@ import General from '../stats/general';
 import sdk from '@lettercms/sdk';
 import Card from '../stats/statsSingleCard';
 import BaseLoad from '../stats/baseLoad';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
 
 export default function WelcomeDashboard() {
   const {status, user} = useUser();

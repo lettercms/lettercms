@@ -1,7 +1,7 @@
 import pagesModel from '@lettercms/models/pages';
 import {find} from '@lettercms/utils/lib/findHelpers/pages';
 
-export default async function() {
+export default async function GetPages() {
   const {req, res} = this;
 
   const {subdomain, path} = req;

@@ -1,6 +1,7 @@
 import {useRouter} from 'next/router';
 import sdk from '@lettercms/sdk';
 import Layout from '../listLayout';
+import Ico from '@/components/assets/adminPost';
 
 function Posts() {
   const router = useRouter();
@@ -11,7 +12,7 @@ function Posts() {
     router.push(`/dashboard/posts/edit/${id}`);
   };
 
-  return <div style={{ width: '90%' }}>
+  return <>
     <Layout
       type='posts'
       fields={[
@@ -22,9 +23,7 @@ function Posts() {
         'views',
         'url',
         'tags',
-        'images',
-        'authorEmail',
-        'author',
+        'author.photo',
         'isProtected',
         'subdomain'
       ]}
@@ -35,8 +34,10 @@ function Posts() {
       onEdit={id => router.push(`/dashboard/posts/edit/${id}`)}
       onCreate={newPost}
       buttonText='Crear'
+      ico={<Ico/>}
+      topText='Entradas'
     />
-  </div>;
+  </>;
 }
 
 export default Posts;

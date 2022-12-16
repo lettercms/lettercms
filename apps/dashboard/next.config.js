@@ -4,7 +4,8 @@ const withTM = require("next-transpile-modules")([
   "@lettercms/ui",
   "@lettercms/models",
   "@lettercms/utils",
-  "@lettercms/admin"
+  "@lettercms/admin",
+  "@lettercms/icons"
 ]);
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -25,7 +26,8 @@ const appConfig = withTM({
     FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID,
     LETTER_ACCESS_TOKEN: process.env.LETTER_ACCESS_TOKEN,
     SENTRY_DSN: process.env.SENTRY_DSN,
-    ASSETS_BASE: isDev ? 'http://localhost:3003' : 'https://cdn.jsdelivr.net/gh/lettercms/lettercms/apps/cdn'
+    ASSETS_BASE: isDev ? 'http://localhost:3003' : 'https://cdn.jsdelivr.net/gh/lettercms/lettercms/apps/cdn',
+    BRANCH: process.env.CIRCLE_BRANCH
   },
   images: {
     domains: [
@@ -63,12 +65,14 @@ const sentryWebpackPluginOptions = {
   silent: true
 }
 
-if (isDev)
+//if (isDev)
   module.exports = appConfig;
-else
+/*else
   module.exports = withSentryConfig({
     ...appConfig,
     sentry: {
-      hideSourceMaps: true
+      hideSourceMaps: true,
+      widenClientFileUpload: true
     },
   }, sentryWebpackPluginOptions);
+*/

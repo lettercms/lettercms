@@ -4,7 +4,7 @@ import connect from '@lettercms/utils/lib/connection';
 import pages from '@lettercms/models/pages';
 import Script from 'next/script';
 import sdk from '@lettercms/sdk';
-import {DashboardProvider, useUser} from '@/lib/dashboardContext';
+import {DashboardProvider, useUser} from '@/components/layout';
 import {getSession} from 'next-auth/react';
 import asyncImportScript from '@/lib/asyncImportScript';
 import Editor from '@/components/admin/pages/createEditor';
@@ -94,7 +94,7 @@ function PageEditor() {
       });
       delete window.grapesjs;
     };
-  }, [status]);
+  }, [status, pageID]);
   
   return <div style={{height: '100%'}}>
     <Head>

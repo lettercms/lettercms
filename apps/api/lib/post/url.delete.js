@@ -4,8 +4,9 @@ import {Ratings} from '@lettercms/models/users';
 import {isValidObjectId} from 'mongoose';
 import revalidate from '@lettercms/utils/lib/revalidate';
 import {getFullUrl} from '@lettercms/utils/lib/posts';
+import updateCategories from './updateCategories';
 
-export default async function() {
+export default async function DeletePost() {
   const {req, res} = this;
 
   const {url} = req.query;
@@ -28,6 +29,8 @@ export default async function() {
   await posts.deletePost(deleteCondition);
   await Ratings.deleteMany({subdomain, post});
   
+  updateCategories(subdomain, p.category, '');
+
   blogs.find({subdomain}, 'mainUrl url', {lean: true})
     .then(blog => {
       const _url = mainUrl + getFullUrl(p, blog.url);

@@ -1,25 +1,4 @@
 {
   "root": true,
-  "env": {
-    "es6": true,
-    "node": true
-  },
-  "plugins": [
-    "eslint:recommended",
-    "import"
-  ],
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaVersion": 2015
-  },
-  "rules": {
-    "semi": ["warn", "always"],
-    "quotes": ["warn", "single"],
-    "array-bracket-spacing": "error",
-    "arrow-spacing": "error",
-    "complexity": "off",
-    "curly": "off",
-    "no-buffer-constructor": "error",
-    "no-var": "error"
-  }
+  "extends": ["@lettercms/eslint-config/javascript"]
 }

@@ -1,7 +1,7 @@
 import * as socials from '@lettercms/models/socials';
 import {Facebook, Instagram} from '@lettercms/utils/lib/social';
 
-export default async function() {
+export default async function GetSocialAccount() {
   const {req, res} = this;
 
   const {subdomain} = req;

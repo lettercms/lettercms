@@ -1,5 +1,5 @@
 import {getPreviewPost} from '@/lib/mongo/posts';
-import Post from '@/components/post';
+import Post from '@/components/article';
 
 export async function getStaticProps({params: {subdomain, id}}) {
   const props = await getPreviewPost(id, subdomain);
@@ -15,4 +15,5 @@ export async function getStaticPaths() {
     fallback: true,
   };
 };
+
 export default Post;

@@ -2,14 +2,15 @@ import manageMethods from '@lettercms/utils/lib/manageMethods';
 import sendMail from '@lettercms/utils/lib/sendMail';
 import jwt from 'jsonwebtoken';
 
-const POST = async function() {
+async function POST() {
   const {req, res} = this;
   const {isAdmin} = req;
 
   const {data} = req.body;
 
   if (isAdmin) {
-    const {template, email, name, role} = data;
+    const {template, email, name} = data;
+    let {role} = data;
 
     if (template === 'verify') {
       role = 'admin';

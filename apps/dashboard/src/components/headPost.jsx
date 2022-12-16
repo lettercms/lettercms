@@ -4,7 +4,7 @@ const Head = props => {
 
   const ogImage = props.ogImage || 'https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/og.png';
 
-  return <BaseHead {...props} ogImage={ogImage}>
+  return <BaseHead {...props} url={`https://lettercms-dashboard-mail.vercel.app/blog/${props.url}`} ogImage={ogImage}>
     <meta name="author" content="LetterCMS"/>
     <meta property="og:type"  content="article"/>    
     <meta property='article:published_time' content={props.published}/>

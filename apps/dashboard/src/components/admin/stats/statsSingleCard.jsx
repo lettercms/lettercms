@@ -1,5 +1,8 @@
-import Image from 'next/image';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
+import Bubbles from '@/components/svg/bubbles';
+import Eye from '@/components/svg/eye';
+import Link from '@/components/svg/link';
+
 
 const Card = ({
   _id,
@@ -16,7 +19,7 @@ const Card = ({
   return <div className="post" key={`post-${_id}`}>
     {
       thumbnail
-      ? <div className="image" style={{ backgroundImage: `url(${thumbnail})` }} />
+      ? <div className="image" style={{ backgroundImage: `url(${thumbnail}&h=175&q=50)` }} />
       : <div className="image-title">{!title ? 'N' : title[0].toUpperCase()}</div>
     }
     <div className="data">
@@ -27,16 +30,16 @@ const Card = ({
           && <span className="tags">{tags.join(', ')}</span>
         }
         <div className="align">
-          <img src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/bubbles.svg" alt='bubbles' />
+          <Bubbles height='24'/>
           <span>{comments}</span>
         </div>
         <div className="align">
-          <img src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/eye.svg" alt='eye' />
+          <Eye height='24'/>
           <span>{views}</span>
         </div>
         <div className="buttons">
           <div className='card-icon' onClick={() => window.open(`https://${blog.domain}/${url}`, '_blank')}>
-            <Image src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/link.svg' layout='fill' alt='asset'/>
+            <Link height='24'/>
           </div>
         </div>
       </div>
@@ -83,8 +86,6 @@ const Card = ({
       }
       div.post .buttons .card-icon {
         margin: 0 10px;
-        height: 25px;
-        width: 25px;
         cursor: pointer;
       }
       div.post span {

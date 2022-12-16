@@ -1,34 +1,30 @@
 import { useState, useEffect } from 'react';
 import sdk from '@lettercms/sdk';
-import ImageUploader from '../../../lib/ImageHandler';
+import ImageUploader from '@/lib/ImageHandler';
 import BlogImages from './images/blogImages';
 import BlogSearch from './images/search';
 import ModalTabs from './images/tabs';
+import Cross from '@/components/svg/cross';
 
 const generateUnsplashSrc = (raw, width, height) => {
+  console.log(arguments);
   return {
-    'data-dimensions': `${width}x${height}`,
-    class: 'lettercms-image',
-    src: `${raw}&w=100`,
-    'data-src': `${raw}&w=1400`,
-    srcset:`${raw}&w=480 480w,
-      ${raw}&w=720 720w,
-      ${raw}&w=1024 1024w,
-      ${raw}&w=2048 1400w`
+    width,
+    class: 'image',
+    src: raw,
+    'data-src': raw,
+    srcset: `${raw}&w=480&q=40 480w, ${raw}&w=720&q=50 720w, ${raw}&w=1024&q=75 1024w, ${raw}&w=2048&q=75 1400w`
   };
 };
 
 const generateLetterSrc = (raw, width, height) => {
   return {
-    'data-dimensions': `${width}x${height}`,
-      class: 'lettercms-image',
-      src: `/_next/image?url=${raw}&q=50&w=100`,
-      'data-src': `/_next/image?url=${raw}&q=75&w=1400`,
-      srcset:`/_next/image?url=${raw}&q=75&w=480 480w,
-        /_next/image?url=${raw}&q=75&w=720 720w,
-        /_next/image?url=${raw}&q=7&w=1024 1024w,
-        /_next/image?url=${raw}&q=7&w=2048 1400w`
-    };
+    width,
+    class: 'image',
+    src: raw,
+    'data-src': raw,
+    srcset: `${raw}&w=480&q=40 480w, ${raw}&w=720&q=50 720w, ${raw}&w=1024&q=75 1024w, ${raw}&w=2048&q=75 1400w`
+  };
 };
 
 export default function ImagesModal({onClose, show}) {
@@ -36,7 +32,7 @@ export default function ImagesModal({onClose, show}) {
   const [opacity, setOpacity] = useState('0');
   const [tab, setTab] = useState('photos');
 
-  const close = () => {
+  function close() {
     setOpacity('0');
     setTimeout(() => {
       setDisplay('none');
@@ -55,7 +51,7 @@ export default function ImagesModal({onClose, show}) {
     });
   };
 
-  const appendImage = (raw, width, height) => {
+  const appendImage = ({raw, width, height}) => {
     const obj = generateLetterSrc(raw, width, height);
     window.editorEventEmitter.emit('insert', obj);
   };
@@ -65,14 +61,30 @@ export default function ImagesModal({onClose, show}) {
       setDisplay('block');
       setTimeout(() => setOpacity('1'), 0);
     } else {
-      close();
+      setOpacity('0');
+
+      setTimeout(() => {
+        setDisplay('none');
+        onClose();
+      }, 610);
     }
-  }, [show]);
+  }, [show, onClose]);
 
   return <div style={{ display, opacity, transition: 'ease .6s' }}>
     <div id="shadow">
       <div id="images-main">
-        <img id="cross" alt='Asset' src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/cross.svg" onClick={close} />
+        <Cross
+          id="cross"
+          width='20'
+          onClick={() => {
+            setOpacity('0');
+
+            setTimeout(() => {
+              setDisplay('none');
+              onClose();
+            }, 610);
+          }}
+        />
         <div id="images-container">
           <ModalTabs onChange={setTab}/>
           <div id='wrapper'>
@@ -99,6 +111,7 @@ export default function ImagesModal({onClose, show}) {
         background: rgba(0,0,0,.6);
         top: 0;
         left: 0;
+        z-index: 100000;
       }
       #shadow #images-main {
         position: absolute;
@@ -121,7 +134,6 @@ export default function ImagesModal({onClose, show}) {
         position: absolute;
         right: 30px;
         top: 20px;
-        width: 20px;
         cursor: pointer;
       }
       #shadow #images-main button {

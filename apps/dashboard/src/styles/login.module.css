@@ -1,0 +1,12 @@
+.form {
+  width: 100%;
+}
+.cta {
+  width: 90%;
+  max-width: 400px;
+  margin: auto;
+}
+.cta span,
+.cta a {
+  color: white;
+}

@@ -1,6 +1,6 @@
 import pages from '@lettercms/models/pages';
 
-export default async function() {
+export default async function PostGrapesJS() {
   const {req: {body, query}, res} = this;
   const {_id} = query;
   const {html, css} = body;

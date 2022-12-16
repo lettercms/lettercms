@@ -1,0 +1,45 @@
+.option {
+  cursor: pointer;
+  padding: .5rem;
+  transition: ease .3s;
+  font-size: .8rem;
+  font-weight: bold;
+  position: relative;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  color: var(--main);
+}
+.option:hover {
+  background: #fff;
+}
+
+.subTab {
+  border: solid 1px #0001;
+  width: 200px;
+  position: absolute;
+  top: 0;
+  left: 105%;
+  background: #f7f7f7;
+  border-radius: 5px;
+  width: max-content;
+  transition: ease .3s;
+}
+.subTab li {
+  text-align: center;
+  padding: .5rem 2rem;
+}
+.subTab hr {
+  width: 100%;
+  margin: 0;
+}
+.subHr {
+  width: 80%;
+  margin: 0 auto;
+}
+.subHeader {
+  background: #e1e4e5;
+  color: var(--main);
+  font-weight: bold;
+}

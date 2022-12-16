@@ -1,7 +1,7 @@
 import * as accounts from '@lettercms/models/accounts';
 import usage from '@lettercms/models/usages';
 
-export default async function() {
+export default async function PostCollabs() {
   const {
     req: {
       body,

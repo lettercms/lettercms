@@ -9,9 +9,9 @@ const Input = ({className, id, status, value = '', type = 'text', label, ...opts
     customClassName = className;
 
   if (status === 'invalid')
-    customClassName += ' button-invalid';
+    customClassName += ' input-invalid';
   else if (status === 'valid')
-    customClassName += ' button-valid';
+    customClassName += ' input-valid';
 
   const options = {
     className: customClassName || undefined,
@@ -36,11 +36,11 @@ const Input = ({className, id, status, value = '', type = 'text', label, ...opts
       textarea:disabled {
         background-color: #f5f5f5 !important;
       }
-      .button-invalid {
+      .input-invalid {
         border-color: red !important;
       }
-      .button-valid {
-        border-color: green !important;
+      .input-valid {
+        border-color: #5dbc5d !important;
       }
     `}</style>
   </div>;

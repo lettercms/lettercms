@@ -2,7 +2,7 @@ import pages from '@lettercms/models/pages';
 import {isValidObjectId} from 'mongoose';
 import {findOne} from '@lettercms/utils/lib/findUtils';
 
-export default async function() {
+export default async function GetPage() {
   const {req: {
     subdomain,
     query

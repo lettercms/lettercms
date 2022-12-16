@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import Head from 'next/head';
 import sdk from '@lettercms/sdk';
 import {getSession} from 'next-auth/react';
-import {DashboardProvider} from '@/lib/dashboardContext';
+import {DashboardProvider} from '@/components/layout';
 import Email from '@/components/admin/email';
 
 export async function getServerSideProps({ req, res, query}) {

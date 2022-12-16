@@ -1,6 +1,7 @@
 import posts from '@lettercms/models/posts';
+import updateTags from './updateTags';
 
-export default async function() {
+export default async function createPost() {
   const {
     req: {
       body,
@@ -10,6 +11,7 @@ export default async function() {
     res
   } = this;
   const id = await posts.createPost(subdomain, {author: account, ...body});
+  updateTags([], body.tags);
 
   res.json({
     status: 'OK',

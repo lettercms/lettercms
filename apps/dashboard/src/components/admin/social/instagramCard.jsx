@@ -1,10 +1,10 @@
-﻿const Instagram = ({content, images}) => <div className='card'>
+﻿const Instagram = ({content, images, pageName, pageImage}) => <div className='card'>
   <header>
     <div>
-      <img alt='Asset' src='https://scontent-mia3-2.cdninstagram.com/v/t51.2885-19/s150x150/67573707_1143606909361030_8411976612114857984_n.jpg?_nc_ht=scontent-mia3-2.cdninstagram.com&_nc_ohc=utSSJWPBWRQAX8abZ5K&oh=b38d5978e2a1d0084e6410d5b14cd488&oe=5F67768D'/>
+      <img alt='Asset' src={pageImage}/>
     </div>
     <div>
-      <span className='bold'>davidsdevel</span>
+      <span className='bold'>{pageName}</span>
       <div>
         <svg aria-label="Más opciones" className="_8-yf5 " fill="#262626" height="16" viewBox="0 0 48 48" width="16">
           <circle clipRule="evenodd" cx="8" cy="24" fillRule="evenodd" r="4.5"></circle>
@@ -16,7 +16,7 @@
   </header>
   <div className='ig-content'>
     {
-      images.map((e, i) => <img key={`ig-image-${i}`} src={e}/>)
+      images.map((e, i) => <img key={`ig-image-${i}`} src={e} alt=''/>)
     }
   </div>
   <div id='footer'>

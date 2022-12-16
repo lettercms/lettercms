@@ -2,6 +2,7 @@ import { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import Share from './shareCard';
+import Bubbles from '@/components/svg/bubbles';
 
 class Card extends Component {
   state = {
@@ -56,13 +57,14 @@ class Card extends Component {
       <div className="blog-card">
         <Link href={`/blog/${url}`}>
           <a>
-            { !!thumbnail
-              ? <div className="card-header-image" style={{ backgroundImage: `url(${thumbnail})` }} />
-            : (
-              <div className="card-header-title">
+            <img width='1' height='1' src='/pixel.png' style={{position: 'absolute'}} alt={title}/>
+            {
+              !!thumbnail
+              ? <div className="card-header-image" style={{ backgroundImage: `url(${thumbnail}&w=500&q=50)` }} />
+              : <div className="card-header-title">
                 <h3>{size === 'big'  ? title[0].toUpperCase() : title}</h3>
               </div>
-              )}
+            }
           </a>
         </Link>
         <div className="data-cont">
@@ -76,7 +78,7 @@ class Card extends Component {
             <div/>
             <div>
               <span>{comments}</span>
-              <img src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/bubbles.svg" className="comment-icon" />
+              <Bubbles height='18'/>
             </div>
           </div>
           <div>
@@ -104,7 +106,7 @@ class Card extends Component {
         .comment-container img.download-icon {
           cursor: pointer;
         }
-        .comment-container div .comment-icon {
+        :global(.comment-container div svg) {
           margin: 0 10px;
         }
         .blog-card {

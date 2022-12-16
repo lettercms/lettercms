@@ -4,12 +4,19 @@ import imageCompression from 'browser-image-compression';
 
 
 export default class ImageHandler {
-  getSize(subdomain, name) {
+  async getSize(subdomain, name) {
     const storage = getStorage();
     // Child references can also take paths delimited by '/'
-    const imgRef = ref(storage, `${subdomain}/${name}.webp`);
+    try {
+      const imgRef = ref(storage, `${subdomain}/${name}.webp`);
 
-    return getMetadata(imgRef);
+      const meta = await getMetadata(imgRef);
+
+      return meta;
+  } catch(err) {
+    return null;
+  }
+
   }
   async upload(file, subdomain, name) {
     try {
@@ -28,7 +35,7 @@ export default class ImageHandler {
       //Get metadata for overwriten file if exists
       const fileMetadata = await this.getSize(subdomain, fileName);
 
-      const {metadata: {size}} = await this._upload(path, file);
+      const {metadata: {size, width, height}} = await this._upload(path, file);
 
       let finalSize = size;
 
@@ -47,7 +54,11 @@ export default class ImageHandler {
       });
 
       //TODO: add proxy URL
-      return `https://storage.googleapis.com/${process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET}/${subdomain}/${fileName}.webp`;
+      return {
+        width,
+        height,
+        url: `https://usercontent-davidsdevel-lettercms.vercel.app/${subdomain}/${fileName}.webp`
+      };
     } catch(err) {
       return Promise.reject(err);      
     }

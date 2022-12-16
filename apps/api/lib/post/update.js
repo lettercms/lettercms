@@ -4,8 +4,11 @@ import blogs from '@lettercms/models/blogs';
 import {isValidObjectId} from 'mongoose';
 import revalidate from '@lettercms/utils/lib/revalidate';
 import {getFullUrl} from '@lettercms/utils/lib/posts';
+import updateTags from './updateTags';
+import updateCategories from './updateCategories';
+import checkCategory from './checkCategory';
 
-export default async function() {
+export default async function UpdatePost() {
   const {req, res} = this;
 
   const {url} = req.query;
@@ -40,6 +43,16 @@ export default async function() {
       });
   }
 
+  if (body.category) {
+    const existsCategory = await checkCategory(subdomain, req.body.category);
+
+    if (!existsCategory)
+      return res.status(400).json({
+        status: 'bad-request',
+        message: 'Category does not exists'
+      });
+  }
+
   if (body.content)
     body.text = body.content.split('<').map(e => e.split('>')[1]).join('');
 
@@ -50,15 +63,19 @@ export default async function() {
     updated: date
   };
 
-  const updatedPost = await posts.findOneAndUpdate(updateCondition, newData, {select: 'url postStatus category published'});
+  const updatedPost = await posts.findOneAndUpdate(updateCondition, newData, {select: 'url postStatus category published tags'});
 
   if (updatedPost.postStatus === 'published') {
     blogs.findOne({subdomain}, 'mainUrl url', {lean: true})
       .then(({mainUrl, url: urlID}) => {
         const url = mainUrl + getFullUrl(updatedPost, urlID);
+
         revalidate(subdomain, url);
       });
   }
+
+  updateTags(subdomain, updatedPost.tags, body.tags);
+  updateCategories(subdomain, updatedPost.category, body.category);
 
   res.json({
     status: 'OK',

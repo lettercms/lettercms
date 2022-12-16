@@ -1,0 +1,23 @@
+.load {
+  padding-bottom: 2rem; 
+  border-radius: 10px;
+}
+.load div {
+  background: var(--load-main);
+  border-radius: 5px;
+  height: 1.5rem;
+  width: 90%;
+  margin: .5rem auto;
+}
+
+.title {
+  width: 50% !important;
+  margin: 3rem 0 2rem 5% !important;
+}
+
+.top {
+  width: 400px !important;
+  height: 300px !important;
+  margin: 5rem 5% 2rem !important;
+  border-radius: 5px !important;
+}

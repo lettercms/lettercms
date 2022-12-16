@@ -1,12 +1,43 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import {useRouter} from 'next/router';
 import {useState, useEffect, useRef} from 'react';
+import {useSession} from 'next-auth/react';
 import Search from '@/components/svg/search';
 import Github from '@/components/svg/github';
+import Button from '@/components/button';
+import Times from '@/components/svg/times';
+import Bars from '@/components/svg/bars';
+import MobileNav from './mobileNav';
+import sdk from '@lettercms/sdk';
 
 export default function Nav () {
   const prevScrollY = useRef(0);
   const [isOpen, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [load, setLoad] = useState(true);
+
+  const router = useRouter();
+
+  const {status, data} = useSession();
+
+  useEffect(() => {
+    if (status === 'authenticated' && !profilePicture && data.user) {
+      let _sdk = new sdk.Letter(data.user.accessToken);
+
+      _sdk.accounts.me([
+        'photo'
+      ])
+      .then(({photo}) => {
+        setProfilePicture(photo);
+        setLoad(false);
+      });
+    } else {
+      setLoad(false);
+    }
+
+  }, [status, router.pathname, data?.user, profilePicture]);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -31,19 +62,22 @@ export default function Nav () {
       <Link href='/'>
         <a className="navbar-brand logo-image">
           <div id='logo-container'>
-            <Image layout='fill' objectFit='contain' src={`${process.env.ASSETS_BASE}/images/lettercms-logo-white-standalone.png`} alt="LetterCMS Logo White"/>          
+            <img src={`${process.env.ASSETS_BASE}/assets/lettercms-logo-white.svg`} alt="LetterCMS Logo White"/>
           </div>
         </a> 
       </Link>
-      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-awesome fas fa-bars"/>
-        <span className="navbar-toggler-awesome fas fa-times"/>
+      <button onClick={() => setMobileOpen(!mobileOpen)} className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-label="Toggle navigation">
+        {
+          mobileOpen
+            ? <Times height='28' fill='white'/>
+            : <Bars height='28' fill='white'/>
+        }
       </button>
-      <div className="collapse navbar-collapse" id="navbarsExampleDefault">
+      <div className='collapse navbar-collapse' id="navbarsExampleDefault">
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <Link href='/'>
-              <a className="nav-link page-scroll">HOME<span className="sr-only">(current)</span></a>
+              <a className="nav-link page-scroll">HOME</a>
             </Link>
           </li>
           <li className="nav-item">
@@ -51,45 +85,11 @@ export default function Nav () {
               <a className="nav-link page-scroll">BLOG</a>
             </Link>
           </li>
-          {/*
-
-          <li className="nav-item dropdown">
-            <a className="nav-link dropdown-toggle page-scroll" href="#video" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">VIDEO</a>
-            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <Link href="/blog">
-                <a className="dropdown-item">
-                  <span className="item-text">BLOG</span>
-                </a>
-              </Link>
-              <div className="dropdown-items-divide-hr"></div>
-              <Link href="/terminos">
-                <a className="dropdown-item">
-                  <span className="item-text">TERMS CONDITIONS</span>
-                </a>
-              </Link>
-              <div className="dropdown-items-divide-hr"></div>
-              <Link href="/privacidad">
-                <a className="dropdown-item">
-                  <span className="item-text">PRIVACY POLICY</span>
-                </a>
-              </Link>
-            </div>
-          </li>
-          <li className="nav-item">
-            <Link href='/pricing'>
-              <a className="nav-link page-scroll">PRECIOS</a>
-            </Link>
-          </li>
-          */}
         </ul>
-        <span className="nav-item">
-          <Link href='/login'>
-            <a className="btn-outline-sm">LOGIN</a>
-          </Link>
-        </span>
         <span className="nav-item">
           <Link href='/blog/search'>
             <a className="nav-link page-scroll">
+              <img width='1' height='1' src='/pixel.png' alt='LetterCMS Search'/>
               <Search width='28' height='28'/>
             </a>
           </Link>
@@ -97,19 +97,42 @@ export default function Nav () {
         <span className="nav-item">
           <Link href='https://github.com/lettercms/lettercms'>
             <a className="nav-link page-scroll" target='_blank'>
+              <img width='1' height='1' src='/pixel.png' alt='LetterCMS Github'/>
               <Github width='32' height='32'/>
             </a>
           </Link>
         </span>
+        <span className="nav-item">
+          {
+            load &&
+            <div className='img-load picture'/>
+          }
+          {
+            !load && !profilePicture &&
+            <Button type='outline' alt onClick={() => router.push('/login')}>Iniciar Sesión</Button>
+          }
+
+          {
+            !load && profilePicture &&
+            <Link href='/dashboard'>
+              <a>
+                <img className='picture' src={profilePicture + '?w=38&h=38&q=25'} width={32} height={32} alt='Profile picture'/>
+              </a>
+            </Link>
+          }
+        </span>
       </div>
     </div>
+    <MobileNav open={mobileOpen}/>
     <style jsx>{`
-      #logo-container {
-        width: 8rem;
-        height: 70%;
-        position: absolute;
-        top: 15%;
-        left: 1.75rem;
+      .img-load {
+        background: var(--load-main);
+        animation: bounce .6s ease infinite;
+      }
+      .picture {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
       }
       .navbar-custom {
       background-color: #5f4dee;
@@ -123,8 +146,7 @@ export default function Nav () {
       }
 
       .navbar-custom .navbar-brand.logo-image img {
-      width: 4.4375rem;
-      height: 1.75rem;
+        width: 4.4375rem;
       }
 
       .navbar-custom .navbar-brand.logo-text {
@@ -139,67 +161,12 @@ export default function Nav () {
       }
 
       .navbar-custom .nav-item .nav-link {
-      padding: 0.625rem 0.75rem 0.625rem 0.75rem;
-      color: #f7f5f5;
-      opacity: 0.8;
-      text-decoration: none;
-      transition: all 0.2s ease;
+        padding: 0.625rem 0.75rem 0.625rem 0.75rem;
+        color: #fff;
+        text-decoration: none;
+        transition: all 0.2s ease;
       }
 
-      .navbar-custom .nav-item .nav-link:hover,
-      .navbar-custom .nav-item .nav-link.active {
-      color: #fff;
-      opacity: 1;
-      }
-
-      .navbar-custom .dropdown:hover > .dropdown-menu {
-      display: block;
-      min-width: auto;
-      animation: fadeDropdown 0.2s;
-      }
-
-      @keyframes fadeDropdown {
-      0% {
-        opacity: 0;
-      }
-
-      100% {
-        opacity: 1;
-      }
-      }
-
-      .navbar-custom .dropdown-toggle:focus {
-      outline: 0;
-      }
-
-      .navbar-custom .dropdown-menu {
-      margin-top: 0;
-      border: none;
-      border-radius: 0.25rem;
-      background-color: #5f4dee;
-      }
-
-      .navbar-custom .dropdown-item {
-      color: #f7f5f5;
-      opacity: 0.8;
-      font: 700 0.875rem/0.875rem "Open Sans", sans-serif;
-      text-decoration: none;
-      }
-
-      .navbar-custom .dropdown-item:hover {
-      background-color: #5f4dee;
-      color: #fff;
-      opacity: 1;
-      }
-
-      .navbar-custom .dropdown-items-divide-hr {
-      width: 100%;
-      height: 1px;
-      margin: 0.75rem auto 0.725rem auto;
-      border: none;
-      background-color: #c4d8dc;
-      opacity: 0.2;
-      }
 
       .navbar-custom .nav-item .btn-outline-sm {
       margin-top: 0.25rem;
@@ -221,26 +188,10 @@ export default function Nav () {
       font-size: 2rem;
       }
 
-      .navbar-custom button[aria-expanded='false'] .navbar-toggler-awesome.fas.fa-times{
-      display: none;
-      }
-
-      .navbar-custom button[aria-expanded='false'] .navbar-toggler-awesome.fas.fa-bars{
-      display: inline-block;
-      }
-
-      .navbar-custom button[aria-expanded='true'] .navbar-toggler-awesome.fas.fa-bars{
-      display: none;
-      }
-
-      .navbar-custom button[aria-expanded='true'] .navbar-toggler-awesome.fas.fa-times{
-      display: inline-block;
-      margin-right: 0.125rem;
-      }
-
       @media (min-width: 992px) {
         #logo-container {
-          width: 11rem;
+          width: 8rem;
+          height: 70%;
         }
       .navbar-custom {
         padding: 2.125rem 1.5rem 2.125rem 2rem;
@@ -271,27 +222,6 @@ export default function Nav () {
       .navbar-custom.top-nav-collapse .nav-item .nav-link:hover,
       .navbar-custom.top-nav-collapse .nav-item .nav-link.active {
         color: #fff;
-      }
-
-      .navbar-custom .dropdown-menu {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        border-top: 0.25rem solid rgba(0, 0, 0, 0);
-        border-radius: 0.25rem;
-      }
-
-      .navbar-custom.top-nav-collapse .dropdown-menu {
-        border-top: 0.25rem solid rgba(0, 0, 0, 0);
-        box-shadow: 0 0.375rem 0.375rem 0 rgba(0, 0, 0, 0.02);
-      }
-
-      .navbar-custom .dropdown-item {
-        padding-top: 0.25rem;
-        padding-bottom: 0.25rem;
-      }
-
-      .navbar-custom .dropdown-items-divide-hr {
-        width: 84%;
       }
 
       .navbar-custom .nav-item .btn-outline-sm {

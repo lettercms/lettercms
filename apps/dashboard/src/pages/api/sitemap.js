@@ -2,9 +2,8 @@ import connect from '@lettercms/utils/lib/connection';
 import posts from '@lettercms/models/posts';
 import blogs from '@lettercms/models/blogs';
 import {find} from '@lettercms/utils/lib/findHelpers/posts';
-import { withSentry } from '@sentry/nextjs';
 
-async function sitemap(req, res) {
+export default async function sitemap(req, res) {
     try {
       await connect();
 
@@ -61,5 +60,3 @@ async function sitemap(req, res) {
       res.status(500).send(err);
     }
   }
-
-export default withSentry(sitemap);

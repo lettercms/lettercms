@@ -3,7 +3,7 @@ import {Accounts, Invitations} from '@lettercms/models/accounts';
 import sendMail from '@lettercms/utils/lib/sendMail';
 import jwt from 'jsonwebtoken';
 
-export default async function() {
+export default async function PostInvitations() {
   const {
     req: {subdomain, body, account},
     res
@@ -32,7 +32,7 @@ export default async function() {
     });
 
   const blog = await blogs.findOne({subdomain}, 'title', {lean: true});
-  const {name, lastname}  = Accounts.findOne({_id: account}, 'name lastname', {lean: true});
+  const {name, lastname} = await Accounts.findOne({_id: account}, 'name lastname', {lean: true});
 
   const {_id} = await Invitations.create({
     ...body,

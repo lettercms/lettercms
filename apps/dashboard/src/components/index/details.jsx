@@ -1,26 +1,29 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import Button from '@/components/button';
+import {useRouter} from 'next/router';
 
-const Details = () => <div id="details" className="basic-1">
+export default function Details() {
+  const router = useRouter();
+
+  return <div id="details" className="basic-1">
     <div className="container">
       <div className="row">
         <div className="col-lg-6">
           <div className="text-container">
             <h2>Es tiempo de mejorar la creacion de tu contenido</h2>
-            <p>Nuestra meta es que crezcas y entregues tu contenido de la mejor manera posible. Con la yuda de LetterCMS no tendras que añadir plugins o integrar herramientas externas, todo lo ofrecemos en un mismo lugar</p>
+            <p>Nuestra meta es que crezcas y entregues tu contenido de la mejor manera posible. Con la ayuda de LetterCMS no tendras que añadir plugins o integrar herramientas externas, todo lo ofrecemos en un mismo lugar</p>
             <ul className="list-unstyled li-space-lg">
               <li className="media">
                 <i className="fas fa-square"></i>
-                <div className="media-body">Atrae nuevos lectoresy ofreceles calidad</div>
+                <div className="media-body">Atrae nuevos lectores y ofreceles calidad</div>
               </li>
               <li className="media">
                 <i className="fas fa-square"></i>
                 <div className="media-body">Colabora y crea de manera mas eficiente</div>
               </li>
             </ul>
-            <Link href='/signin'>
-              <a className="btn-solid-reg page-scroll">REGISTRARSE</a>
-            </Link>
+            <Button type='solid' onClick={() => router.push('/signin')}>REGISTRARSE</Button>
           </div>
         </div>
         <div className="col-lg-6">
@@ -33,7 +36,7 @@ const Details = () => <div id="details" className="basic-1">
     <style jsx>{`
       .basic-1 {
         padding-top: 7.5rem;
-        padding-bottom: 8rem;
+        padding-bottom: 4rem;
       }
 
       .basic-1 .text-container {
@@ -81,5 +84,4 @@ const Details = () => <div id="details" className="basic-1">
       }
     `}</style>
   </div>;
-
-export default Details;
+}

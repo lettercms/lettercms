@@ -21,7 +21,7 @@ request|click|deferred|delivered|soft_bounce|hard_bounce|complaint|unique_open|o
 }
 */
 
-const POST = async function() {
+async function POST() {
   const {res} = this;
 
   res.sendStatus(200);

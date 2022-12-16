@@ -8,7 +8,7 @@ export default function MiniFooter() {
     <div id='footer-container'>
       <span>LetterCMS {date.getFullYear()} | </span>
       <div style={{height: '1rem', position: 'relative', width: '2rem'}}>
-        <Image layout='fill' objectFit='contain' src={`${process.env.ASSETS_BASE}/images/lettercms-logo-standalone.png`} alt="David's Devel Rombo Logo"/>
+        <Image layout='fill' objectFit='contain' src={`${process.env.ASSETS_BASE}/assets/lettercms-logo.svg`} alt="David's Devel Rombo Logo"/>
       </div>
     </div>
     <style jsx>{`

@@ -1,0 +1,48 @@
+.adminTop {
+  width: 100%;
+}
+.adminTop svg {
+  display: block;
+  margin: auto;
+}
+.adminTop img {
+  height: 80%;
+  margin: auto;
+  display: block;
+}
+
+.topButton {
+  position: absolute;
+  top: 2rem;
+  left: 5%;
+}
+
+.textContainer {
+  width: 80%;
+  text-align: center;
+  color: var(--main-alt);
+  font-size: 2rem;
+  letter-spacing: 2px;
+  padding-top: 2rem;
+  margin: auto;
+}
+
+.topOpen {
+  top: 0 !important;
+}
+
+.top {
+  width: 85%;
+  background: #fff;
+  z-index: 1;
+  top: -150px;
+  left: 15%;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 5%;
+  box-shadow: 1px 1px 5px #0001;
+  transition: ease .3s;
+  z-index: 2;
+}

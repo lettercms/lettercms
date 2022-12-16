@@ -2,8 +2,9 @@ import blogs from '@lettercms/models/blogs';
 import posts from '@lettercms/models/posts';
 import revalidate from '@lettercms/utils/lib/revalidate';
 import {getFullUrl} from '@lettercms/utils/lib/posts';
+import updateCategories from './updateCategories';
 
-export default async function() {
+export default async function PatchBlog() {
   const {
     req,
     res
@@ -16,6 +17,12 @@ export default async function() {
   const condition = {
     subdomain
   };
+
+  if (req.body.categories) {
+    await updateCategories(subdomain, req.body.categories);
+
+    delete req.body.categories;
+  }
 
   const db = await blogs.findOneAndUpdate(condition, req.body, {select: 'mainUrl url'});
 

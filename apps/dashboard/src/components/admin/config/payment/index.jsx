@@ -125,7 +125,7 @@ const InvoiceField = ({label, used, total, units, price}) => <>
 
 const Faturation = ({data, lastPayment}) => {
   const {values, total} = generateTotals(data);
-  const opts = {...paypalOpts, layout: 'horizontal'};
+  /*const opts = {...paypalOpts, layout: 'horizontal'};
 
   opts.onApprove = onApprove('payment', () => alert('Pago efectuado con exito'));
   opts.createOrder = async () => {
@@ -138,12 +138,13 @@ const Faturation = ({data, lastPayment}) => {
         }
       };
     });
+
     createOrder(units);
   };
 
   useEffect(() => {
-    window.p =paypal.Buttons(opts).render('#payment-button');
-  }, []);
+    window.p = paypal.Buttons(opts).render('#payment-button');
+  }, [opts]);*/
 
   return <div style={{width: '100%'}}>
     <ul>
@@ -177,7 +178,7 @@ const Faturation = ({data, lastPayment}) => {
 const BalanceModal = ({addFunds}) => {
   const [amount, setAmount] = useState('2.00');
 
-  const opts = {...paypalOpts};
+  /*const opts = {...paypalOpts};
   
   opts.onApprove = onApprove('funds', () => addFunds(parseInt(amount)));
   opts.createOrder = createOrder([
@@ -186,7 +187,7 @@ const BalanceModal = ({addFunds}) => {
 
   useEffect(() => {
     window.p2 = paypal.Buttons(opts).render('#paypalCheckoutContainer');
-  }, []);
+  }, [opts]);*/
 
   return <div className='modal-funding'>
     <div className='modal-prices'>
@@ -258,7 +259,7 @@ const Payment = () => {
       </div>
     </Base>
     <Base rows={2} title='Añadir Fondos' style={{height: 250}}>
-      <Image src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/plus.svg' width='100' height='100' style={{cursor: 'pointer'}} onClick={() => setModal(true)}/>
+      <Image src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/plus.svg' width='100' height='100' style={{cursor: 'pointer'}} onClick={() => setModal(true)} alt=''/>
     </Base>
     <Base rows={1} title='Factura Actual' style={{height: 'auto'}}>
       {

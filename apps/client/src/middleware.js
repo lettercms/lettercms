@@ -39,8 +39,9 @@ export default function middleware(req) {
     return NextResponse.rewrite(url);  
   }
 
-  url.pathname = `/_blogs/${currentHost}${url.pathname}`;
+  url.pathname = `/_blog/${currentHost}${url.pathname}`;
   return NextResponse.rewrite(url);
+
   /*const userID = req.cookies.get('userID');
   
   if (!userID || url.pathname === '/search') {

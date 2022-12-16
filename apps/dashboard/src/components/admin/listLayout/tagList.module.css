@@ -1,0 +1,21 @@
+.tagList {
+  padding: 1rem;
+  position: absolute;
+  right: 10%;
+  bottom: 1rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px #0002;
+  opacity: 0;
+  transition: .3s ease;
+  max-width: 85%;
+  width: max-content;
+}
+
+.tagList ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+.tagList ul li {
+  margin: .25rem .5rem;
+}

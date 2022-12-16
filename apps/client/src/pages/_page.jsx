@@ -1,53 +1,50 @@
-import React, {Component} from 'react';
-import NotFound from './404';
+import {useEffect} from 'react';
 import PageHead from '../components/pageHead';
 import {getOrigin, getSubdomain} from '../lib/utils';
 import sdk from '@lettercms/sdk';
 import Router from 'next/router';
+import jwt from 'jsonwebtoken';
 
-export default class Page extends Component {
-  static async getInitialProps({req, query, asPath}, {token}) {
-    const origin = getOrigin(req);
-    const subdomain = getSubdomain(req);
-    const subSDK = token ? new sdk.Letter(token) : sdk;
+export async function getServerSideProps({req, query: {subdomain, paths}, asPath}) {
+  const token = jwt.sign({subdomain}, process.env.JWT_AUTH);
 
-    try {
-      const page = await subSDK.pages.single(query.ID, [
-        'images',
-        'html',
-        'css',
-        'title',
-        'description'
-      ]);
+  const subSDK = new sdk.Letter(token);
 
-      query = Object.assign({}, query, page);
+  try {
+    const page = await subSDK.pages.single(query.ID, [
+      'images',
+      'html',
+      'css',
+      'title',
+      'description'
+    ]);
 
-      return {
-        ...query,
-        pathname: asPath,
-        hideLayout: true
-      };
-    } catch (err) {
-      throw err;
-    }
-	}
-  componentDidMount() {
+    return {
+      props: page
+    };
+  } catch (err) {
+    throw err;
+  }
+}
+
+export default function Page({html, css, title, description, image, pathname}) {
+
+  useEffect(() => {
     const links = document.getElementsByTagName('a');
 
-    for (let e of links) {
+    links.forEach(e => {
       e.onclick = ev => {
         if (e.attributes.target !== '_blank') {
           ev.preventDefault();
           Router.push(e.attributes.href);
         }
       };
-    }
-  }
-  render({html, css, title, description, image, pathname}) {
-    return <div>
-      <PageHead title={title} description={description} image={image} url={pathname}/>
-      <style>{css}</style>
-      <div dangerouslySetInnerHTML={{__html: html}}/>
-    </div>;
-  }
+    });
+  }, []);
+
+  return <div>
+    <PageHead title={title} description={description} image={image} url={pathname}/>
+    <style>{css}</style>
+    <div dangerouslySetInnerHTML={{__html: html}}/>
+  </div>;
 }

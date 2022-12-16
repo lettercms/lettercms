@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import {useRouter} from 'next/router';
+import Button from '@/components/button';
 
 export default function Paging({page, total}) {
   const router = useRouter();
@@ -11,12 +12,12 @@ export default function Paging({page, total}) {
   <div className='flex flex-row'>
     {
       page !== 1
-      ? <button className='btn-outline-sm' onClick={() => router.push(`/blog?page=${page - 1}`)}>Anterior</button>
+      ? <Button type='outline' onClick={() => router.push(`/blog?page=${page - 1}`)}>Anterior</Button>
       : <div/>
     }
     {
       page !== total
-      ? <button className='btn-outline-sm' onClick={() => router.push(`/blog?page=${page + 1}`)}>Siguiente</button>
+      ? <Button type='outline' onClick={() => router.push(`/blog?page=${page + 1}`)}>Siguiente</Button>
       : <div/>
     }
   </div>
@@ -35,7 +36,7 @@ export default function Paging({page, total}) {
       padding: 0 2rem;
       flex-grow: 1;
     }
-    #paging-container .flex button {
+    :global(#paging-container .flex button) {
       width: 8rem;
     }
     select {

@@ -1,4 +1,6 @@
 import sdk from '@lettercms/sdk';
+import Cross from '@/components/svg/cross';
+import Plus from '@/components/svg/cross';
 
 async function deleteImage(url, cb) {
   const name = url.split('/').pop().replace('.webp', '');
@@ -20,12 +22,12 @@ const ImageList = ({images, onAdd, onDelete}) => {
         {
           images.map((e, i) => <div key={`social-image-${i}`} className='images-block' style={{backgroundImage: `url(${e})`}}>
             <div className='delete-shadow' onClick={() => deleteImage(e, onDelete)}>
-              <img src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/cross.svg'/>
+              <Cross width='48'/>
             </div>
           </div>)
         }
         <div className='no-images images-block' onClick={onAdd}>
-          <img src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/plus.svg'/>
+          <Plus width='48' fill='#ccd7ec'/>
         </div>
       </div>
     </div>
@@ -78,9 +80,7 @@ const ImageList = ({images, onAdd, onDelete}) => {
         justify-content: center;
         align-items: center;
       }
-      .images-block img {
-        width: 3rem;
-      }
+      
     `}</style>
   </div>;
 };

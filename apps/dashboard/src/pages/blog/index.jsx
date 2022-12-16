@@ -32,6 +32,9 @@ const Blog = ({posts, blog, paging, mostViewed}) => {
       <Footer/>
     </div>
     <style jsx>{`
+      :global(.chart-container)  {
+        border: none !important;
+      }
       #content-wrapper {
         display: flex;
       }

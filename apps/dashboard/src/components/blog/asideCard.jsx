@@ -4,9 +4,10 @@ export default function AsideCard({thumbnail, title, url}) {
   return <div className='flex flex-row aside-card'>
     <Link href={`/blog/${url}`}>
       <a target='_blank'>
+        <img width='1' height='1' src='/pixel.png' alt={`${title} - LetterCMS`}/>
         {
           thumbnail
-          ? <div className='aside-thumbnail' style={{backgroundImage: `url(${thumbnail})`}}></div>
+          ? <div className='aside-thumbnail' style={{backgroundImage: `url(${thumbnail}&h=100&q=50)`}}></div>
           : <div className='flex flex-center aside-no-thumbnail'>
               <span>{title[0].toUpperCase()}</span>
             </div>

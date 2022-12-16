@@ -2,7 +2,7 @@ import Camera from '@/components/svg/camera';
 import Spinner from '@/components/svg/spinner';
 import createUploader from '@/lib/createUploader';
 import {useEffect, useState, useRef} from 'react';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
 import sdk from '@lettercms/sdk';
 
 export default function Thumbnail({url = 'https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/article-details-large.jpg', onChangePicture}) {
@@ -50,9 +50,9 @@ export default function Thumbnail({url = 'https://cdn.jsdelivr.net/gh/davidsdeve
       </div>
     </div>
     <div id='thumbnail-text' className='flex flex-column'>
-      <span>Upload an image to customize your blog social media preview.</span>
-      <span>Images should be at least 640×320px (1280×640px for best display).</span>
-      <a href='#'>Download Template</a>
+      <span>Sube una imagen para mejorar la presencia de tu blog en redes sociales.</span>
+      <span>La imagen debe ser de al menos 640×320px (1280×640px para mejor calidad).</span>
+      <a href='#'>Descargar Plantilla</a>
     </div>
     <style jsx>{`
       #thumbnail-text {

@@ -5,7 +5,7 @@ const withTM = require("next-transpile-modules")([
   "@lettercms/ui",
   "@lettercms/models",
   "@lettercms/sdk",
-  '@lettercms/eslint-config'
+  "@lettercms/icons"
 ]);
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -13,14 +13,14 @@ const isDev = process.env.NODE_ENV !== 'production';
 const cfg = withTM({
   swcMinify: true,
   compiler: {
-    removeConsole: true,
+    removeConsole: !isDev,
   },
   eslint: {
     ignoreDuringBuilds: true
   },
   poweredByHeader: false,
   env: {
-    LETTERCMS_ENDPOINT: process.env.LETTERCMS_ENDPOINT,
+    FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID,
     ASSETS_BASE: isDev ? 'http://localhost:3003' : 'https://cdn.jsdelivr.net/gh/lettercms/lettercms/apps/cdn'
   },
   sentry: {

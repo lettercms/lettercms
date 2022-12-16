@@ -8,8 +8,9 @@ import BlogImport from './blog/import';
 import BlogDelete from './blog/delete';
 import Thumbnail from './blog/thumbnail';
 import sdk from '@lettercms/sdk';
-import {useUser} from '@/lib/dashboardContext';
+import {useUser} from '@/components/layout';
 import BaseLoad from '../stats/baseLoad';
+import Top from '../top';
 
 let changes = {};
 
@@ -22,12 +23,12 @@ const handleChanges = (e, cb) => {
   changes[name] = value;
 };
 
-export default function BlogConfig({button}) {
+export default function BlogConfig() {
   const [thumbnail, setThumbnail] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [isVisible, setIsVisible] = useState(false);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState({});
   const [urlID, setUrl] = useState('');
 
   const [load, setLoad] = useState(true);
@@ -44,21 +45,13 @@ export default function BlogConfig({button}) {
         'url'
       ])
       .then(data => {
-
         setThumbnail(data.thumbnail);
         setTitle(data.title);
         setDescription(data.description);
         setIsVisible(data.isVisible);
-        setCategories(data.categories || []);
+        setCategories(Object.keys(data.categories) || []);
         setUrl(data.url);
-
         setLoad(false);
-
-      });
-      
-      button.current.onclick = () => sdk.blogs.update(changes).then(() => {
-        alert('Datos Modificados con exito');
-        changes = {};
       });
     }
   }, [status]);
@@ -74,9 +67,9 @@ export default function BlogConfig({button}) {
   };
 
   const deleteCategory = cat => {
-    changes.categories = changes.categories.filter(e => e !== cat);
+      changes.categories = categories.filter(e => e !== cat);
 
-    if (changes.categories.length === 0 && urlID == '2') {
+    if (categories.length === 0 && urlID == '2') {
       setUrl('1');
       changes.url = '1';
     }
@@ -88,6 +81,17 @@ export default function BlogConfig({button}) {
     return <BaseLoad rows={1}/>;
 
   return <>
+    <Top
+      create={() => {
+        sdk.blogs
+          .update(changes)
+          .then(() => {
+            alert('Datos Modificados con exito');
+            changes = {};
+          });
+      }}
+      buttonText='Guardar'
+    />
       <div className='config-opts'>
         <Thumbnail url={thumbnail}/>
         <Container rows={1} title='Meta' style={{height: 'auto !important'}}>
