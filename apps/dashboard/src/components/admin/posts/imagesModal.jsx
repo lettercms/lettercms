@@ -11,7 +11,7 @@ const generateUnsplashSrc = (raw, width, height) => {
   return {
     width,
     class: 'image',
-    src: raw,
+    src: `${raw}&w=100`,
     'data-src': raw,
     srcset: `${raw}&w=480&q=40 480w, ${raw}&w=720&q=50 720w, ${raw}&w=1024&q=75 1024w, ${raw}&w=2048&q=75 1400w`
   };
@@ -21,7 +21,7 @@ const generateLetterSrc = (raw, width, height) => {
   return {
     width,
     class: 'image',
-    src: raw,
+    src: `${raw}&w=100`,
     'data-src': raw,
     srcset: `${raw}&w=480&q=40 480w, ${raw}&w=720&q=50 720w, ${raw}&w=1024&q=75 1024w, ${raw}&w=2048&q=75 1400w`
   };
