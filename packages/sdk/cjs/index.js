@@ -19,7 +19,7 @@ const Social_1 = __importDefault(require("./lib/Social"));
 const Stats_1 = __importDefault(require("./lib/Stats"));
 const Users_1 = __importDefault(require("./lib/Users"));
 const devEndpoint = "http://localhost:3009";
-const prodEndpoint = `https://lettercms-api-${process.env.BRANCH}.vercel.app`;
+const prodEndpoint = `https://lettercms-api-${process.env.BRANCH || 'main'}.vercel.app`;
 const isDev = process.env.NODE_ENV !== "production";
 const endpoint = isDev ? devEndpoint : prodEndpoint;
 class LetterSDK {
