@@ -14,13 +14,13 @@ const generateNumbers = (actual, pages) => {
 
   for(let i = start; i <= end; i++) {
     if (i === actual)
-      tags.push(<div className='w-8 h-8 bg-main-500 text-white flex items-center justify-center rounded mx-1' key={'page-' + 1}>{i}</div>)
+      tags.push(<div className='w-8 h-8 bg-main-500 text-white flex items-center justify-center rounded mx-1' key={'page-' + 1}>{i}</div>);
     else
-      tags.push(<div className='cursor-pointer hover:bg-slate-100 border boder-solid boder-main-500 w-8 h-8 bg-slate-50 flex items-center justify-center rounded mx-1' key={'page-' + i} onClick={() => Router.push(`/?page=${i}`)}>{i}</div>)
+      tags.push(<div className='cursor-pointer hover:bg-slate-100 border boder-solid boder-main-500 w-8 h-8 bg-slate-50 flex items-center justify-center rounded mx-1' key={'page-' + i} onClick={() => Router.push(`/?page=${i}`)}>{i}</div>);
   }
 
   return tags;
-}
+};
 
 export default function Pagination({pages, actual}) {
   if (pages === 1)
@@ -40,5 +40,5 @@ export default function Pagination({pages, actual}) {
         ? <div className='cursor-pointer hover:bg-slate-100 h-8 px-2 flex items-center rounded border boder-solid boder-main-500 bg-slate-50 ml-4' onClick={() => Router.push(`/?page=${actual + 1}`)}>Siguiente</div>
         : <div/>
     }
-  </div>
+  </div>;
 }

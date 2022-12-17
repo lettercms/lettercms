@@ -2,7 +2,9 @@ import {Component} from 'react';
 import {createBlog} from '@lettercms/admin';
 import Router from 'next/router';
 import Input from '../input';
+import Button from '../button';
 import Image from 'next/image';
+import sdk from '@lettercms/sdk';
 
 export default class BlogTab extends Component {
   state = {
@@ -25,7 +27,30 @@ export default class BlogTab extends Component {
         .replace(/"|'/g, '')
       : value
   });
+  existsSubdomain = async e => {
+    const {target: {name, value}} = e;
+
+    this.setState({
+      existsSubdomain: null
+    });
+
+    this.handleInput(e);
+
+    const exists = await sdk.Letter.existsSubdomain(value);
+
+    this.setState({
+      existsSubdomain: exists
+    });
+  }
   createBlog = async e => {
+    const {isLoad, subdomain, title, description, existsSubdomain} = this.state;
+    
+    if (existsSubdomain)
+      return;
+
+    if (!subdomain || !title || !description)
+      return alert('Por favor rellene todos los campos');
+
     this.setState({
       isLoad: true
     });
@@ -63,71 +88,81 @@ export default class BlogTab extends Component {
     }
   }
   render() {
-    const {isLoad, subdomain, title, description} = this.state;
+    const {isLoad, subdomain, title, description, existsSubdomain} = this.state;
+
+    let subdomainStatus = '';
+    console.log(existsSubdomain);
+
+    if (existsSubdomain === true)
+      subdomainStatus = 'invalid';
+    else if (existsSubdomain === false)
+      subdomainStatus = 'valid' ;
+    else
+      subdomainStatus = 'loading';
 
     return <form className='form' onSubmit={this.createBlog}>
-        <div id='direction'>
-          <Input
-            disabled={isLoad}
-            id='subdomain'
-            value={subdomain}
-            onChange={this.handleInput}
-            label='Dirección'
-          /><div>
-            <span>.lettercms.vercel.app</span>
-          </div>
+      <div id='direction'>
+        <Input
+          status={subdomainStatus}
+          disabled={isLoad}
+          id='subdomain'
+          value={subdomain}
+          onChange={this.existsSubdomain}
+          label='Dirección'
+        />
+        <div>
+          <span>.lettercms.vercel.app</span>
         </div>
-        <Input
-          disabled={isLoad}
-          id='title'
-          value={title}
-          onChange={this.handleInput}
-          label='Título del Blog'
-        />
-        <Input
-          disabled={isLoad}
-          id='description'
-          type='textarea'
-          value={description}
-          onChange={this.handleInput}
-          label='Descripción'
-        />
-        {
-          isLoad
-            ? <div style={{width: '2.75rem', height: '2.75rem', position: 'relative', margin: 'auto'}}>
-              
-              <Image layout='fill'
-                src={`${process.env.ASSETS_BASE}/assets/spinner-black.svg`} 
-                alt='Spinner'
-                style={{
-                  display: 'block', height: '2.75rem', margin: '15px auto', animation: 'rotation linear 1s infinite',
-                }}
-              />
-            </div>
-          :
-          <button className="black">Crear Blog</button>
+      </div>
+      {
+        existsSubdomain === true &&
+        <div className='tooltip'>
+          <span>Ya existe un blog con ese subdominio</span>
+        </div>
+      }
+      <Input
+        disabled={isLoad}
+        id='title'
+        value={title}
+        onChange={this.handleInput}
+        label='Título del Blog'
+      />
+      <Input
+        disabled={isLoad}
+        id='description'
+        type='textarea'
+        value={description}
+        onChange={this.handleInput}
+        label='Descripción'
+      />
+      <Button type='solid' style={{width: '100%'}}  loading={isLoad}>Registrar</Button>
+      <style jsx>{`
+        #direction {
+          display: flex;
         }
-        <style jsx>{`
-          #direction {
-            display: flex;
-          }
-          #direction div {
-            border: 1px solid #c4d8dc;
-            border-left: none;
-            margin-bottom: 1.25rem;
-            border-radius: 0 .25rem .25rem 0;
-            font: 400 0.875rem/1.875rem "Open Sans", sans-serif;
-            display: flex;
-            align-items: center;
-            padding-right: 1.25rem;
-          }
-          :global(#direction .form-group) {
-            flex-grow: 1;
-          }
-          :global(#subdomain) {
-            border-radius: .25rem 0 0 .25rem;
-          }
-        `}</style>
+        #direction div {
+          border: 1px solid #c4d8dc;
+          border-left: none;
+          margin-bottom: 1.25rem;
+          border-radius: 0 .25rem .25rem 0;
+          font: 400 0.875rem/1.875rem "Open Sans", sans-serif;
+          display: flex;
+          align-items: center;
+          padding-right: 1.25rem;
+        }
+        :global(#direction .form-group) {
+          flex-grow: 1;
+        }
+        :global(#subdomain) {
+          border-radius: .25rem 0 0 .25rem;
+        }
+        .tooltip {
+          margin-top: -1rem;
+          margin-bottom: 1rem;
+          display: flex;
+          justify-content: center;
+        }
+      `}</style>
     </form>;
   }
 }
