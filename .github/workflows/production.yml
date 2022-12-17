@@ -1,11 +1,9 @@
 name: Promote to Production
 
 on:
-  pull_request:
+  push:
     branches:
       - production
-    types:
-      - closed
 
 jobs:
   changes:
