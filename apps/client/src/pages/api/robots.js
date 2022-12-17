@@ -3,6 +3,8 @@ import blogs from '@lettercms/models/blogs';
 import { withSentry } from '@sentry/nextjs';
 
 async function Robots(req, res) {
+  let subdomain = null;
+  
   const hostname = req.headers.host || 'davidsdevel.lettercms.vercel.app';
 
   //Switch between staging and production

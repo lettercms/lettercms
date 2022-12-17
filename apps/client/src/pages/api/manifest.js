@@ -2,6 +2,7 @@ import connect from '@lettercms/utils/lib/connection';
 import blogs from '@lettercms/models/blogs';
 
 async function Manifest(req, res) {
+  let subdomain = null;
   const hostname = req.headers.host || 'davidsdevel.lettercms.vercel.app';
 
   //Switch between staging and production

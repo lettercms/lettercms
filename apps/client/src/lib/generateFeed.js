@@ -6,6 +6,7 @@ import {Feed} from 'feed';
 export default async function feed(req, res) {
   try {
     const hostname = req.headers.host || 'davidsdevel.lettercms.vercel.app';
+    let subdomain = null;
 
     //Switch between staging and production
     if (hostname.startsWith('lettercms-client-'))
