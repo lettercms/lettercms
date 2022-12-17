@@ -93,6 +93,7 @@ jobs:
         if: ${{inputs.env == 'production'}}
         run: vercel build --prod -t $VERCEL_TOKEN
 
+
       - name: Vercel Deploy Preview
         if: ${{inputs.env == 'staging'}}
         run: echo "vercel_url=$(vercel --prebuilt -t $VERCEL_TOKEN)" >> $GITHUB_ENV
@@ -101,9 +102,19 @@ jobs:
         if: ${{inputs.env == 'production'}}
         run: echo "vercel_url=$(vercel --prebuilt --prod -t $VERCEL_TOKEN)" >> $GITHUB_ENV
 
-      - name: 'Generate Preview URL'
-        if: ${{inputs.env == 'staging'}}
-        run: echo "env_url=${{inputs.name}}-${{ github.ref_name }}-$(git rev-parse --short HEAD).vercel.app" >> $GITHUB_ENV
+
+      - name: 'Generate Client Staging URL'
+        if: ${{inputs.env == 'staging' && inputs.name == 'client'}}
+        run: echo "env_url=davidsdevel.lettercms.vercel.app" >> $GITHUB_ENV
+
+      - name: 'Generate Dashboard Staging URL'
+        if: ${{inputs.env == 'staging' && inputs.name == 'dashboard'}}
+        run: echo "env_url=lettercms-preview.vercel.app" >> $GITHUB_ENV
+
+      - name: 'Generate API Staging URL'
+        if: ${{inputs.env == 'staging' && inputs.name == 'api'}}
+        run: echo "env_url=lettercms-api-main.vercel.app" >> $GITHUB_ENV
+
 
       - name: 'Generate API Production URL'
         if: ${{inputs.env == 'production' && inputs.name == 'api'}}
@@ -115,12 +126,9 @@ jobs:
 
       - name: 'Generate Client Production URL'
         if: ${{inputs.env == 'production' && inputs.name == 'client'}}
-        run: echo "env_url=davidsdevel.lettercms.vercel.app" >> $GITHUB_ENV
+        run: echo "env_url=*.lettercms.vercel.app" >> $GITHUB_ENV
+
 
       - name: Set alias
         if: ${{inputs.env == 'staging'}}
-        run: vercel alias set ${{ env.vercel_url }} ${{env.env_url}} --scope lettercms -t $VERCEL_TOKEN
-
-      - name: Set alias
-        if: ${{inputs.env == 'staging'}}
-        run: vercel alias set ${{ env.vercel_url }} lettercms-${{inputs.name}}-${{github.ref_name}}.vercel.app --scope lettercms -t $VERCEL_TOKEN
+        run: vercel alias set ${{env.vercel_url}} ${{env.env_url}} --scope lettercms -t $VERCEL_TOKEN
