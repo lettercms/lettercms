@@ -25,9 +25,11 @@ const resendEmail = async () => {
 export default function Verify({onVerify}) {
   const [code, setCode] = useState('');
   const [isLoad, setIsLoad] = useState(false);
+  const [isInvalidCode, setIsInvalidCode] = useState(false);
 
   const verify = async () => {
     setIsLoad(true);
+    setIsInvalidCode(false);
 
     const email = localStorage.getItem('userEmail');
     const token = localStorage.getItem('userToken');
@@ -54,7 +56,7 @@ export default function Verify({onVerify}) {
       
       onVerify();
     } else {
-      alert('Código no valido');
+      setIsInvalidCode(true);
     }
 
     setIsLoad(false);
@@ -63,10 +65,27 @@ export default function Verify({onVerify}) {
   return <div className='form'>
     <span style={{color: '#555', fontSize: '1rem'}}>
       <span>Ingresa el código recibido por correo</span>
-      <Input id='code' value={code} onInput={({target: {value}}) => setCode(value)} label='Código de verificación'/>
-      <Button type='outline' loading={isLoad} onClick={verify}>Verificar</Button>
+      <Input status={isInvalidCode ? 'invalid' : null} id='code' value={code} onInput={({target: {value}}) => setCode(value)} label='Código de verificación'/>
+      {
+        isInvalidCode &&
+        <div className='tooltip'>
+          <span>Código Invalido</span>
+        </div>
+      }
+      <Button type='solid' loading={isLoad} onClick={verify}>Verificar</Button>
     </span>
     <hr/>
-    <Button type='outline' loading={isLoad} onClick={resendEmail}>Reenviar Correo</Button>
+    <Button type='solid' loading={isLoad} onClick={resendEmail}>Reenviar Correo</Button>
+    <style jsx global>{`
+      .form button {
+        width: 100%;
+      }
+      .form .tooltip {
+        margin-top: -1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+      }
+    `}</style>
   </div>;
 }

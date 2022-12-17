@@ -4,7 +4,7 @@ const setCookie = (accept, cb) => {
   Cookie.set('__lettercms_cookie_consent', accept.toString());
 
   cb(accept);
-}
+};
 
 export default function Consent({setConsent}) {
   return <div className='fixed w-full bg-main-500 bottom-0 left-0 px-2 py-4 shadow shadow-1 shadow-gray md:px-12'>

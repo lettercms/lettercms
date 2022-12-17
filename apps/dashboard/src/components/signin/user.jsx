@@ -2,17 +2,12 @@ import {Component} from 'react';
 import Router from 'next/router';
 import sdk from '@lettercms/sdk';
 import {createAccount, createCollaborator} from '@lettercms/admin';
-import Input from '../input';
-import Image from 'next/image';
+import Input from '@/components/input';
+import Spinner from '@lettercms/icons/spinner';
 import {signIn} from 'next-auth/react';
 import Button from '@/components/button';
 
 export default class UserTab extends Component {
-  constructor() {
-    super();
-
-    this.checkEmailTimeout = null;
-  }
   state = {
     name: '',
     lastname: '',
@@ -31,15 +26,16 @@ export default class UserTab extends Component {
       });
 
       sdk.Letter.existsAccount({email})
-        .then(({exists}) => this.setState({
-          existsEmail: exists,
-          emailLoad: false
-        }));
+        .then(exists => {
+
+          this.setState({
+            existsEmail: exists,
+            emailLoad: false
+          });
+        });
     }
   };
   handleInput = ({target: {name, value, type}}) => {
-    clearTimeout(this.checkEmailTimeout);
-
     this.setState({
       existsEmail: null
     });
@@ -63,7 +59,7 @@ export default class UserTab extends Component {
         email
       } = this.state;
 
-      if (!name || !lastname || password || !email)
+      if (!name || !lastname || !password || !email)
         return alert('Por favor rellene todos los campos');
 
       this.setState({
@@ -146,12 +142,16 @@ export default class UserTab extends Component {
     const {name, lastname, password, email, existsEmail, isLoad, emailLoad} = this.state;
     let emailStatus = '';
 
-    if (existsEmail)
+    if (existsEmail === true)
       emailStatus = 'invalid';
-    else if (!existsEmail)
+    else if (existsEmail === false)
       emailStatus = 'valid' ;
+    else
+      emailStatus = 'loading';
 
     return <form className='form' onSubmit={!isCollab ? this.register : this.createCollab}>
+      <div className='username'>
+        
         <Input
           disabled={isLoad}
           value={name}
@@ -168,6 +168,7 @@ export default class UserTab extends Component {
           label='Apellido'
           autoComplete='false'
         />
+      </div>
         {
           !isCollab &&
           <div id='emailLoad'>
@@ -184,7 +185,13 @@ export default class UserTab extends Component {
             {
               emailLoad &&
               <div className='load-container'>
-                <Image layout='fill' src={`${process.env.ASSETS_BASE}/assets/spinner-black.svg`} alt='Spinner' className='load-rotation'style={{animation: 'rotation linear 1s infinite'}}/>
+                <Spinner width='50' height='50' style={{animation: 'rotation linear 1s infinite'}}/>
+              </div>
+            }
+            {
+              existsEmail === true &&
+              <div className='tooltip'>
+                <span>Una cuenta con el mismo correo ya existe</span>
               </div>
             }
           </div>
@@ -200,6 +207,10 @@ export default class UserTab extends Component {
         />
         <Button type='solid' style={{width: '100%'}}  loading={isLoad}>Registrar</Button>
       <style jsx>{`
+        .username {
+          display: flex;
+          justify-content: space-between;
+        }
         .load-container {
           width: 50px;
           height: 50px;
@@ -209,6 +220,12 @@ export default class UserTab extends Component {
         }
         #emailLoad {
           position: relative;
+        }
+        .tooltip {
+          margin-top: -1rem;
+          margin-bottom: 1rem;
+          display: flex;
+          justify-content: center;
         }
       `}</style>
     </form>;
