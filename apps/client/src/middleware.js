@@ -25,12 +25,17 @@ export default function middleware(req) {
    return NextResponse.next();
   }
 
+  let currentHost = null;
   const hostname = req.headers.get('host') || 'davidsdevel.lettercms.vercel.app';
 
-  const currentHost =
-    process.env.NODE_ENV === 'production' && process.env.VERCEL === '1'
-      ? hostname.replace('.lettercms.vercel.app', '')
-      : hostname.replace('.localhost:3002', '');
+  //Switch between staging and production
+  if (hostname.startsWith('lettercms-client-'))
+    currentHost = 'davidsdevel';
+  else
+    currentHost =
+      process.env.NODE_ENV === 'production' && process.env.VERCEL === '1'
+        ? hostname.replace('.lettercms.vercel.app', '')
+        : hostname.replace('.localhost:3002', '');
 
   const isPreview = req.cookies.get('__next_preview_data') || req.cookies.get('__prerender_bypass');
 
