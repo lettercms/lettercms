@@ -1,6 +1,6 @@
+import {Codes} from '@lettercms/models/accounts';
 import manageMethods from '@lettercms/utils/lib/manageMethods';
 import sendMail from '@lettercms/utils/lib/sendMail';
-import jwt from 'jsonwebtoken';
 
 async function POST() {
   const {req, res} = this;
@@ -9,19 +9,38 @@ async function POST() {
   const {data} = req.body;
 
   if (isAdmin) {
-    const {template, email, name} = data;
+    const {template, name, email} = data;
+
     let {role} = data;
 
     if (template === 'verify') {
-      role = 'admin';
+       //delete expired codes
+      await Codes.deleteMany({email});
 
-      const code = jwt.sign(data, process.env.JWT_AUTH, { expiresIn: 60 * 5 });
+      //Generate 4 digit verification code
+      let code = '';
 
-      await sendMail(email, `${name} verifica tu cuenta - LetterCMS`, {
-        type: 'verify',
-        url: `https://lettercms-api-staging.herokuapp.com/api/account/verify?token=${code}&e=${Buffer.from(data.email).toString('hex')}`,
-        ...data
+      for (let i = 0; i < 4; i++) {
+        code += Math.floor(Math.random() * 10);
+      }
+
+      await Codes.create({
+        code,
+        email
       });
+
+      try {
+        await sendMail(email, `${name} verifica tu cuenta - LetterCMS`, {
+          type: 'verify',
+          code,
+          name
+        });
+      } catch(err) {
+        return res.status(500).json({
+          status: 'email-error',
+          message: 'Error Sending Email'
+        });
+      }
     }
   }
 

@@ -30,7 +30,7 @@ export default async function createCollab(req, res) {
     name: body.name,
     lastname: body.lastname,
     email: body.email,
-    photo: `https://avatar.tobi.sh/${Buffer.from(body.email).toString('hex')}.svg?text=${body.name[0]+body.lastname[0]}&size=250`,
+    photo: `https://avatar.tobi.sh/${Buffer.from(body.email).toString('hex')}.svg`,
     password,
     role: 'collaborator',
     subdomain: invitation.subdomain
