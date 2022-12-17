@@ -1,7 +1,7 @@
 import connect from '@lettercms/utils/lib/connection';
 import blogs from '@lettercms/models/blogs';
 
-async function Manifest(req, res) {
+export default async function Manifest(req, res) {
   let subdomain = null;
   const hostname = req.headers.host || 'davidsdevel.lettercms.vercel.app';
 
@@ -34,5 +34,3 @@ async function Manifest(req, res) {
     background_color: '#000',
   });
 }
-
-export default Manifest;

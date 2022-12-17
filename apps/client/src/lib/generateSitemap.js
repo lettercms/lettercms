@@ -62,7 +62,8 @@ export default async function sitemap(req, res) {
 
       res.end(finalXML);
     } catch (err) {
-      console.error(err);
       res.status(500).send(err);
+
+      throw err;
     }
   }

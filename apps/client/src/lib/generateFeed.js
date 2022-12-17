@@ -104,7 +104,8 @@ export default async function feed(req, res) {
 
       res.end();
     } catch (err) {
-      console.error(err);
       res.status(500).send(err);
+
+      throw err;
     }
   }

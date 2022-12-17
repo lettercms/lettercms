@@ -1,10 +1,9 @@
 import connect from '@lettercms/utils/lib/connection';
 import blogs from '@lettercms/models/blogs';
-import { withSentry } from '@sentry/nextjs';
 
-async function Robots(req, res) {
+export default async function Robots(req, res) {
   let subdomain = null;
-  
+
   const hostname = req.headers.host || 'davidsdevel.lettercms.vercel.app';
 
   //Switch between staging and production
@@ -41,4 +40,3 @@ async function Robots(req, res) {
   res.send(robots.replace(/\n\s*/g, '\n'));
 }
 
-export default withSentry(Robots);
