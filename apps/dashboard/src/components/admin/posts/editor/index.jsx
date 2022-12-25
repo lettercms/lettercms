@@ -182,7 +182,7 @@ export default function EditorContainer({post, blog, hasFacebook, hasInstagram})
             clearTimeout: () => clearTimeout(timer.current),
             setLoading: console.log
           });
-        }, 5000);
+        }, 20000);
       }
     },
     (key, value) => {
