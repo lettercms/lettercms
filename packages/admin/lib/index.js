@@ -13,10 +13,10 @@ export const facebookLogin = async scope => {
   console.log(res.authResponse);
 
   return res.authResponse;
-}
+};
 
 export const facebookPages = async fields => {
-  const res = await getPages({fields: fields.join(',')})
+  const res = await getPages({fields: fields.join(',')});
 
   console.log(res);
 
