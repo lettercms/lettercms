@@ -69,7 +69,7 @@ const _delete = async (id, type, cb) => {
 
     if (status === 'OK') {
       alert('Eliminado con Exito');
-      cb(prev => prev.filters(({_id}) => _id !== id));
+      cb(prev => prev.filter(({_id}) => _id !== id));
     } else
       alert(message);
   } catch (err) {
@@ -127,6 +127,7 @@ function Layout(props) {
         });
       }}
       onDelete={_delete}
+      setData={setData}
       onEdit={props.onEdit}
       isLoadingMore={isLoadingMore}
     />;

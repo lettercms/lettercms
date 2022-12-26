@@ -74,3 +74,9 @@
   top: 1rem;
   left: 1rem;
 }
+
+.dashboardHome {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}

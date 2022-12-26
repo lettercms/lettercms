@@ -1,9 +1,11 @@
 import {useState, useEffect, createContext, useContext, memo} from 'react';
+import Home from '@/components/svg/home';
 import Router from 'next/router';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import sdk from '@lettercms/sdk';
 import Cookie from 'js-cookie'; 
+import {option} from './option.module.css';
 import {useSession} from 'next-auth/react';
 import {createFirebaseApp } from '@/firebase/client';
 import {getAuth, signInWithCustomToken} from 'firebase/auth';
@@ -17,7 +19,8 @@ import {
   asideFooter,
   footerImg,
   accountName,
-  asideNameLoad
+  asideNameLoad,
+  dashboardHome
 } from './index.module.css';
 import MenuLoad from './menuLoad';
 
@@ -112,6 +115,14 @@ export function DashboardProvider({userID, children, hideMenu}) {
         {
           load &&
           <div className={dashboardSpinner} style={{animation: 'rotation linear .6s infinite'}}/>
+        }
+        {
+          !isLoading &&
+          <Link href={`https://${blog?.domain}${blog?.mainUrl}`}>
+            <a target='_blank' className={dashboardHome}>
+              <Home fill='#362e6f' height='20'/>
+            </a>
+          </Link>
         }
         {
           isLoading
