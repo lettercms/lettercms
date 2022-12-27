@@ -104,6 +104,13 @@ export default function Editor({onOpenModal}) {
           top: 59px;
           box-shadow: none !important;
         }
+        .ck-content a {
+          color: var(--main) !important;
+        }
+        .ck-content b,
+        .ck-content strong {
+          color: var(--main-alt) !important;
+        }
       `}</style>
     </div>;
 }

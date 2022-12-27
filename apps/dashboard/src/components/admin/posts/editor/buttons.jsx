@@ -9,7 +9,7 @@ export default function Buttons({postStatus, onPreview, onSave, onPublish, isSav
   const [data] = useData();
 
   return <div className={buttons}>
-    <button className={save} disabled={data.loading} title='Vista Previa' onClick={onSave}>
+    <button className={save} disabled={data.loading} title='Vista Previa' onClick={onPreview}>
       <Eye fill='#5f4dee'/>
     </button>
     <button className={save} disabled={data.loading || isSaved} title={postStatus === 'published' ? 'Convertir a Borrador' : 'Guardar'} onClick={onSave}>

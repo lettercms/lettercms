@@ -1,14 +1,15 @@
 import {find as baseFind, parseQuery} from '../findUtils';
 
 export const find = async (model, filter, opts = {}) => {
-  if (!opts.fields) {
+  let hasPassword = true;
 
-    opts.fiels = '-password';
-  } else {
+  if (opts.fields) {
     let splitted = opts.fields.split(',');
     
     if (splitted.includes('password'))
       splitted = splitted.filter(e => e !== 'password');
+    else
+      hasPassword = false;
 
     opts.fields = splitted.join(',');
   }
@@ -25,6 +26,13 @@ export const find = async (model, filter, opts = {}) => {
     single,
     all: collaborator + single
   };
+
+  if (hasPassword)
+    data.data = data.data.map(e => {
+      delete e.password;
+
+      return e;
+    });
 
   return data;
 };

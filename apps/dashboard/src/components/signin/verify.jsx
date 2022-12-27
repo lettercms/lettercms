@@ -75,7 +75,7 @@ export default function Verify({onVerify}) {
       <Button type='solid' loading={isLoad} onClick={verify}>Verificar</Button>
     </span>
     <hr/>
-    <Button type='solid' loading={isLoad} onClick={resendEmail}>Reenviar Correo</Button>
+    <Button type='solid' loading={isLoad} onClick={resendEmail}>Reenviar Código</Button>
     <style jsx global>{`
       .form button {
         width: 100%;

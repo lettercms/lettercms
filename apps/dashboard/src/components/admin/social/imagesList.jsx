@@ -1,18 +1,12 @@
 import sdk from '@lettercms/sdk';
 import Cross from '@/components/svg/cross';
-import Plus from '@/components/svg/cross';
+import Plus from '@/components/svg/plus';
 
 async function deleteImage(url, cb) {
   const name = url.split('/').pop().replace('.webp', '');
-  
-  await fetch(`https://lettercms-api.vercel.app/image/${name}`, {
-    method: 'DELETE',
-    headers: {
-      Authorization: sdk.accessToken
-    }
-  });
-}
 
+  return sdk.createRequest(`/image/${name}`, 'DELETE');
+}
 
 const ImageList = ({images, onAdd, onDelete}) => {
   return <div id='images-upload-container'>
@@ -21,7 +15,7 @@ const ImageList = ({images, onAdd, onDelete}) => {
       <div id='pics-container'>
         {
           images.map((e, i) => <div key={`social-image-${i}`} className='images-block' style={{backgroundImage: `url(${e})`}}>
-            <div className='delete-shadow' onClick={() => deleteImage(e, onDelete)}>
+            <div className='delete-shadow' onClick={() => deleteImage(e).then(onDelete)}>
               <Cross width='48'/>
             </div>
           </div>)

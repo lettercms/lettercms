@@ -18,7 +18,8 @@ const generateCursorPagination = async (model, filter, opts) => {
 
   const hasMore = data.length === options.limit;
 
-  data.pop();
+  if (data.length > 10)
+    data.pop();
   
   if (hasMore) {    
     const beforeCursor = data[data.length - 1]._id;

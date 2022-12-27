@@ -6,8 +6,9 @@ const createJestConfig = nextJest({
 })
 
 const customJestConfig = {
+  rootDir: '.',
   moduleDirectories: ['node_modules', '<rootDir>/'],
-  testEnvironment: 'jest-environment-jsdom',
+  testEnvironment: 'node',
   testMatch: [
     //'**/davidsdevel-*/testing/me.test.js',
     //'**/davidsdevel-*/testing/login.test.js',

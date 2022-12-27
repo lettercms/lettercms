@@ -96,7 +96,7 @@ Accounts.statics.createCollab = async function(subdomain, data) {
 
   const id = await this.create({
     ...data,
-    photo: `https://avatar.tobi.sh/${Buffer.from(data.email).toString('hex')}.svg?text=${data.name[0]+data.lastname[0]}&size=250`,
+    photo: `https://avatar.tobi.sh/${Buffer.from(data.email).toString('hex')}.svg`,
     password,
     role: 'collaborator',
     subdomain
