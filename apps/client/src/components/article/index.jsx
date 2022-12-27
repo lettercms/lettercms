@@ -61,16 +61,21 @@ export default function Article({blog, popular, post, recommended}) {
     <div className='flex flex-col md:flex-row mt-24 px-2 lg:px-8 pb-12 flex-wrap'>
       <Content html={post.content} published={post.published} tags={post.tags}/>
       <Aside entries={popular} tags={blog.tags} author={post.author} categories={blog.categories}/>
-      <div className='flex flex-wrap'>
-        <div className='w-full px-4 mt-8 lg:mt-0'>
-          <span className='text-lg font-bold text-main-700'>Te podría interesar</span>
-        </div>
-      </div>
-      <div className='flex flex-col lg:flex-row justify-around w-full'>
-        {
-          recommended.map(e => <Card key={e._id} {...e}/>)
-        }
-      </div>
+      {
+        recommended?.length > 0 &&
+        <>
+          <div className='flex flex-wrap'>
+            <div className='w-full px-4 mt-8 lg:mt-0'>
+              <span className='text-lg font-bold text-main-700'>Te podría interesar</span>
+            </div>
+          </div>
+          <div className='flex flex-col lg:flex-row justify-around w-full'>
+            {
+              recommended.map(e => <Card key={e._id} {...e}/>)
+            }
+          </div>
+        </>
+      }
     </div>
   </div>;
 }

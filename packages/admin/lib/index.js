@@ -7,9 +7,21 @@ export const createCollaborator = data => createRequest('/api/collaborator/creat
 
 export const createBlog = data => createRequest('/api/blog/create', 'POST', data);
 
-export const facebookLogin = scope => login(scope.join(','));
+export const facebookLogin = async scope => {
+  const res = await login(scope.join(','));
 
-export const facebookPages = fields => getPages({fields: fields.join(',')});
+  console.log(res.authResponse);
+
+  return res.authResponse;
+};
+
+export const facebookPages = async fields => {
+  const res = await getPages({fields: fields.join(',')});
+
+  console.log(res);
+
+  return res.data;
+};
 
 export const setFacebookPage = (pageID, accessToken, subdomain) =>
   createRequest('/api/social/create', 'POST', {

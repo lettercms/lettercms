@@ -1,10 +1,19 @@
 import connect from '@lettercms/utils/lib/connection';
 import blogs from '@lettercms/models/blogs';
-import { withSentry } from '@sentry/nextjs';
 
-async function Robots(req, res) {
-  const hostname = req.headers.host;
-  const subdomain = process.env.NODE_ENV === 'production'  ? hostname.replace('.lettercms.vercel.app', '') : hostname.replace('.localhost:3002', '');
+export default async function Robots(req, res) {
+  let subdomain = null;
+
+  const hostname = req.headers.host || 'davidsdevel.lettercms.vercel.app';
+
+  //Switch between staging and production
+  if (hostname.startsWith('lettercms-client-'))
+    subdomain = 'davidsdevel';
+  else
+    subdomain =
+      process.env.NODE_ENV === 'production' && process.env.VERCEL === '1'
+        ? hostname.replace('.lettercms.vercel.app', '')
+        : hostname.replace('.localhost:3002', '');
 
   await connect();
 
@@ -31,4 +40,3 @@ async function Robots(req, res) {
   res.send(robots.replace(/\n\s*/g, '\n'));
 }
 
-export default withSentry(Robots);

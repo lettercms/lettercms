@@ -22,7 +22,7 @@ export default function ListContainer({type, data, before, onDelete, onEdit, onL
             case 'accounts':
               return <Collabs key={e._id} {...e}/>;
             default:
-              return <Card key={e.url + e._id} edit={onEdit} del={id => onDelete(id, setData)} {...e}/>;
+              return <Card key={e.url + e._id} edit={onEdit} del={id => onDelete(id, type, setData)} {...e}/>;
           }
         })
       }
