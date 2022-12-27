@@ -111,6 +111,13 @@ export default function Editor({onOpenModal}) {
         .ck-content strong {
           color: var(--main-alt) !important;
         }
+        .ck-content li {
+          list-style: auto !important;
+        }
+        .ck-content li::marker {
+          font-weight: bold !important;
+          color: var(--main-alt) !important;
+        }
       `}</style>
     </div>;
 }
