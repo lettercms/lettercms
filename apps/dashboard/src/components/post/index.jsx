@@ -57,12 +57,12 @@ const BlogPost = ({isAdmin, isPreview, user, recommendation: {recommended, simil
             <main dangerouslySetInnerHTML={{ __html: content }}/>
             <Tags tags={tags}/>
           </Base>
-          {
+          {/*
             !stateUser?.email &&
             <Base principal rows={1} style={{height: 'auto', justifyContent: 'center', alignItems: 'center' }}>
               <Subscription onSubscribe={setUser} user={stateUser}/>
             </Base>
-          }
+          */}
         </div>
       </div>
       <Breadcrumbs title={title}/>
@@ -91,7 +91,7 @@ const BlogPost = ({isAdmin, isPreview, user, recommendation: {recommended, simil
               ID={similar._id}
             />
           }
-          <Comments id={_id} user={stateUser}/>
+          {/*<Comments id={_id} user={stateUser}/>*/}
         </Base>
       <Footer isPost/>
     </div>
