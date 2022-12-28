@@ -7,6 +7,7 @@ import Layout from '@/components/tracingLayout';
 import {parse as cookieParser} from 'cookie';
 import {getBlog} from '@/lib/mongo/blogs';
 import Paging from '@/components/blog/paging';
+import {captureException} from '@sentry/nextjs';
 
 const Blog = ({posts, blog, paging, mostViewed}) => {
   return <Layout>
@@ -51,25 +52,28 @@ const Blog = ({posts, blog, paging, mostViewed}) => {
 };
 
 export async function getServerSideProps({req, res, query}) {
-  const {page} = query;
-  const referrer = req?.headers.referrer || null;
-  const {userID = null} = req ? req.cookies : cookieParser(document.cookie);
-  
-  const blogData = await getBlog(page);
+  try {
+    const {page} = query;
+    const referrer = req?.headers.referrer || null;
+    const {userID = null} = req ? req.cookies : cookieParser(document.cookie);
+    
+    const blogData = await getBlog(page);
 
-  const {blog, posts, mostViewed} = JSON.parse(JSON.stringify(blogData));
+    const {blog, posts, mostViewed} = JSON.parse(JSON.stringify(blogData));
 
-
-  return {
-    props: {
-      posts: posts.data,
-      blog,
-      paging: posts.paging,
-      userID,
-      referrer,
-      mostViewed
-    }
-  };
+    return {
+      props: {
+        posts: posts.data,
+        blog,
+        paging: posts.paging,
+        userID,
+        referrer,
+        mostViewed
+      }
+    };
+  } catch(err) {
+    throw err;
+  }
 }
 
 export default Blog;

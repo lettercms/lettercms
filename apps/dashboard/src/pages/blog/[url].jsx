@@ -2,33 +2,38 @@ import Post from '@/components/post';
 import {getSession} from 'next-auth/react';
 import {getPost} from '@/lib/mongo/posts';
 import jwt from 'jsonwebtoken';
+import {captureException} from '@sentry/nextjs';
 
-export const getServerSideProps = async ({req, res, query}) => {  
-  const {url} = query;
-  const userID = req?.cookies.userID || 'no-user';
+export const getServerSideProps = async ({req, res, query}) => {
+  try {
+    const {url} = query;
+    const userID = req?.cookies.userID || 'no-user';
 
-  const {notFound, post, user, recommendation} = await getPost(url, userID);
+    const {notFound, post, user, recommendation} = await getPost(url, userID);
 
-  if (notFound)
+    if (notFound)
+      return {
+        notFound: true
+      };
+
+    //Parse Mongo Object IDs
+    const props = JSON.parse(JSON.stringify({
+      post,
+      referrer: req?.headers.referer || null,
+      recommendation,
+      user
+    }));
+
     return {
-      notFound: true
+      props: {
+        ...props,
+        //TODO: implement SDK token generation
+        accessToken: jwt.sign({subdomain: 'davidsdevel'}, process.env.JWT_AUTH)
+      }
     };
-
-  //Parse Mongo Object IDs
-  const props = JSON.parse(JSON.stringify({
-    post,
-    referrer: req?.headers.referer || null,
-    recommendation,
-    user
-  }));
-
-  return {
-    props: {
-      ...props,
-      //TODO: implement SDK token generation
-      accessToken: jwt.sign({subdomain: 'davidsdevel'}, process.env.JWT_AUTH)
-    }
-  };
+  } catch(err) {
+    throw err;
+  }
 };
 
 export default Post;

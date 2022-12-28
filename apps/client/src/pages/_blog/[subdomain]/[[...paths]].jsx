@@ -19,13 +19,6 @@ const Home = dynamic(() => import('@/components/home'), {
 
 const isDev = process.env.NODE_ENV !== 'production';
 
-/*export function getStaticPaths() {
-  return {
-    paths: [],
-    fallback:true
-  };
-}*/
-
 export async function getServerSideProps({query: {subdomain, paths, page = '1'}}) {
   try {
     let apiPath =  `${isDev ? 'http://localhost:3002' : `https://${subdomain}.lettercms.vercel.app`}/api/data/blog?subdomain=${subdomain}&page=${page}`;
