@@ -32,6 +32,8 @@ export const getServerSideProps = async ({req, res, query}) => {
       }
     };
   } catch(err) {
+    captureException(err);
+
     throw err;
   }
 };

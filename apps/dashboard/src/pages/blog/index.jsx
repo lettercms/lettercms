@@ -72,6 +72,8 @@ export async function getServerSideProps({req, res, query}) {
       }
     };
   } catch(err) {
+    captureException(err);
+
     throw err;
   }
 }
