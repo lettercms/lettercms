@@ -29,7 +29,7 @@ const isFail = status === 'failed';
             { 
               name: "Job URL", 
               value: `[Visit Job](${process.env.CIRCLE_BUILD_URL})`
-            }
+            },
             {
               name: 'URL',
               value: `[View Deployment](https://lettercms-${env}-${process.env.CIRCLE_BRANCH}.vercel.app)`
