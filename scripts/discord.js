@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
-const {argv} = require('yargs');
 
-const {status, env} = argv;
+const status = process.argv[2];
+const env = process.argv[3];
 
 const isFail = status === 'failed';
 

@@ -51,11 +51,11 @@ jobs:
             vercel alias set $VERCEL_URL lettercms-client-$CIRCLE_BRANCH.vercel.app --scope lettercms -t $VERCEL_TOKEN
       - run:
           name: Notify error on deploy
-          command: node scripts/discord --status fail --env client
+          command: node scripts/discord fail client
           when: on_fail
       - run:
           name: Notify deploy
-          command: node scripts/discord --status success --env client
+          command: node scripts/discord success client
           when: on_success
 
 
@@ -97,11 +97,11 @@ jobs:
             vercel alias set $VERCEL_URL lettercms-dashboard-$CIRCLE_BRANCH.vercel.app --scope lettercms -t $VERCEL_TOKEN
       - run:
           name: Notify error on deploy
-          command: node scripts/discord --status fail --env dashboard
+          command: node scripts/discord fail dashboard
           when: on_fail
       - run:
           name: Notify deploy
-          command: node scripts/discord --status success --env client
+          command: node scripts/discord success dashboard
           when: on_success
 
 
@@ -142,13 +142,12 @@ jobs:
             vercel alias set $VERCEL_URL lettercms-api-$CIRCLE_BRANCH.vercel.app --scope lettercms -t $VERCEL_TOKEN
       - run:
           name: Notify error on deploy
-          command: node scripts/discord --status fail --env api
+          command: node scripts/discord fail api
           when: on_fail
       - run:
           name: Notify deploy
-          command: node scripts/discord --status success --env client
+          command: node scripts/discord success api
           when: on_success
-
 
   alias-api:
     docker:
