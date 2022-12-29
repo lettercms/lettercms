@@ -4,9 +4,6 @@ import asyncImport from '@/lib/asyncImportScript';
 import sdk from '@lettercms/sdk';
 import Button from '@/components/button';
 
-
-const isDev = process.env.NODE_ENV !== 'production';
-
 let canvas = null;
 let cropper = null;
 let originalImg = '';
@@ -18,6 +15,7 @@ const cropperOpts = {
   autoCropArea: 1,
   dragMode: 'move',
   restore: false,
+  responsive: true,
   center: false,
   highlight: false,
   cropBoxMovable: true,
@@ -156,13 +154,17 @@ const SelectRatio = ({onClick, onChange, image}) => <div id='aspect-main'>
   `}</style>
 </div>;
 
-const UploadMethod = ({onClickUpload}) => <div>
-  <Input id='url' onKeyUp={e => {onUrlPicture(e, onClickUpload);}} label='Enlace'/>
-  <hr/>
-  <Button style={{width: '100%'}} type='solid' onClick={onClickUpload}>Subir Imagen</Button>{/*
+const UploadMethod = ({onClickUpload}) => {
+  const [url, setUrl] = useState('');
+
+  return <div>
+    <Input id='url' value={url} onChange={({target: {value}}) => setUrl(value)} onKeyUp={e => {onUrlPicture(e, onClickUpload);}} label='Enlace'/>
     <hr/>
-    <button>Seleccionar de la galeria</button>*/}
-</div>;
+    <Button style={{width: '100%'}} type='solid' onClick={onClickUpload}>Subir Imagen</Button>{/*
+      <hr/>
+      <button>Seleccionar de la galeria</button>*/}
+  </div>;
+};
 
 const ImageSelector = ({show, onAppend}) => {
   const [step, changeStep] = useState('select');
@@ -184,16 +186,12 @@ const ImageSelector = ({show, onAppend}) => {
   useEffect(() => {
     asyncImport(
       'cropper-js',
-      isDev
-        ? '/editor/cropper.css'
-        : 'https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css',
       'css'
     );
     asyncImport(
       'cropper-css',
-      isDev
-        ? '/editor/cropper.js'
-        : 'https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js'
+      'https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js'
     );
 
     return () => {
@@ -220,15 +218,15 @@ const ImageSelector = ({show, onAppend}) => {
     }
     {
       step === 'edit' &&
-      <button onClick={() => cropDone(() => changeStep('upload'))}>Cortar</button>
+      <Button type='solid' onClick={() => cropDone(() => changeStep('upload'))}>Cortar</Button>
     }
     {
       step === 'upload' &&
       <>
         <img src={croppedImg} style={{height: 300}} alt=''/>
-        <button onClick={() => uploadImage(onAppend)}>Listo</button>
+        <Button type='solid' onClick={() => uploadImage(onAppend)}>Listo</Button>
         <br/>
-        <button onClick={() => cancelCrop(() => changeStep('edit'))}>Cancelar</button>
+        <Button type='solid' onClick={() => cancelCrop(() => changeStep('edit'))}>Cancelar</Button>
       </>
     }
     <style jsx>{`

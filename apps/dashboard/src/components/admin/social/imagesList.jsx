@@ -27,7 +27,8 @@ const ImageList = ({images, onAdd, onDelete}) => {
     </div>
     <style jsx>{`
       span {
-        color: white;
+        color: var(--main-alt);
+        font-weight: bold;
       }
       #images-upload-container {
         margin-bottom: 1rem;
@@ -69,7 +70,7 @@ const ImageList = ({images, onAdd, onDelete}) => {
         opacity: 1;
       }
       .no-images {
-        background: white;
+        background: #f7f7f7;
         display: inline-flex;
         justify-content: center;
         align-items: center;
