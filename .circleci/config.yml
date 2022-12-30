@@ -43,12 +43,9 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn
-          with-cache: false
       - run:
           name: Deploy info
-          command: node scripts/discord null info
+          command: node scripts/discord info
       - path-filtering/set-parameters:
           mapping: |
             packages/models/.* run-dashboard true
@@ -77,4 +74,6 @@ workflows:
   always-run:
     jobs:
       - filter
+          context:
+            - LetterCMS
           

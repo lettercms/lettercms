@@ -1,14 +1,13 @@
-const fetch = require('node-fetch');
+const https = require('https');
+const url = require('url');
 
 const status = process.argv[2];
 const env = process.argv[3];
 
 const isFail = status === 'failed';
 
-
-
 (async function() {
-  let colorCode = '5f4dee';
+  let colorCode = 6245870;
   let description = '';
 
   let fields = [];
@@ -38,7 +37,7 @@ const isFail = status === 'failed';
     colorCode = 3394662;
   } else if (status === 'info') {
     description = `Starting Deployment of **${process.env.CIRCLE_BRANCH}** branch by [@${process.env.CIRCLE_USERNAME}](https://github.com/${process.env.CIRCLE_USERNAME})`;
-    colorCode = 'f7f7f7';
+    colorCode = 16250871;
 
     fields = [
       {
@@ -48,21 +47,40 @@ const isFail = status === 'failed';
     ];
   }
 
-  const r = await fetch(process.env.DISCORD_DEPLOYMENT_WEBHOOK, {
+  const {hostname, path} = url.parse(process.env.DISCORD_DEPLOYMENT_WEBHOOK);
+
+  console.log(JSON.stringify({
+    embeds: [
+      { 
+        description,
+        color: colorCode,
+        fields
+      } 
+    ]  
+  }))
+
+  const req = https.request({
     method: 'POST',
+    hostname,
+    path,
     headers: {
       'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      embeds: [
-        { 
-          description,
-          color: colorCode,
-          fields
-        } 
-      ] 
-    })
+    }
+  }, r => {
+    console.log(r.headers)
+    console.log(r.statusCode)
+    r.on('data', chunk => console.log(chunk.toString()))
   });
-})()
 
-//https://discord.gg/XxYCqGZsvT
+  req.write(JSON.stringify({
+    embeds: [
+      { 
+        description,
+        color: colorCode,
+        fields
+      } 
+    ]  
+  }));
+
+  req.end();
+})()
