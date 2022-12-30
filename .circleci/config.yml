@@ -37,10 +37,15 @@ commands:
 
 jobs:
   filter:
+    docker:
+      - image: cimg/node:16.18.0
     executor: path-filtering/default
     resource_class: small
     steps:
       - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: false
       - run:
           name: Deploy info
           command: node scripts/discord null info
