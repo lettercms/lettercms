@@ -67,7 +67,7 @@ jobs:
       - set-continued-config:
           lookup-key: config
       - continuation/continue:
-          configuration-path: .circleci/continue_config.yml
+          configuration_path: .circleci/continue_config.yml
           parameters: /tmp/pipeline-parameters.json
 
 workflows:
