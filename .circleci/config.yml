@@ -4,6 +4,7 @@ setup: true
 
 orbs:
   path-filtering: circleci/path-filtering@0.1.3
+  continuation: circleci/continuation@0.3.1
   node: circleci/node@4.1
 
 jobs:
@@ -16,7 +17,6 @@ jobs:
           name: Deploy info
           command: node scripts/discord null info
       - path-filtering/set-parameters:
-          name: check-updated-files
           mapping: |
             packages/models/.* run-dashboard true
             apps/dashboard/.* run-dashboard true
@@ -34,7 +34,11 @@ jobs:
             apps/api/.* run-api true
 
           base-revision: main
+      - set-continud-config:
+          lookup-key: config
+      - continuation/continue:
           config-path: .circleci/continue_config.yml
+          parameters: /tmp/pipeline-parameters.json
 
 workflows:
   always-run:
