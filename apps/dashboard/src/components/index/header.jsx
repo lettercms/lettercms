@@ -1,3 +1,4 @@
+import {FormattedMessage} from 'react-intl';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 import Button from '@/components/button';
@@ -14,7 +15,9 @@ export default function  Header (){
               <div className="text-container">
                 <h1>Letter CMS</h1>
                 <p className="p-large">Usa LetterCMS para atraer nuevos usuarios y ofrecerles el mejor contenido de acuerdo a sus gustos</p>
-                <Button type='outline' alt onClick={() => router.push('/signin')}>REGISTRARSE</Button>
+                <Button type='outline' alt onClick={() => router.push('/signin')}>
+                  <FormattedMessage id="REGISTER"/>
+                </Button>
               </div> 
             </div> 
             <div className="col-lg-6 col-xl-8">

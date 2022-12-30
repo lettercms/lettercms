@@ -1,3 +1,4 @@
+import {FormattedMessage} from 'react-intl';
 import Link from 'next/link';
 import Image from 'next/image';
 import Button from '@/components/button';
@@ -23,7 +24,9 @@ export default function Details() {
                 <div className="media-body">Colabora y crea de manera mas eficiente</div>
               </li>
             </ul>
-            <Button type='solid' onClick={() => router.push('/signin')}>REGISTRARSE</Button>
+            <Button type='solid' onClick={() => router.push('/signin')}>
+              <FormattedMessage id="REGISTER"/>
+            </Button>
           </div>
         </div>
         <div className="col-lg-6">

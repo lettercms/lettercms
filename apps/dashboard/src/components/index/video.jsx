@@ -1,3 +1,4 @@
+import {FormattedMessage} from 'react-intl';
 import Base from '../admin/stats/base';
 import Link from 'next/link';
 import Button from '@/components/button';
@@ -16,7 +17,9 @@ export default function CTA() {
             </div> 
           </div>
           <p className="p-heading">Empieza desde cero y crece junto a nosotros.</p>
-          <Button type='outline' onClick={() => router.push('/signin')}>REGISTRARSE</Button>
+          <Button type='outline' onClick={() => router.push('/signin')}>
+            <FormattedMessage id="REGISTER"/>
+          </Button>
         </div> 
       </div> 
     </Base> 

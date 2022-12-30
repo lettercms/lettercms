@@ -13,8 +13,8 @@ const links = [
   },
   {
     pre: 'Apoyanos en ',
-    link: 'Patreon' ,
-    href: 'https://patreon.com/lettercms'
+    link: 'Open Collective' ,
+    href: 'https://opencollective.com/lettercms'
   }
 ];
 

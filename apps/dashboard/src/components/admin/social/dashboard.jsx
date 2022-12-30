@@ -82,9 +82,6 @@ export default function SocialDashboard({newPost, onAccounts}) {
       >
         <Button type='outline' onClick={newPost} disabled={!hasAccounts}>Nueva Entrada</Button>
       </Top>
-      <div className='stats-notice'>
-        <span>Feature aun en desarrollo. Todos los datos son de demostración</span>
-      </div>
       <div id='main-social'>
         <ul>
           {UI}
@@ -93,13 +90,6 @@ export default function SocialDashboard({newPost, onAccounts}) {
       <style jsx>{`
         .social-container {
           width: 100%;
-        }
-        .stats-notice {
-          width: 100%;
-          background: #ccd7ec;
-          padding: 1rem 0;
-          text-align: center;
-          z-index: 10;
         }
         #main-social {
           width: 100%;

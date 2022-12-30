@@ -1,3 +1,4 @@
+import {FormattedMessage} from 'react-intl';
 import {useState} from 'react';
 import {useRouter} from 'next/router';
 import Image from 'next/image';
@@ -93,7 +94,9 @@ export default function Features() {
                               </li>)
                             }
                           </ul>
-                          <Button type='solid' onClick={() => router.push('/signin')}>REGISTRATE</Button>
+                          <Button type='solid' onClick={() => router.push('/signin')}>
+                            <FormattedMessage id="REGISTER"/>
+                          </Button>
                         </div> 
                       </div> 
                     </div> 

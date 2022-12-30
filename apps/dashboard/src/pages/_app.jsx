@@ -6,6 +6,7 @@ import { SessionProvider } from 'next-auth/react';
 import toast, { Toaster } from 'react-hot-toast';
 import Load from '../components/loadBar';
 import {ClientProvider} from '@/lib/userContext'; 
+import {IntlProvider} from "react-intl";
 import '@/styles/global.scss';
 
 //Dynamics
@@ -46,26 +47,28 @@ export default function App({Component, pageProps: { session, ...pageProps }}) {
 
     return (
       <div>
-        <ClientProvider accessToken={pageProps.accessToken}>
-          <SessionProvider session={session}>
-            {
-              (
-                showLoad &&
-                !pageProps.hideLayout
-              ) &&
-              <Load />
-            }
-            {
-              (
-                !router.asPath.startsWith('/dashboard') &&
-                !Component.hideMenu
-              ) &&
-              <Nav />
-            }
-            {getLayout(<Component {...pageProps} />, pageProps.user)}
-          </SessionProvider>
-        </ClientProvider>
-        <Toaster />
+        <IntlProvider locale='es' defaultLocale="en">
+          <ClientProvider accessToken={pageProps.accessToken}>
+            <SessionProvider session={session}>
+              {
+                (
+                  showLoad &&
+                  !pageProps.hideLayout
+                ) &&
+                <Load />
+              }
+              {
+                (
+                  !router.asPath.startsWith('/dashboard') &&
+                  !Component.hideMenu
+                ) &&
+                <Nav />
+              }
+              {getLayout(<Component {...pageProps} />, pageProps.user)}
+            </SessionProvider>
+          </ClientProvider>
+          <Toaster />
+        </IntlProvider>
       </div>
     );
 }

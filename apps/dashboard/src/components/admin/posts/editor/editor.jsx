@@ -64,8 +64,6 @@ export default function Editor({onOpenModal}) {
           }
         }}
         onChange={ ( event, editor ) => {
-          console.log('event', event);
-
           const content = inputRef.current;
           
           const images = content.getElementsByTagName('img');

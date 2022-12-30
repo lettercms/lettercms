@@ -2,7 +2,6 @@
 import BaseLoad from '../stats/baseLoad';
 import AccountLoad from './account/load';
 import dynamic from 'next/dynamic';
-import ConfigAside from './configAside';
 import asyncImport from '@/lib/asyncImportScript';
 
 
@@ -36,8 +35,6 @@ const Account = dynamic(() => import('./account'), {
   loading: () => <AccountLoad/>,
   ssr: false
 });
-
-
 
 export default function Config({tab}) {
   useEffect(() => {

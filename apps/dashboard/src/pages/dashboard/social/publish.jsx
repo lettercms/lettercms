@@ -31,7 +31,7 @@ export async function getServerSideProps({ req, res, query}) {
 const AdminDashboard = ({accounts}) => {
   return <>
       <Head>
-        <title>Redes Sociales | Dashboard - LetterCMS</title>
+        <title>Publicación | Dashboard - LetterCMS</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

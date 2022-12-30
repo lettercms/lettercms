@@ -1,1 +1,0 @@
-thumbnailList.jsx;

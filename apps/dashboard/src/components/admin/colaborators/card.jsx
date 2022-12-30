@@ -3,6 +3,7 @@ const Card = ({
   photo,
   name,
   lastname,
+  ocupation
   role,
   view,
   del
@@ -16,7 +17,7 @@ const Card = ({
     <div className="data">
       <span>{name + ' ' + lastname}</span>
       <div>
-        <span className="tags">Developer</span>
+        <span className="tags">{ocupation}</span>
         <div className="align">
           <span>Type:</span>
           <span>{role}</span>
