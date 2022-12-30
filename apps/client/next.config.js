@@ -10,7 +10,7 @@ const withTM = require("next-transpile-modules")([
 
 const isDev = process.env.NODE_ENV !== 'production';
 
-const cfg = withTM({
+const appConfig = withTM({
   swcMinify: true,
   compiler: {
     removeConsole: !isDev,
