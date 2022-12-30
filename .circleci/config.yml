@@ -73,7 +73,7 @@ jobs:
 workflows:
   always-run:
     jobs:
-      - filter
+      - filter:
           context:
             - LetterCMS
           
