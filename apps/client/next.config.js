@@ -54,4 +54,13 @@ const sentryWebpackPluginOptions = {
   silent: true
 }
 
-module.exports = withSentryConfig(cfg, sentryWebpackPluginOptions);
+if (isDev)
+  module.exports = appConfig;
+else
+  module.exports = withSentryConfig({
+    ...appConfig,
+    sentry: {
+      hideSourceMaps: true,
+      widenClientFileUpload: true
+    },
+  }, sentryWebpackPluginOptions);
