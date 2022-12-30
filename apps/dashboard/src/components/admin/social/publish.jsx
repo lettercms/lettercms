@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
+import Router from 'next/router';
 import Datetime from 'react-datetime';
 import moment from 'moment';
 import Input from '../../input';
@@ -9,6 +9,8 @@ import ImageSelector from './imageSelector';
 import ImageList from './imagesList';
 import sdk from '@lettercms/sdk';
 import Button from '@/components/button';
+import FBIco from '@lettercms/icons/facebook';
+import IGIco from '@lettercms/icons/instagram';
 import 'react-datetime/css/react-datetime.css';
 import 'moment/locale/es';
 
@@ -53,12 +55,12 @@ const renderInput =  (isOpen, date, clearDate) => {
       <style jsx>{`
         #date-container {
           border-radius: 50px;
-          border: 0.125rem solid white;
+          border: 0.125rem solid var(--main);
           position: relative;
           display: flex;
           align-items: center;
           cursor: pointer;
-          color: white;
+          color: var(--main);
         }
         #date-container div {
           padding: 0 2rem 0 1rem;
@@ -76,13 +78,13 @@ const renderInput =  (isOpen, date, clearDate) => {
           padding: .5rem .8rem;
         }
         :global(#date-button path) {
-          fill: white;
+          fill: var(--main);
         }
         :global(#date-button:hover:enabled) {
-          background: white;
+          background: var(--main);
         }
         :global(#date-button:hover:enabled path) {
-          fill: #5f4dee;
+          fill: white;
         }
       `}</style>
     </div>;
@@ -145,6 +147,9 @@ const Publish = ({accounts}) => {
   }, [content]);
 
   return <div className='publish-container flex'>
+    <button className='back-button' onClick={() => Router.push('/dashboard/social')}>
+      <svg className='back-ico' height='32' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
+    </button>
     <div id='publish-main' className='middle flex flex-column'>
       <div>
         <div id='selections'>
@@ -164,7 +169,7 @@ const Publish = ({accounts}) => {
             }
           </div>
       </div>
-      <div id='publish-buttons' className='bg-blue'>
+      <div id='publish-buttons'>
         <ImageList images={images} onAdd={() => setModal('image')} onDelete={url => setImage(images.filter(_url => url !== _url))}/>
         <Input type='textarea' id='content' value={content} label='Contenido' onInput={({target: {value}}) => setContent(value)}/>
         <div className='flex flex-row' style={{justifyContent: 'space-between'}}>
@@ -174,6 +179,7 @@ const Publish = ({accounts}) => {
                 onClose={() => setDateOpen(false)}
                 onOpen={() => setDateOpen(true)}
                 value={date}
+                isValidDate={current => current.isAfter(Date.now())}
                 locale="es"
                 onChange={e => setDate(e.toDate())}
                 renderInput={renderInput(isDateOpen, date, () => setDate(null))}
@@ -181,22 +187,26 @@ const Publish = ({accounts}) => {
             }
           </div>
           <div className='flex flex-row' style={{width: 'auto'}}>
-            <Button disabled={!content || !hasFacebook || !hasInstagram} type='outline' alt onClick={() => publishPost({
-              message: content,
-              schedule: date !== null && date,
-              images,
-              feeds: [hasFacebook && 'facebook', hasInstagram && 'instagram'].filter(e => e) 
-            }, clearData)}>{ !date ? 'Publicar' : 'Programar'}</Button>
+            <Button
+              disabled={!content || !hasFacebook || !hasInstagram}
+              type='outline'
+              onClick={() => publishPost({
+                message: content,
+                schedule: date !== null && date,
+                images,
+                feeds: [hasFacebook && 'facebook', hasInstagram && 'instagram'].filter(e => e) 
+              }, clearData)}
+            >{ !date ? 'Publicar' : 'Programar'}</Button>
           </div>
         </div>
       </div>
     </div>
-    <div id='cards' className='bg-blue'>
+    <div id='cards'>
       {
         hasFacebook &&
         <>
           <div className='social-title'>
-            <img alt='' src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/facebook.svg'/>
+            <FBIco height='32'/>
             <span>Facebook</span>
           </div>
           <Facebook content={content} images={images} pageImage={accounts.facebook.picture} pageName={accounts.facebook.name}/>
@@ -206,7 +216,7 @@ const Publish = ({accounts}) => {
         hasInstagram &&
         <>
           <div className='social-title'>
-            <img alt='' src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/instagram.svg'/>
+            <IGIco height='32'/>
             <span>Instagram</span>
           </div>
           <Instagram content={content} images={images} pageImage={accounts.instagram.picture} pageName={accounts.instagram.name}/>
@@ -242,6 +252,13 @@ const Publish = ({accounts}) => {
         align-items: center;
         display: flex;
       }
+      .back-button {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background: none;
+        border: none;
+      }
       #cards {
         justify-content: start;
         display: flex;
@@ -251,6 +268,7 @@ const Publish = ({accounts}) => {
         padding: 1rem 0;
         align-items: center;
         overflow: auto;
+        background: #f7f7f7;
       }
       #selections {
         display: flex;
@@ -258,6 +276,7 @@ const Publish = ({accounts}) => {
         flex-wrap: wrap;
         justify-content: space-around;
         width: 100%;
+        padding-top: 3rem;
       }
       #selections div {
         width: 47.5%;
@@ -295,30 +314,31 @@ const Publish = ({accounts}) => {
         height: 50%;
         width: 100%;
       }
-      .bg-blue {
-        background: #5f4dee;
+      #publish-main {
+        padding: 0 1rem;
       }
       #publish-buttons {
-        padding: 2rem 10%;
+        padding: 2rem 0;
         height: auto;
       }
+      .center {
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
       .center span {
-        color: white;
+        color: var(--main-alt);
       }
       .social-title {
-        color: white;
+        color: var(--main-alt);
         display: flex;
         flex-direction: row; 
         align-items: center;
         justify-content: center;
       }
-      .social-title img {
-        filter: brightness(5);
-        width: 2rem;
-        margin-right: .5rem;
-      }
       .social-title span {
         font-size: 20px;
+        margin-left: .5rem;
       }
     `}</style>
   </div>;

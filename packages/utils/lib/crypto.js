@@ -1,6 +1,5 @@
 import {randomBytes, scrypt, timingSafeEqual} from 'crypto';
 
-
 export const sign = key => {
   return new Promise((resolve, reject) => {
     const salt = randomBytes(16);

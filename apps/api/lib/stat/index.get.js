@@ -242,7 +242,7 @@ export default async function GetStats() {
     comments = await commentsModel.countDocuments({published: conditions.time, subdomain});
   
   if (hasSubscriptors)
-    subscriptors = await Users.countDocuments({subscriptionTime: conditions.time, subdomain});
+    subscriptors = await Users.countDocuments({subscriptionTime: conditions.time, subdomain, active: true /*Change to subscription status*/});
 
   if (hasMostViewed)
     general.mostViewed = await posts.findOne({subdomain}, 'thumbnail title views comments url', {

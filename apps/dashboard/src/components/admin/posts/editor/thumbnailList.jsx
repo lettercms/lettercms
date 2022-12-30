@@ -25,13 +25,18 @@ export default function List() {
       <style jsx global>{`
         .thumbContainer {
           width: 15rem !important;
-          padding: .5rem 1rem;
+          padding: .5rem 0 .5rem 1rem;
+          max-height: 35rem;
         }
         .thumbContainer span {
           text-align: center;
           width: 100%;
           margin: 0 0 .5rem;
           display: block;
+        }
+        .thumbContainer ul {
+          overflow-y: auto;
+          padding-right: 1rem;
         }
         .thumbContainer li {
           padding: 15px 5%;
