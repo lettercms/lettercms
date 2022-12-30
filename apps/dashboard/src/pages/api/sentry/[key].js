@@ -1,13 +1,12 @@
 import bcrypt from 'bcrypt';
 
 export default async function SentryProxy(req, res) {
-  console.log(req.query);
   if (req.method !== 'POST')
     return res.status(405).json({
       message: 'Method Not Allowed'
     });
 
-  const valid = await bcrypt.compare(process.env.SENTRY_WEBHOOK_KEY, req.query.key);
+  const valid = await bcrypt.compare(req.query.key, process.env.SENTRY_WEBHOOK_KEY);
 
   if (!valid)
     return res.status(403).json({
