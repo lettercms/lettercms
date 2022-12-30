@@ -15,7 +15,7 @@ commands:
         default: /tmp/pipeline-parameters.json
       configuration-path:
         type: string
-        default: .circleci/continue.yml
+        default: .circleci/continue_config.yml
       lookup-key:
         type: string
         description: key to look up the filepath for the next config
@@ -67,7 +67,7 @@ jobs:
       - set-continued-config:
           lookup-key: config
       - continuation/continue:
-          configuration_path: .circleci/continue_config.yml
+          configuration-path: .circleci/continue_config.yml
           parameters: /tmp/pipeline-parameters.json
 
 workflows:
