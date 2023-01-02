@@ -47,7 +47,7 @@ const filterTemplate = (template, data) => {
 
 const sendMail = async (to, subject, data) => {
   if (isDev)
-    return console.log(to, subject, data);
+    return console.log(to, subject, data); //eslint-disable-line
 
   const template = await getTemplate(data.type);
 

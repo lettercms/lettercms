@@ -47,7 +47,7 @@ export default async function TrainigRecommendation() {
   else
     await Users.updateOne({_id: id}, {$push: {views}, $inc: {postsView: 1}});
 
-  await Ratings.updateOne({post: _id}, {viewed: true});
+  await Ratings.updateOne({post: _id, userID: id}, {viewed: true});
 
   train(id, subdomain);
 

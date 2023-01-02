@@ -15,13 +15,14 @@ module.exports = {
     "prettier"
   ],
   rules: {
-    "semi": ["warn", "always"],
-    "quotes": ["warn", "single"],
+    semi: ["warn", "always"],
+    quotes: ["warn", "single"],
     "array-bracket-spacing": "error",
     "arrow-spacing": "error",
-    "complexity": "off",
-    "curly": "off",
+    complexity: "off",
+    curly: "off",
     "no-buffer-constructor": "error",
-    "no-var": "error"
+    "no-var": "error",
+    "no-console": "warn"
   }
 };

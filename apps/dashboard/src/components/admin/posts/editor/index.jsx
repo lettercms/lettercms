@@ -180,7 +180,7 @@ export default function EditorContainer({post, blog, hasFacebook, hasInstagram})
         timer.current = setTimeout(() => {
           update(data._id, {
             clearTimeout: () => clearTimeout(timer.current),
-            setLoading: console.log
+            setLoading
           });
         }, 20000);
       }

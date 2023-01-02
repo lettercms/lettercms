@@ -37,8 +37,7 @@ export async function getBlog(page = '1', userID) {
   if (!userID || userID === 'undefined')
     postsData = await findPosts(posts, {subdomain, postStatus: 'published'}, postsOptions);
   else
-    postsData = await findRecommendations(Ratings, {subdomain, userID}, postsOptions);
-
+    postsData = await findRecommendations(Ratings, {userID}, postsOptions);
 
   return {
     posts: postsData,

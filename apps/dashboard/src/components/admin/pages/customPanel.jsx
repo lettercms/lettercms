@@ -39,7 +39,6 @@ const InputPanel = ({title,url, description, onChange, pageStatus}) => {
     onChange(e, _url);
   };
 
-  console.log(_title, _url, _description);
   return <div id='custom-panel-react'>
     <div>
       

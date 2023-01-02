@@ -68,7 +68,8 @@ class Pages extends Component {
       this.setState({ editting: true });
     } catch(err) {
       alert('Error al crear la pagina');
-      throw new Error(err);
+
+      throw err;
     }
   }
 
@@ -93,7 +94,7 @@ class Pages extends Component {
           {name: 'published', alias: 'Publicados'},
           {name: 'draft', alias: 'Guardados'}
         ]}
-        onEdit={console.log}
+        onEdit={() => null}
         onCreate={this.newPage}
         buttonText='Crear'
       />;

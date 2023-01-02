@@ -31,6 +31,7 @@ module.exports = {
     'no-buffer-constructor': 'error',
     'no-var': 'error',
     'react/react-in-jsx-scope': 'off',
-    'react/prop-types': 'off'
+    'react/prop-types': 'off',
+    "no-console": "warn"
   }
 };

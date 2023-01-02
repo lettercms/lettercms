@@ -64,14 +64,11 @@ export default function Editor({onOpenModal}) {
           }
         }}
         onChange={ ( event, editor ) => {
-          console.log('event', event);
-
           const content = inputRef.current;
           
           const images = content.getElementsByTagName('img');
 
           if (images?.length > 0) {
-
             let im = Array.from(images).map(e => e.dataset.src ? e.dataset.src : e.src);
 
             setData('images', im);
@@ -80,7 +77,9 @@ export default function Editor({onOpenModal}) {
           setData('content', editor.getData());
 
         }}
-        onError={console.error}
+        onError={err => {
+          throw err;
+        }}
       />
       <style jsx global>{`
         .ck-editor {

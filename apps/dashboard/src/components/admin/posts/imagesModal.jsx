@@ -7,7 +7,6 @@ import ModalTabs from './images/tabs';
 import Cross from '@/components/svg/cross';
 
 const generateUnsplashSrc = (raw, width, height) => {
-  console.log(arguments);
   return {
     width,
     class: 'image',

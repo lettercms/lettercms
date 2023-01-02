@@ -51,8 +51,6 @@ export default async function PostInvitations() {
     invitation: _id
   });
 
-  console.log(r);
-
   res.json({
     status: 'OK'
   });

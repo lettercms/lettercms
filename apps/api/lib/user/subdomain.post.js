@@ -6,18 +6,17 @@ export default async function CreateUser() {
 
   const {_id: id} = await Users.create({...body, subdomain});
 
-  posts.find({subdomain, postStatus: 'published'}, '_id')
-    .then(data => {
-      Promise.allSettled(
-        data.map(({_id}) => {
-          Ratings.create({
-            userID: id,
-            post: _id,
-            subdomain
-          });
-        })
-      ).then(() => console.log('Done'));
-    });
+  const data = await posts.find({subdomain, postStatus: 'published'}, '_id');
+
+  const promises = data.map(({_id}) =>
+    Ratings.create({
+      userID: id,
+      post: _id,
+      subdomain
+    })
+  );
+
+  Promise.allSettled(promises);
 
   res.json({
     status: 'OK',

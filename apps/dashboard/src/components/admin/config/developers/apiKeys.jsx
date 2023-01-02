@@ -71,8 +71,9 @@ const ApiKey = () => {
 
       alert('Error al crear la llave');
     } catch(err) {
-      console.error(err);
-      return alert('Error al crear la llave');
+      alert('Error al crear la llave');
+
+      throw err;
     } finally {
       setKeyName('');
     }

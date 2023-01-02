@@ -1,8 +1,6 @@
 import blogs from '@lettercms/models/blogs';
 
 export default async function UpdateCategories(subdomain, prev, next) {
-  console.log(prev, next);
-
   if (prev == next)
     return Promise.resolve();
 

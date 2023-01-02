@@ -28,7 +28,6 @@ export default async function processBlogger(file, subdomain, author) {
     }
   });
 
-  console.log(tags);
   await blogs.updateOne({subdomain}, {tags});
 
   return posts.insertMany(postData);

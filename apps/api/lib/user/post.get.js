@@ -103,9 +103,6 @@ export default async function GetRecommended() {
     req.query);
   }
 
-  console.log(req.query);
-
-
   if (!recommended || !similar) {
     const fallbackCondition = condition._id
       ? {_id: {$ne: postID}, postStatus: 'published'}

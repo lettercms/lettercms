@@ -15,6 +15,7 @@ module.exports = {
     "@next/next/no-img-element": "off",
     "no-buffer-constructor": "error",
     "no-var": "error",
+    "no-console": "warn",
     "turbo/no-undeclared-env-vars": "off"
   }
 };

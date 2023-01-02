@@ -8,7 +8,7 @@ export const find = async (model, filter, opts = {}) => {
   let hasCategory = false;
   let hasFullUrl = false;
 
-  opts.fields = opts.fields?.split(',').map(e => ('post.' + e)).join(',') || 'post';
+  opts.fields = opts.fields?.split(',').map(e => ('post.' + e)).join(',') || 'viewed,rating,post.*';
 
   if (opts.fields) {
 

@@ -8,7 +8,6 @@ const training = async (userID, subdomain) => {
   const {views} = await Users.findOne({_id: userID}, 'views', {lean: true});
 
   const rates = generateData(views);
-  console.log(rates);
 
   await Users.updateOne({_id: userID}, {
     hasRecommendations: true,
@@ -17,14 +16,14 @@ const training = async (userID, subdomain) => {
 
   const p = await posts.find({subdomain, postStatus:'published'}, 'tags');
 
-  const promises = p.filter(e => e.tags.length > 0).map(({_id: post, tags}) => {
+  const promises = p.filter(e => e.tags.length > 0).map(async ({_id: post, tags}) => {
 
     const wanted = rate(rates, tags);
 
     return Ratings.updateOne({userID, post}, {rating: wanted});
   });
 
-  return Promise.allSettled(promises);
+  return promises;
 };
 
 export default training;

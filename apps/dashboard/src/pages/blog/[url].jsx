@@ -24,8 +24,6 @@ export const getServerSideProps = async ({req, res, query}) => {
       user
     }));
 
-    console.log(recommendation);
-
     return {
       props: {
         ...props,
