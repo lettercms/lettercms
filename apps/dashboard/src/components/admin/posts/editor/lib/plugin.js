@@ -11,7 +11,6 @@ const  EditorPlugin = (closeModal, data, setData) => editor => {
   editor.conversion.for( 'editingDowncast' ).add(imageToEditFigure);
 
   window.editorEventEmitter.on('insert', source => {
-    console.log(source);
     const frag = editor.model.change( writer => {
 
       const image = writer.createElement('imageBlock', source);

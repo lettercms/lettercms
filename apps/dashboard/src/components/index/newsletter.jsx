@@ -16,7 +16,6 @@ export default class Newsletter extends Component {
 
     try {
       //await admin.createSubscritor(this.state.email);
-      console.log('Done');
     } catch(err) {
       alert('Error al suscribirse');
       throw err;

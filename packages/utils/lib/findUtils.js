@@ -98,22 +98,19 @@ export const parseFields = fields => {
     if (path === '_base' && !populate && !opts.select) 
       return opts.select;
 
-    if (path === '_base' && populate?.select === '*') {
+    if (path === '_base' && populate?.select === '*')
       return {
         populate
       };
-    }
 
-    if (path === '_base' && populate) {
+    if (path === '_base' && populate)
       return {
         populate,
         select: opts.select
       };
-    }
+
     if (path === '_base' && opts.select)
       return opts.select;
-    
-
 
     if (populate)
       opts.populate = populate;
@@ -152,10 +149,14 @@ export const parseQuery = query => {
 
   if (!options.populate)
     options.lean = true;
-  if (sort)
-    options.sort = {
-      [sort]: -1
-    };
+  if (sort) {
+    if (typeof sort === 'string')
+      options.sort = {
+        [sort]: -1
+      };
+    else
+      options.sort = sort;
+  }
 
   if (page)
     options.skip = (page - 1) * limit;

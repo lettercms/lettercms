@@ -59,7 +59,7 @@ class Editor {
         assetManager: {
           custom: {
             open(props) {
-              console.log(props);
+              //console.log(props);
               //TODO: Add custom modal
             },
             close(props) {
@@ -85,7 +85,6 @@ class Editor {
                 'X-Requested-With': ''
               },
               onStore: (data, editor) => {
-                console.log(editor);
                 const html = editor.getHtml();
                 const css = editor.getCss();
 

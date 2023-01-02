@@ -3,9 +3,7 @@ import train from '../lib/training';
 export default async function Training() {
   const {req: {subdomain, params: {userID}}, res} = this;
 
-
-  train(userID, subdomain)
-    .then(() => console.log(`> Training done to user "${userID}"`));
+  train(userID, subdomain);
 
   res.json({
     status: 'OK'

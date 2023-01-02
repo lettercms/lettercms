@@ -3,13 +3,22 @@ version: 2.1
 setup: true
 
 orbs:
-  path-filtering: circleci/path-filtering@0.1.1
+  node: circleci/node@4.1
+  path-filtering: circleci/path-filtering@0.1.3
+  continuation: circleci/continuation@0.3.1
 
-workflows:
-  always-run:
-    jobs:
-      - path-filtering/filter:
-          name: check-updated-files
+jobs:
+  filter:
+    docker:
+      - image: cimg/node:16.18.0
+    executor: path-filtering/default
+    resource_class: small
+    steps:
+      - checkout
+      - run:
+          name: Deploy info
+          command: node scripts/discord info
+      - path-filtering/set-parameters:
           mapping: |
             packages/models/.* run-dashboard true
             apps/dashboard/.* run-dashboard true
@@ -27,4 +36,13 @@ workflows:
             apps/api/.* run-api true
 
           base-revision: main
-          config-path: .circleci/continue_config.yml
+      - continuation/continue:
+          configuration_path: .circleci/continue_config.yml
+
+workflows:
+  always-run:
+    jobs:
+      - filter:
+          context:
+            - LetterCMS
+          

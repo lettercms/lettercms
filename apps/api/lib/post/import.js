@@ -18,20 +18,17 @@ export default async function importData() {
       data += chunk.toString();
     })
     .on('error', err => {
-      console.log(err);
       throw err;
     })
     .on('end', async () => {
       try {
         const r = await processBlogger(data, subdomain, account);
         await bucket.file(`${subdomain}/${type}.xml`).delete();
-        console.log(r);
 
         res.json({
           status: 'OK'
         });
       } catch(err) {
-        console.log(err);
         throw err;
       }
     });

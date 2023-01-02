@@ -49,11 +49,13 @@ export default async function patchUsage(req, res) {
       status: 'OK'
     });
   } catch(err) {
-    console.log(err);
+
     res.statusCode = 500;
 
-    return res.json({
+    res.json({
       status: 'Server Error'
     });
+
+    throw err;
   }
 }

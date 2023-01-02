@@ -57,7 +57,7 @@ export async function getServerSideProps({req, res, query}) {
     const referrer = req?.headers.referrer || null;
     const {userID = null} = req ? req.cookies : cookieParser(document.cookie);
     
-    const blogData = await getBlog(page);
+    const blogData = await getBlog(page, userID);
 
     const {blog, posts, mostViewed} = JSON.parse(JSON.stringify(blogData));
 

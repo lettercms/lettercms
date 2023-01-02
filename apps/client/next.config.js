@@ -10,7 +10,7 @@ const withTM = require("next-transpile-modules")([
 
 const isDev = process.env.NODE_ENV !== 'production';
 
-const cfg = withTM({
+const appConfig = withTM({
   swcMinify: true,
   compiler: {
     removeConsole: !isDev,
@@ -54,4 +54,13 @@ const sentryWebpackPluginOptions = {
   silent: true
 }
 
-module.exports = withSentryConfig(cfg, sentryWebpackPluginOptions);
+if (isDev)
+  module.exports = appConfig;
+else
+  module.exports = withSentryConfig({
+    ...appConfig,
+    sentry: {
+      hideSourceMaps: true,
+      widenClientFileUpload: true
+    },
+  }, sentryWebpackPluginOptions);

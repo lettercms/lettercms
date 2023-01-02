@@ -27,6 +27,7 @@ const days = [
   'friday',
   'saturday'
 ];
+
 const generateDates = (daysCount, dateEnd) => {
   const dates = [];
 
@@ -41,7 +42,6 @@ const generateDates = (daysCount, dateEnd) => {
       dates.push(path);
     }
 
-    console.log(dateEnd);
     return dates;
 };
 

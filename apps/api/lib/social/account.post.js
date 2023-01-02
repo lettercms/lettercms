@@ -10,7 +10,6 @@ export default async function PostAccount() {
 
   if (type === 'instagram' || type === 'facebook') {
     const longLive = await exchangeToken(accessToken);
-    console.log(longLive);
 
     if (type === 'facebook') {
       account = {

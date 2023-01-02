@@ -16,13 +16,13 @@ export const authOptions = {
   debug: isDev,
   logger: {
     error(code, metadata) {
-      console.error({ type: 'inside error logger', code, metadata });
+      console.error({ type: 'inside error logger', code, metadata }); //eslint-disable-line
     },
     warn(code) {
-      console.warn({ type: 'inside warn logger', code });
+      console.warn({ type: 'inside warn logger', code }); //eslint-disable-line
     },
     debug(code, metadata) {
-      console.log({ type: 'inside debug logger', code, metadata });
+      console.log({ type: 'inside debug logger', code, metadata }); //eslint-disable-line
     },
   },
   session:{

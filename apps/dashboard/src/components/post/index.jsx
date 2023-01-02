@@ -14,29 +14,17 @@ import Layout from '@/components/tracingLayout';
 import Base from '@/components/admin/stats/base';
 import HandleDate from '@/lib/handleDate';
 import Card from '@/components/blog/card';
-import {useToken} from '@/lib/userContext';
 import initLazyLoad from '@/lib/initLazyLoad';
 
 const BlogPost = ({isAdmin, isPreview, user, recommendation: {recommended, similar}, post: {_id, content, title, url, published, updated, thumbnail, tags, description}, referrer, notFound}) => {
   const [stateUser, setUser] = useState(user);
-  const {accessToken} = useToken();
 
   const hasRecommendation = recommended && similar && !isPreview;
 
   useEffect(() => {
-    if (!notFound && !isPreview) {
+    if (!notFound && !isPreview)
       initLazyLoad();
-      
-      const {userID} = cookieParser(document.cookie);
-
-      const _sdk = new sdk.Letter(accessToken);
-      
-      _sdk.stats.setView(url, referrer);
-
-      if (userID && userID !== 'undefined' && userID !== 'null' && userID !== 'no-user')
-        _sdk.createRequest(`/user/${userID}/recommendation`, 'POST', {url});
-    }
-  }, [url, isAdmin, referrer, notFound, accessToken, isPreview]);
+  }, [url, notFound, isPreview]);
 
   return <Layout>
     <Head
@@ -69,27 +57,26 @@ const BlogPost = ({isAdmin, isPreview, user, recommendation: {recommended, simil
         <Base rows={1} title={hasRecommendation ? 'Recomendados para ti' : ''} style={{flexWrap: 'wrap', height: 'auto', width: '100%', borderRadius: '1rem 1rem 0 0', margin: '1rem 0 0'}}>
           {
             hasRecommendation &&
-            <Card
-              title={recommended.title}
-              content={recommended.description}
-              url={recommended.url}
-              fullUrl={recommended.fullUrl}
-              thumbnail={recommended.thumbnail}
-              comments={0}
-              ID={recommended._id}
-            />
-          } 
-          {
-            hasRecommendation &&
-            <Card
-              title={similar.title}
-              content={similar.description}
-              url={similar.url}
-              fullUrl={similar.fullUrl}
-              thumbnail={similar.thumbnail}
-              comments={0}
-              ID={similar._id}
-            />
+            <>
+              <Card
+                title={recommended.title}
+                content={recommended.description}
+                url={recommended.url}
+                fullUrl={recommended.fullUrl}
+                thumbnail={recommended.thumbnail}
+                comments={0}
+                ID={recommended._id}
+              />
+              <Card
+                title={similar.title}
+                content={similar.description}
+                url={similar.url}
+                fullUrl={similar.fullUrl}
+                thumbnail={similar.thumbnail}
+                comments={0}
+                ID={similar._id}
+              />
+            </>
           }
           {/*<Comments id={_id} user={stateUser}/>*/}
         </Base>

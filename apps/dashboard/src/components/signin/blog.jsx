@@ -91,7 +91,6 @@ export default class BlogTab extends Component {
     const {isLoad, subdomain, title, description, existsSubdomain} = this.state;
 
     let subdomainStatus = '';
-    console.log(existsSubdomain);
 
     if (existsSubdomain === true)
       subdomainStatus = 'invalid';
