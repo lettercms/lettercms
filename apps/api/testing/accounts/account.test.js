@@ -1,10 +1,19 @@
-const factory = require('@lettercms/models');
-const jwt = require('jsonwebtoken');
-const testMiddleware = require('../../testing/fetchMiddleware');
+import next from 'next';
+import supertest from 'supertest';
+import express from 'express';
+import setup from './setup';
+import connect from '@lettercms/utils/lib/connection';
+import {Accounts} from '@lettercms/models/accounts';
 
-const {accounts: {Accounts}} = factory(['accounts']);
+const app = next({ dev: true });
+const server = setup(app, express());
+const agent = supertest(server);
 
+let id = null;
+
+const testDate = new Date();
 const testID = 'accounts-account';
+const password = 'hello-world-23';
 const token = jwt.sign({subdomain: testID}, process.env.JWT_AUTH);
 
 const generatePromise = async (key, value, id) => {
@@ -25,34 +34,46 @@ const generatePromise = async (key, value, id) => {
   return Promise.resolve();
 }
 
+beforeAll(async () => {
+  const mongo = await connect();
+
+  const hash = await bcrypt.hash(password, 10);
+  
+  const res = await Accounts.createAccount(testID, {
+    subdomain: testID,
+    name: 'David',
+    lastname: 'Gonzalez',
+    firstTime: false,
+    description: 'Test description',
+    lastLogin: testDate,
+    ocupation: 'LetterCMS CEO',
+    role: 'admin',
+    isSubscribeToNewsletter: false,
+    email:'account@test.com',
+    password: hash,
+    photo: 'photo-url',
+    website: 'website-url',
+    facebook: 'facebook-url',
+    twitter: 'twitter-url',
+    instagram: 'instagram-url',
+    linkedin: 'linkedin-url',
+    email: 'account@test.com',
+  });
+
+  id = res._id.toString();
+
+  mongo.disconnect();
+});
+
 describe('Account API Testing', () => {
   test('GET - Complete Data', async () => {
-    const now = new Date();
-    const {id} = await Accounts.createAccount(testID, {
-      name: 'David',
-      lastname: 'Gonzalez',
-      lastLogin: now,
-      description: 'Test description',
-      ocupation: 'developer',
-      permissions: ['posts'],
-      photo: 'photo-url',
-      website: 'website-url',
-      facebook: 'facebook-url',
-      twitter: 'twitter-url',
-      instagram: 'instagram-url',
-      linkedin: 'linkedin-url',
-      email: 'account@test.com',
-      password: '1234',
-      role: 'admin'
-    });
 
     const matchObj = {
       name: 'David',
       lastname: 'Gonzalez',
-      lastLogin: now.toISOString(),
+      lastLogin: testDate.toISOString(),
       description: 'Test description',
-      ocupation: 'developer',
-      permissions: ['posts'],
+      ocupation: 'LetterCMS CEO',
       photo: 'photo-url',
       website: 'website-url',
       facebook: 'facebook-url',
@@ -71,6 +92,12 @@ describe('Account API Testing', () => {
         emailHex: id
       }
     });
+
+    agent
+      .get('/api/account')
+      .expect(200, {
+        message: 'Unauthorized'
+      }, done);
 
     expect(idRes.statusCode).toBe(200);
     expect(idRes.body).toMatchObject(matchObj);

@@ -4,7 +4,7 @@ import pages from '@lettercms/models/pages';
 import blogs from '@lettercms/models/blogs';
 import {Ratings, Users} from '@lettercms/models/users';
 import {Facebook} from '@lettercms/models/socials';
-import brain from '@/lib/brain';
+import rate from '@/lib/recommendation/lib/rate';
 import FB from '@lettercms/utils/lib/social/Facebook';
 import revalidate from '@lettercms/utils/lib/revalidate';
 import updateTags from './updateTags';
@@ -93,15 +93,9 @@ export default async function PublishPost() {
         let rating = 0;
 
         if (mlModel) {
-          const parsedTags = {};
+          const rates = JSON.parse(mlModel);
 
-          tags.forEach(e => parsedTags[e] = 1);
-              
-          const cross = new brain.CrossValidate(brain.NeuralNetwork);
-
-          const net = cross.fromJSON(JSON.parse(mlModel));
-
-          rating = net.run(parsedTags);
+          rating = rate(rates, tags);
         }
 
         return Ratings.create({

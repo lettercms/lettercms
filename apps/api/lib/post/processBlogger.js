@@ -1,24 +1,35 @@
 import {XMLParser} from 'fast-xml-parser';
 import posts from '@lettercms/models/posts';
+import blogs from '@lettercms/models/blogs';
 
 const parser = new XMLParser({
   ignoreAttributes : false  
 });
 
-export default function processBlogger(file, subdomain, author) {
+export default async function processBlogger(file, subdomain, author) {
 
   const parsed = parser.parse(file);
   const {entry} = parsed.feed;
 
   const postData = [];
+  let tags = {};
 
   entry.forEach(e => {
     if (e.id.includes('.post-')) {
       const data = parseBlogger(e, subdomain, author);
 
+      if (data.postStatus === 'published') {
+        data.tags.forEach(tag => {
+          tags[tag] = (tags[tag] || 0) + 1;
+        });
+      }
+
       postData.push(data);
     }
   });
+
+  console.log(tags);
+  await blogs.updateOne({subdomain}, {tags});
 
   return posts.insertMany(postData);
 }
@@ -54,7 +65,7 @@ function parseBlogger(data, subdomain, author) {
   return {
     title: data.title['#text'],
     thumbnail: data['media:thumbnail']?.['@_url'].replace(/s\d*-(w\d*-)?c(-h\d*)?/, 'w1400'),
-    postStatus: 'draft',
+    postStatus: published ? 'published' : 'draft',
     description: text?.split('.')[0],
     updated: new Date(data.updated),
     published,

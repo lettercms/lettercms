@@ -81,25 +81,29 @@ export default async function GetRecommended() {
   });
 
   if (ordered?.length < 1) {
-    ordered = await findPosts(postModel, {_id: {$ne: _id}, subdomain, postStatus: 'published'}, {limit: 2, ...req.query});
+    const {data} = await findPosts(postModel, {_id: {$ne: _id}, subdomain, postStatus: 'published'}, {limit: 2, ...req.query});
+
+    ordered = data;
   } else if (ordered?.length < 2) {
     ordered[1] = await findPost(postModel, {_id: {$ne: _id}, subdomain, postStatus: 'published'}, req.query);
   }
-
-  let similar = ordered?.[0];
   
+  let similar = ordered?.[0];
+
   if (id.includes('no-user'))
     recommended = ordered?.[1];
   else {
     recommended = await findRecommendation(Ratings, {
       subdomain,
       $and: [
-        {post: {$ne: _id}},
-        {post: {$ne: similar._id}}
+        {post: {$ne: _id.toString()}},
+        {post: {$ne: similar._id.toString()}}
       ]
     },
     req.query);
   }
+
+  console.log(req.query);
 
 
   if (!recommended || !similar) {
@@ -114,7 +118,6 @@ export default async function GetRecommended() {
 
     recommended = fallBack.data[0];
     similar = fallBack.data[1];
-
   }
 
   res.json({

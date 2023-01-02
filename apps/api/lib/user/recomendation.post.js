@@ -1,12 +1,11 @@
 import posts from '@lettercms/models/posts';
 import {Ratings, Users} from '@lettercms/models/users';
 import train from '@/lib/recommendation/lib/training';
-import jwt from 'jsonwebtoken';
 
 const parseTags = arr => {
   const tags = {};
 
-  arr.forEach(e => tags[e] = 1);
+  arr.forEach(e => tags[e.replace(/\s/g, '-').toLowerCase()] = 1);
 
   return tags;
 };
@@ -32,7 +31,6 @@ export default async function TrainigRecommendation() {
       status: 'not-found'
     });
 
-
   const {tags, _id} = await posts.findOne({subdomain, url}, 'tags');
 
   const views = parseTags(tags);
@@ -50,8 +48,6 @@ export default async function TrainigRecommendation() {
     await Users.updateOne({_id: id}, {$push: {views}, $inc: {postsView: 1}});
 
   await Ratings.updateOne({post: _id}, {viewed: true});
-
-  const token = jwt.sign({subdomain}, process.env.JWT_AUTH);
 
   train(id, subdomain);
 

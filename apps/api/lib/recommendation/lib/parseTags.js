@@ -1,7 +1,9 @@
+import blogs from '@lettercms/models/blogs';
+
 export default function parseTags(arr) {
-  const tags = {};
+  let _parsed = {};
 
-  arr.forEach(e => tags[e] = 1);
+  arr.forEach(e => _parsed[e.replace(/\s/g, '-').toLowerCase()] = 1);
 
-  return tags;
+  return _parsed;
 };

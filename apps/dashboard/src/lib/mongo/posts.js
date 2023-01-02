@@ -22,7 +22,6 @@ export async function getPost(url, userID) {
     mainUrl
   });
 
-
   if (post?.postStatus !== 'published')
     return {
       notFound: true

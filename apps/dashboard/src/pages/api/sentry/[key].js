@@ -35,9 +35,9 @@ export default async function SentryProxy(req, res) {
 
   lines.forEach(e => {
     if (actualLine === lineno) {
-      linesString += `\n`;
+      linesString += '\n';
       linesString += `${actualLine++}| ${e}\n`;
-      linesString += `^\n`;
+      linesString += '^\n';
 
     }
     else
@@ -85,7 +85,6 @@ export default async function SentryProxy(req, res) {
         'level',
         'mechanism',
         'runtime',
-        'runtime.name',
         'sentry:release',
         'server_name',
         'vercel'
@@ -107,6 +106,6 @@ export default async function SentryProxy(req, res) {
   })
   .then(e => res.json({}))
   .catch(e => {
-    throw e
+    throw e;
   });
 }

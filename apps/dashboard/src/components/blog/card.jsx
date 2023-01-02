@@ -43,7 +43,8 @@ class Card extends Component {
       comments,
       ID,
       thumbnail,
-      size
+      size,
+      description
     } = this.props;
 
     const {

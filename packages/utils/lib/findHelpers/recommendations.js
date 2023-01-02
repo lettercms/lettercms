@@ -57,7 +57,7 @@ export const find = async (model, filter, opts = {}) => {
   return posts;
 };
 
-export const findOne = async (model, filter, query) => {
+export const findOne = async (model, filter, query = {}) => {
   let hasUrl = false;
   let hasPublished = false;
   let hasCategory = false;
@@ -85,7 +85,10 @@ export const findOne = async (model, filter, query) => {
 
   const {options, projection} = parseQuery(query);
 
-  const data = await model.findOne(filter, projection, options);
+  const {post: data} = await model.findOne(filter, 'post', {...options, populate: {
+    path: 'post',
+    select: projection
+  }});
 
   data.fullUrl = query.mainUrl + getFullUrl(data, query.urlID);
 
@@ -98,7 +101,6 @@ export const findOne = async (model, filter, query) => {
 
   return data;
 };
-
 
 export const findSimilars = async (model, query) => {
   // Post: {subdomain, url}

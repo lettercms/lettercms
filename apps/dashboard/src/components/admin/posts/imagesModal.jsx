@@ -76,6 +76,7 @@ export default function ImagesModal({onClose, show}) {
         <Cross
           id="cross"
           width='20'
+          fill='white'
           onClick={() => {
             setOpacity('0');
 
@@ -130,7 +131,7 @@ export default function ImagesModal({onClose, show}) {
         font-size: 24px;
         margin-top: 10px;
       }
-      #shadow #images-main #cross {
+      :global(#shadow #images-main #cross) {
         position: absolute;
         right: 30px;
         top: 20px;
