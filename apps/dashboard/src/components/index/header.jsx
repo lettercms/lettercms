@@ -14,7 +14,9 @@ export default function  Header (){
             <div className="col-lg-6 col-xl-4">
               <div className="text-container">
                 <h1>Letter CMS</h1>
-                <p className="p-large">Usa LetterCMS para atraer nuevos usuarios y ofrecerles el mejor contenido de acuerdo a sus gustos</p>
+                <p className="p-large">
+                  <FormattedMessage id='Use LetterCMS to attract new users and offer them the best content based on their tastes'/>
+                </p>
                 <Button type='outline' alt onClick={() => router.push('/signin')}>
                   <FormattedMessage id="REGISTER"/>
                 </Button>

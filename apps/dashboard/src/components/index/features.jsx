@@ -6,35 +6,33 @@ import Button from '@/components/button';
 
 const features = [
   {
-    title: 'Integra tus redes',
-    description: 'Promociona tus entradas sin demora a travez de los distintos canales. Tu te concentras en crear y nosotros promocionamos por ti',
+    title: <FormattedMessage id='Integrate your social media'/>,
+    description: <FormattedMessage id='Promote your entries on different channels without waiting. Focus on create, we promote for you'/>,
     img: `${process.env.ASSETS_BASE}/illustrations/5.svg`,
     feats: [
-      'Promociona en tus redes sociales',
-      'Envia emails a tus suscriptores',
-      'Envia notificaciones a los dispositivos de tus lectores'
-
+      <FormattedMessage id='Promote on your social media'/>,
+      <FormattedMessage id='Send emails to your subscribers'/>,
+      <FormattedMessage id='Send notifications to your readers devices'/>
     ]
   },
   {
-    title: 'Muestra el contenido correcto',
+    title: <FormattedMessage id='Show the right content'/>,
     img: `${process.env.ASSETS_BASE}/illustrations/109.svg`,
-    description: 'Nuestros sistema de recomendacion te ayudara a ofrecerle el contenido correcto para cada persona',
+    description: <FormattedMessage id='Our recommendation systems will help you to offer the right content for each person'/>,
     feats: [
-      'Filtros de similares',
-      'Recomendaciones basada en gustos',
-      'Contenido 100% dinamico'
+      <FormattedMessage id='Similarity filter'/>,
+      <FormattedMessage id='Recommendations based on tastes'/>,
+      <FormattedMessage id='100% Dinamic content'/>
     ]
   },
   {
 
-    title: 'Pensado para tus lectores',
+    title: <FormattedMessage id='Thought for your readers'/>,
     img: `${process.env.ASSETS_BASE}/illustrations/125.svg`,
-    description: 'Nuestra plataforma esta optimizada para ofrecer la mejor experiencia de carga. Reducimos la espera para aumentar tus visitas',
+    description: <FormattedMessage id='Our platform is optimized to offer the best loading experience. We have reduced the loading times to boost your views'/>,
     feats: [
-      'Reduccion del peso de las imagenes',
-      'Carga asincrona',
-      'Creación de paginas en demanda'
+      <FormattedMessage id='Image size reduction'/>,
+      <FormattedMessage id='Asynchronous load'/>
     ]
   }
 ];
@@ -54,22 +52,34 @@ export default function Features() {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <div className="above-heading">FEATURES</div>
-            <h2 className="h2-heading">Pensando en ti y en tus lectores</h2>
-            <p className="p-heading">Toma tu tiempo, dedicate a escribir, que nosotros nos encargamos de entregar tu contenido en tus redes con un solo click. Una vez dentro ofrecemos el contenido correcto para la persona correcta</p>
+            <div className="above-heading">
+              <FormattedMessage id='FEATURES'/>
+            </div>
+            <h2 className="h2-heading">
+              <FormattedMessage id='Thinking on you and your readers'/>
+            </h2>
+            <p className="p-heading">
+              <FormattedMessage id={'Take your time, focus on writing, we\'ll take care of deliver your content in all your social media with one click. Once inside we offer the right content to the right person'}/>
+            </p>
           </div>
         </div>
         <div className="row">
           <div className="col-lg-12">
             <ul className="nav nav-tabs" id="argoTabs" role="tablist">
               <li className="nav-item">
-                <a className={`nav-link${tab === 0 ? ' active' : ''}`} onClick={e => changeTab(e, 0, setTab)} id="nav-tab-1" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected={tab === 0 ? 'true' : 'false'}><i className="fas fa-list"></i>Promociona</a>
+                <a className={`nav-link${tab === 0 ? ' active' : ''}`} onClick={e => changeTab(e, 0, setTab)} id="nav-tab-1" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected={tab === 0 ? 'true' : 'false'}><i className="fas fa-list"></i>
+                  <FormattedMessage id='Promote'/>
+                </a>
               </li>
               <li className="nav-item">
-                <a className={`nav-link${tab === 1 ? ' active' : ''}`} onClick={e => changeTab(e, 1, setTab)} id="nav-tab-2" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected={tab === 1 ? 'true' : 'false'}><i className="fas fa-envelope-open-text"></i>Deleita</a>
+                <a className={`nav-link${tab === 1 ? ' active' : ''}`} onClick={e => changeTab(e, 1, setTab)} id="nav-tab-2" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected={tab === 1 ? 'true' : 'false'}><i className="fas fa-envelope-open-text"></i>
+                  <FormattedMessage id='Delight'/>
+                </a>
               </li>
               <li className="nav-item">
-                <a className={`nav-link${tab === 2 ? ' active' : ''}`} onClick={e => changeTab(e, 2, setTab)} id="nav-tab-3" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected={tab === 2 ? 'true' : 'false'}><i className="fas fa-chart-bar"></i>Fideliza</a>
+                <a className={`nav-link${tab === 2 ? ' active' : ''}`} onClick={e => changeTab(e, 2, setTab)} id="nav-tab-3" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected={tab === 2 ? 'true' : 'false'}><i className="fas fa-chart-bar"></i>
+                  <FormattedMessage id='Retain'/>
+                </a>
               </li>
             </ul>
             <div className="tab-content" id="argoTabsContent">

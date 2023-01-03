@@ -1,3 +1,4 @@
+import {FormattedMessage} from 'react-intl';
 import Link from 'next/link';
 import AngleDoubleRight from '@/components/svg/angleDoubleRight';
 
@@ -8,7 +9,9 @@ const Breadcrumbs = ({title}) => {
         <div className="col-lg-12">
           <div className="breadcrumbs">
             <Link href="/blog">
-              <a>Inicio</a>
+              <a>
+                <FormattedMessage id='Home' />
+              </a>
             </Link>
             <AngleDoubleRight fill='#aaa' className='.angle-double-right' width='16' style={{margin: '0 .5em'}}/>
             <span>{title}</span>

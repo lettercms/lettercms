@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useMemo, useEffect} from 'react';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import Facebook from '../lib/client/FacebookSDK';
@@ -31,9 +31,11 @@ const initApp = setLoad => {
   });
 };
 
-export default function App({Component, pageProps: { session, ...pageProps }}) {
+export default function App({Component, pageProps: { messages, session, ...pageProps }}) {
   const [showLoad, setLoad] = useState(false);
   const router = Router.useRouter();
+
+  const {hl} = router.query;
 
   useEffect(() => {
     window.alert = msg => toast(msg);
@@ -47,7 +49,14 @@ export default function App({Component, pageProps: { session, ...pageProps }}) {
 
     return (
       <div>
-        <IntlProvider locale='es' defaultLocale="en">
+        <IntlProvider 
+          locale={hl ?? 'en'}
+          messages={messages}
+          defaultLocale='en'
+          onError={err => {
+            throw err;
+          }}
+        >
           <ClientProvider accessToken={pageProps.accessToken}>
             <SessionProvider session={session}>
               {

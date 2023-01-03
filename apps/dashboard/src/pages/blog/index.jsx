@@ -53,16 +53,21 @@ const Blog = ({posts, blog, paging, mostViewed}) => {
 
 export async function getServerSideProps({req, res, query}) {
   try {
-    const {page} = query;
+    const {page, hl = 'en'} = query;
     const referrer = req?.headers.referrer || null;
     const {userID = null} = req ? req.cookies : cookieParser(document.cookie);
     
     const blogData = await getBlog(page, userID);
 
+    const lang = await import(`@/translations/blog/${hl}.json`);
+
+    const messages = Object.assign({}, lang.default);
+
     const {blog, posts, mostViewed} = JSON.parse(JSON.stringify(blogData));
 
     return {
       props: {
+        messages,
         posts: posts.data,
         blog,
         paging: posts.paging,

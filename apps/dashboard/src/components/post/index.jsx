@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
 import sdk from '@lettercms/sdk';
 import dynamic from 'next/dynamic';
 import {parse as cookieParser} from 'cookie';
@@ -18,6 +19,7 @@ import initLazyLoad from '@/lib/initLazyLoad';
 
 const BlogPost = ({isAdmin, isPreview, user, recommendation: {recommended, similar}, post: {_id, content, title, url, published, updated, thumbnail, tags, description}, referrer, notFound}) => {
   const [stateUser, setUser] = useState(user);
+  const intl = useIntl();
 
   const hasRecommendation = recommended && similar && !isPreview;
 
@@ -41,7 +43,9 @@ const BlogPost = ({isAdmin, isPreview, user, recommendation: {recommended, simil
       <Breadcrumbs title={title}/>
       <div className='flex'>
         <div id='post-main'>
-          <Base rows={1} style={{height: 'auto', flexDirection: 'column', alignItems: 'start' }} title={`Publicado el ${HandleDate.getGMTDate(published)}`}>
+          <Base rows={1} style={{height: 'auto', flexDirection: 'column', alignItems: 'start' }} title={
+            intl.formatMessage({id: 'Posted on '}) + HandleDate.getGMTDate(published)
+          }>
             <main dangerouslySetInnerHTML={{ __html: content }}/>
             <Tags tags={tags}/>
           </Base>
@@ -54,7 +58,7 @@ const BlogPost = ({isAdmin, isPreview, user, recommendation: {recommended, simil
         </div>
       </div>
       <Breadcrumbs title={title}/>
-        <Base rows={1} title={hasRecommendation ? 'Recomendados para ti' : ''} style={{flexWrap: 'wrap', height: 'auto', width: '100%', borderRadius: '1rem 1rem 0 0', margin: '1rem 0 0'}}>
+        <Base rows={1} title={hasRecommendation ? <FormattedMessage id='Recommended for you'/> : ''} style={{flexWrap: 'wrap', height: 'auto', width: '100%', borderRadius: '1rem 1rem 0 0', margin: '1rem 0 0'}}>
           {
             hasRecommendation &&
             <>

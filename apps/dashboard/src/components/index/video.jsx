@@ -16,7 +16,9 @@ export default function CTA() {
               <img className="img-fluid" src={`${process.env.ASSETS_BASE}/illustrations/324.svg`} alt="alternative"/>
             </div> 
           </div>
-          <p className="p-heading">Empieza desde cero y crece junto a nosotros.</p>
+          <p className="p-heading">
+            <FormattedMessage id='Start from scratch and growth with us.'/>
+          </p>
           <Button type='outline' onClick={() => router.push('/signin')}>
             <FormattedMessage id="REGISTER"/>
           </Button>

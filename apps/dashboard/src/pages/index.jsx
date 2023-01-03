@@ -37,13 +37,17 @@ export default function Home({referrer, isAdmin}) {
     </div>;
 }
 
-export async function getStaticProps({req, res}) {
+export async function getServerSideProps({req, res, query}) {
   const session = await getSession({req});
+  const {hl = 'en'} = query;
 
   const isAdmin = !!session;
 
+  const messages = await import(`@/translations/index/${hl}.json`);
+
   return {
     props: {
+      messages: Object.assign({}, messages.default),
       referrer: req?.headers.referer || null,
       isAdmin,
       accessToken: jwt.sign({subdomain: 'davidsdevel'}, process.env.JWT_AUTH)
