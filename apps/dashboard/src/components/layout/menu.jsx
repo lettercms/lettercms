@@ -7,7 +7,7 @@ import Cog from '@/components/svg/cog';
 const menu = [
   {
     name: 'posts',
-    title: 'Entradas',
+    title: 'Posts',
     icon: <Cross fill='#362e6f' height='12' width='32'/>,
     href: '/dashboard/posts',
     /*sub: [
@@ -25,26 +25,26 @@ const menu = [
   },*/
   {
     name: 'stats',
-    title: 'Analiticas',
+    title: 'Analytics',
     icon: <Chart fill='#362e6f' height='12' width='32'/>,
     href: '/dashboard/stats'
   },
   {
     name: 'social',
-    title: 'Redes Sociales',
+    title: 'Social Media',
     icon: <Website fill='#362e6f' height='12' width='32'/>,
     href: '/dashboard/social'
   },
   {
     name: 'collaborators',
     admin: true,
-    title: 'Colaboradores',
+    title: 'Collaborators',
     icon: <User fill='#362e6f' height='12' width='32'/>,
     href: '/dashboard/collaborators'
   },
   {
     name: 'config',
-    title: 'Configuración',
+    title: 'Config',
     icon: <Cog fill='#362e6f' height='12' width='32'/>,
     href: '/dashboard/config/account',
     sub: [
@@ -54,12 +54,12 @@ const menu = [
         admin: true,
       },
       {
-        label: 'Uso',
+        label: 'Usage',
         href: '/dashboard/config/usage',
         admin: true,
       },
       {
-        label: 'Desarrolladores',
+        label: 'Developers',
         admin: true,
         href: '/dashboard/config/developers'
       }

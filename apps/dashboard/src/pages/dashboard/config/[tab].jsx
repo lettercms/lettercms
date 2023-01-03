@@ -12,7 +12,7 @@ const tabs = [
 ];
 
 export async function getServerSideProps({ req, res, query }) {
-  const {tab} = query;
+  const {tab, hl} = query;
 
   if (!tabs.includes(tab))
     return {
@@ -29,8 +29,11 @@ export async function getServerSideProps({ req, res, query }) {
       }
     };
 
+  const messages = await import(`@/translations/dashboard/config/${hl}.json`);
+
   return {
     props: {
+      messages: Object.assign({}, messages.default),
       user: session.user,
       hideLayout: true,
       tab

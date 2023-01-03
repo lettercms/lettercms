@@ -7,6 +7,7 @@ import {getPostData} from '@/lib/mongo/postEdit';
 import Editor from '@/components/admin/posts/editor';
 
 export async function getServerSideProps({ req, res, query}) {
+  const {hl} = query;
   const session = await getSession({req});
 
 
@@ -25,8 +26,11 @@ export async function getServerSideProps({ req, res, query}) {
       notFound: true
     };
 
+  const messages = await import(`@/translations/dashboard/posts/${hl}.json`);
+
   return {
     props: {
+      messages: Object.assign({}, messages.default),
       user: session.user,
       data
     }

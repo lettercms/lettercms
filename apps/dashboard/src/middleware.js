@@ -77,7 +77,7 @@ export default function middleware(req) {
     }
   }
 
-  const _lastLogin = req.cookies.get('__last-login');
+  /*const _lastLogin = req.cookies.get('__last-login');
 
   if (_lastLogin) {
 
@@ -94,7 +94,7 @@ export default function middleware(req) {
 
       return NextResponse.redirect(url);
     }
-  }
+  }*/
 
   url.searchParams.set('hl', language);
   return NextResponse.rewrite(url);
