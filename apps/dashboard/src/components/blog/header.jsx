@@ -8,7 +8,7 @@ const Header =({title, description, thumbnail}) =>  {
             <div id='landing-description'>
               <img src={`${process.env.ASSETS_BASE}/assets/lettercms-logo-white.svg`} className='mobile' alt='LetterCMS logo white'/>
               <span>
-                <FormattedMessage id={`Stay tuned of my blog's updates`}/>
+                <FormattedMessage id={'Stay tuned of my blog\'s updates'}/>
               </span>
             </div>
             <div id='landing-image'>

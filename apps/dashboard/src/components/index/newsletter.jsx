@@ -49,7 +49,7 @@ export default class Newsletter extends Component {
                 <div className="form-group checkbox">
                   <input type="checkbox" id="nterms" value="Agreed-to-Terms" required/>
                   
-                  <FormattedMessage id={`I've read and accept the `}/>
+                  <FormattedMessage id={'I\'ve read and accept the '}/>
                   
                   <Link href='/privacy'>
                     <a>

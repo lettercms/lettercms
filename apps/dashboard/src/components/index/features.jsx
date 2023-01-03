@@ -1,4 +1,4 @@
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {useState} from 'react';
 import {useRouter} from 'next/router';
 import Image from 'next/image';
@@ -6,33 +6,33 @@ import Button from '@/components/button';
 
 const features = [
   {
-    title: <FormattedMessage id='Integrate your social media'/>,
-    description: <FormattedMessage id='Promote your entries on different channels without waiting. Focus on create, we promote for you'/>,
+    title: 'Integrate your social media',
+    description: 'Promote your entries on different channels without waiting. Focus on create, we promote for you',
     img: `${process.env.ASSETS_BASE}/illustrations/5.svg`,
     feats: [
-      <FormattedMessage id='Promote on your social media'/>,
-      <FormattedMessage id='Send emails to your subscribers'/>,
-      <FormattedMessage id='Send notifications to your readers devices'/>
+      'Promote on your social media',
+      'Send emails to your subscribers',
+      'Send notifications to your readers devices'
     ]
   },
   {
-    title: <FormattedMessage id='Show the right content'/>,
+    title: 'Show the right content',
     img: `${process.env.ASSETS_BASE}/illustrations/109.svg`,
-    description: <FormattedMessage id='Our recommendation systems will help you to offer the right content for each person'/>,
+    description: 'Our recommendation systems will help you to offer the right content for each person',
     feats: [
-      <FormattedMessage id='Similarity filter'/>,
-      <FormattedMessage id='Recommendations based on tastes'/>,
-      <FormattedMessage id='100% Dinamic content'/>
+      'Similarity filter',
+      'Recommendations based on tastes',
+      '100% Dinamic content'
     ]
   },
   {
 
-    title: <FormattedMessage id='Thought for your readers'/>,
+    title: 'Thought for your readers',
     img: `${process.env.ASSETS_BASE}/illustrations/125.svg`,
-    description: <FormattedMessage id='Our platform is optimized to offer the best loading experience. We have reduced the loading times to boost your views'/>,
+    description: 'Our platform is optimized to offer the best loading experience. We have reduced the loading times to boost your views',
     feats: [
-      <FormattedMessage id='Image size reduction'/>,
-      <FormattedMessage id='Asynchronous load'/>
+      'Image size reduction',
+      'Asynchronous load'
     ]
   }
 ];
@@ -47,6 +47,7 @@ const changeTab = (e, tab, cb) => {
 export default function Features() {
   const [tab, setTab] = useState(0);
   const router = useRouter();
+  const intl = useIntl();
 
   return <div id="features" className="tabs">
       <div className="container">
@@ -94,13 +95,25 @@ export default function Features() {
                     </div>
                       <div className="col-lg-6">
                         <div className="text-container">
-                          <h3>{e.title}</h3>
-                          <p>{e.description}</p>
+                          <h3>{
+                            intl.formatMessage({
+                              id: e.title
+                            })
+                          }</h3>
+                          <p>{
+                            intl.formatMessage({
+                              id: e.description
+                            })
+                          }</p>
                           <ul className="list-unstyled li-space-lg">
                             {
                               e.feats.map((f, fi) => <li key={`${e.title}-f-${fi}`} className="media">
                                 <i className="fas fa-square"></i>
-                                <div className="media-body">{f}</div>
+                                <div className="media-body">{
+                                  intl.formatMessage({
+                                    id: f
+                                  })
+                                }</div>
                               </li>)
                             }
                           </ul>

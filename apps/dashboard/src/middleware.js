@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
 
+const supportedLanguages = [
+  'es',
+  'en'
+];
+
 function parseQuery(search) {
   if (!search)
     return null;
@@ -15,11 +20,6 @@ function parseQuery(search) {
 
   return query;
 }
-
-const supportedLanguages = [
-  'es',
-  'en'
-];
 
 export const config = {
   matcher: [
@@ -38,7 +38,7 @@ export default function middleware(req) {
 
   let language;
 
-  //Check if has hl query on path
+  //Check if has hl query on searchParams
   if (query?.hl)
     language = query.hl;
   else

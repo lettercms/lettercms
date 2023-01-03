@@ -1,3 +1,4 @@
+import {FormattedMessage, injectIntl} from 'react-intl';
 import {Component} from 'react';
 import Router from 'next/router';
 import sdk from '@lettercms/sdk';
@@ -7,7 +8,7 @@ import Spinner from '@lettercms/icons/spinner';
 import {signIn} from 'next-auth/react';
 import Button from '@/components/button';
 
-export default class UserTab extends Component {
+class UserTab extends Component {
   state = {
     name: '',
     lastname: '',
@@ -51,6 +52,10 @@ export default class UserTab extends Component {
 
     e.preventDefault();
 
+    const {
+      intl
+    } = this.props;
+
     try {
       const {
         name,
@@ -60,7 +65,11 @@ export default class UserTab extends Component {
       } = this.state;
 
       if (!name || !lastname || !password || !email)
-        return alert('Por favor rellene todos los campos');
+        return alert(
+          intl.formatMessage({
+            id: 'Please fill all the fields'
+          })
+        );
 
       this.setState({
         isLoad: true
@@ -87,7 +96,11 @@ export default class UserTab extends Component {
       });
 
       if (status !== 'OK')
-        return alert('Error enviando los datos');
+        return alert(
+          intl.formatMessage({
+            id: 'Error sending the data'
+          })
+        );
 
       this.setState({
         isLoad: false,
@@ -96,7 +109,11 @@ export default class UserTab extends Component {
 
       this.props.onRegister(email);
     } catch(err) {
-      alert('Error Registrando usuario');
+      alert(
+        intl.formatMessage({
+          id: 'Error registering user'
+        })
+      );
       throw err;
     }
   };
@@ -138,7 +155,7 @@ export default class UserTab extends Component {
       Router.push('/dashboard');
   }
   render() {
-    const {isCollab} = this.props;
+    const {isCollab, intl} = this.props;
     const {name, lastname, password, email, existsEmail, isLoad, emailLoad} = this.state;
     let emailStatus = '';
 
@@ -157,7 +174,11 @@ export default class UserTab extends Component {
           value={name}
           id='name'
           onInput={this.handleInput}
-          label='Nombre'
+          label={
+            intl.formatMessage({
+              id: 'Name'
+            })
+          }
           autoComplete='false'
         />
         <Input
@@ -165,7 +186,11 @@ export default class UserTab extends Component {
           value={lastname}
           id='lastname'
           onInput={this.handleInput}
-          label='Apellido'
+          label={
+            intl.formatMessage({
+              id: 'Lastname'
+            })
+          }
           autoComplete='false'
         />
       </div>
@@ -179,7 +204,11 @@ export default class UserTab extends Component {
               id='email'
               type='email'
               onInput={this.handleInput}
-              label='Email'
+              label={
+                intl.formatMessage({
+                  id: 'Email'
+                })
+              }
               autoComplete='false'
             />
             {
@@ -191,7 +220,9 @@ export default class UserTab extends Component {
             {
               existsEmail === true &&
               <div className='tooltip'>
-                <span>Una cuenta con el mismo correo ya existe</span>
+                <span>
+                  <FormattedMessage id='An account with that email already exists'/>
+                </span>
               </div>
             }
           </div>
@@ -201,11 +232,17 @@ export default class UserTab extends Component {
           value={password}
           id='password'
           onInput={this.handleInput}
-          label='Contraseña'
+          label={
+            intl.formatMessage({
+              id: 'Password'
+            })
+          }
           type='password'
           autoComplete='false'
         />
-        <Button type='solid' style={{width: '100%'}}  loading={isLoad}>Registrar</Button>
+        <Button type='solid' style={{width: '100%'}}  loading={isLoad}>
+          <FormattedMessage id='Register'/>
+        </Button>
       <style jsx>{`
         .username {
           display: flex;
@@ -231,3 +268,6 @@ export default class UserTab extends Component {
     </form>;
   }
 }
+
+
+export default injectIntl(UserTab);

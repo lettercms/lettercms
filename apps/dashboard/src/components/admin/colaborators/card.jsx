@@ -3,7 +3,7 @@ const Card = ({
   photo,
   name,
   lastname,
-  ocupation
+  ocupation,
   role,
   view,
   del

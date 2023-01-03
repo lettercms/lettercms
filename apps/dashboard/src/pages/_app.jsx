@@ -6,7 +6,7 @@ import { SessionProvider } from 'next-auth/react';
 import toast, { Toaster } from 'react-hot-toast';
 import Load from '../components/loadBar';
 import {ClientProvider} from '@/lib/userContext'; 
-import {IntlProvider} from "react-intl";
+import {IntlProvider} from 'react-intl';
 import '@/styles/global.scss';
 
 //Dynamics
@@ -45,12 +45,12 @@ export default function App({Component, pageProps: { messages, session, ...pageP
     initApp(setLoad);
   }, []);
 
-  const getLayout = Component.getLayout || ((page) => page);
+  const getLayout = Component.getLayout || (page => page);
 
     return (
       <div>
         <IntlProvider 
-          locale={hl ?? 'en'}
+          locale={hl || 'en'}
           messages={messages}
           defaultLocale='en'
           onError={err => {

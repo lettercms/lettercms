@@ -16,7 +16,7 @@ export default function Details() {
               <FormattedMessage id={'It\'s time to improve your content creation'}/>
             </h2>
             <p>
-              <FormattedMessage id={`Our goal is for you to grow and deliver your content in the best possible way. With LetterCMS you won't have to add plugins or use external tools, we offer everythingin one place.`}/>
+              <FormattedMessage id={'Our goal is for you to grow and deliver your content in the best possible way. With LetterCMS you won\'t have to add plugins or use external tools, we offer everythingin one place.'}/>
             </p>
             <ul className="list-unstyled li-space-lg">
               <li className="media">

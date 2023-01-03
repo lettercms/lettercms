@@ -31,7 +31,7 @@ const Footer = ({isPost}) => {
                 <FormattedMessage id='About LetterCMS'/>
               </h4>
               <p className="p-small">
-                <FormattedMessage id={`LetterCMS is a system created by David's Devel. With the purpose of helping both new and experienced content creators`}/>
+                <FormattedMessage id={'LetterCMS is a system created by David\'s Devel. With the purpose of helping both new and experienced content creators'}/>
               </p>
             </div>
           </div> 

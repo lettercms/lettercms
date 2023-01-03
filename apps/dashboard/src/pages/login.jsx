@@ -26,7 +26,7 @@ export async function getServerSideProps({req, res, query}) {
 function CTA() {
   return <div className={styles.cta}>
     <span>
-      <FormattedMessage id={`Don't you have an account yet? `}/>
+      <FormattedMessage id={'Don\'t you have an account yet? '}/>
     </span>
     <Link href='/signin'>
       <a>
