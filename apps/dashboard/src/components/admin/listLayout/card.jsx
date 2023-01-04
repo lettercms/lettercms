@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {FormattedMessage} from 'react-intl';
 import {useUser} from '@/components/layout';
 import Eye from '@/components/svg/eye';
 import Preview from '@/components/svg/preview';
@@ -40,7 +41,7 @@ const Card = ({
     }
     <div className={styles.data}>
       <div className={styles.postTitle}>
-        <span>{title ? title : postStatus ? '(Nueva Entrada)' : '(Nueva Pagina)'}</span>
+        <span>{title ? title : postStatus ? <FormattedMessage id='(New Post)'/> : <FormattedMessage id='(New Page)'/>}</span>
         {
           author &&
           <img src={`${author.photo}?h=36&w=36&q=25`} className={styles.authorPicture} alt=''/>

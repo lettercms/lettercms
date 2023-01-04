@@ -52,7 +52,7 @@ export default function App({Component, pageProps: { messages, session, ...pageP
         <IntlProvider 
           locale={hl || 'en'}
           messages={messages}
-          defaultLocale='en'
+          defaultLocale={hl || 'en'}
           onError={err => {
             throw err;
           }}

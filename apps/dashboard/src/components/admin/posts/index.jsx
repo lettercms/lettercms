@@ -1,10 +1,12 @@
 import {useRouter} from 'next/router';
+import {useIntl} from 'react-intl';
 import sdk from '@lettercms/sdk';
 import Layout from '../listLayout';
 import Ico from '@/components/assets/adminPost';
 
 function Posts() {
   const router = useRouter();
+  const intl = useIntl();
 
   const newPost = async () => {
     const {id} = await sdk.posts.create();
@@ -28,14 +30,32 @@ function Posts() {
         'subdomain'
       ]}
       tabs={[
-        {name: 'published', alias: 'Publicados'},
-        {name: 'draft', alias: 'Guardados'}
+        {
+          name: 'published',
+          alias: intl.formatMessage({
+            id: 'Published'
+          })
+        },
+        {
+          name: 'draft',
+          alias: intl.formatMessage({
+            id: 'Draft'
+          })
+        }
       ]}
       onEdit={id => router.push(`/dashboard/posts/edit/${id}`)}
       onCreate={newPost}
-      buttonText='Crear'
+      buttonText={
+        intl.formatMessage({
+          id: 'Create'
+        })
+      }
       ico={<Ico/>}
-      topText='Entradas'
+      topText={
+        intl.formatMessage({
+          id: 'Posts'
+        })
+      }
     />
   </>;
 }
