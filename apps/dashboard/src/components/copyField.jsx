@@ -3,7 +3,7 @@ import Copy from '@/components/svg/copy';
 export default function CopyField({text}) {
   const copy = () => {
     navigator.clipboard.writeText(text);
-    alert('Copiada');
+    alert('Copiado');
   };
 
   return <div className='copy-field flex flex-row'>

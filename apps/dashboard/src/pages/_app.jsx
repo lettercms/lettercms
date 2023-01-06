@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useMemo, useEffect} from 'react';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import Facebook from '../lib/client/FacebookSDK';
@@ -6,6 +6,7 @@ import { SessionProvider } from 'next-auth/react';
 import toast, { Toaster } from 'react-hot-toast';
 import Load from '../components/loadBar';
 import {ClientProvider} from '@/lib/userContext'; 
+import {IntlProvider} from 'react-intl';
 import '@/styles/global.scss';
 
 //Dynamics
@@ -30,9 +31,11 @@ const initApp = setLoad => {
   });
 };
 
-export default function App({Component, pageProps: { session, ...pageProps }}) {
+export default function App({Component, pageProps: { messages, session, ...pageProps }}) {
   const [showLoad, setLoad] = useState(false);
   const router = Router.useRouter();
+
+  const {hl} = router.query;
 
   useEffect(() => {
     window.alert = msg => toast(msg);
@@ -42,30 +45,39 @@ export default function App({Component, pageProps: { session, ...pageProps }}) {
     initApp(setLoad);
   }, []);
 
-  const getLayout = Component.getLayout || ((page) => page);
+  const getLayout = Component.getLayout || (page => page);
 
     return (
       <div>
-        <ClientProvider accessToken={pageProps.accessToken}>
-          <SessionProvider session={session}>
-            {
-              (
-                showLoad &&
-                !pageProps.hideLayout
-              ) &&
-              <Load />
-            }
-            {
-              (
-                !router.asPath.startsWith('/dashboard') &&
-                !Component.hideMenu
-              ) &&
-              <Nav />
-            }
-            {getLayout(<Component {...pageProps} />, pageProps.user)}
-          </SessionProvider>
-        </ClientProvider>
-        <Toaster />
+        <IntlProvider 
+          locale={hl || 'en'}
+          messages={messages}
+          defaultLocale={hl || 'en'}
+          onError={err => {
+            throw err;
+          }}
+        >
+          <ClientProvider accessToken={pageProps.accessToken}>
+            <SessionProvider session={session}>
+              {
+                (
+                  showLoad &&
+                  !pageProps.hideLayout
+                ) &&
+                <Load />
+              }
+              {
+                (
+                  !router.asPath.startsWith('/dashboard') &&
+                  !Component.hideMenu
+                ) &&
+                <Nav />
+              }
+              {getLayout(<Component {...pageProps} />, pageProps.user)}
+            </SessionProvider>
+          </ClientProvider>
+          <Toaster />
+        </IntlProvider>
       </div>
     );
 }

@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import {useIntl} from 'react-intl';
 import {getSession} from 'next-auth/react';
 import {DashboardProvider} from '@/components/layout';
 import LogoLoad from '@/components/logoLoad';
@@ -9,7 +10,8 @@ const Welcome = dynamic(() => import('@/components/admin/welcome'), {
   loading:LogoLoad
 });
 
-export async function getServerSideProps({ req, res, query}) {
+export async function getServerSideProps({req, res, query}) {
+  const {hl} = query;
   const session = await getSession({req});
 
   if (!session)
@@ -20,9 +22,11 @@ export async function getServerSideProps({ req, res, query}) {
       }
     };
 
+  const messages = await import(`@/translations/dashboard/${hl}.json`);
 
   return {
     props: {
+      messages: Object.assign({}, messages.default),
       user: session.user,
       hideLayout: true
     }
@@ -30,9 +34,15 @@ export async function getServerSideProps({ req, res, query}) {
 }
 
 const AdminDashboard = ({tab, user}) => {
+  const intl = useIntl();
+
   return <>
       <Head>
-        <title>Resumen | Dashboard - LetterCMS</title>
+        <title>{
+          intl.formatMessage({
+            id: 'Summary | Dashboard - LetterCMS'
+          })
+        }</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

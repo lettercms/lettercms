@@ -1,3 +1,4 @@
+import {FormattedMessage} from 'react-intl';
 import Link from 'next/link';
 import Image from 'next/image';
 import Button from '@/components/button';
@@ -11,19 +12,29 @@ export default function Details() {
       <div className="row">
         <div className="col-lg-6">
           <div className="text-container">
-            <h2>Es tiempo de mejorar la creacion de tu contenido</h2>
-            <p>Nuestra meta es que crezcas y entregues tu contenido de la mejor manera posible. Con la ayuda de LetterCMS no tendras que añadir plugins o integrar herramientas externas, todo lo ofrecemos en un mismo lugar</p>
+            <h2>
+              <FormattedMessage id={'It\'s time to improve your content creation'}/>
+            </h2>
+            <p>
+              <FormattedMessage id={'Our goal is for you to grow and deliver your content in the best possible way. With LetterCMS you won\'t have to add plugins or use external tools, we offer everythingin one place.'}/>
+            </p>
             <ul className="list-unstyled li-space-lg">
               <li className="media">
                 <i className="fas fa-square"></i>
-                <div className="media-body">Atrae nuevos lectores y ofreceles calidad</div>
+                <div className="media-body">
+                  <FormattedMessage id='Attract new readers and offer them quality'/>
+                </div>
               </li>
               <li className="media">
                 <i className="fas fa-square"></i>
-                <div className="media-body">Colabora y crea de manera mas eficiente</div>
+                <div className="media-body">
+                  <FormattedMessage id='Create and collab more efficiently'/>
+                </div>
               </li>
             </ul>
-            <Button type='solid' onClick={() => router.push('/signin')}>REGISTRARSE</Button>
+            <Button type='solid' onClick={() => router.push('/signin')}>
+              <FormattedMessage id="REGISTER"/>
+            </Button>
           </div>
         </div>
         <div className="col-lg-6">

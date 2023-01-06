@@ -1,4 +1,5 @@
 import {Component} from 'react';
+import {FormattedMessage, injectIntl} from 'react-intl';
 import {createBlog} from '@lettercms/admin';
 import Router from 'next/router';
 import Input from '../input';
@@ -6,7 +7,7 @@ import Button from '../button';
 import Image from 'next/image';
 import sdk from '@lettercms/sdk';
 
-export default class BlogTab extends Component {
+class BlogTab extends Component {
   state = {
     isLoad: false
   }
@@ -43,13 +44,21 @@ export default class BlogTab extends Component {
     });
   }
   createBlog = async e => {
+    const {
+      intl
+    } = this.props;
+
     const {isLoad, subdomain, title, description, existsSubdomain} = this.state;
     
     if (existsSubdomain)
       return;
 
     if (!subdomain || !title || !description)
-      return alert('Por favor rellene todos los campos');
+      return alert(
+        intl.formatMessage({
+          id: 'Please fill all the fields'
+        })
+      );
 
     this.setState({
       isLoad: true
@@ -83,11 +92,16 @@ export default class BlogTab extends Component {
 
       Router.push('/login');
     } catch(err) {
-      alert('Error Creating Blog');
+      alert(
+        intl.formatMessage({
+          id: 'Error creating the blog'
+        })
+      );
       throw err;
     }
   }
   render() {
+    const {intl} = this.props;
     const {isLoad, subdomain, title, description, existsSubdomain} = this.state;
 
     let subdomainStatus = '';
@@ -107,7 +121,11 @@ export default class BlogTab extends Component {
           id='subdomain'
           value={subdomain}
           onChange={this.existsSubdomain}
-          label='Dirección'
+          label={
+            intl.formatMessage({
+              id: 'Address'
+            })
+          }
         />
         <div>
           <span>.lettercms.vercel.app</span>
@@ -116,7 +134,9 @@ export default class BlogTab extends Component {
       {
         existsSubdomain === true &&
         <div className='tooltip'>
-          <span>Ya existe un blog con ese subdominio</span>
+          <span>
+            <FormattedMessage id='A blog with that subdomain already exists'/>
+          </span>
         </div>
       }
       <Input
@@ -124,7 +144,11 @@ export default class BlogTab extends Component {
         id='title'
         value={title}
         onChange={this.handleInput}
-        label='Título del Blog'
+        label={
+          intl.formatMessage({
+            id: 'Blog\'s title'
+          })
+        }
       />
       <Input
         disabled={isLoad}
@@ -132,9 +156,15 @@ export default class BlogTab extends Component {
         type='textarea'
         value={description}
         onChange={this.handleInput}
-        label='Descripción'
+        label={
+          intl.formatMessage({
+            id: 'Description'
+          })
+        }
       />
-      <Button type='solid' style={{width: '100%'}}  loading={isLoad}>Registrar</Button>
+      <Button type='solid' style={{width: '100%'}}  loading={isLoad}>
+        <FormattedMessage id='Register'/>
+      </Button>
       <style jsx>{`
         #direction {
           display: flex;
@@ -165,3 +195,5 @@ export default class BlogTab extends Component {
     </form>;
   }
 }
+
+export default injectIntl(BlogTab);

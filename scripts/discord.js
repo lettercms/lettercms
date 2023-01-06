@@ -49,16 +49,6 @@ const isFail = status === 'failed';
 
   const {hostname, path} = url.parse(process.env.DISCORD_DEPLOYMENT_WEBHOOK);
 
-  console.log(JSON.stringify({
-    embeds: [
-      { 
-        description,
-        color: colorCode,
-        fields
-      } 
-    ]  
-  }))
-
   const req = https.request({
     method: 'POST',
     hostname,
@@ -66,10 +56,6 @@ const isFail = status === 'failed';
     headers: {
       'Content-Type': 'application/json'
     }
-  }, r => {
-    console.log(r.headers)
-    console.log(r.statusCode)
-    r.on('data', chunk => console.log(chunk.toString()))
   });
 
   req.write(JSON.stringify({

@@ -1,8 +1,9 @@
+import {FormattedMessage} from 'react-intl';
 import Link from 'next/link';
 
 const Tags = ({tags}) => {
   return <div id='tags-container'>
-    <span>Etiquetas:</span>
+    <span><FormattedMessage id='Tags'/>:</span>
     <ul>
       {tags.map(e => <li key={e}><Link href={`/blog/search?q=${e}`}><a>{e}</a></Link></li>)}
     </ul>

@@ -4,6 +4,7 @@ import {DashboardProvider} from '@/components/layout';
 import Stats from '@/components/admin/stats';
 
 export async function getServerSideProps({ req, res, query}) {
+  const {hl} = query;
   const session = await getSession({req});
 
   if (!session)
@@ -14,9 +15,11 @@ export async function getServerSideProps({ req, res, query}) {
       }
     };
 
+  const messages = await import(`@/translations/dashboard/stats/${hl}.json`);
 
   return {
     props: {
+      messages: Object.assign({}, messages.default),
       user: session.user,
       hideLayout: true
     }

@@ -36,7 +36,7 @@ export default class Feed extends Component {
         feed: demo[type]
       });
     } catch(err) {
-      alert('Error al obtener los Posts');
+      alert('Error al obtener las entradas');
       throw err;
     }
   }

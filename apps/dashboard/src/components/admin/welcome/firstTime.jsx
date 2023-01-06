@@ -1,4 +1,5 @@
 import {useEffect} from 'react';
+import {FormattedMessage} from 'react-intl';
 import {useUser} from '@/components/layout';
 import sdk from '@lettercms/sdk';
 import Link from 'next/link';
@@ -10,23 +11,38 @@ const FirstTime = ({name, id}) =>  {
 
   return <div id='first-time-main'>
     <div id='welcome-title'>
-      <span>Bienvenido <span>{name}</span></span>
-      <p>Estamos felices que nos hayas elegido</p>
+      <span>
+        <FormattedMessage id='Welcome '/>
+        <span>{name}</span>
+      </span>
+      <p>
+        <FormattedMessage id='We are happy that you have chosen us'/>
+      </p>
     </div>
     <img src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/welcome.svg' alt='LetterCMS - Welcome'/>
     <div id='welcome-links'>
       <div>
-        <span>Visita nuestra</span>
-        <a href='#'>Guia de Usuario</a>
+        <span>
+          <FormattedMessage id='Visit our'/>
+        </span>
+        <a href='#'>
+          <FormattedMessage id='User guide'/>
+        </a>
       </div>
       <div>
-        <span>Lee nuestros</span>
+        <span>
+          <FormattedMessage id='Read our'/>
+        </span>
         <Link href='/terms'>
-          <a>Terminos de Uso</a>
+          <a>
+            <FormattedMessage id='Terms and Conditions'/>
+          </a>
         </Link>
       </div>
       <div>
-        <span>Cuentanos tus inquietudes en</span>
+        <span>
+          <FormattedMessage id='Interact with us in'/>
+        </span>
         <a href='https://www.facebook.com/davidsdevel'>Facebook</a>
       </div>
     </div>

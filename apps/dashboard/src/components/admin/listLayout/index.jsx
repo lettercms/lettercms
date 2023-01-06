@@ -1,4 +1,5 @@
 import {useEffect, useState, useMemo} from 'react';
+import {useIntl} from 'react-intl';
 import {useRouter} from 'next/router';
 import Top from './top';
 import ListContainer from './listContainer';
@@ -60,33 +61,48 @@ const fetchMore = async ({type, fields, pageToken, status,  setData, setLoadMore
     });
 };
 
-const _delete = async (id, type, cb) => {
+const _delete = async (id, type, cb, intl) => {
   try {
-    if (!confirm('¿Esta seguro de eliminar?'))
+    const sureDelete = confirm(
+      intl.formatMessage({
+        id: 'Are you sure to delete it?'
+      })
+    );
+
+    if (!sureDelete)
       return;
 
     const { status, message } = await sdk[type].delete(id);
 
     if (status === 'OK') {
-      alert('Eliminado con Exito');
+      alert(
+        intl.formatMessage({
+          id: 'Deleted successfully'
+        })
+      );
       cb(prev => prev.filter(({_id}) => _id !== id));
     } else
       alert(message);
   } catch (err) {
-    alert('Error al Eliminar entrada');
+    alert(
+      intl.formatMessage({
+        id: 'Error on delete'
+      })
+    );
     throw err;
   }
 };
 
 function Layout(props) {
-  const user = useUser();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isLoadingMore, setLoadMore] = useState(false);
   const [count, setCount] = useState(0);
   const [status, setStatus] = useState('*');
 
+  const user = useUser();
   const router = useRouter();
+  const intl = useIntl();
 
   useEffect(() => {
     if (user.status === 'done' && props.fields && props.type)
@@ -126,7 +142,7 @@ function Layout(props) {
           setCount
         });
       }}
-      onDelete={_delete}
+      onDelete={(id, type, cb) => _delete(id, type, cb, intl)}
       setData={setData}
       onEdit={props.onEdit}
       isLoadingMore={isLoadingMore}

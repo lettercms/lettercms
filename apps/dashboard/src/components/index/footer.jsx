@@ -1,20 +1,21 @@
+import {FormattedMessage} from 'react-intl';
 import Link from 'next/link';
 
 const links = [
   {
-    pre: 'Creado por ',
+    pre: <FormattedMessage id='Created by '/>,
     link: 'David\'s Devel' ,
     href: 'https://facebook.com/davidsdevel'
   },
   {
-    pre: 'Colabora con nosotros en ',
+    pre: <FormattedMessage id='Collaborate with us in '/>,
     link: 'GitHub' ,
     href: 'https://github.com/lettercms'
   },
   {
-    pre: 'Apoyanos en ',
-    link: 'Patreon' ,
-    href: 'https://patreon.com/lettercms'
+    pre: <FormattedMessage id='Support us in '/>,
+    link: 'Open Collective' ,
+    href: 'https://opencollective.com/lettercms'
   }
 ];
 
@@ -26,13 +27,19 @@ const Footer = ({isPost}) => {
         <div className="row">
           <div className="col-md-4">
             <div className="footer-col first">
-              <h4>Acerca de LetterCMS</h4>
-              <p className="p-small">LetterCMS es un sistema creado por David&apos;s Devel. Con el proposito de ayudar a los credores de contenido tanto nuevos como experimentados</p>
+              <h4>
+                <FormattedMessage id='About LetterCMS'/>
+              </h4>
+              <p className="p-small">
+                <FormattedMessage id={'LetterCMS is a system created by David\'s Devel. With the purpose of helping both new and experienced content creators'}/>
+              </p>
             </div>
           </div> 
           <div className="col-md-4">
             <div className="footer-col middle">
-              <h4>Enlaces Importantes</h4>
+              <h4>
+                <FormattedMessage id='Relevant links'/>
+              </h4>
               <ul className="list-unstyled li-space-lg p-small">
               {
                 links.map(({pre, link, href}) => {
@@ -47,7 +54,9 @@ const Footer = ({isPost}) => {
           </div> 
           <div className="col-md-4">
             <div className="footer-col last">
-              <h4>Contactos</h4>
+              <h4>
+                <FormattedMessage id='Contact'/>
+              </h4>
               <ul className="list-unstyled li-space-lg p-small">
                 <li className="media">
                   <i className="fas fa-map-marker-alt"></i>
@@ -67,25 +76,25 @@ const Footer = ({isPost}) => {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <p className="p-small">Desarrollado por <Link href="https://www.facebook.com/davidsdevel"><a>David&apos;s Devel</a></Link></p>
+            <p className="p-small"><FormattedMessage id='Developed by '/> <Link href="https://www.facebook.com/davidsdevel"><a>David&apos;s Devel</a></Link></p>
           </div> 
         </div> 
       </div> 
     </div> 
     <style jsx>{`
       .footer-frame {
-      width: 100%;
-      height: 1.5rem;
+        width: 100%;
+        height: 1.5rem;
       }
 
       .footer {
-      padding-top: 3rem;
-      padding-bottom: 0.5rem;
-      background-color: #5f4dee;
+        padding-top: 3rem;
+        padding-bottom: 0.5rem;
+        background-color: #5f4dee;
       }
 
       .footer .footer-col {
-      margin-bottom: 2.25rem;
+        margin-bottom: 2.25rem;
       }
 
       .footer h4 {

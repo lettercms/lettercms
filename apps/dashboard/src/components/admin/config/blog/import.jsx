@@ -48,7 +48,7 @@ export default function BlogImport() {
 
   return <div>
     <div>
-      <Button type='solid' style={{width: '100%'}} onClick={() => setShowModal(true)}>Eliminar</Button>
+      <Button type='solid' style={{width: '100%'}} onClick={() => setShowModal(true)}>Importar</Button>
       {/*<button className="black">Exportar</button>*/}
     </div>
     <Modal show={showModal} close={() => setShowModal(false)} height='max-content' width='max-content'>

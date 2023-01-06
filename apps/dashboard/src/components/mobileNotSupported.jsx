@@ -1,5 +1,7 @@
+import {FormattedMessage} from 'react-intl';
 import Image from 'next/image';
-import Link from 'next/link';
+import Button from '@/components/button';
+import Router from 'next/router';
 
 const NotSupported = () => <div id='not-supported-container'>
 
@@ -7,9 +9,13 @@ const NotSupported = () => <div id='not-supported-container'>
     <Image layout='fill' src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/warn.png' alt='Warning'/>
   </div>
   <div id='text-container'>
-    <span>Lo sentimos, nuestra app aun no funciona en dispositivos moviles. Ingrese desde su PC para disfrutar las mejores herramientas que te ofrecemos</span>
+    <span>
+      <FormattedMessage id={'We\'re sorry, our app doesn\'t work on mobile devices. Login from a PC to enjoy all the tools we have for you'}/>
+    </span>
   </div>
-  <Link href='/'><a className="btn-solid-lg">INICIO</a></Link>
+  <Button type='solid' onClick={() => Router.push('/')}>
+    <FormattedMessage id='HOME'/>
+  </Button>
   <style jsx>{`
     #not-supported-container {
       background:#5f4dee;
@@ -34,21 +40,9 @@ const NotSupported = () => <div id='not-supported-container'>
       padding: 25px 5%;
       border-radius: 5px;
       background: white;
-    }
-    .btn-solid-lg {
-      width: 90%;
-      max-width: 360px;
-      text-align: center;
-      margin-top: 1.125rem;
-      border-color: #f3f7fd;
-      background-color: #f3f7fd;
-      color: #5f4dee;
+      margin-bottom: 1rem;
     }
 
-    .btn-solid-lg:hover {
-      background: transparent;
-      color: #f3f7fd;
-    }
   `}</style>
 </div>;
 

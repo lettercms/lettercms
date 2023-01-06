@@ -87,7 +87,10 @@ export function DashboardProvider({userID, children, hideMenu}) {
 
       Cookie.set('__last-login', now.toISOString());
 
-      Promise.all([sdk.blogs.single(), sdk.accounts.me()])
+      Promise.all([
+        sdk.blogs.single(),
+        sdk.accounts.me()
+      ])
         .then(([_blog, _account]) => {
           if (_blog.customDomain)
             _blog.domain = _blog.customDomain;
@@ -137,14 +140,14 @@ export function DashboardProvider({userID, children, hideMenu}) {
         <ul className={navBar}>
           {
             isLoading
-            ? <MenuLoad/>
-            : <Nav role={user.role} blog={blog}/>
+              ? <MenuLoad/>
+              : <Nav role={user.role} blog={blog}/>
           }
         </ul>
         <div className={asideFooter}>
           <Link href='/'>
             <a>
-             <img src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt='LetterCMS linear Logo' className={footerImg}/> 
+              <img src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt='LetterCMS linear Logo' className={footerImg}/> 
             </a>
           </Link>
         </div>

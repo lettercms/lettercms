@@ -1,3 +1,4 @@
+import {FormattedMessage} from 'react-intl';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 import Button from '@/components/button';
@@ -12,12 +13,16 @@ export default function Paging({page, total}) {
   <div className='flex flex-row'>
     {
       page !== 1
-      ? <Button type='outline' onClick={() => router.push(`/blog?page=${page - 1}`)}>Anterior</Button>
+      ? <Button type='outline' onClick={() => router.push(`/blog?page=${page - 1}`)}>
+        <FormattedMessage id='Prev'/>
+      </Button>
       : <div/>
     }
     {
       page !== total
-      ? <Button type='outline' onClick={() => router.push(`/blog?page=${page + 1}`)}>Siguiente</Button>
+      ? <Button type='outline' onClick={() => router.push(`/blog?page=${page + 1}`)}>
+        <FormattedMessage id='Next'/>
+      </Button>
       : <div/>
     }
   </div>
