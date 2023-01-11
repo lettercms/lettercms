@@ -1,3 +1,4 @@
+import {useIntl} from 'react-intl';
 import {
   CartesianGrid,
   XAxis,
@@ -8,13 +9,24 @@ import {
   BarChart,
 } from 'recharts';
 
-function RenderBarChart({data, sort = false, dataKey = 'vista', layout = 'horizontal'}) {
+function RenderBarChart({data, sort = false, dataKey = 'vista', layout = 'horizontal', translate = false}) {
+  const intl = useIntl();
+
+  const _views = intl.formatMessage({
+    id: 'views'
+  });
+  
   const isHorizontal = layout === 'horizontal';
 
-  data = Object.entries(data).map(([key, vistas]) => ({
-    vistas,
-    [dataKey]: key
-  }));
+  data = Object.entries(data).map(([key, views]) => {
+    const parsed = {
+      [dataKey]: translate ? intl.formatMessage({id: key}) : key
+    };
+
+    parsed[_views] = views;
+
+    return parsed;
+  });
 
   if (sort)
     data = data.sort((a,b) => a.vistas > b.vistas ? -1 : +1);
@@ -37,7 +49,7 @@ function RenderBarChart({data, sort = false, dataKey = 'vista', layout = 'horizo
         <CartesianGrid />
         <Tooltip />
         <Bar
-          dataKey="vistas"
+          dataKey={_views}
           fill="#03a9f4"
           radius={[isHorizontal ? 5 : 0, 5, isHorizontal ? 0 : 5, 0]}/>
       </BarChart>

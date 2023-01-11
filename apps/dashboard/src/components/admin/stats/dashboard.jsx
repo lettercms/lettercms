@@ -1,4 +1,6 @@
 ﻿import {useState} from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
+
 import dynamic from 'next/dynamic';
 import Top from '../listLayout/top';
 import StatsIco from '@/components/assets/adminStats';
@@ -49,66 +51,171 @@ const PieChart = dynamic(() => import('./charts/pie'), {
 
 const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days, dates, hours}, general, onChange}) => {
   const [range, setRange] = useState('2');
+  const intl = useIntl();
 
   return <div>
     <Top
       ico={<StatsIco/>}
-      topText='Datos del Blog'
+      topText={
+        intl.formatMessage({
+          id: 'Blog data'
+        })
+      }
       disableTopButton={true}
     >
       <div>
         <select value={range} onChange={({target: {value}}) => changeTime(value, setRange, onChange)}>
-          <option value='1'>Ultimos 7 dias</option>
-          <option value='2'>Ultimo mes</option>
-          <option value='3'>Ultimos 3 meses</option>
-          <option value='4'>Ultimos 6 meses</option>
-          <option value='5'>Desde el inicio</option>
+          <option value='1'>
+            <FormattedMessage id='Lasts 7 days'/>
+          </option>
+          <option value='2'>
+            <FormattedMessage id='Last month'/>
+          </option>
+          <option value='3'>
+            <FormattedMessage id='Lasts 3 months'/>
+          </option>
+          <option value='4'>
+            <FormattedMessage id='Lasts 6 months'/>
+          </option>
+          <option value='5'>
+            <FormattedMessage id='All views'/>
+          </option>
         </select>
       </div>
     </Top>
     <div id='stats-dashboard'>
-      <Base rows={2} title='Vistas Totales' principal>
+      <Base
+        rows={2}
+        title={
+          intl.formatMessage({
+            id: 'Total views'
+          })
+        }
+        principal
+      >
         <GeneralPanel value={general.totalViews}/>
       </Base>
-      <Base rows={2} title='Rebotes'>
+      <Base
+        rows={2}
+        title={
+          intl.formatMessage({
+            id: 'Bounces'
+          })
+        }
+      >
         <GeneralPanel value={general.bounces}/>
       </Base>
-      <Base rows={3} title='Taza de Rebote'>
+      <Base
+        rows={3}
+        title={
+          intl.formatMessage({
+            id: 'Bounce rate'
+          })
+        }
+      >
         <GeneralPanel value={general.bounceRate} percent/>
       </Base>
-      <Base rows={3} title='Comentarios'>
+      <Base
+        rows={3}
+        title={
+          intl.formatMessage({
+            id: 'Comments'
+          })
+        }
+      >
         <GeneralPanel value={general.totalComments}/>
       </Base>
-      <Base rows={3} title='Subscriptores'>
+      <Base
+        rows={3}
+        title={
+          intl.formatMessage({
+            id: 'Subscribers'
+          })
+        }
+      >
         <GeneralPanel value={general.subscriptors}/>
       </Base>
-      <Base rows={1} title='Vistas'>
+      <Base
+        rows={1}
+        title={
+          intl.formatMessage({
+            id: 'Views'
+          })
+        }
+      >
         <LineChart data={dates}/>
       </Base>
-      <Base rows={1} title='Horas'>
+      <Base
+        rows={1}
+        title={
+          intl.formatMessage({
+            id: 'Hours'
+          })
+        }
+      >
         <BarChart data={hours} dataKey="hora"/>
       </Base>
-      <Base rows={1} title='Días'>
-        <BarChart data={days} dataKey="día"/>
+      <Base
+        rows={1}
+        title={
+          intl.formatMessage({
+            id: 'Days'
+          })
+        }
+      >
+        <BarChart data={days} dataKey="día" translate/>
       </Base>
-      <Base rows={3} title='Países'>
+      <Base
+        rows={3}
+        title={
+          intl.formatMessage({
+            id: 'Countries'
+          })
+        }
+      >
         <PieChart data={countries}/>
       </Base>
-      <Base rows={3} title='Navegadores'>
+      <Base
+        rows={3}
+        title={
+          intl.formatMessage({
+            id: 'Browsers'
+          })
+        }
+      >
         <PieChart data={browsers}/>
       </Base>
-      <Base rows={3} title='Sistema Operativo'>
+      <Base
+        rows={3}
+        title={
+          intl.formatMessage({
+            id: 'OS'
+          })
+        }
+      >
         <PieChart data={oss}/>
       </Base>
     </div>
-    <span className="title">Más Visto</span>
+    <span className="title">
+      <FormattedMessage id='More seen'/>
+    </span>
     <Card {...general.mostViewed} subdomain={general.subdomain}/>
-    <span className="title">Más Comentado</span>
+    <span className="title">
+      <FormattedMessage id='More commented'/>
+    </span>
     <Card {...general.mostCommented} subdomain={general.subdomain}/>
-    <Base rows={1} title='Entradas'>
+    <Base rows={1} title={
+      intl.formatMessage({
+        id: 'Posts'
+      })
+    }>
       <BarChart data={urls} sort={true} layout='vertical'/>
     </Base>
-    <Base rows={1} title='Origenes'>
+    <Base rows={1} title={
+      intl.formatMessage({
+        id: 'Referrers'
+      })
+    }>
       <BarChart data={referrers} sort={true} layout='vertical'/>
     </Base>
     <style jsx>{`

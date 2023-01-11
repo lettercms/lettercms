@@ -1,3 +1,4 @@
+import {FormattedMessage} from 'react-intl';
 import dynamic from 'next/dynamic';
 import CardLoad from './cardLoad';
 import {container} from './listContainer.module.css';
@@ -29,7 +30,9 @@ export default function ListContainer({type, data, before, onDelete, onEdit, onL
     </ul>
     {
       before &&
-      <Button style={{margin: 'auto'}} type='outline' onClick={onLoadMore} loading={isLoadingMore}>Cargar Más</Button>
+      <Button style={{margin: 'auto'}} type='outline' onClick={onLoadMore} loading={isLoadingMore}>
+        <FormattedMessage id='Load more'/>
+      </Button>
     }
   </>;
 }

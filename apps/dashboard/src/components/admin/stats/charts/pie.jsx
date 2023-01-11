@@ -1,3 +1,4 @@
+import {useIntl} from 'react-intl';
 import {
     Legend,
     LabelList,
@@ -9,11 +10,17 @@ import {
 } from 'recharts';
 
 function RenderPieChart({data}) {
-  data = Object.entries(data).map(([name, value]) => ({
-    name,
-    value,
+  const intl = useIntl();
+
+  const _views = intl.formatMessage({
+    id: 'views'
+  });
+
+  data = Object.entries(data).map(([key, views]) => ({
+    name: key === 'Unknown' ? intl.formatMessage({id: key}) : key,
+    [_views]: views
   }));
-  
+
   return <div style={{ width: '100%', height: 200 }}>
     <ResponsiveContainer>
       <PieChart height={200}>
@@ -21,7 +28,7 @@ function RenderPieChart({data}) {
         <Tooltip />
         <Pie
           data={data}
-          dataKey="value"
+          dataKey={_views}
           label={false}
         >
           {
