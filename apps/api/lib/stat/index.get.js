@@ -165,6 +165,47 @@ export default async function GetStats() {
 
       const dataKeys = viewData.map(e => e.viewKey);
 
+      if (dataKeys.length === 0) {
+        data = {
+          ...data,
+          hours: {
+            '1AM': 0,
+            '2AM': 0,
+            '3AM': 0,
+            '4AM': 0,
+            '5AM': 0,
+            '6AM': 0,
+            '7AM': 0,
+            '8AM': 0,
+            '9AM': 0,
+            '10AM': 0,
+            '11AM': 0,
+            '12M': 0,
+            '1PM': 0,
+            '2PM': 0,
+            '3PM': 0,
+            '4PM': 0,
+            '5PM': 0,
+            '6PM': 0,
+            '7PM': 0,
+            '8PM': 0,
+            '9PM': 0,
+            '10PM': 0,
+            '11PM': 0,
+            '12AM': 0,
+          },
+          days: {
+            sunday: 0,
+            monday: 0,
+            tuesday: 0,
+            wednesday: 0,
+            thursday: 0,
+            friday: 0,
+            saturday: 0
+          }
+        };
+      }
+
       defaultDates.forEach(e => {
         const viewIndex = dataKeys.indexOf(e);
         const view = viewData[viewIndex];
@@ -184,6 +225,7 @@ export default async function GetStats() {
           else
             data.countries[key] = val;
         });
+
         view.oss?.forEach((val, key) => {
           const value = data.oss[key];
 
@@ -192,6 +234,7 @@ export default async function GetStats() {
           else
             data.oss[key] = val;
         });
+
         view.browsers?.forEach((val, key) => {
           const value = data.browsers[key];
 
@@ -200,6 +243,7 @@ export default async function GetStats() {
           else
             data.browsers[key] = val;
         });
+
         view.urls?.forEach((val, key) => {
           const value = data.urls[key];
 
@@ -208,6 +252,7 @@ export default async function GetStats() {
           else
             data.urls[key] = val;
         });
+
         view.hours.forEach((val, key) => {
           const value = data.hours[key];
 
@@ -216,6 +261,7 @@ export default async function GetStats() {
           else
             data.hours[key] = val;
         });
+
         view.days.forEach((val, key) => {
           const value = data.days[key];
 
@@ -224,6 +270,7 @@ export default async function GetStats() {
           else
             data.days[key] = val;
         });
+
         view.referrers?.forEach((val, key) => {
           const _key = key.replace(/\:/g, '.');
 
