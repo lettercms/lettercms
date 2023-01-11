@@ -6,11 +6,13 @@ import sdk from '@lettercms/sdk';
 import Upload from '@/components/svg/upload';
 import createUploader from '@/lib/createUploader';
 import {useUser} from '@/components/layout';
+import {useIntl} from 'react-intl';
 
 export default function BlogImages({onSelect, isHidden}) {
   const {blog} = useUser();
   const [images, setImages] = useState([]);
   const [isLoading, setLoadState] = useState(true);
+  const intl = useIntl();
 
   const upload = () => createUploader({
     subdomain: blog.subdomain,
@@ -22,7 +24,11 @@ export default function BlogImages({onSelect, isHidden}) {
       setImages(Object.assign([], [url], images));
     },
     onError(err) {
-      alert('Error al subir la imagen');
+      alert(
+        intl.formatMessage({
+          id: 'Error uploading image'
+        })
+      );
       setLoadState(false);  
 
       throw err;

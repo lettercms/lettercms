@@ -1,3 +1,4 @@
+import {FormattedMessage} from 'react-intl';
 import Modal from './imageModal';
 import {useState, useEffect} from 'react';
 import Button from '@/components/button';
@@ -51,7 +52,9 @@ export default function ImageList({images, isUploading, onLoadMore, isLoadingMor
       </li>
     }
     <div id='button-container'>
-      <Button type='outline' loading={isLoading} onClick={onLoadMore}>Cargar más</Button>
+      <Button type='outline' loading={isLoading} onClick={onLoadMore}>
+        <FormattedMessage id='Load more'/>
+      </Button>
     </div>
     {
       showModal &&

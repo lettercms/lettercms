@@ -1,3 +1,4 @@
+import {useIntl} from 'react-intl';
 import Input from '@/components/input';
 import {useState, useEffect} from 'react';
 import List from './list';
@@ -13,6 +14,7 @@ export default function Search({onSelect}) {
   const [isLoadingMore, setLoadMore] = useState(false);
   const [nextPage, setNextPage] = useState(1);
   const [actualPage, setActualPage] = useState(1);
+  const intl = useIntl();
 
   useEffect(() => {
     if (searchQuery !== lastQuery) {
@@ -62,7 +64,11 @@ export default function Search({onSelect}) {
           setNextPage(1);
           setSearchQuery(value);
         }
-      }} onInput={({target: {value}}) => setQuery(value)} label='Término'/>
+      }} onInput={({target: {value}}) => setQuery(value)} label={
+        intl.formatMessage({
+          id: 'Search query'
+        })
+      }/>
     </div>
     <div id='content-wrapper'>{ui}</div>
     <style jsx>{`

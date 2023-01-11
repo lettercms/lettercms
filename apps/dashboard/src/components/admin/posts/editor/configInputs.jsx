@@ -1,3 +1,4 @@
+import {FormattedMessage} from 'react-intl';
 import {metaInputs} from './metaInputs.module.css';
 import {useData} from './index';
 
@@ -8,7 +9,9 @@ export default function MetaInputs({hasFacebook, hasInstagram}) {
     <div className='selection'>
       <input type='checkbox' name='protect' id='protect' checked={data.isProtected} onChange={() => setData('isProtected', !data.isProtected)}/>
       <label className='option' htmlFor='protect'>
-        <span>Proteger</span>
+        <span>
+          <FormattedMessage id='Protect'/>
+        </span>
       </label>
     </div>
     {
@@ -16,7 +19,9 @@ export default function MetaInputs({hasFacebook, hasInstagram}) {
       <>
         <hr/>
         <div>
-          <span>Promocionar en</span>
+          <span>
+            <FormattedMessage id='Promote on'/>
+          </span>
           {
             hasFacebook &&
             <div className='selection'>

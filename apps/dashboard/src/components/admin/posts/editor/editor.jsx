@@ -1,4 +1,5 @@
-import {useState, useRef} from 'react';
+import {useState} from 'react';
+import {useIntl} from 'react-intl';
 import {useData} from './index';
 import EditorLoad from './editorLoad';
 import dynamic from 'next/dynamic';
@@ -16,7 +17,7 @@ const CKEditor = dynamic(async () => {
 export default function Editor({onOpenModal}) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useData();
-  const inputRef = useRef(null);
+  const intl = useIntl();
 
   return <div>
       {  
@@ -34,7 +35,13 @@ export default function Editor({onOpenModal}) {
           ]
         }}
         editor={ BallonEditor }
-        data={data.content ? data.content : '<p>Nueva super entrada</p>'}
+        data={
+          data.content
+            ? data.content
+            : intl.formatMessage({
+              id: '<p>New super post</p>'
+            })
+        }
         onReady={ editor => {
           editor.model.schema.extend('imageBlock', { allowAttributes: ['data-src', 'data-width'] });
 
@@ -51,31 +58,28 @@ export default function Editor({onOpenModal}) {
 
           //Get images on load
           const content = document.querySelector('.ck-content');
-
-          inputRef.current = content;
-          
           const images = content.getElementsByTagName('img');
 
           if (images?.length > 0) {
 
-            let im = Array.from(images).map(e => e.dataset.src ? e.dataset.src : e.src);
+            const im = Array.from(images).map(e => e.dataset.src ? e.dataset.src : e.src);
 
             setData('images', im);
           }
         }}
-        onChange={ ( event, editor ) => {
-          const content = inputRef.current;
-          
+        onChange={(_, editor) => {
+          const content = editor.getData();
+
+          //Get content images on change
           const images = content.getElementsByTagName('img');
 
           if (images?.length > 0) {
-            let im = Array.from(images).map(e => e.dataset.src ? e.dataset.src : e.src);
+            const im = Array.from(images).map(e => e.dataset.src ? e.dataset.src : e.src);
 
             setData('images', im);
           }
 
-          setData('content', editor.getData());
-
+          setData('content', content);
         }}
         onError={err => {
           throw err;
