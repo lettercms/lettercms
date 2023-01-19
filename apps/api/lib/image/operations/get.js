@@ -4,7 +4,7 @@ const getObj = async (subdomain, name) => {
   try {
     const bucket = getBucket();
 
-    const [data] = await bucket.file(`${subdomain}/${name}`).getMetadata();
+    const [data] = await bucket.file(`${subdomain}/${name}.webp`).getMetadata();
     return Promise.resolve(data);
   } catch(err) {
     throw err;
