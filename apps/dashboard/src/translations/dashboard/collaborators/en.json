@@ -13,5 +13,17 @@
   "All": "All",
   "Deleted successfully": "Deleted successfully",
   "Error on delete": "Error on delete",
-  "Oops, we have nothing here yet": "Oops, we have nothing here yet"
+  "Oops, we have nothing here yet": "Oops, we have nothing here yet",
+
+  "Singles": "Singles",
+  "Invite": "Invite",
+  "Insert data": "Insert data",
+  "Invitation sent": "Invitation sent",
+  "An account with that email already exists": "An account with that email already exists",
+  "Error sending invitation": "Error sending invitation",
+  "Send invitation": "Send invitation",
+  "Name": "Name",
+  "Lastname": "Lastname",
+  "Email": "Email"
 }
+

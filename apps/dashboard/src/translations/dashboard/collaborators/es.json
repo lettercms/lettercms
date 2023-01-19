@@ -13,5 +13,17 @@
   "All": "Todos",
   "Deleted successfully": "Eliminado con exito",
   "Error on delete": "Error al eliminar",
-  "Oops, we have nothing here yet": "Lo sentimos, aún no tenemos nada por aqui"
+  "Oops, we have nothing here yet": "Lo sentimos, aún no tenemos nada por aqui",
+
+  "Singles": "Únicos",
+  "Invite": "Invitar",
+  "Insert data": "Ingrese los datos",
+  "Invitation sent": "Invitación enviada",
+  "An account with that email already exists": "Una cuenta con el mismo correo ya existe",
+  "Error sending invitation": "Error al eviar la invitación",
+  "Send invitation": "Enviar invitación",
+  "Name": "Nombre",
+  "Lastname": "Apellido",
+  "Email": "Correo electrónico"
 }
+
