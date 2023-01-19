@@ -19,7 +19,7 @@ export async function getServerSideProps({ req, res, query}) {
     };
 
   const accounts = await getAccounts();
-  const messages = await import(`@/translations/dashboard/social/${hl}.json`);
+  const messages = await import(`@/translations/dashboard/social/publish/${hl}.json`);
 
   return {
     props: {

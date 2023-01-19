@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import {useIntl, FormattedMessage} from 'react-intl';
 import AccountCard from './accountCard';
 import AccountLoad from './accountCardLoad';
 import sdk from '@lettercms/sdk';
@@ -41,6 +42,8 @@ export default function SocialDashboard({newPost, onAccounts}) {
   const [accounts, setAccounts] = useState([]);
   const {status} = useUser();
 
+  const intl = useIntl();
+
   const hasAccounts = accounts?.length > 0;
 
   useEffect(() => {
@@ -76,11 +79,21 @@ export default function SocialDashboard({newPost, onAccounts}) {
         loading={isLoading}
         create={newPost}
         disabled={!hasAccounts}
-        buttonText='Nueva Entrada'
+        buttonText={
+          intl.formatMessage({
+            id: 'New Post'
+          })
+        }
         ico={<SocialIco/>}
-        topText='Redes sociales'
+        topText={
+          intl.formatMessage({
+            id: 'Social media'
+          })
+        }
       >
-        <Button type='outline' onClick={newPost} disabled={!hasAccounts}>Nueva Entrada</Button>
+        <Button type='outline' onClick={newPost} disabled={!hasAccounts}>
+          <FormattedMessage id='New Post'/>
+        </Button>
       </Top>
       <div id='main-social'>
         <ul>

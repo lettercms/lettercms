@@ -1,6 +1,8 @@
+import {FormattedMessage} from 'react-intl';
 import sdk from '@lettercms/sdk';
 import Cross from '@/components/svg/cross';
 import Plus from '@/components/svg/plus';
+import {useUser} from '@/components/layout';
 
 async function deleteImage(url, cb) {
   const name = url.split('/').pop().replace('.webp', '');
@@ -9,13 +11,17 @@ async function deleteImage(url, cb) {
 }
 
 const ImageList = ({images, onAdd, onDelete}) => {
+  const {blog} = useUser();
+
   return <div id='images-upload-container'>
-    <span>Imagenes</span>
+    <span>
+      <FormattedMessage id='Images'/>
+    </span>
     <div id='scrollbar'>
       <div id='pics-container'>
         {
           images.map((e, i) => <div key={`social-image-${i}`} className='images-block' style={{backgroundImage: `url(${e})`}}>
-            <div className='delete-shadow' onClick={() => deleteImage(e).then(onDelete)}>
+            <div className='delete-shadow' onClick={() => deleteImage(e).then(({id}) => onDelete(`https://usercontent-davidsdevel-lettercms.vercel.app/${blog.subdomain}/${id}.webp`))}>
               <Cross width='48'/>
             </div>
           </div>)

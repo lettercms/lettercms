@@ -7,5 +7,11 @@
   "Blog": "Blog",
   "Usage": "Usage",
   "Developers": "Developers",
-  "Log out": "Log out"
+  "Log out": "Log out",
+
+  "Are you sure to delete it?": "Are you sure to delete it?",
+  "All": "All",
+  "Deleted successfully": "Deleted successfully",
+  "Error on delete": "Error on delete",
+  "Oops, we have nothing here yet": "Oops, we have nothing here yet"
 }

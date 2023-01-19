@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
 import dynamic from 'next/dynamic';
 import Router from 'next/router';
 import Datetime from 'react-datetime';
@@ -12,7 +13,6 @@ import Button from '@/components/button';
 import FBIco from '@lettercms/icons/facebook';
 import IGIco from '@lettercms/icons/instagram';
 import 'react-datetime/css/react-datetime.css';
-import 'moment/locale/es';
 
 const Load = () => <img alt='' src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/spinner.svg' style={{animation: 'rotation linear .3s infinite', width: 5}}/>;
 const Facebook = dynamic(() => import('./facebookCard'), {
@@ -91,30 +91,46 @@ const renderInput =  (isOpen, date, clearDate) => {
   };
 };
 
-const publishPost = async (data, cb) => {
+const publishPost = async (data, cb, intl) => {
   try {
     if (data.feeds.lenght === 0)
-      return alert('Debe seleccionar al menos una red social');
+      return alert(
+        intl.formatMessage({
+          id: 'You must select at least one social media'
+        })
+      );
 
     const {status} = await sdk.createRequest('/social', 'POST', data);
 
     if (status === 'OK') {
-      alert('Publicado con exito');
+      alert(
+        intl.formatMessage({
+          id: 'Published successfully'
+        })
+      );
       cb();
     }
   } catch(err) {
-    alert('Error al publicar entrada');
+    alert(
+      intl.formatMessage({
+        id: 'Error publishing post'
+      })
+    );
   }
 };
 
 const Publish = ({accounts}) => {
   const [date, setDate] = useState(null);
   const [content, setContent] = useState('');
-  const [show, setModal] = useState('');
+  const [showModal, setShowModal] = useState('');
   const [hasInstagram, setIg] = useState(false);
   const [hasFacebook, setFb] = useState(false);
   const [images, setImage] = useState([]);
   const [isDateOpen, setDateOpen] = useState(false);
+  const [localeLoaded, setLocaleLoaded] = useState(false);
+
+  const {query: {hl}} = Router.useRouter();
+  const intl = useIntl();
 
   const clearData = () => {
     images.forEach(e => sdk.createRequest(`/image/${e.split('/').pop().replace('.webp', '')}`, 'DELETE'));
@@ -146,6 +162,12 @@ const Publish = ({accounts}) => {
     localStorage.setItem('temp_social_content', content);
   }, [content]);
 
+  useEffect(() => {
+    if (hl !== 'en')
+      import(`moment/locale/${hl}`)
+        .then(e => setLocaleLoaded(true));
+  }, [hl]);
+
   return <div className='publish-container flex'>
     <button className='back-button' onClick={() => Router.push('/dashboard/social')}>
       <svg className='back-ico' height='32' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"/></svg>
@@ -170,17 +192,18 @@ const Publish = ({accounts}) => {
           </div>
       </div>
       <div id='publish-buttons'>
-        <ImageList images={images} onAdd={() => setModal('image')} onDelete={url => setImage(images.filter(_url => url !== _url))}/>
-        <Input type='textarea' id='content' value={content} label='Contenido' onInput={({target: {value}}) => setContent(value)}/>
+        <ImageList images={images} onAdd={() => setShowModal(true)} onDelete={url => setImage(images.filter(_url => url !== _url))}/>
+        <Input type='textarea' id='content' value={content} label={intl.formatMessage({id: 'Content'})} onInput={({target: {value}}) => setContent(value)}/>
         <div className='flex flex-row' style={{justifyContent: 'space-between'}}>
           <div className='date-container'>
             {
+              localeLoaded &&
               <Datetime
                 onClose={() => setDateOpen(false)}
                 onOpen={() => setDateOpen(true)}
                 value={date}
                 isValidDate={current => current.isAfter(Date.now())}
-                locale="es"
+                locale={hl}
                 onChange={e => setDate(e.toDate())}
                 renderInput={renderInput(isDateOpen, date, () => setDate(null))}
               />
@@ -196,7 +219,11 @@ const Publish = ({accounts}) => {
                 images,
                 feeds: [hasFacebook && 'facebook', hasInstagram && 'instagram'].filter(e => e) 
               }, clearData)}
-            >{ !date ? 'Publicar' : 'Programar'}</Button>
+            >{
+              !date
+                ? <FormattedMessage id='Publish'/>
+                : <FormattedMessage id='Program'/>
+              }</Button>
           </div>
         </div>
       </div>
@@ -225,13 +252,15 @@ const Publish = ({accounts}) => {
       {
         (!hasFacebook && !hasInstagram) &&
         <div className='center'>
-          <span>Seleccione una red social</span>
+          <span>
+            <FormattedMessage id='Select a social media'/>
+          </span>
         </div>
       }
     </div>
-    <ModalBase show={!!show} close={() => {setModal('');}} width='auto' height={show === 'image' && 'auto'} >
-      <ImageSelector show={show} onAppend={_url => {
-        setModal('');
+    <ModalBase show={showModal} close={() => setShowModal(false)} width='auto' height={showModal && 'auto'} >
+      <ImageSelector show={showModal} onAppend={_url => {
+        setShowModal(false);
         setImage(images.concat([_url]));
       }}/>
     </ModalBase>
