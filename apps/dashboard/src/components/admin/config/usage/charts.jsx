@@ -1,3 +1,4 @@
+import {useIntl, FormattedMessage} from 'react-intl';
 import Base from '../../stats/base';
 import dynamic from 'next/dynamic';
 import Spinner from '@/components/svg/spinner';
@@ -13,46 +14,55 @@ const CircleChart = dynamic(() => import('../../stats/circleChart'), {
   loading
 });
 
-export default function Charts({limits}){
+export default function Charts({limits}) {
+  const intl = useIntl();
+
+  const storageText = intl.formatMessage({id: 'You have {storage}MB left'});
+  const uploadText = intl.formatMessage({id: 'You have {uploads} uploads left'});
+  const pagesText = intl.formatMessage({id: 'You have {pages} left'});
+  const igText = intl.formatMessage({id: 'You have {instagramPosts} left'});
+  const schedulesText = intl.formatMessage({id: 'You have {schedules} left'});
+  const testText = intl.formatMessage({id: 'You have {tests} tests left'});
+
   return <>
-    <Base title='Almacenamiento' rows={1} style={{height: 380}}>
+    <Base title={intl.formatMessage({id: 'Storage'})} rows={1} style={{height: 380}}>
       <CircleChart data={limits.files.storage} labels={[
-        'Has usado',
-        (limits.files.storage.used / 1024 / 1024).toFixed(2) + 'MB',
-        `Te restan ${(limits.files.storage.available / 1024/ 1024).toFixed(2)}MB`
+        intl.formatMessage({id: 'You have used'}),
+        `${(limits.files.storage.used / 1024 / 1024).toFixed(2)}MB`,
+        storageText.replace('{storage}', (limits.files.storage.available / 1024/ 1024).toFixed(2))
       ]}/>
       <CircleChart data={limits.files.upload} labels={[
-        'Has subido',
-        limits.files.upload.used + ' archivos',
-        `Te restan ${limits.files.upload.available} cargas`
+        intl.formatMessage({id: 'You have uploaded'}),
+        `${limits.files.upload.used} ${intl.formatMessage({id: 'files'})}`,
+        uploadText.replace('{uploads}', limits.files.upload.available)
       ]}/>
     </Base>
-    <Base title='Páginas' rows={2} style={{height: 380}}>
+    <Base title={intl.formatMessage({id: 'Pages'})} rows={2} style={{height: 380}}>
       <CircleChart data={limits.pages} labels={[
-        'Has publicado',
-        limits.pages.used + ' paginas',
-        `Te restan ${limits.pages.available}`
+        intl.formatMessage({id: 'You have published'}),
+        `${limits.pages.used} ${intl.formatMessage({id: 'pages'})}`,
+        pagesText.replace('{pages}', limits.pages.available)
       ]}/>
     </Base>
-    <Base title='Posts de Instagram' rows={2} style={{height: 380}}>
+    <Base title={intl.formatMessage({id: 'Instagram posts'})} rows={2} style={{height: 380}}>
       <CircleChart data={limits.social.instagramPosts} labels={[
-        'Has publicado',
-        limits.social.instagramPosts.used + ' posts',
-        `Te restan ${limits.social.instagramPosts.available}`
+        intl.formatMessage({id: 'You have published'}),
+        `${limits.social.instagramPosts.used} posts`,
+        igText.replace('{instagramPosts}', limits.social.instagramPosts.available)
       ]}/>
     </Base>
-    <Base title='Posts programados' rows={2} style={{height: 380}}>
+    <Base title={intl.formatMessage({id: 'Scheduled posts'})} rows={2} style={{height: 380}}>
       <CircleChart data={limits.social.schedule} labels={[
-        'Has programado',
-        limits.social.schedule.used + ' posts',
-        `Te restan ${limits.social.schedule.available}`
+        intl.formatMessage({id: 'You have scheduled'}),
+        `${limits.social.schedule.used} posts`,
+        schedulesText.replace('{schedules}', limits.social.schedule.available)
       ]}/>
     </Base>
-    <Base title='Pruebas A/B' rows={2} style={{height: 380}}>
+    <Base title={intl.formatMessage({id: 'Split tests'})} rows={2} style={{height: 380}}>
       <CircleChart data={limits.ab.tests} labels={[
-        'Has usado',
-        limits.ab.tests.used + ' pruebas',
-        `Te restan ${limits.ab.tests.available} pruebas`
+        intl.formatMessage({id: 'You have used'}),
+        `${limits.ab.tests.used} ${intl.formatMessage({id: 'tests'})}`,
+        testText.replace('{tests}', limits.ab.tests.available)
       ]}/>
     </Base>
   </>;

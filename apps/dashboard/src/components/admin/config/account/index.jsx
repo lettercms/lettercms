@@ -1,5 +1,5 @@
 import {useState, useEffect, forwardRef} from 'react';
-//import asyncImport from '@/lib/asyncImportScript';
+import {useIntl} from 'react-intl';
 import sdk from '@lettercms/sdk';
 import AccountLoad from './load';
 import dynamic from 'next/dynamic';
@@ -22,6 +22,8 @@ export default function AccountConfig() {
   const [loading, setLoad] = useState(true);
   const [file, setFile] = useState(null);
   const {user, status} = useUser();
+
+  const intl = useIntl();
 
   useEffect(() => {
     if (status === 'done') {
@@ -65,11 +67,19 @@ export default function AccountConfig() {
         sdk.accounts
           .update(user._id, changes)
           .then(() => {
-            alert('Datos Modificados con exito');
+            alert(
+              intl.formatMessage({
+                id: 'Data updated successfully'
+              })
+            );
             changes = {};
           });
       }}
-      buttonText='Guardar'
+      buttonText={
+        intl.formatMessage({
+          id: 'Save'
+        })
+      }
     />
     <UI {...data} onChange={handleInput} onChangePicture={setFile}/>
     <Cropper file={file} onChange={photo => setData(prev => ({

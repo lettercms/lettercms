@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {useUser} from '@/components/layout';
 import Modal from '@/components/modalBase';
 import ImageUploader from '@/lib/ImageHandler';
@@ -29,6 +30,8 @@ export default function CropperModal({file, onChange}) {
   const [fullImage, setFullImage] = useState('');
   const [previewImage, setPreviewImage] = useState('');
   const {blog, user} = useUser();
+
+  const intl = useIntl();
 
   useEffect(() => {
     if (file) {
@@ -90,12 +93,19 @@ export default function CropperModal({file, onChange}) {
         onChange(URL.createObjectURL(file));
         close();
 
-        alert('Imagen actualizada con exito');
+        alert(
+          intl.formatMessage({
+            id: 'Image updated successfully'
+          })
+        );
       } catch(err) {
-        alert('Error al actualizar la imagen');
+        alert(
+          intl.formatMessage({
+            id: 'Error updating the image'
+          })
+        );
       }
     });
-
   };
 
   return <Modal show={showModal} close={close} width='500px' height='552px'>
@@ -103,14 +113,20 @@ export default function CropperModal({file, onChange}) {
       edit ?
       <div key='edit' id='cropper-edit'>
         <img alt='Asset' key='edit-image' src={fullImage || ''} id='cropper' style={{display: 'block', maxWidth: '100%', width:400, height: 400}}/>
-        <button className='black' style={{marginTop: 10}} onClick={cropDone}>Cortar</button>
+        <button className='black' style={{marginTop: 10}} onClick={cropDone}>
+          <FormattedMessage id='Crop'/>
+        </button>
       </div>
       :
       <div key='preview'>
         <img alt='Asset' key='preview-image' src={previewImage || ''} style={{borderRadius: '50%', display: 'block', maxWidth: '100%', width:400, height: 400}}/>
         <div className='flex' style={{width:   400, marginTop: 10}}>
-          <button className='gray' onClick={upload}>Guardar</button>
-          <button className='black' onClick={cancelCrop}>Cancelar</button>
+          <button className='gray' onClick={upload}>
+            <FormattedMessage id='Save'/>
+          </button>
+          <button className='black' onClick={cancelCrop}>
+            <FormattedMessage id='Cancel'/>
+          </button>
         </div>
       </div>
     }

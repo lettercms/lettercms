@@ -1,7 +1,9 @@
+import {useIntl, FormattedMessage} from 'react-intl';
 import Input from '@/components/input';
 import Image from 'next/image';
 import Container from '../../stats/base';
 import Social from './social';
+
 import Camera from '@/components/svg/camera';
 
 const AccountUI = ({
@@ -18,6 +20,8 @@ const AccountUI = ({
   onChangePicture,
   onChange
 }) => {
+
+  const intl = useIntl();
 
   const changePicture = () => {
     let input = document.getElementById('cropper-input');
@@ -41,26 +45,26 @@ const AccountUI = ({
         <Camera id='camera-icon' fill='#0009' width='60' height='60'/>
       </div>
     </div>
-    <Container rows={1} title='Información'>
+    <Container rows={1} title={intl.formatMessage({id: 'Information'})}>
       <div>
         <div className='flex' style={{width: '100%'}}>
-          <Input id='name' value={name} label='Nombre' onInput={onChange}/>
-          <Input id='lastname' value={lastname} label='Apellido' onInput={onChange}/>
+          <Input id='name' value={name} label={intl.formatMessage({id: 'Name'})} onInput={onChange}/>
+          <Input id='lastname' value={lastname} label={intl.formatMessage({id: 'Lastname'})} onInput={onChange}/>
         </div>
-        <Input id='ocupation' value={ocupation} label='Ocupación' onInput={onChange}/>
-        <Input id='description' value={description} type='textarea' label='Acerca de mi' onInput={onChange}/>
+        <Input id='ocupation' value={ocupation} label={intl.formatMessage({id: 'Occupation'})} onInput={onChange}/>
+        <Input id='description' value={description} type='textarea' label={intl.formatMessage({id: 'About me'})} onInput={onChange}/>
       </div>
     </Container>
-    <Container rows={1} title='Redes sociales'>
+    <Container rows={1} title={intl.formatMessage({id: 'Social media'})}>
       <div>
-        <Input id='website' value={website} label='Sitio Web' onInput={onChange}/>
+        <Input id='website' value={website} label={intl.formatMessage({id: 'Website'})} onInput={onChange}/>
         <Input id='facebook' value={facebook} label='Facebook' onInput={onChange}/>
         <Input id='instagram' value={instagram} label='Instagram' onInput={onChange}/>
         <Input id='twitter' value={twitter} label='Twitter' onInput={onChange}/>
         <Input id='linkedin' value={linkedin} label='Linkedin' onInput={onChange}/>
       </div>
     </Container>
-    <Container rows={1} title='Enlaces'>
+    <Container rows={1} title={intl.formatMessage({id: 'Links'})}>
       <Social/>
     </Container>
 

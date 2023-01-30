@@ -1,8 +1,11 @@
+import {FormattedMessage, useIntl} from 'react-intl';
 import Trash from '@/components/svg/trash';
 import sdk from '@lettercms/sdk';
 
 //TODO: add confirmation modal to delete
 export default function KeyList({apiKeys, onDelete}) {
+  const intl = useIntl();
+
   const deleteKey = async id => {
     try {
       const res = await fetch('/api/blog/api-key', {
@@ -23,9 +26,19 @@ export default function KeyList({apiKeys, onDelete}) {
           return onDelete(id);
       }
 
-      alert('Error al eliminar la llave');
+      alert(
+        intl.formatMessage({
+          id: 'Error deleting key'
+        })
+      );
     } catch(err) {
-      return alert('Error al eliminar la llave');
+      alert(
+        intl.formatMessage({
+          id: 'Error deleting key'
+        })
+      );
+
+      throw err;
     }
   };
   return <div style={{width: '100%'}}>
@@ -33,13 +46,15 @@ export default function KeyList({apiKeys, onDelete}) {
       {
         apiKeys?.length === 0 &&
         <li style={{textAlign: 'center'}}>
-          <span>No hay llaves disponibles</span>
+          <span>
+            <FormattedMessage id='No keys available'/>
+          </span>
         </li>
       }
       {
         apiKeys.map(e => {
           const d = new Date(e.created);
-          const created = `Creada el ${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} a las ${d.getHours()}:${d.getMinutes()}`;
+          const created = `${intl.formatMessage({id: 'Created on'})} ${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${intl.formatMessage({id: 'at'})} ${d.getHours()}:${d.getMinutes()}`;
 
           return <li key={e._id} className='flex flex-row'>
             <div className='flex flex-column'>
