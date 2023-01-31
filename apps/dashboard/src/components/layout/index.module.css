@@ -80,3 +80,43 @@
   right: 1rem;
   top: 1rem;
 }
+
+.bottomButtons {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto 1.5rem;
+}
+.bottomButtons button {
+  background: none;
+  border: none;
+}
+
+.languageBox {
+  position: absolute;
+  left: 110%;
+  background: #f7f7f7;
+  bottom: -1.5rem;
+  transition: ease .3s;
+  opacity: 0;
+  display: none;
+  border-radius: .25rem;
+  overflow: hidden;
+}
+.languageBox li button {
+  display: flex;
+  align-items: center;
+  padding: .5rem 1rem;
+  width: 100%;
+  transition: ease .3s;
+}
+.languageBox li button:disabled,
+.languageBox li button:enabled:hover {
+  background: #eee;
+}
+.languageBox li button span {
+  margin-left: .5rem;
+  color: var(--main);
+}

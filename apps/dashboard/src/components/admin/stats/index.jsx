@@ -24,7 +24,6 @@ const NoData = dynamic(() => import('./noData'), {
   loading: () => <Load/>
 });
 
-
 const fetchData = start => {
   const fields = [
     'data.referrers',

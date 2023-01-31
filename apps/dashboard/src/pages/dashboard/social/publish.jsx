@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import {useIntl} from 'react-intl';
 import Head from 'next/head';
 import sdk from '@lettercms/sdk';
 import {getSession} from 'next-auth/react';
@@ -19,6 +20,12 @@ export async function getServerSideProps({ req, res, query}) {
     };
 
   const accounts = await getAccounts();
+
+  if (!accounts.facebook && !accounts.instagram)
+    return {
+      notFound: true
+    }
+
   const messages = await import(`@/translations/dashboard/social/publish/${hl}.json`);
 
   return {
@@ -32,9 +39,15 @@ export async function getServerSideProps({ req, res, query}) {
 }
 
 const AdminDashboard = ({accounts}) => {
+  const intl = useIntl();
+
   return <>
       <Head>
-        <title>Publicación | Dashboard - LetterCMS</title>
+        <title>{
+          intl.formatMessage({
+            id: 'Publish | Dashboard - LetterCMS'
+          })
+        }</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

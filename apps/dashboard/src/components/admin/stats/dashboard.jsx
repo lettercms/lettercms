@@ -63,7 +63,7 @@ const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days,
       }
       disableTopButton={true}
     >
-      <div>
+      <div className='range-container'>
         <select value={range} onChange={({target: {value}}) => changeTime(value, setRange, onChange)}>
           <option value='1'>
             <FormattedMessage id='Lasts 7 days'/>
@@ -219,6 +219,12 @@ const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days,
       <BarChart data={referrers} sort={true} layout='vertical'/>
     </Base>
     <style jsx>{`
+      .range-container {
+        width: 9rem;
+      }
+      .title {
+        margin-left: 2.5%;
+      }
       #stats-dashboard {
         display: flex;
         flex-wrap: wrap;

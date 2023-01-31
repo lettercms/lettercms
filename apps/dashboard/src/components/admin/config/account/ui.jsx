@@ -75,7 +75,7 @@ const AccountUI = ({
         border: #ddd solid 1px;
         position: relative;
         overflow: hidden;
-        margin: 2rem 0;
+        margin: 5rem 0 2rem;
       }
       #account-photo {
         width: 250px;

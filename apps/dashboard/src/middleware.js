@@ -38,9 +38,10 @@ export default function middleware(req) {
 
   let language;
 
+  const hlCookie = req.cookies.get('__lcms-hl');
   //Check if has hl query on searchParams
-  if (query?.hl)
-    language = query.hl;
+  if (hlCookie)
+    language = hlCookie;
   else
     language = req.headers.get('accept-language')?.split(',')?.[0].split('-')?.[0].toLowerCase() || 'en';
     

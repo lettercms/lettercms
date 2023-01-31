@@ -29,7 +29,7 @@ function RenderBarChart({data, sort = false, dataKey = 'vista', layout = 'horizo
   });
 
   if (sort)
-    data = data.sort((a,b) => a.vistas > b.vistas ? -1 : +1);
+    data = data.sort((a,b) => a[_views] > b[_views] ? -1 : +1);
 
   return <div style={{height: !isHorizontal ? data.length * 50 + 10 : 200, width: '95%'}}>
     <ResponsiveContainer>
@@ -46,11 +46,11 @@ function RenderBarChart({data, sort = false, dataKey = 'vista', layout = 'horizo
           type={isHorizontal ? 'number' : 'category'}
           dataKey={!isHorizontal ? dataKey : undefined}
         />
-        <CartesianGrid />
+        <CartesianGrid stroke="#e1e4e5" strokeDasharray="5 5"/>
         <Tooltip />
         <Bar
           dataKey={_views}
-          fill="#03a9f4"
+          fill="#5f4dee"
           radius={[isHorizontal ? 5 : 0, 5, isHorizontal ? 0 : 5, 0]}/>
       </BarChart>
     </ResponsiveContainer>

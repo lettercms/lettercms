@@ -205,7 +205,7 @@ export default function EditorContainer({post, blog, hasFacebook, hasInstagram})
       </button>
       <Top
         ico={<Ico/>}
-        topText={data.title || intl.formatMessage({id: 'New Post'})}
+        topText={data.title || intl.formatMessage({id: 'New post'})}
         disableTopButton
       >
         <div>
@@ -236,12 +236,12 @@ export default function EditorContainer({post, blog, hasFacebook, hasInstagram})
       <Editor onOpenModal={setShowImages}/>
       <Buttons
         onPreview={
-          () => draft(data._id, {
+          () => preview(data._id, {
             clearTimeout: () => clearTimeout(timer.current),
             setLoading,
             setData,
             domain: user.blog?.domain
-          })
+          }, intl)
         }
         onSave={
           () => update(data._id, {

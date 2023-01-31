@@ -32,7 +32,7 @@ function RenderPieChart({data}) {
           label={false}
         >
           {
-            data.map((entry, index) => <Cell key={`slice-${index}`} fill={`rgba(3, 169, 244, ${(index + 1) / data.length})`} />)
+            data.map((entry, index) => <Cell key={`slice-${index}`} fill={`rgba(95, 77, 238, ${(index + 1) / data.length})`} />)
           }
         </Pie>
       </PieChart>
