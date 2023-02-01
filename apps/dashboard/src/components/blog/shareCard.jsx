@@ -11,21 +11,21 @@ const ShareCard = ({ url, title, style }) => {
         target="_blank"
         rel='noreferrer'
       >
-        <Facebook height='50'/>
+        <Facebook height='28'/>
       </a>
       <a
         href={`https://twitter.com/intent/tweet?original_referer=${encodedURL.split('vercel.app')[0] + 'vercel.app'}&ref_src=twsrc%5Etfw&text=${encodeURI('Esta entrada me gusto, puede que a ti también te interese.')}&tw_p=tweetbutton&url=${encodedURL}&via=lettercms`}
         target="_blank"
         rel='noreferrer'
       >
-        <Twitter height='50' />
+        <Twitter height='28' />
       </a>
       <a
         href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodedURL}`}
         target="_blank"
         rel='noreferrer'
       >
-        <Linkedin height='50'/>
+        <Linkedin height='28'/>
       </a>
       <style jsx>
         {`
