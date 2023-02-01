@@ -1,13 +1,15 @@
 import {useState, useEffect} from 'react';
+import {useIntl} from 'react-intl';
 import {inputTag, tagsContainer, tagList, blogTagsStyles, tagUl} from './tags.module.css';
 import {useData} from './index';
 
 export default function Tags({blogTags: _bt}) {
-  const[data, setData] = useData();
-
   const [blogTags, setBlogTags] = useState(_bt || []);
   const [text,  setText] = useState('');
   const [showTags, setShowTags] = useState(false);
+
+  const[data, setData] = useData();
+  const intl = useIntl();
 
   useEffect(() => {
     if (!text) {
@@ -47,7 +49,11 @@ export default function Tags({blogTags: _bt}) {
           disabled={data.loading}
           onBlur={() => setTimeout(() => setShowTags(false), 0)}
           className={inputTag}
-          placeholder='Etiqueta'
+          placeholder={
+            intl.formatMessage({
+              id: 'Tag'
+            })
+          }
           value={text}
           onChange={({target: {value}}) => setText(value)}
         />

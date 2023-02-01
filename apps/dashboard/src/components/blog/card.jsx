@@ -1,3 +1,4 @@
+import {FormattedMessage} from 'react-intl';
 import { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
@@ -83,8 +84,12 @@ class Card extends Component {
             </div>
           </div>
           <div>
-            <button className="view-more" onClick={() => { Router.push(`/blog/${url}`);}}>Ver Mas</button>
-            <button className="share" onFocus={this.toggleShare} onBlur={this.toggleShare}>Compartir</button>
+            <button className="view-more" onClick={() => { Router.push(`/blog/${url}`);}}>
+              <FormattedMessage id='See more'/>
+            </button>
+            <button className="share" onFocus={this.toggleShare} onBlur={this.toggleShare}>
+              <FormattedMessage id='Share'/>
+            </button>
           </div>
           <Share style={{ opacity: shareOpacity, display: shareDisplay }} title={title} url={`https://lettercms.vercel.app/blog/${url}`} />
         </div>

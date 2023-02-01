@@ -1,3 +1,4 @@
+import {useIntl} from 'react-intl';
 import {
   CartesianGrid,
   XAxis,
@@ -8,16 +9,30 @@ import {
   BarChart,
 } from 'recharts';
 
-function RenderBarChart({data, sort = false, dataKey = 'vista', layout = 'horizontal'}) {
+function RenderBarChart({data, sort = false, dataKey = 'vista', layout = 'horizontal', translate = false}) {
+  const intl = useIntl();
+
+  const _views = intl.formatMessage({
+    id: 'views'
+  });
+  
   const isHorizontal = layout === 'horizontal';
 
-  data = Object.entries(data).map(([key, vistas]) => ({
-    vistas,
-    [dataKey]: key
-  }));
+  if (!Array.isArray(data))
+    data = Object.entries(data);
+
+  data = data.map(([key, views]) => {
+    const parsed = {
+      [dataKey]: translate ? intl.formatMessage({id: key}) : key
+    };
+
+    parsed[_views] = views;
+
+    return parsed;
+  });
 
   if (sort)
-    data = data.sort((a,b) => a.vistas > b.vistas ? -1 : +1);
+    data = data.sort((a,b) => a[_views] > b[_views] ? -1 : +1);
 
   return <div style={{height: !isHorizontal ? data.length * 50 + 10 : 200, width: '95%'}}>
     <ResponsiveContainer>
@@ -34,11 +49,11 @@ function RenderBarChart({data, sort = false, dataKey = 'vista', layout = 'horizo
           type={isHorizontal ? 'number' : 'category'}
           dataKey={!isHorizontal ? dataKey : undefined}
         />
-        <CartesianGrid />
+        <CartesianGrid stroke="#e1e4e5" strokeDasharray="5 5"/>
         <Tooltip />
         <Bar
-          dataKey="vistas"
-          fill="#03a9f4"
+          dataKey={_views}
+          fill="#5f4dee"
           radius={[isHorizontal ? 5 : 0, 5, isHorizontal ? 0 : 5, 0]}/>
       </BarChart>
     </ResponsiveContainer>

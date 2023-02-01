@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {useIntl, FormattedMessage} from 'react-intl';
 import Modal from '../../../modalBase';
 import importData from '@/lib/uploadXml';
 import {useUser} from '@/components/layout';
@@ -9,6 +10,7 @@ export default function BlogImport() {
   const [sending, setSending] = useState(false);
 
   const {blog} = useUser();
+  const intl = useIntl();
 
   const sendBlogData = cms => {
     if (sending)
@@ -30,12 +32,21 @@ export default function BlogImport() {
         try {
           const {status} = await importData(file, cms, blog.subdomain);
           if (status === 'OK') {
-            alert('Datos importado con exito');
+            alert(
+              intl.formatMessage({
+                id: 'Data imported successfully'
+              })
+            );
+
             setShowModal(false);
           }
 
         } catch(err) {
-          alert('Error al importar las entradas');
+          alert(
+            intl.formatMessage({
+              id: 'Error importing data'
+            })
+          );
           throw err;
         } finally {
           setSending(false);
@@ -48,7 +59,9 @@ export default function BlogImport() {
 
   return <div>
     <div>
-      <Button type='solid' style={{width: '100%'}} onClick={() => setShowModal(true)}>Eliminar</Button>
+      <Button type='solid' style={{width: '100%'}} onClick={() => setShowModal(true)}>
+        <FormattedMessage id='Import'/>
+      </Button>
       {/*<button className="black">Exportar</button>*/}
     </div>
     <Modal show={showModal} close={() => setShowModal(false)} height='max-content' width='max-content'>

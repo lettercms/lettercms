@@ -1,3 +1,4 @@
+import {FormattedMessage} from 'react-intl';
 import Camera from '@/components/svg/camera';
 import Spinner from '@/components/svg/spinner';
 import createUploader from '@/lib/createUploader';
@@ -50,9 +51,15 @@ export default function Thumbnail({url = 'https://cdn.jsdelivr.net/gh/davidsdeve
       </div>
     </div>
     <div id='thumbnail-text' className='flex flex-column'>
-      <span>Sube una imagen para mejorar la presencia de tu blog en redes sociales.</span>
-      <span>La imagen debe ser de al menos 640×320px (1280×640px para mejor calidad).</span>
-      <a href='#'>Descargar Plantilla</a>
+      <span>
+        <FormattedMessage id='Upload an image to improve your blog appeal on social media'/>
+      </span>
+      <span>
+        <FormattedMessage id='Image must be at least 640x320 px (recommended 1280 x 640 for best quality)'/>
+      </span>
+      <a href='#'>
+        <FormattedMessage id='Download template'/>
+      </a>
     </div>
     <style jsx>{`
       #thumbnail-text {

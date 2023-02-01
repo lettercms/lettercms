@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import {useIntl} from 'react-intl';
 import Head from 'next/head';
 import sdk from '@lettercms/sdk';
 import {getSession} from 'next-auth/react';
@@ -11,6 +12,7 @@ const Posts = dynamic(() => import('@/components/admin/posts'), {
 });
 
 export async function getServerSideProps({ req, res, query}) {
+  const {hl} = query;
   const session = await getSession({req});
 
   if (!session)
@@ -21,9 +23,11 @@ export async function getServerSideProps({ req, res, query}) {
       }
     };
 
+  const messages = await import(`@/translations/dashboard/posts/${hl}.json`);
 
   return {
     props: {
+      messages: Object.assign({}, messages.default),
       user: session.user,
       hideLayout: true
     }
@@ -31,9 +35,15 @@ export async function getServerSideProps({ req, res, query}) {
 }
 
 const AdminDashboard = ({tab, user}) => {
+  const intl = useIntl();
+
   return <>
       <Head>
-        <title>Entradas | Dashboard - LetterCMS</title>
+        <title>{
+          intl.formatMessage({
+            id: 'Posts | Dashboard - LetterCMS'
+          })
+        }</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

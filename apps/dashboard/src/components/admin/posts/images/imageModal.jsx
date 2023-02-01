@@ -1,3 +1,4 @@
+import {FormattedMessage} from 'react-intl';
 import {useState, useEffect, useRef} from 'react';
 import Cross from '@/components/svg/cross';
 import Button from '@/components/button';
@@ -26,7 +27,9 @@ export default function ImageModal({show, img, meta, onClose, onSelect}) {
     <div id='modal-image-container'>
       <img className='lazy-img' src={img} alt=''/>
     </div>
-    <Button type='solid' alt onClick={() => onSelect(meta)}>Seleccionar</Button>
+    <Button type='solid' alt onClick={() => onSelect(meta)}>
+      <FormattedMessage id='Select'/>
+    </Button>
     <style jsx>{`
       :global(#image-modal-cross) {
         position: absolute;

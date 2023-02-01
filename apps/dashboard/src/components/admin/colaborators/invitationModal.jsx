@@ -1,3 +1,4 @@
+import {useIntl, FormattedMessage} from 'react-intl';
 import {useState, useEffect} from 'react';
 import sdk from '@lettercms/sdk';
 import ModalUser from './modalUser';
@@ -7,6 +8,8 @@ import Button from '@/components/button';
 export default function InvitationModal({onClose}) {
   const [showModal, setShowModal] = useState(false);
   const [sending, setSending] = useState(false);
+
+  const intl = useIntl();
   
   const [data, setData] = useState({
     name: '',
@@ -35,11 +38,16 @@ export default function InvitationModal({onClose}) {
 
   const sendInvitation = async () => {
     setSending(true);
+
     try {
       const {email, name, lastname} = data;
 
       if (!email || !name || !lastname)
-        return alert('Ingresa todo los datos');
+        return alert(
+          intl.formatMessage({
+            id: 'Insert data'
+          })
+        );
 
       let res;
       if (data.role === 'collaborator') 
@@ -48,10 +56,18 @@ export default function InvitationModal({onClose}) {
         res = await sdk.accounts.inviteSingle(email);
 
       if (res.status === 'OK')
-        alert('Invitacion Enviada');
+        alert(
+          intl.formatMessage({
+            id: 'Invitation sent'
+          })
+        );
 
       if (res.status === 'account-exists')
-        alert('Ya existe una cuenta con ese correo');
+        alert(
+          intl.formatMessage({
+            id: 'An account with that email already exists'
+          })
+        );
       
       setData({
         name: '',
@@ -63,7 +79,12 @@ export default function InvitationModal({onClose}) {
       setSending(false);
       close();
     } catch(err) {
-      alert('Error enviando invitacion');
+      alert(
+        intl.formatMessage({
+          id: 'Error sending invitation'
+        })
+      );
+
       throw err;
     }
   };
@@ -71,7 +92,9 @@ export default function InvitationModal({onClose}) {
   return <Base show={showModal} close={close} width='auto' height='auto'>
     <div>
       <ModalUser onChange={handleInput} role={data.role} name={data.name} lastname={data.lastname} email={data.email}/>
-      <Button loading={sending} type='solid' onClick={sendInvitation}>Enviar Invitacion</Button>
+      <Button loading={sending} type='solid' onClick={sendInvitation}>
+        <FormattedMessage id='Send invitation'/>
+      </Button>
     </div>
   </Base>;
 }

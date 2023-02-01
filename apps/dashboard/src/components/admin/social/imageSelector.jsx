@@ -1,8 +1,11 @@
 import Input from '@/components/input';
-import {useState, useEffect} from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
+import {useState, useEffect, useRef} from 'react';
 import asyncImport from '@/lib/asyncImportScript';
 import sdk from '@lettercms/sdk';
 import Button from '@/components/button';
+import {getStorage, ref, uploadBytes, getMetadata} from 'firebase/storage';
+import {useUser} from '@/components/layout';
 
 let canvas = null;
 let cropper = null;
@@ -23,27 +26,42 @@ const cropperOpts = {
   toggleDragModeOnDblclick: false
 };
 
-const uploadImage = (onUnload) => {
+const uploadImage = (subdomain, onUnload, intl) => {
   try {
     canvas.toBlob(async file => {
-      const body = new FormData();
+      //Generate Random temp name
+      const random = parseInt(Math.random() * 10e10);
+      const tempName = a.toString(16);
 
-      body.append('file', file);
+      const storage = getStorage();
 
-      const res = await fetch('https://lettercms-api.vercel.app/api/image', {
-        method: 'POST',
-        headers: {
-          Authorization: sdk.accessToken
-        },
-        body
+      const path = `${subdomain}/${tempName}.webp`;
+
+      const _ref = ref(storage, path);
+
+      const {metadata: {size}} = await uploadBytes(_ref, file, {
+        cacheControl: 'no-cache, no-store, max-age=0, must-revalidate'
       });
 
-      const data = await res.json();
-      
-      onUnload(data.url);
-    });
+      fetch('/api/usage/update', {
+        method: 'PATCH',
+        body: JSON.stringify({
+          size
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: sdk.accessToken
+        }
+      });
+
+      onUnload(`https://usercontent-davidsdevel-lettercms.vercel.app/${path}`);
+    }, 'image/webp');
   } catch(err) {
-    alert('Error al subir la foto de perfil');
+    alert(
+      intl.formatMessage({
+        id: 'Error uploading image'
+      })
+    );
 
     throw err;
   }
@@ -54,7 +72,7 @@ const onChangePicture = (file, cb) => {
 
   img.src = originalImg = imageUrl;
 
-  window.crop = cropper = new Cropper(img, {
+  cropper = new Cropper(img, {
     ...cropperOpts,
     aspectRatio: editRatio
   });
@@ -77,7 +95,7 @@ const onClickUrl = (ratio, cb) => {
 
   img.src = originalImg;
 
-  window.crop = cropper = new Cropper(img, {
+  cropper = new Cropper(img, {
     ...cropperOpts,
     aspectRatio: editRatio
   });
@@ -92,7 +110,7 @@ const cancelCrop = (cb) => {
 
     img.src = originalImg;
 
-    window.crop = cropper = new Cropper(img, {
+    cropper = new Cropper(img, {
       ...cropperOpts,
       aspectRatio: editRatio
     });
@@ -121,7 +139,9 @@ const changePicture = (ratio, cb) => {
 
 
 const SelectRatio = ({onClick, onChange, image}) => <div id='aspect-main'>
-  <span>Selecciona la relación</span>
+  <span>
+    <FormattedMessage id='Select aspect ratio'/>
+  </span>
   <div id='aspect-container'>
     <div className='aspect' onClick={() => {image ? onClickUrl(5/4, onChange) : onClick(5/4, onChange);}} style={{width: '10rem', height: '8rem'}}>4:5</div>  
     <div className='aspect' onClick={() => {image ? onClickUrl(1/1.91, onChange) : onClick(1/1.91, onChange);}} style={{width: '4.2rem', height: '8rem'}}>1:1.91</div>
@@ -156,11 +176,24 @@ const SelectRatio = ({onClick, onChange, image}) => <div id='aspect-main'>
 
 const UploadMethod = ({onClickUpload}) => {
   const [url, setUrl] = useState('');
+  const intl = useIntl();
 
   return <div>
-    <Input id='url' value={url} onChange={({target: {value}}) => setUrl(value)} onKeyUp={e => {onUrlPicture(e, onClickUpload);}} label='Enlace'/>
+    <Input
+      id='url'
+      value={url}
+      onChange={({target: {value}}) => setUrl(value)}
+      onKeyUp={e => onUrlPicture(e, onClickUpload)}
+      label={
+        intl.formatMessage({
+          id: 'URL'
+        })
+      }
+    />
     <hr/>
-    <Button style={{width: '100%'}} type='solid' onClick={onClickUpload}>Subir Imagen</Button>{/*
+    <Button style={{width: '100%'}} type='solid' onClick={onClickUpload}>
+      <FormattedMessage id='Upload image'/>
+    </Button>{/*
       <hr/>
       <button>Seleccionar de la galeria</button>*/}
   </div>;
@@ -168,19 +201,27 @@ const UploadMethod = ({onClickUpload}) => {
 
 const ImageSelector = ({show, onAppend}) => {
   const [step, changeStep] = useState('select');
+  const {blog} = useUser();
+  const cropperRef = useRef();
+  const intl = useIntl();
 
   useEffect(() => {
     if (!show) {
       canvas = null;
-      cropper = null;
       originalImg = '';
       croppedImg = '';
       editRatio = null;
-      changeStep('select');
 
-      if (cropper)
-        cropper.destroy();
+      setTimeout(() => {
+        cropper?.destroy();
+
+        if (cropperRef.current)
+          cropperRef.current.src = '';
+
+        changeStep('select');
+      }, 700);
     }
+
   }, [show]);
 
   useEffect(() => {
@@ -195,8 +236,7 @@ const ImageSelector = ({show, onAppend}) => {
     );
 
     return () => {
-      if (cropper)
-        cropper.destroy();
+      cropper?.destroy();
 
       document.getElementById('cropper-css').remove();
       document.getElementById('cropper-js').remove();
@@ -214,19 +254,24 @@ const ImageSelector = ({show, onAppend}) => {
     }
     {
       step !== 'upload' &&
-      <img id='cropper' style={{height: step === 'edit' ? 300 : null}} alt=''/>
+      <img ref={cropperRef} id='cropper' style={{height: step === 'edit' ? 300 : null}} alt=''/>
     }
     {
       step === 'edit' &&
-      <Button type='solid' onClick={() => cropDone(() => changeStep('upload'))}>Cortar</Button>
+      <Button type='solid' onClick={() => cropDone(() => changeStep('upload'))}>
+        <FormattedMessage id='Crop'/>
+      </Button>
     }
     {
       step === 'upload' &&
       <>
         <img src={croppedImg} style={{height: 300}} alt=''/>
-        <Button type='solid' onClick={() => uploadImage(onAppend)}>Listo</Button>
-        <br/>
-        <Button type='solid' onClick={() => cancelCrop(() => changeStep('edit'))}>Cancelar</Button>
+        <Button type='solid' onClick={() => uploadImage(blog.subdomain, onAppend, intl)}>
+          <FormattedMessage id='Done'/>
+        </Button>
+        <Button type='solid' onClick={() => cancelCrop(() => changeStep('edit'))}>
+          <FormattedMessage id='Cancel'/>
+        </Button>
       </>
     }
     <style jsx>{`

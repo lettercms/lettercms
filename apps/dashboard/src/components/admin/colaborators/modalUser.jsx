@@ -1,25 +1,40 @@
+import {useIntl} from 'react-intl';
 import Input from '../../input';
 
 export default function ModalUser({onChange, role, email, name, lastname}) {
+  const intl = useIntl();
+
   return <div id='user-modal'>
     <Input
       onInput={onChange}
       value={name}
       id='name'
-      label='Nombre'
+      label={
+        intl.formatMessage({
+          id: 'Name'
+        })
+      }
     />
     <Input
       onInput={onChange}
       value={lastname}
       id='lastname'
-      label='Apellido'
+      label={
+        intl.formatMessage({
+          id: 'Lastname'
+        })
+      }
     />
     <Input
       onInput={onChange}
       value={email}
       type='email'
       id='email'
-      label='Email'
+      label={
+        intl.formatMessage({
+          id: 'Email'
+        })
+      }
     />
     {/*
       <select onInput={onChange} name="role" value={role}>

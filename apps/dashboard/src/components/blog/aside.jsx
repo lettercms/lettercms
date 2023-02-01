@@ -1,3 +1,4 @@
+import {FormattedMessage} from 'react-intl';
 import {useState} from 'react';
 import Base from '@/components/admin/stats/base';
 import Input from '@/components/input';
@@ -18,8 +19,10 @@ export default function Aside({owner, mostViewed}) {
   return <aside>
     <Base row={1} principal>
       <div id='query-container'>
-        <Input label='Termino' value={query} onChange={e => setQuery(e.target.value)} id='query'/>
-        <Button type='outline' alt onClick={() => router.push(`/search?q=${query}`)}>Buscar</Button>
+        <Input label={<FormattedMessage id='Term'/>} value={query} onChange={e => setQuery(e.target.value)} id='query'/>
+        <Button type='outline' alt onClick={() => router.push(`/search?q=${query}`)}>
+          <FormattedMessage id='Search'/>
+        </Button>
       </div>
     </Base>
     <Base row={1}>
@@ -92,7 +95,7 @@ export default function Aside({owner, mostViewed}) {
         </div>
       </div>
     </Base>
-    <Base row={1} title='Más vistos'>
+    <Base row={1} title={<FormattedMessage id='Most viewed'/>}>
       <div className='flex flex-column'>
         <MostViewed mostViewed={mostViewed}/>
       </div>

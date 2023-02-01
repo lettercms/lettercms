@@ -1,7 +1,8 @@
-import {useState, useEffect, createContext, useContext, memo} from 'react';
+import {useState, useEffect, createContext, useContext, useRef} from 'react';
 import Home from '@/components/svg/home';
 import Router from 'next/router';
 import Link from 'next/link';
+import {signOut} from 'next-auth/react';
 import dynamic from 'next/dynamic';
 import sdk from '@lettercms/sdk';
 import Cookie from 'js-cookie'; 
@@ -20,14 +21,26 @@ import {
   footerImg,
   accountName,
   asideNameLoad,
-  dashboardHome
+  dashboardHome,
+  bottomButtons,
+  languageBox
 } from './index.module.css';
 import MenuLoad from './menuLoad';
+
+import SignOutIcon from '@lettercms/icons/signOut';
+import languages from './languages';
 
 const Nav = dynamic(() => import('./nav'), {
   loading: MenuLoad,
   ssr: false
 });
+
+const logout = () => signOut({redirect: false}).then(_ => Router.push('/login'));
+const setLanguage = hl => {
+  Cookie.set('__lcms-hl', hl);
+
+  Router.reload();
+};
 
 const DashboardContext = createContext();
 
@@ -59,10 +72,32 @@ export function DashboardProvider({userID, children, hideMenu}) {
   const [user, setUser] = useState(null);
   const [load, setLoad] = useState(null);
   const [isLoading, setLoading] = useState(true);
+  const [isOpenLanguages, setIsOpenLanguages] = useState(false);
+
+  const languagesRef = useRef(null);
 
   const ctx = useContext(DashboardContext);
 
   const router = Router.useRouter();
+
+  const languageArray = Object.entries(languages);
+
+  useEffect(() => {
+    if (isOpenLanguages) {
+      languagesRef.current.style.display = 'block';
+
+      setTimeout(() => {
+        languagesRef.current.style.opacity = 1;
+      }, 0);
+
+    } else {
+      languagesRef.current.style.opacity = 0;
+
+      setTimeout(() => {
+        languagesRef.current.style.display = 'none';
+      }, 310);
+    }
+  }, [isOpenLanguages]);
 
   useEffect(() => {
     if (!ctx && status === 'authenticated') {
@@ -87,7 +122,10 @@ export function DashboardProvider({userID, children, hideMenu}) {
 
       Cookie.set('__last-login', now.toISOString());
 
-      Promise.all([sdk.blogs.single(), sdk.accounts.me()])
+      Promise.all([
+        sdk.blogs.single(),
+        sdk.accounts.me()
+      ])
         .then(([_blog, _account]) => {
           if (_blog.customDomain)
             _blog.domain = _blog.customDomain;
@@ -137,14 +175,37 @@ export function DashboardProvider({userID, children, hideMenu}) {
         <ul className={navBar}>
           {
             isLoading
-            ? <MenuLoad/>
-            : <Nav role={user.role} blog={blog}/>
+              ? <MenuLoad/>
+              : <Nav role={user.role} blog={blog}/>
           }
         </ul>
         <div className={asideFooter}>
+
+          <li>
+            <div className={bottomButtons}>
+              <button onClick={logout}>
+                <SignOutIcon fill='#362e6f' height='24'/>
+              </button>
+              <button onFocus={() => setIsOpenLanguages(true)} onBlur={() => setIsOpenLanguages(false)}>
+                {
+                  languages[router.query.hl].icon
+                }
+              </button>
+              <ul className={languageBox} ref={languagesRef}>
+                {languageArray.map(([name, value]) => {
+                  return <li key={name}>
+                    <button disabled={name === router.query.hl} onClick={() => setLanguage(name)}>
+                      {value.icon}
+                      <span>{value.name}</span>
+                    </button>
+                  </li>;
+                })}
+              </ul>
+            </div>
+          </li>
           <Link href='/'>
             <a>
-             <img src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt='LetterCMS linear Logo' className={footerImg}/> 
+              <img src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt='LetterCMS linear Logo' className={footerImg}/> 
             </a>
           </Link>
         </div>

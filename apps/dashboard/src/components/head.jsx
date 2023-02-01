@@ -1,9 +1,17 @@
 import BaseHead from './_headBase';
+import {useIntl} from 'react-intl';
 
 const Head = props => {
+  const intl = useIntl();
 
-  const description = 'Ahorra tiempo y promociona tu contenido de manera eficiente con LetterCMS';
-  const title = 'LetterCMS - Crea, Atrae, Deleita';
+  const title = intl.formatMessage({
+    id: 'LetterCMS - Create, Attract, Delight'
+  });
+
+  const description = intl.formatMessage({
+    id: 'Save time and promote your content efficiently with LetterCMS'
+  });
+
   const url = 'https://lettercms-dashboard-davidsdevel.vercel.app';
   const ogImage = 'https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/og.png';
 

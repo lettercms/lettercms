@@ -15,7 +15,7 @@ const UserTab = dynamic(import('../components/signin/user'), {
 const Verify = dynamic(import('../components/signin/verify'));
 
 export async function getServerSideProps({req, res, query}) {
-  const {invitationID, token} = query;
+  const {invitationID, token, hl = 'en'} = query;
 
   if (invitationID) {
     return {
@@ -36,8 +36,13 @@ export async function getServerSideProps({req, res, query}) {
       }
     };
 
+  const lang = await import(`@/translations/signin/${hl}.json`);
+  const messages = Object.assign({}, lang.default);
+
   return {
-    props: {}
+    props: {
+      messages
+    }
   };
 }
 

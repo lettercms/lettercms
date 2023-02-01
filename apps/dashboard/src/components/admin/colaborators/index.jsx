@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import {useIntl} from 'react-intl';
+import {useState} from 'react';
 import Invitation from './invitationModal';
 import Collab from './collab';
 import Layout from '../listLayout';
@@ -7,6 +8,8 @@ import Ico from '@/components/assets/adminCollabs';
 export default function Accounts() {
   const [showInvitation, setShowInvitation] = useState(false);
   const [collabId, setCollabId] = useState(null);
+
+  const intl = useIntl();
 
   return <div style={{ width: '100%' }}>
     <Layout
@@ -17,16 +20,24 @@ export default function Accounts() {
         'lastname',
         'role',
         'ocupation'
-      ]}
+      ]}/*
       tabs={[
-        {name: 'single', alias: 'Unicos'},
-        {name: 'collaborator', alias: 'Colaboradores'}
-      ]}
+        {name: 'single', alias: intl.formatMessage({id: 'Singles'})},
+        {name: 'collaborator', alias: intl.formatMessage({id: 'Collaborators'})}
+      ]}*/
       onEdit={setCollabId}
       onCreate={() => setShowInvitation(true)}
-      buttonText='Invitar'
+      buttonText={
+        intl.formatMessage({
+          id: 'Invite'
+        })
+      }
       ico={<Ico/>}
-      topText='Colaboradores'
+      topText={
+        intl.formatMessage({
+          id: 'Collaborators'
+        })
+      }
     />
 
     {

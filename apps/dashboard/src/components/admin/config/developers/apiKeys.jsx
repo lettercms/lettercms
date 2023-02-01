@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
 import Container from '../../stats/base';
 import Modal from '@/components/modalBase';
 import Input from '@/components/input';
@@ -18,6 +19,8 @@ const ApiKey = () => {
   const [newKey, setNewKey] = useState('');
   const {status, blog} = useUser();
 
+  const intl = useIntl();
+
   useEffect(() => {
     if (status === 'done') {
       fetch('/api/blog/api-key', {
@@ -36,7 +39,11 @@ const ApiKey = () => {
   const create = async () => {
     try {
       if (!keyName)
-        return alert('Ingresa una descripción');
+        return alert(
+          intl.formatMessage({
+            id: 'Write a description'
+          })
+        );
 
       const res = await fetch('/api/blog/api-key', {
         method: 'POST',
@@ -65,13 +72,25 @@ const ApiKey = () => {
           setKeyName('');
           toggleModal(false);
 
-          return alert('Solo puede tener 3 llaves por blog');
+          return alert(
+            intl.formatMessage({
+              id: 'You only can have 3 keys per blog'
+            })
+          );
         }
       }
 
-      alert('Error al crear la llave');
+      alert(
+        intl.formatMessage({
+          id: 'Error creating key'
+        })
+      );
     } catch(err) {
-      alert('Error al crear la llave');
+      alert(
+        intl.formatMessage({
+          id: 'Error creating key'
+        })
+      );
 
       throw err;
     } finally {
@@ -92,34 +111,49 @@ const ApiKey = () => {
   const removeKey = id => setKeys(k => k.filter(e => e._id.toString() !== id));
 
   return <div>
-    <Container rows={1} title='Blog ID'>
+    <Container rows={1} title={intl.formatMessage({id: 'Blog ID'})}>
       <div className='flex flex-column' id='credentials-main' style={{width: '100%'}}>
         <div className='flex flex-row' id='credentials-top'>
           <div>
             <CopyField text={blog?._id}/>
           </div>
-          <Button type='solid' onClick={() => toggleModal(true)}>Crear Nueva Llave</Button>
+          <Button type='solid' onClick={() => toggleModal(true)}>
+            <FormattedMessage id='Create new key'/>
+          </Button>
         </div>
-        <span>Llaves de la API</span>
-        { loading && <ListLoad/> }
-        { !loading && <List onDelete={removeKey} apiKeys={keys}/> }
+        <span>
+          <FormattedMessage id='API keys'/>
+        </span>
+        {
+          loading
+            ? <ListLoad/>
+            : <List onDelete={removeKey} apiKeys={keys}/>
+        }
       </div>
     </Container>
     <Modal show={show} close={close} height='max-content' width='max-content'>
       {
         step === 0 &&
         <>
-          <div>Añade una breve descripci&oacute;n</div>
-          <Input id='keyName' value={keyName} onInput={({target:{value}}) => setKeyName(value)} label='Descripción de la llave'/>
-          <Button type='solid' style={{width: '100%'}} onClick={create}>Crear</Button>
+          <div>
+            <FormattedMessage id='Add a short description'/>
+          </div>
+          <Input id='keyName' value={keyName} onInput={({target:{value}}) => setKeyName(value)} label={intl.formatMessage({id: 'Key description'})}/>
+          <Button type='solid' style={{width: '100%'}} onClick={create}>
+            <FormattedMessage id='Create'/>
+          </Button>
         </>
       }
       {
         step === 1 &&
         <>
-          <span>Asegurate de Guardala. Por seguridad no la volveremos a mostrar</span>
+          <span>
+            <FormattedMessage id='Be sure to save it. For safety we will not show it again'/>
+          </span>
           <CopyField text={newKey}/>
-          <Button type='solid' onClick={close}>Cerrar</Button>
+          <Button type='solid' onClick={close}>
+            <FormattedMessage id='Close'/>
+          </Button>
         </>
       }
     </Modal>

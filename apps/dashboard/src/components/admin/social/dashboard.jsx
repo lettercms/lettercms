@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import {useIntl, FormattedMessage} from 'react-intl';
 import AccountCard from './accountCard';
 import AccountLoad from './accountCardLoad';
 import sdk from '@lettercms/sdk';
@@ -41,6 +42,8 @@ export default function SocialDashboard({newPost, onAccounts}) {
   const [accounts, setAccounts] = useState([]);
   const {status} = useUser();
 
+  const intl = useIntl();
+
   const hasAccounts = accounts?.length > 0;
 
   useEffect(() => {
@@ -76,15 +79,22 @@ export default function SocialDashboard({newPost, onAccounts}) {
         loading={isLoading}
         create={newPost}
         disabled={!hasAccounts}
-        buttonText='Nueva Entrada'
+        buttonText={
+          intl.formatMessage({
+            id: 'New Post'
+          })
+        }
         ico={<SocialIco/>}
-        topText='Redes sociales'
+        topText={
+          intl.formatMessage({
+            id: 'Social media'
+          })
+        }
       >
-        <Button type='outline' onClick={newPost} disabled={!hasAccounts}>Nueva Entrada</Button>
+        <Button type='outline' onClick={newPost} disabled={!hasAccounts}>
+          <FormattedMessage id='New Post'/>
+        </Button>
       </Top>
-      <div className='stats-notice'>
-        <span>Feature aun en desarrollo. Todos los datos son de demostración</span>
-      </div>
       <div id='main-social'>
         <ul>
           {UI}
@@ -93,13 +103,6 @@ export default function SocialDashboard({newPost, onAccounts}) {
       <style jsx>{`
         .social-container {
           width: 100%;
-        }
-        .stats-notice {
-          width: 100%;
-          background: #ccd7ec;
-          padding: 1rem 0;
-          text-align: center;
-          z-index: 10;
         }
         #main-social {
           width: 100%;

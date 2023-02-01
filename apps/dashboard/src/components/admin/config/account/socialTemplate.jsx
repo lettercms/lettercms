@@ -10,7 +10,7 @@ const AccountTemplate = ({name, username, cover, picture, onSelect}) => <div cla
         </div>
         <div className='account-button'>
           <span className='account-username'>@{username}</span>
-          <button className='white' onClick={onSelect}>Use Account</button>
+          <button className='white' onClick={onSelect}>Usar Cuenta</button>
         </div>
       </div>
     </div>

@@ -1,3 +1,5 @@
+import {FormattedMessage} from 'react-intl';
+import Link from 'next/link';
 import {Component} from 'react';
 import Input from '../input';
 import * as admin from '@lettercms/admin';
@@ -23,13 +25,18 @@ export default class Newsletter extends Component {
   }
   render() {
     const {email, isLoad} = this.state;
+
     return <div className="form">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-container">
-              <div className="above-heading">NOTICIAS</div>
-              <h2>Esta al tanto de que traemos nuevo para ti</h2>
+              <div className="above-heading">
+                <FormattedMessage id='NEWS'/>
+              </div>
+              <h2>
+                <FormattedMessage id='Stay tuned of the new things we bring to you'/>
+              </h2>
               <form id="newsletterForm" onSubmit={this.subscribe} data-toggle="validator" data-focus="false">
                 <Input
                   disabled={isLoad}
@@ -40,11 +47,28 @@ export default class Newsletter extends Component {
                   label='Email'
                 />
                 <div className="form-group checkbox">
-                  <input type="checkbox" id="nterms" value="Agreed-to-Terms" required/>He leido y acepto las <a href="privacy-policy.html">Politicas de privacidad</a> y los <a href="terms-conditions.html">Terminos y Condiciones</a> de LetterCMS
+                  <input type="checkbox" id="nterms" value="Agreed-to-Terms" required/>
+                  
+                  <FormattedMessage id={'I\'ve read and accept the '}/>
+                  
+                  <Link href='/privacy'>
+                    <a>
+                      <FormattedMessage id='Privacy policies'/>
+                    </a>
+                  </Link>
+                  <FormattedMessage id=' and the '/>
+                  <Link href='/conditions'>
+                    <a>
+                      <FormattedMessage id='Terms and Conditions'/>
+                    </a>
+                  </Link>
+                  <FormattedMessage id=' of LetterCMS'/>
                   <div className="help-block with-errors"></div>
                 </div>
                 <div className="form-group">
-                  <Button type='solid'>SUBSCRIBIRSE</Button>
+                  <Button type='solid'>
+                    <FormattedMessage id='SUBSCRIBE'/>
+                  </Button>
                 </div>
                 <div className="form-message">
                   <div id="nmsgSubmit" className="h3 text-center hidden"/>

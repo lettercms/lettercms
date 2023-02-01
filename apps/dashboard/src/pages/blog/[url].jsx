@@ -6,7 +6,7 @@ import {captureException} from '@sentry/nextjs';
 
 export const getServerSideProps = async ({req, res, query}) => {
   try {
-    const {url} = query;
+    const {url, hl = 'en'} = query;
     const userID = req?.cookies.userID || 'no-user';
 
     const {notFound, post, user, recommendation} = await getPost(url, userID);
@@ -15,6 +15,10 @@ export const getServerSideProps = async ({req, res, query}) => {
       return {
         notFound: true
       };
+
+    const lang = await import(`@/translations/post/${hl}.json`);
+
+    const messages = Object.assign({}, lang.default);
 
     //Parse Mongo Object IDs
     const props = JSON.parse(JSON.stringify({
@@ -27,6 +31,7 @@ export const getServerSideProps = async ({req, res, query}) => {
     return {
       props: {
         ...props,
+        messages,
         //TODO: implement SDK token generation
         accessToken: jwt.sign({subdomain: 'davidsdevel'}, process.env.JWT_AUTH)
       }

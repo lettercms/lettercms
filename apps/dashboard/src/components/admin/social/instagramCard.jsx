@@ -1,4 +1,6 @@
-﻿const Instagram = ({content, images, pageName, pageImage}) => <div className='card'>
+﻿import {FormattedMessage} from 'react-intl';
+
+const Instagram = ({content, images, pageName, pageImage}) => <div className='card'>
   <header>
     <div>
       <img alt='Asset' src={pageImage}/>
@@ -37,14 +39,22 @@
       </div>
     </div>
     <div id='post-content'>
-      <span className='bold'>0 Me Gusta</span>
+      <span className='bold'>
+        <FormattedMessage id='0 Likes'/>
+      </span>
       <p><span className='bold'>davidsdevel </span>{content}</p>
-      <time>AHORA</time>
+      <time>
+        <FormattedMessage id='NOW'/>
+      </time>
     </div>
   </div>
   <div id='comments'>
-    <span>Agrega un comentario...</span>
-    <button disabled>Publicar</button>
+    <span>
+      <FormattedMessage id='Add a comment...'/>
+    </span>
+    <button disabled>
+      <FormattedMessage id='Publish'/>
+    </button>
   </div>
   <style jsx>{`
     div {

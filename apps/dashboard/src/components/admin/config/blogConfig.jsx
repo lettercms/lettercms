@@ -1,4 +1,5 @@
-﻿import {useState, useEffect} from 'react';
+﻿import {FormattedMessage, useIntl} from 'react-intl';
+import {useState, useEffect} from 'react';
 import Categories from './blogCategories';
 import Container from '../stats/base';
 import BlogTitle from './blog/title';
@@ -33,6 +34,7 @@ export default function BlogConfig() {
 
   const [load, setLoad] = useState(true);
   const {status} = useUser();
+  const intl = useIntl();
 
   useEffect(() => {
     if (status === 'done') {
@@ -86,15 +88,20 @@ export default function BlogConfig() {
         sdk.blogs
           .update(changes)
           .then(() => {
-            alert('Datos Modificados con exito');
+            alert(
+              intl.formatMessage({
+                id: 'Data updated successfully'
+              })
+            );
+
             changes = {};
           });
       }}
-      buttonText='Guardar'
+      buttonText={intl.formatMessage({id: 'Save'})}
     />
       <div className='config-opts'>
         <Thumbnail url={thumbnail}/>
-        <Container rows={1} title='Meta' style={{height: 'auto !important'}}>
+        <Container rows={1} title={intl.formatMessage({id: 'Metadata'})} style={{height: 'auto !important'}}>
           <BlogTitle
             isVisible={isVisible}
             title={title}
@@ -104,16 +111,16 @@ export default function BlogConfig() {
             onChangeVisible={e => handleChanges(e, setIsVisible)}
           />
         </Container>
-        <Container rows={1} title='Categorias' style={{height: 'auto !important'}}>
+        <Container rows={1} title={intl.formatMessage({id: 'Categories'})} style={{height: 'auto !important'}}>
           <BlogCategory categories={categories} onAdd={addCategory} onDelete={deleteCategory}/>
         </Container>
-        <Container rows={1} title='Ruta de las entradas' style={{height: 'auto !important'}}>
+        <Container rows={1} title={intl.formatMessage({id: 'Posts route'})} style={{height: 'auto !important'}}>
           <BlogUrl urlID={urlID} categories={categories} onChange={e => handleChanges(e, setUrl)}/>
         </Container>
-        <Container rows={2} title='Datos' style={{height: 'auto !important'}}>
+        <Container rows={2} title={intl.formatMessage({id: 'Data'})} style={{height: 'auto !important'}}>
           <BlogImport/>
         </Container>
-        <Container rows={2} title='Eliminar Blog' style={{height: 'auto !important'}}>
+        <Container rows={2} title={intl.formatMessage({id: 'Delete blog'})} style={{height: 'auto !important'}}>
           <BlogDelete/>
         </Container>
       </div>

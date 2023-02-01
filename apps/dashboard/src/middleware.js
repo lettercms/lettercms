@@ -1,5 +1,26 @@
 import { NextResponse } from 'next/server';
 
+const supportedLanguages = [
+  'es',
+  'en'
+];
+
+function parseQuery(search) {
+  if (!search)
+    return null;
+
+  const query = {};
+
+  const q = search.slice(1);
+  q.split('&').forEach(e => {
+    const [key, value] = e.split('=');
+
+    query[key] = value;
+  });
+
+  return query;
+}
+
 export const config = {
   matcher: [
     '/([^/.]*)',
@@ -13,11 +34,26 @@ export const config = {
 
 export default function middleware(req) {
   const url = req.nextUrl;
+  let query = parseQuery(url.search);
+
+  let language;
+
+  const hlCookie = req.cookies.get('__lcms-hl');
+  //Check if has hl query on searchParams
+  if (hlCookie)
+    language = hlCookie;
+  else
+    language = req.headers.get('accept-language')?.split(',')?.[0].split('-')?.[0].toLowerCase() || 'en';
+    
+  //If language is not supported, set to english
+  if (!supportedLanguages.includes(language))
+    language = 'en';
 
   if (url.pathname.startsWith('/blog/')) {
     const isPreview = req.cookies.get('__next_preview_data') || req.cookies.get('__prerender_bypass');
 
     if (isPreview) {
+      url.searchParams.set('hl', language);
       url.pathname = url.pathname.replace('/blog/', '/_preview/');
       
       return NextResponse.rewrite(url);  
@@ -47,8 +83,9 @@ export default function middleware(req) {
   if (_lastLogin) {
 
     const lastLogin = new Date(_lastLogin);
-    const limit = Date.now() - (24*60*60*1000);
+    const limit = Date.now() - (24*60*60*1000); //Get time less 24 hours
 
+    //If less than 24h, path /dashboard redirects to /dashboard/post
     if (lastLogin > limit && url.pathname === '/dashboard') {
       url.pathname = '/dashboard/posts';
 
@@ -60,5 +97,6 @@ export default function middleware(req) {
     }
   }
 
-  return NextResponse.next();
+  url.searchParams.set('hl', language);
+  return NextResponse.rewrite(url);
 }

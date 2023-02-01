@@ -1,11 +1,4 @@
-import dynamic from 'next/dynamic';
-
-/*const Subscribe = dynamic(() => import('./subscribeButton'), {
-    loading: () => <img src='/assets/spinner.svg' style={{
-        animation: 'rotation linear .6s infinite',
-        width: 70
-    }}/>
-});*/
+import {FormattedMessage} from 'react-intl';
 
 const Header =({title, description, thumbnail}) =>  {
     return (
@@ -14,7 +7,9 @@ const Header =({title, description, thumbnail}) =>  {
           <div id="header-shadow">
             <div id='landing-description'>
               <img src={`${process.env.ASSETS_BASE}/assets/lettercms-logo-white.svg`} className='mobile' alt='LetterCMS logo white'/>
-              <span>Mantente al tanto de las actualizaciones de mi blog</span>
+              <span>
+                <FormattedMessage id={'Stay tuned of my blog\'s updates'}/>
+              </span>
             </div>
             <div id='landing-image'>
               <img src={`${process.env.ASSETS_BASE}/assets/lettercms-logo-white.svg`} className='desktop' alt='LetterCMS logo white'/>

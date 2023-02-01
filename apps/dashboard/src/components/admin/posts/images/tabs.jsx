@@ -1,3 +1,4 @@
+import {FormattedMessage} from 'react-intl';
 import {useState} from 'react';
 
 export default function Tabs({onChange}) {
@@ -13,10 +14,14 @@ export default function Tabs({onChange}) {
 
   return <div id='modal-tab'>
     <div className={active === 'photos' ? 'active' : ''} onClick={() => changeTab('photos')}>
-      <span>Mis Imagenes</span>
+      <span>
+        <FormattedMessage id='My images'/>
+      </span>
     </div>
     <div className={active === 'search' ? 'active' : ''} onClick={() => changeTab('search')}>
-      <span>Buscar</span>
+      <span>
+        <FormattedMessage id='Search'/>
+      </span>
     </div>
     <style jsx>{`
       #modal-tab {

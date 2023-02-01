@@ -2,7 +2,6 @@ import sdk from '@lettercms/sdk';
 import {getStorage, ref, uploadBytes, getMetadata} from 'firebase/storage';
 import imageCompression from 'browser-image-compression';
 
-
 export default class ImageHandler {
   async getSize(subdomain, name) {
     const storage = getStorage();
@@ -13,11 +12,11 @@ export default class ImageHandler {
       const meta = await getMetadata(imgRef);
 
       return meta;
-  } catch(err) {
-    return null;
+    } catch(err) {
+      return null;
+    }
   }
 
-  }
   async upload(file, subdomain, name) {
     try {
       let fileName = name;
@@ -31,7 +30,7 @@ export default class ImageHandler {
       }
 
       const path = `${subdomain}/${fileName}.webp`;
-          
+            
       //Get metadata for overwriten file if exists
       const fileMetadata = await this.getSize(subdomain, fileName);
 
@@ -63,6 +62,7 @@ export default class ImageHandler {
       return Promise.reject(err);      
     }
   }
+
   async compress(image) {
     const options = {
       maxSizeMB: 1,
@@ -77,8 +77,8 @@ export default class ImageHandler {
       return Promise.reject(err);
     }
   }
-  async uploadProfilePic(file) {
 
+  async uploadProfilePic(file) {
     const {subdomain, _id} = await sdk.accounts.me(['subdomain']);
 
     const path = `${subdomain}/${_id}/profile.webp`;
@@ -89,6 +89,7 @@ export default class ImageHandler {
       photo: picURL
     });
   }
+
   async _upload(path, file) {
     const storage = getStorage();
     const _ref = ref(storage, path);
@@ -111,7 +112,7 @@ export default class ImageHandler {
     });
 
     const compressed = await this.compress(file);
-    
+
     try {
       return uploadBytes(_ref, compressed, {
         cacheControl: 'no-cache, no-store, max-age=0, must-revalidate',

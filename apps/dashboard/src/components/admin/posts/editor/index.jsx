@@ -1,4 +1,5 @@
 import {useState, createContext, useContext, useRef} from 'react';
+import {useIntl} from 'react-intl';
 import dynamic from 'next/dynamic';
 import Top from '../../listLayout/top';
 import Buttons from './buttons';
@@ -22,13 +23,9 @@ const Editor = dynamic(() => import('./editor'), {
   ssr: false
 });
 
-/*const Thumbnails = dynamic(() => import (""), {
-  ssr: false
-});*/
-
 const promote = {};
-
 let changes = {};
+
 const handleChanges = (field, value) => {
   changes[field] = value;
 };
@@ -47,82 +44,92 @@ export function useData() {
   return value;
 }
 
-
 const draft = async (id, {clearTimeout, setLoading, setData}) => {
-    clearTimeout();
+  clearTimeout();
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
+  try {
+    await sdk.createRequest(`/post/${id}/draft`, 'POST');
+  } catch(err) {
+    throw err;
+  }
 
-      await sdk.createRequest(`/post/${id}/draft`, 'POST');
-    } catch(err) {
-      throw err;
-    }
+  setData('postStatus', 'draft');
+  setLoading(false);
+};
 
-    setData('postStatus', 'draft');
-    setLoading(false);
-  };
-  const publish = async (id, {clearTimeout, setLoading, setData, status}) => {
-    clearTimeout();
+const publish = async (id, {clearTimeout, setLoading, setData, status}, intl) => {
+  clearTimeout();
     
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      await sdk.createRequest(`/post/${id}/publish`, 'POST', {
-        ...changes,
-        promote
-      });
+  try {
+    await sdk.createRequest(`/post/${id}/publish`, 'POST', {
+      ...changes,
+      promote
+    });
 
-      changes = {};
-    } catch(err) {
-      throw err;
-    }
+    changes = {};
+  } catch(err) {
+    throw err;
+  }
 
-    if (status === 'published') {
-      alert('Publicado con exito');
-    } else {
-      alert('Actualizado con exito');
-    }
+  if (status === 'published')
+    alert(
+      intl.formatMessage({
+        id: 'Published successfully'
+      })
+    );
+  else
+    alert(
+      intl.formatMessage({
+        id: 'Updated successfully'
+      })
+    );
 
-    Router.push('/dashboard/posts');
-  };
+  Router.push('/dashboard/posts');
+};
 
-  const update = async (id, {clearTimeout, setLoading}) => {
-    clearTimeout();
+const update = async (id, {clearTimeout, setLoading}, intl) => {
+  clearTimeout();
     
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      await sdk.createRequest(`/post/${id}/update`, 'POST', changes);
+  try {
+    await sdk.createRequest(`/post/${id}/update`, 'POST', changes);
       
-      changes = {};
-    } catch(err) {
-      throw err;
-    }
+    changes = {};
+  } catch(err) {
+    throw err;
+  }
 
-    alert('Actualizado con exito');
+  alert(
+    intl.formatMessage({
+      id: 'Updated successfully'
+    })
+  );
 
-    setLoading(false);
-  };
+  setLoading(false);
+};
 
-  const preview = async (id, {clearTimeout, setLoading, domain}) => {
-    clearTimeout();
+const preview = async (id, {clearTimeout, setLoading, domain}) => {
+  clearTimeout();
   
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      await sdk.createRequest(`/post/${id}/update`, 'POST', changes);
+  try {
+    await sdk.createRequest(`/post/${id}/update`, 'POST', changes);
 
-      changes = {};
-    } catch(err) {
-      throw err;
-    }
+    changes = {};
+  } catch(err) {
+    throw err;
+  }
   
-    setLoading(false);
+  setLoading(false);
 
-    window.open(`https://${domain}/api/preview?id=${id}`);
-  };
+  window.open(`https://${domain}/api/preview?id=${id}`);
+};
 
 export default function EditorContainer({post, blog, hasFacebook, hasInstagram}) {
   const [showImages, setShowImages] = useState(false);
@@ -130,6 +137,7 @@ export default function EditorContainer({post, blog, hasFacebook, hasInstagram})
   const [data, setData] = useState(post);
   const timer = useRef();
   const user = useUser();
+  const intl = useIntl();
 
   const router = Router.useRouter();
 
@@ -181,7 +189,7 @@ export default function EditorContainer({post, blog, hasFacebook, hasInstagram})
           update(data._id, {
             clearTimeout: () => clearTimeout(timer.current),
             setLoading
-          });
+          }, intl);
         }, 20000);
       }
     },
@@ -197,14 +205,18 @@ export default function EditorContainer({post, blog, hasFacebook, hasInstagram})
       </button>
       <Top
         ico={<Ico/>}
-        topText={data.title || 'Nueva Entrada'}
+        topText={data.title || intl.formatMessage({id: 'New post'})}
         disableTopButton
       >
         <div>
           <button className={backButton} onClick={() => {
             if (Object.keys(changes).length !== 0) {
 
-              if (confirm('Hay cambios no guardados ¿Estas seguro de salir?'))
+              if (confirm(
+                intl.formatMessage({
+                  id: 'There are unsaved changes, are you sure of exit?'
+                })
+              ))
                 router.push('/dashboard/posts');
             } else {
               router.push('/dashboard/posts');
@@ -224,18 +236,18 @@ export default function EditorContainer({post, blog, hasFacebook, hasInstagram})
       <Editor onOpenModal={setShowImages}/>
       <Buttons
         onPreview={
-          () => draft(data._id, {
+          () => preview(data._id, {
             clearTimeout: () => clearTimeout(timer.current),
             setLoading,
             setData,
             domain: user.blog?.domain
-          })
+          }, intl)
         }
         onSave={
           () => update(data._id, {
             clearTimeout: () => clearTimeout(timer.current),
             setLoading
-          })
+          }, intl)
         }
         onPublish={
           () => data.postStatus === 'published'
@@ -249,7 +261,7 @@ export default function EditorContainer({post, blog, hasFacebook, hasInstagram})
               setLoading,
               setData,
               status: data.postStatus
-            })
+            }, intl)
         }
       />
       <ImagesModal show={showImages} onClose={() => setShowImages(false)}/>

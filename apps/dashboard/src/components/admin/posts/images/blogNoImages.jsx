@@ -1,7 +1,11 @@
+import {FormattedMessage} from 'react-intl';
+
 export default function NoImages({images, isUploading}) {
   return <div id='no-image-container'>
     <img src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/no-images.svg' alt='' />
-    <span>No hay imagenes disponibles</span>
+    <span>
+      <FormattedMessage id='No images available'/>
+    </span>
     <style jsx>{`
       #no-image-container {
         height: 100%;

@@ -1,3 +1,4 @@
+import {FormattedMessage} from 'react-intl';
 import {metaInputs} from './metaInputs.module.css';
 import {useData} from './index';
 
@@ -5,7 +6,9 @@ export default function List() {
   const [data, setData] = useData();
 
   return <div className={metaInputs + ' thumbContainer'}>
-    <span>Selecciona una miniatura</span>
+    <span>
+      <FormattedMessage id='Select a thumbnail'/>
+    </span>
     <ul>
       {
         data.images?.length > 0
@@ -20,7 +23,9 @@ export default function List() {
       }
       {
         data.images?.length === 0 &&
-        <span>No hay imagenes en esta entrada</span>
+        <span>
+          <FormattedMessage id='There are no images on this post'/>
+        </span>
       }
       <style jsx global>{`
         .thumbContainer {
