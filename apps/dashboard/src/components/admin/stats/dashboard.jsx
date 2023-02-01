@@ -53,6 +53,9 @@ const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days,
   const [range, setRange] = useState('2');
   const intl = useIntl();
 
+  referrers = Object.entries(referrers);
+  urls = Object.entries(urls);
+
   return <div>
     <Top
       ico={<StatsIco/>}
@@ -204,20 +207,26 @@ const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days,
       <FormattedMessage id='More commented'/>
     </span>
     <Card {...general.mostCommented} subdomain={general.subdomain}/>
-    <Base rows={1} title={
-      intl.formatMessage({
-        id: 'Posts'
-      })
-    }>
-      <BarChart data={urls} sort={true} layout='vertical'/>
-    </Base>
-    <Base rows={1} title={
-      intl.formatMessage({
-        id: 'Referrers'
-      })
-    }>
-      <BarChart data={referrers} sort={true} layout='vertical'/>
-    </Base>
+    {
+      urls.length > 0 &&
+      <Base rows={1} title={
+        intl.formatMessage({
+          id: 'Posts'
+        })
+      }>
+        <BarChart data={urls} sort={true} layout='vertical'/>
+      </Base>
+    }
+    {
+      referrers.length > 0 &&
+      <Base rows={1} title={
+        intl.formatMessage({
+          id: 'Referrers'
+        })
+      }>
+        <BarChart data={referrers} sort={true} layout='vertical'/>
+      </Base>
+    }
     <style jsx>{`
       .range-container {
         width: 9rem;

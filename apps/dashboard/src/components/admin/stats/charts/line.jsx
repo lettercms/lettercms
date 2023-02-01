@@ -16,12 +16,13 @@ function RenderLineChart({data}) {
     id: 'views'
   });
 
-  if (!Array.isArray(data)) {
-    data = Object.entries(data).map(([name, views]) => ({
-      name,
-      [_views]: views
-    }));
-  }
+  if (!Array.isArray(data))
+    data = Object.entries(data);
+
+  data = data.map(([name, views]) => ({
+    name,
+    [_views]: views
+  }));
 
   return <div style={{height: 200, width: '95%'}}>
     <ResponsiveContainer>

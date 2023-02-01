@@ -18,7 +18,10 @@ function RenderBarChart({data, sort = false, dataKey = 'vista', layout = 'horizo
   
   const isHorizontal = layout === 'horizontal';
 
-  data = Object.entries(data).map(([key, views]) => {
+  if (!Array.isArray(data))
+    data = Object.entries(data);
+
+  data = data.map(([key, views]) => {
     const parsed = {
       [dataKey]: translate ? intl.formatMessage({id: key}) : key
     };

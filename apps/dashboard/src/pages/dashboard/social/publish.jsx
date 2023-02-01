@@ -24,7 +24,7 @@ export async function getServerSideProps({ req, res, query}) {
   if (!accounts.facebook && !accounts.instagram)
     return {
       notFound: true
-    }
+    };
 
   const messages = await import(`@/translations/dashboard/social/publish/${hl}.json`);
 
