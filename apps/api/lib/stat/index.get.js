@@ -46,6 +46,12 @@ const generateDates = (daysCount, dateEnd) => {
 };
 
 const generateRanges = (start, end) => {
+
+  if (!start)
+    start = Date.now() - (1000 * 60 * 60 * 24 * 30);
+  if (!end)
+    end = Date.now();
+
   let parsedStart = +start;
   let parsedEnd = +end;
 
@@ -84,7 +90,6 @@ export default async function GetStats() {
   let {
     start
   } = query;
-
 
   const fields = parseFields(query.fields);
 
