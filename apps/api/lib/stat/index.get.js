@@ -46,19 +46,21 @@ const generateDates = (daysCount, dateEnd) => {
 };
 
 const generateRanges = (start, end) => {
-  const dateEnd = new Date(end || Date.now());
-
   let parsedStart = +start;
+  let parsedEnd = +end;
 
   if (isNaN(parsedStart))
     parsedStart = start;
 
-  const dateStart = parsedStart  ? parsedStart : dateEnd - (1000 * 60 * 60 * 24 * 30);
+  if (isNaN(parsedEnd))
+    parsedEnd = end;
+
+  const dateStart = parsedStart  ? parsedStart : parsedEnd - (1000 * 60 * 60 * 24 * 30);
 
   return {
-    dateEnd,
+    dateEnd: new Date(parsedEnd),
     dateStart: new Date(dateStart),
-    diff: (dateEnd - dateStart) / (1000 * 60 * 60 * 24)
+    diff: (parsedEnd - dateStart) / (1000 * 60 * 60 * 24)
   };
 };
 
