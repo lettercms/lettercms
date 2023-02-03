@@ -47,7 +47,7 @@ export default function Aside({entries, tags, categories, author}) {
           <span className='font-bold text-sm text-main-700'>Etiquetas</span>
           <ul className='flex mx-auto flex-wrap mt-4'>
             {
-              _tags.map(([key, value]) => <li key={`tag-${key}`} className='m-1 p-2 text-left bg-main-500 text-white rounded-lg'>{key} ({value})</li>)
+              _tags.map(([key, value]) => <li key={`tag-${key}`} className='m-1 p-1 text-left bg-main-500 text-white rounded-lg'>{key} ({value})</li>)
             }
           </ul>
         </div>
