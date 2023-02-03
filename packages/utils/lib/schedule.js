@@ -1,48 +1,30 @@
-import crypto from 'crypto';
-import jobs from '@lettercms/models/jobs';
+const generateDelay = timeString => {
+  const date = new Date(timeString);
+  const now = Date.now();
+   
 
-const generateID = () => crypto.randomUUID();
-
-const generateTime = timeString => {
-  const d = new Date(timeString);
-
-  const min = d.getUTCMinutes();
-  const hour = d.getUTCHours();
-  const date = d.getUTCDate();
-  const month = d.getUTCMonth() + 1;
-
-  return `${min} ${hour} ${date} ${month} *`;
+  return `${parseInt((date - now) / 1000)}s`;
 };
 
 const schedule = async (date, req) => {
   try {
-    const jobId = `lettercms-${generateID()}`;
-
-    const time = generateTime(date);
+    const delay = generateDelay(date);
 
     const res = await fetch(`https://qstash.upstash.io/v1/publish/${req.url}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Upstash-Cron': time,
+        'Upstash-Delay': delay,
         'Authorization': `Bearer ${process.env.QSTASH_TOKEN}`,
-        'Upstash-Forward-Authorization': req.token,
-        'Upstash-Forward-X-Job-Id': jobId
+        'Upstash-Forward-Authorization': req.token
       },
       body: JSON.stringify(req.body)
     });
 
     if (!res.ok)
-      return Promise.reject();
+      return Promise.reject(await res.json());
 
-    const {scheduleId} = await res.json();
-
-    await jobs.create({
-      jobId,
-      scheduleId
-    });
-
-    return Promise.resolve();
+    return res.json();
   } catch(err) {
     return Promise.reject(err);
   }

@@ -9,3 +9,9 @@ const handler = manageMethods({
 export default async function Schedule(req, res) {
   return verifySignature(handler)(req, res);
 }
+
+export const config = {
+  api: {
+    bodyParser: false
+  }
+};

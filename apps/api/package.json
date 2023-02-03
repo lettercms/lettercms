@@ -21,7 +21,7 @@
     "@lettercms/ui": "*",
     "@lettercms/utils": "*",
     "@sentry/nextjs": "^7.19.0",
-    "@upstash/qstash": "^0.1.7",
+    "@upstash/qstash": "^0.3.4",
     "bcrypt": "5.1.0",
     "fast-xml-parser": "^4.0.11",
     "i18n-iso-countries": "^7.5.0",

@@ -57,9 +57,9 @@ export default async function PublishSocial() {
     if (req.body.schedule) {
       await schedule(req.body.schedule, {
         method: 'POST',
-        url: 'https://api.lettercms.vercel.app/api/social/instagram',
+        url: 'https://lettercms-api-main.vercel.app/api/social/instagram/qstash',
+        token: jwt.sign({subdomain}, process.env.JWT_AUTH),
         headers: {
-          Authorization: jwt.sign({subdomain}, process.env.JWT_AUTH),
           'Content-Type': 'application/json' 
         },
         body: {

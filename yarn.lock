@@ -2215,10 +2215,10 @@
     "@typescript-eslint/types" "5.37.0"
     eslint-visitor-keys "^3.3.0"
 
-"@upstash/qstash@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@upstash/qstash/-/qstash-0.1.7.tgz#637555fa6d13d044eb8ebefc0dad5a54517c21c5"
-  integrity sha512-QrQuT+m54cIAC+XPp3sWF89G/1gV63i+jiSQWonoMLC6vmXaEg+YSAvWkFLdFWBm1WPheFFQLuKwlZNtUH51SA==
+"@upstash/qstash@^0.3.4":
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/@upstash/qstash/-/qstash-0.3.4.tgz#0491cdf1c3ead001905bb49e3c256f16042e5014"
+  integrity sha512-M3flEZueu5eKhmqZAn8dT9Cp5wC5OePyD0lwreVLSsj60oqy77DtoLUasttLnnJiDS18wdXFi6Sg0ZO8en2e0w==
   dependencies:
     "@deno/shim-crypto" "~0.3.0"
 

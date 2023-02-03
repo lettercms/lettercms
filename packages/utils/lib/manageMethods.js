@@ -1,6 +1,5 @@
 import cors from './cors';
 import connect from './connection';
-import jobs from '@lettercms/models/jobs';
 import blogs from '@lettercms/models/blogs';
 //import usage from '@lettercms/models/usages';
 import decodeToken from './decodeJwt';
@@ -125,28 +124,6 @@ export default function manageMethods(methods) {
 
       //Execute method handler
       await methodFn();
-
-      //Delete QStash schedule if exists
-      const jobId = req.headers['x-job-id'];
-      if (jobId) {
-        const {scheduleId} = await jobs.findOne({jobId});
-
-        const deleteRes = await fetch(`https://qstash.upstash.io/v1/schedules/${scheduleId}`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${process.env.QSTASH_TOKEN}`
-          },
-        });
-
-        if (deleteRes.ok) {
-
-          //Delete Job ID
-          await jobs.deleteOne({jobId});
-
-          // Commented because usage will reset every month, this behaviour can change
-          // await usage.updateOne({subdomain}, {$inc: {socialSchedule: -1}});
-        }
-      }
     } catch(err) {
       res.status(500).send({
         status: 'server-error'

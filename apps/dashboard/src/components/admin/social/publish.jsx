@@ -100,7 +100,9 @@ const publishPost = async (data, cb, intl) => {
         })
       );
 
-    const {status} = await sdk.createRequest('/social', 'POST', data);
+    console.log(data);
+    cb()
+    /*const {status} = await sdk.createRequest('/social', 'POST', data);
 
     if (status === 'OK') {
       alert(
@@ -109,7 +111,7 @@ const publishPost = async (data, cb, intl) => {
         })
       );
       cb();
-    }
+    }*/
   } catch(err) {
     alert(
       intl.formatMessage({
@@ -211,7 +213,7 @@ const Publish = ({accounts}) => {
           </div>
           <div className='flex flex-row' style={{width: 'auto'}}>
             <Button
-              disabled={!content || !hasFacebook || !hasInstagram}
+              disabled={!content || (!hasFacebook && !hasInstagram)}
               type='outline'
               onClick={() => publishPost({
                 message: content,
