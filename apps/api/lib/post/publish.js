@@ -69,20 +69,20 @@ export default async function PublishPost() {
   };
 
   const {tags, _id: postID, url: _url, description, category} = await posts.findOneAndUpdate(updateCondition, newData, {select: 'description _id tags url category'});
+  const {mainUrl, customDomain} = await blogs.find({subdomain}, 'mainUrl customDomain', {lean: true});
 
-  if (body.promote?.facebook) {
+  if (body.promote?.facebook) { 
     //Promote on Facebook
     Facebook.findOne({subdomain}, 'pageId token').then(({pageId, token}) => {
       const fb = new FB(pageId, token);
 
       //TODO: add custom domain
       fb.publishPost(description, {
-        link: `https://${subdomain}.lettercms.vercel.app/${_url}`
+        link: `https://${customDomain ?? `${subdomain}.lettercms.vercel.app`}/${_url}`
       });
     });
   }
 
-  const {mainUrl} = await blogs.find({subdomain}, 'mainUrl', {lean: true});
 
   revalidate(subdomain, mainUrl);
 

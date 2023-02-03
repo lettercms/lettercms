@@ -23,10 +23,6 @@ const appConfig = withTM({
     FACEBOOK_APP_ID: process.env.FACEBOOK_APP_ID,
     ASSETS_BASE: isDev ? 'http://localhost:3003' : 'https://cdn.jsdelivr.net/gh/lettercms/lettercms/apps/cdn'
   },
-  sentry: {
-    hideSourceMaps: true,
-    widenClientFileUpload: true
-  },
    async headers() {
     return [
       {

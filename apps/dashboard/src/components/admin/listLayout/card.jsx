@@ -76,22 +76,16 @@ const Card = ({
         <div>
           
           {
-            postStatus === 'published' &&
+            (postStatus === 'published' || pageStatus === 'published') &&
             <div className={styles.cardIcon} onClick={() => window.open(`https://${blog.domain}${fullUrl}`, '_blank')}>
               <LinkSvg height='22'/>
             </div>
-            }
-            {
+          }
+          {
             postStatus === 'draft' &&
 
             <div className={styles.cardIcon} onClick={() => window.open(`https://${blog.domain}/api/preview?id=${_id}`, '_blank')}>
               <Preview height='22'/>
-            </div>
-          }
-          {
-            pageStatus === 'published' &&
-            <div className={styles.cardIcon} onClick={() => window.open(`https://${blog.domain}/${url}`, '_blank')}>
-              <LinkSvg height='22'/>
             </div>
           }
           {

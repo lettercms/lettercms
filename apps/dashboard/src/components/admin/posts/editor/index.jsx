@@ -91,7 +91,7 @@ const publish = async (id, {clearTimeout, setLoading, setData, status}, intl) =>
   Router.push('/dashboard/posts');
 };
 
-const update = async (id, {clearTimeout, setLoading}, intl) => {
+const update = async (id, {clearTimeout, setLoading, isPublished}, intl) => {
   clearTimeout();
     
   setLoading(true);
@@ -111,6 +111,9 @@ const update = async (id, {clearTimeout, setLoading}, intl) => {
   );
 
   setLoading(false);
+
+  if (isPublished)
+    return Router.push('/dashboard/posts');
 };
 
 const preview = async (id, {clearTimeout, setLoading, domain}) => {
@@ -244,18 +247,23 @@ export default function EditorContainer({post, blog, hasFacebook, hasInstagram})
           }, intl)
         }
         onSave={
-          () => update(data._id, {
+          () => data.postStatus === 'published'
+          ? draft(data._id, {
+            clearTimeout: () => clearTimeout(timer.current),
+            setLoading,
+            setData
+          })
+          : update(data._id, {
             clearTimeout: () => clearTimeout(timer.current),
             setLoading
           }, intl)
         }
         onPublish={
           () => data.postStatus === 'published'
-          ? draft(data._id, {
-              clearTimeout: () => clearTimeout(timer.current),
-              setLoading,
-              setData
-            })
+          ? update(data._id, {
+            clearTimeout: () => clearTimeout(timer.current),
+            setLoading
+          }, intl)
           : publish(data._id, {
               clearTimeout: () => clearTimeout(timer.current),
               setLoading,

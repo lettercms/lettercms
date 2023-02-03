@@ -58,13 +58,16 @@ export default function Editor({onOpenModal}) {
 
           //Get images on load
           const content = document.querySelector('.ck-content');
-          const images = content.getElementsByTagName('img');
 
-          if (images?.length > 0) {
+          if (content) {
+            const images = content.getElementsByTagName('img');
 
-            const im = Array.from(images).map(e => e.dataset.src ? e.dataset.src : e.src);
+            if (images?.length > 0) {
 
-            setData('images', im);
+              const im = Array.from(images).map(e => e.dataset.src ? e.dataset.src : e.src);
+
+              setData('images', im);
+            }
           }
         }}
         onChange={(_, editor) => {
