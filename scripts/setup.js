@@ -5,25 +5,19 @@ const {writeFileSync, appendFileSync, existsSync, rmSync} = require('fs');
 const {join} = require('path');
 const {randomBytes} = require('crypto');
 
-const preGeneratedJWTKey = randomBytes(16).toString('hex')
+const preGeneratedJWTKey = randomBytes(16).toString('hex');
+const preGeneratedNextAuthKey = randomBytes(16).toString('hex');
 
-const env = `## Paypal Sandbox 
-PAYPAL_SANDBOX_CLIENT= 
-PAYPAL_SANDBOX_SECRET= 
-
-## Next Auth Envs
-NEXTAUTH_SECRET=
+const env = `## Next Auth Envs
+NEXTAUTH_SECRET=${preGeneratedNextAuthKey}
 NEXTAUTH_URL=http://localhost:3000
-
-## Define LetterCMS API Endpoint
-LETTERCMS_ENDPOINT=http://localhost:3009
 
 MONGO_URL=
 
 ## Pregenerated JWT verify signature
 JWT_AUTH=${preGeneratedJWTKey}
 
-# Firebase Admin Credentials. See https://firebase.google.com/docs/admin/setup
+## Firebase Admin Credentials. See https://firebase.google.com/docs/admin/setup
 FIREBASE_CLIENT_EMAIL=
 FIREBASE_PRIVATE_KEY=
 
@@ -37,7 +31,7 @@ NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
 NEXT_PUBLIC_FIREBASE_APP_ID=
 NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=
 
-## Unsplash API Keys
+## Unsplash API Keys. See https://insplash.com/developers
 UNSPLASH_KEY=
 
 ## Optional. SendinBlue API key. See https://developers.sendinblue.com/docs/api-clients
