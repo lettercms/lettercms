@@ -108,10 +108,6 @@ $ yarn build
 $ yarn test
 ```
 
-There are some other scripts available in the `scripts` section of the `package.json` file.
-
-The default test script will do the following: lint with ESLint -> type check with Flow -> unit tests with coverage -> e2e tests. **Please make sure to have this pass successfully before submitting a PR.** Although the same tests will be run against your PR on the CI server, it is better to have it working locally.
-
 ## Project Structure
 
 - **`apps`**: contains main projects which are deployed on vercel:
