@@ -12,6 +12,7 @@ const env = `## Next Auth Envs
 NEXTAUTH_SECRET=${preGeneratedNextAuthKey}
 NEXTAUTH_URL=http://localhost:3000
 
+LETTERCMS_SUBDOMAIN=
 MONGO_URL=
 
 ## Pregenerated JWT verify signature
