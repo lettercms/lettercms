@@ -3,13 +3,16 @@ import posts from '@lettercms/models/posts';
 import blogs from '@lettercms/models/blogs';
 import {find} from '@lettercms/utils/lib/findHelpers/posts';
 
+const subdomain = process.env.LETTERCMS_SUBDOMAIN; //'davidsdevel';
+
+
 export default async function sitemap(req, res) {
     try {
       await connect();
 
-      const {customDomain, url: urlID} = await blogs.findOne({subdomain: 'davidsdevel'}, 'customDomain url', {lean: true});
+      const {customDomain, url: urlID} = await blogs.findOne({subdomain}, 'customDomain url', {lean: true});
       const {data} = await find(posts, {
-        subdomain: 'davidsdevel',
+        subdomain,
         postStatus: 'published'
       }, {
         fields: 'updated,fullUrl',

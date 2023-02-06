@@ -2,7 +2,7 @@ import connect from '@lettercms/utils/lib/connection';
 import * as socialModel from '@lettercms/models/socials';
 import Base from '@lettercms/utils/lib/social/base';
 
-const subdomain = 'davidsdevel';
+const subdomain = process.env.LETTERCMS_SUBDOMAIN; //'davidsdevel';
 
 export async function getAccounts() {
   await connect();

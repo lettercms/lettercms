@@ -1,5 +1,12 @@
 import bcrypt from 'bcrypt';
 
+
+/**
+ * Sentry Proxy
+ *
+ * @description Proxy to parse sentry errors and send to Discord channel
+ * 
+ */
 export default async function SentryProxy(req, res) {
   if (req.method !== 'POST')
     return res.status(405).json({

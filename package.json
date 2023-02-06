@@ -8,10 +8,8 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build",
-    "deploy": "turbo run deploy",
     "dev": "node ./scripts/run-dev",
-    "lint": "turbo run lint",
+    "lint": "node ./scripts/run-lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {

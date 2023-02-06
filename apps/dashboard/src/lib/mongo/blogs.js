@@ -8,7 +8,7 @@ import {find as findPosts} from '@lettercms/utils/lib/findHelpers/posts';
 import {findOne as findBlog} from '@lettercms/utils/lib/findUtils';
 import {find as findRecommendations} from '@lettercms/utils/lib/findHelpers/recommendations';
 
-const subdomain = 'davidsdevel';
+const subdomain = process.env.LETTERCMS_SUBDOMAIN; //'davidsdevel';
 
 export async function getBlog(page = '1', userID) {
   await connect();

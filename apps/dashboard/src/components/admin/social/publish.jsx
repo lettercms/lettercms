@@ -100,9 +100,7 @@ const publishPost = async (data, cb, intl) => {
         })
       );
 
-    console.log(data);
-    cb();
-    /*const {status} = await sdk.createRequest('/social', 'POST', data);
+    const {status} = await sdk.createRequest('/social', 'POST', data);
 
     if (status === 'OK') {
       alert(
@@ -111,7 +109,7 @@ const publishPost = async (data, cb, intl) => {
         })
       );
       cb();
-    }*/
+    }
   } catch(err) {
     alert(
       intl.formatMessage({

@@ -4,13 +4,15 @@ import blogs from '@lettercms/models/blogs';
 import {find} from '@lettercms/utils/lib/findHelpers/posts';
 import {Feed} from 'feed';
 
+const subdomain = process.env.LETTERCMS_SUBDOMAIN; //'davidsdevel';
+
 export default async function feed(req, res) {
     await connect();
 
-    const {description, thumbnail: blogThumbnail, url: urlID} = await blogs.findOne({subdomain: 'davidsdevel'}, 'description thumbnail url', {lean: true});
+    const {description, thumbnail: blogThumbnail, url: urlID} = await blogs.findOne({subdomain}, 'description thumbnail url', {lean: true});
 
     const { data: postData } = find(posts, {
-      subdomain: 'davidsdevel',
+      subdomain,
       postStatus: 'published'
     }, {
       urlID,
