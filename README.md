@@ -5,8 +5,6 @@
   </a>
 </p>
 
-
-
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 [![Production](https://github.com/lettercms/lettercms/actions/workflows/production.yml/badge.svg)](https://github.com/lettercms/lettercms/actions/workflows/production.yml)
 <a href="https://www.producthunt.com/posts/lettercms-create-attract-delight?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-lettercms&#0045;create&#0045;attract&#0045;delight" target="_blank" style='display: inline-block;'>

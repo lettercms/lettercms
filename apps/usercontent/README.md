@@ -10,4 +10,3 @@
 ## Description
 
 Proxy to serve user images stored on Firebase, transform to webp and resize with Sharp
-

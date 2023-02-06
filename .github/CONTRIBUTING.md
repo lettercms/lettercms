@@ -30,6 +30,7 @@ Before submitting your contribution, please make sure to take a moment and read 
 - It's OK to have multiple small commits as you work on the PR - GitHub will automatically squash it before merging.
 
 - If adding a new feature:
+
   - Add accompanying test case.
   - Provide a convincing reason to add this feature. Ideally, you should open a suggestion issue first and have it approved before working on it.
 
@@ -50,21 +51,37 @@ First, you will need create:
 - An [Unsplash](https://unsplash.com) accout
 - Optionally
   - An [Upstash](https://upstash.com/) account
-  - A [Sendinblue](https://sendinblue.com/) account 
+  - A [Sendinblue](https://sendinblue.com/) account
 
 After cloning the repo, run:
 
-``` bash
+```bash
 $ yarn # install the dependencies of the project
 ```
 
 Then run:
 
 ```bash
-$ yarn setup # setup .env template 
+$ yarn setup # setup .env template
 ```
 
 Check `.env.local` template and fill with your own credentials
+
+Then run:
+
+```bash
+$ yarn dev
+```
+
+This starts 4 development servers
+
+- `3000` for dashboard
+- `3002` for blog UI
+- `3003` for serve CDN content
+- `3009` for API
+
+Blog UI receive a subdomain to render blog content. `subdomain.localhost:3002`.
+Create an account, then add your subdomain on `LETTERCMS_SUBDOMAIN` env to render blog on `http://localhost:3000/blog`
 
 ### Committing Changes
 
@@ -94,7 +111,7 @@ https://www.conventionalcommits.org/ or check out the
 
 ### Commonly used NPM scripts
 
-``` bash
+```bash
 # start development server
 $ yarn dev
 
@@ -111,6 +128,7 @@ $ yarn test
 ## Project Structure
 
 - **`apps`**: contains main projects which are deployed on vercel:
+
   - `apps/api`: API server.
   - `apps/cdn`: CDN files.
   - `apps/client`: User blog renderer
@@ -118,6 +136,7 @@ $ yarn test
   - `apps/usercontent`: Usercontent proxy to serve files from Firebase Storage
 
 - **`scripts`**: contains build-related scripts and configuration files. Usually, you don't need to touch them. However, it would be helpful to familiarize yourself with the following files:
+
   - `scripts/discord.js`: send deployment status to Discord.
   - `scripts/run-dev.js`: start development servers.
   - `scripts/run-test.js`: run unit testing
