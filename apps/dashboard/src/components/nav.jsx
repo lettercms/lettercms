@@ -110,9 +110,7 @@ export default function Nav () {
           }
           {
             !load && !profilePicture &&
-            <Button type='outline' alt onClick={() => router.push('/login')}>
-              <FormattedMessage id='Log In'/>
-            </Button>
+            <Button type='outline' alt onClick={() => router.push('/login')}>Login</Button>
           }
 
           {

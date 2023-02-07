@@ -21,9 +21,7 @@ export default function MobileNav({open}) {
       </li>
       <li>
         <Link href='/login'>
-          <a className="nav-link page-scroll">
-            <FormattedMessage id='Log In'/>
-          </a>
+          <a className="nav-link page-scroll">Login</a>
         </Link>
       </li>
     </ul>
