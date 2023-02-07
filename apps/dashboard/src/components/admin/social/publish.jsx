@@ -64,7 +64,7 @@ const renderInput =  (isOpen, date, clearDate) => {
         }
         #date-container div {
           padding: 0 2rem 0 1rem;
-          width: 15rem;
+          width: 10rem;
           text-align: center;
         }
         button:disabled {
@@ -287,6 +287,7 @@ const Publish = ({accounts}) => {
         left: 1rem;
         background: none;
         border: none;
+        z-index: 5;
       }
       #cards {
         justify-content: start;
@@ -303,20 +304,16 @@ const Publish = ({accounts}) => {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-around;
         width: 100%;
         padding-top: 3rem;
       }
       #selections div {
-        width: 47.5%;
-        margin: 15px 0;    
+        width: 50%;
+        margin: .5rem 0;
       }
       #selections div img {
         height: 1.5rem;
         margin-right: .5rem;
-      }
-      .date-container {
-        width: 12rem;
       }
       .image-container {
         width: 2.75rem !important;
@@ -368,6 +365,25 @@ const Publish = ({accounts}) => {
       .social-title span {
         font-size: 20px;
         margin-left: .5rem;
+      }
+      @media (max-width: 480px) {
+        .publish-container {
+          flex-direction: column !important;
+          position: relative;
+          padding-top: 1rem;
+        }
+        .publish-container #cards,
+        .publish-container #publish-main {
+          width: 100%;
+          position: relative;
+        }
+        .publish-container #cards {
+          height: max-content;
+        }
+        #selections div span,
+        #selections div img {
+          margin-right: .1rem; 
+        }
       }
     `}</style>
   </div>;

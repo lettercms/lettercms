@@ -43,6 +43,11 @@ const AccountCard = () => <li style={{animation: 'bounce infinite ease 2s'}}>
       left: 15px;
       bottom: 15px;
     }
+    @media (max-width: 480px) {
+      li {
+        width: 100%; !important;
+      } 
+    }
   `}</style>
 </li>;
 
