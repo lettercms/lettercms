@@ -29,6 +29,7 @@ import MenuLoad from './menuLoad';
 
 import SignOutIcon from '@lettercms/icons/signOut';
 import languages from './languages';
+import MobileLayout from './mobileLayout';
 
 const Nav = dynamic(() => import('./nav'), {
   loading: MenuLoad,
@@ -73,8 +74,10 @@ export function DashboardProvider({userID, children, hideMenu}) {
   const [load, setLoad] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const [isOpenLanguages, setIsOpenLanguages] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const languagesRef = useRef(null);
+  const asideRef = useRef(null);
 
   const ctx = useContext(DashboardContext);
 
@@ -98,6 +101,17 @@ export function DashboardProvider({userID, children, hideMenu}) {
       }, 310);
     }
   }, [isOpenLanguages]);
+
+  useEffect(() => {
+    if (window.screen.availWidth < 480) {
+      if (isMenuOpen)
+        asideRef.current.style.left = 0;
+      else
+        asideRef.current.style.left = '-100%';
+    } else {
+      asideRef.current.style.left = 0;
+    }
+  },[isMenuOpen]);
 
   useEffect(() => {
     if (!ctx && status === 'authenticated') {
@@ -149,67 +163,68 @@ export function DashboardProvider({userID, children, hideMenu}) {
 
   return <DashboardContext.Provider value={value}>
     <div>
-      <aside className={menuAside} style={{display: 'none'}}>
-        {
-          load &&
-          <div className={dashboardSpinner} style={{animation: 'rotation linear .6s infinite'}}/>
-        }
-        {
-          !isLoading &&
-          <Link href={`https://${blog?.domain}${blog?.mainUrl}`}>
-            <a target='_blank' className={dashboardHome}>
-              <Home fill='#362e6f' height='20'/>
-            </a>
-          </Link>
-        }
-        {
-          isLoading
-            ? <div className={asideImg} style={{background: '#ccd7ec'}}/>
-            : <img src={user.photo + '?w=100&h=100&q=50'} className={asideImg} alt={`${user.name} ${user.lastname} profile picture`}/>
-        }
-        {
-          isLoading
-            ? <div className={asideNameLoad}/>
-            : <span className={accountName}>{user.name} {user.lastname}</span>
-        }
-        <ul className={navBar}>
+      <MobileLayout onOpen={() => setIsMenuOpen(true)} onClose={() => setIsMenuOpen(false)}>
+        <aside className={menuAside} ref={asideRef}>
+          {
+            load &&
+            <div className={dashboardSpinner} style={{animation: 'rotation linear .6s infinite'}}/>
+          }
+          {
+            !isLoading &&
+            <Link href={`https://${blog?.domain}${blog?.mainUrl}`}>
+              <a target='_blank' className={dashboardHome}>
+                <Home fill='#362e6f' height='20'/>
+              </a>
+            </Link>
+          }
           {
             isLoading
-              ? <MenuLoad/>
-              : <Nav role={user.role} blog={blog}/>
+              ? <div className={asideImg} style={{background: '#ccd7ec'}}/>
+              : <img src={user.photo + '?w=100&h=100&q=50'} className={asideImg} alt={`${user.name} ${user.lastname} profile picture`}/>
           }
-        </ul>
-        <div className={asideFooter}>
-
-          <li>
-            <div className={bottomButtons}>
-              <button onClick={logout}>
-                <SignOutIcon fill='#362e6f' height='24'/>
-              </button>
-              <button onFocus={() => setIsOpenLanguages(true)} onBlur={() => setIsOpenLanguages(false)}>
-                {
-                  languages[router.query.hl].icon
-                }
-              </button>
-              <ul className={languageBox} ref={languagesRef}>
-                {languageArray.map(([name, value]) => {
-                  return <li key={name}>
-                    <button disabled={name === router.query.hl} onClick={() => setLanguage(name)}>
-                      {value.icon}
-                      <span>{value.name}</span>
-                    </button>
-                  </li>;
-                })}
-              </ul>
-            </div>
-          </li>
-          <Link href='/'>
-            <a>
-              <img src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt='LetterCMS linear Logo' className={footerImg}/> 
-            </a>
-          </Link>
-        </div>
-      </aside>
+          {
+            isLoading
+              ? <div className={asideNameLoad}/>
+              : <span className={accountName}>{user.name} {user.lastname}</span>
+          }
+          <ul className={navBar}>
+            {
+              isLoading
+                ? <MenuLoad/>
+                : <Nav role={user.role} blog={blog}/>
+            }
+          </ul>
+          <div className={asideFooter}>
+            <li>
+              <div className={bottomButtons}>
+                <button onClick={logout}>
+                  <SignOutIcon fill='#362e6f' height='24'/>
+                </button>
+                <button onFocus={() => setIsOpenLanguages(true)} onBlur={() => setIsOpenLanguages(false)}>
+                  {
+                    languages[router.query.hl].icon
+                  }
+                </button>
+                <ul className={languageBox} ref={languagesRef}>
+                  {languageArray.map(([name, value]) => {
+                    return <li key={name}>
+                      <button disabled={name === router.query.hl} onClick={() => setLanguage(name)}>
+                        {value.icon}
+                        <span>{value.name}</span>
+                      </button>
+                    </li>;
+                  })}
+                </ul>
+              </div>
+            </li>
+            <Link href='/'>
+              <a>
+                <img src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt='LetterCMS linear Logo' className={footerImg}/> 
+              </a>
+            </Link>
+          </div>
+        </aside>
+      </MobileLayout>
       <div className={content}>
         {children}
       </div>

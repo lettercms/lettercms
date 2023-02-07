@@ -16,7 +16,6 @@
 }
 
 .subTab {
-  border: solid 1px #0001;
   width: 200px;
   position: absolute;
   top: 0;
@@ -25,6 +24,7 @@
   border-radius: 5px;
   width: max-content;
   transition: ease .3s;
+  box-shadow: 1px 1px 5px lightgrey;
 }
 .subTab li {
   text-align: center;
@@ -42,4 +42,12 @@
   background: #e1e4e5;
   color: var(--main);
   font-weight: bold;
+}
+@media (max-width: 480px) {
+  .subTab {
+    width: 100%;
+    left: 0;
+    position: relative;
+    box-shadow: none;
+  }
 }

@@ -13,7 +13,7 @@ export default function Title() {
 
       .title-input {
         width: 80%;
-        max-width: 400x;
+        max-width: 400px;
         margin: auto;
       }
     `}</style>

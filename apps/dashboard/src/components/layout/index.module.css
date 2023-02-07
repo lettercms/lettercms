@@ -95,6 +95,7 @@
 }
 
 .languageBox {
+  box-shadow: 1px 1px 5px lightgrey;
   position: absolute;
   left: 110%;
   background: #f7f7f7;
@@ -132,6 +133,15 @@
     width: 80%;
     position: fixed;
     top: 0;
-    max-width: 400px;
+    left: -100%;
+    transition: ease .3s;
+    max-width: 260px;
+    height: max-content;
+    overflow-y: auto;
+    min-height: 100%;
+  }
+  .languageBox {
+    left: auto;
+    right: 0;
   }
 }

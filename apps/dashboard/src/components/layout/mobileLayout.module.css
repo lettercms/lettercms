@@ -1,0 +1,31 @@
+.shadow {
+  display: none;
+}
+.openButton {
+  display: none
+}
+
+@media (max-width: 480px) {
+  .shadow {
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #0008;
+    z-index: 1;
+    transition: ease .3s;
+    opacity: 0;
+  }
+  .openButton {
+    display: block;
+    position: fixed;
+    left: 0;
+    padding: .5rem;
+    background: white;
+    border-radius: 0 1rem 1rem 0;
+    border: none;
+    box-shadow: 1px 1px 5px lightgrey;
+    bottom: 15%;
+    z-index: 1;
+  }
+}
