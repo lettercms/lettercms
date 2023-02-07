@@ -149,7 +149,7 @@ export function DashboardProvider({userID, children, hideMenu}) {
 
   return <DashboardContext.Provider value={value}>
     <div>
-      <aside className={menuAside} style={{display: hideMenu ? 'none' : 'inline-block'}}>
+      <aside className={menuAside} style={{display: 'none'}}>
         {
           load &&
           <div className={dashboardSpinner} style={{animation: 'rotation linear .6s infinite'}}/>
@@ -210,7 +210,7 @@ export function DashboardProvider({userID, children, hideMenu}) {
           </Link>
         </div>
       </aside>
-      <div className={content} style={{width: hideMenu ? '100%' : '85%', left: hideMenu ? 0 : '15%'}}>
+      <div className={content}>
         {children}
       </div>
       <style jsx global>{`

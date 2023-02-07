@@ -108,6 +108,24 @@ const Card = ({
       .buttons {
         display: flex;
       }
+      @media (max-width: 480px) {
+        .post {
+          flex-direction: column;
+          padding: 0 !important;
+          height: auto !important;
+        }
+        .post .image {
+          width: 100% !important;
+          height: 150px !important;
+        }
+        .post .data {
+          display: inline-block !important;
+          margin: 0 1rem 0.5rem !important;
+        }
+        .post .data span {
+          text-align: center;
+        }
+      }
     `}</style>
   </div>;
 };

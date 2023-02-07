@@ -159,6 +159,13 @@ export default function WelcomeDashboard() {
       #welcome-panels {
         position: relative;
       }
+      @media (max-width: 480px) {
+        :global(.load-container),
+        :global(.chart-container) {
+          width: 100% !important;
+          margin: auto;
+        }
+      }
     `}</style>
   </div>;
 }

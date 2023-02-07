@@ -120,3 +120,18 @@
   margin-left: .5rem;
   color: var(--main);
 }
+
+@media (max-width: 480px) {
+  .content {
+    width: 100%;
+    left: 0;
+    position: relative;
+    padding: 1rem 0;
+  }
+  .menuAside {
+    width: 80%;
+    position: fixed;
+    top: 0;
+    max-width: 400px;
+  }
+}
