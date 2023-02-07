@@ -1,4 +1,4 @@
-const Base = ({children, rows = 1, title, style, principal}) => <div className={`${principal ? 'principal ' : ''}chart-container`} style={style}>
+const Base = ({children, rows = 1, title, style, principal}) => <div className={`${principal ? 'principal ' : ''}chart-container stat-rows-${rows}`} style={style}>
   <span className='baseTitle'>{title}</span>
   {children}
   <style jsx>{`

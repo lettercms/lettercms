@@ -26,13 +26,13 @@ function RenderLineChart({data}) {
 
   return <div style={{height: 200, width: '95%'}}>
     <ResponsiveContainer>
-    <LineChart width={700} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-      <Line type="monotone" dataKey={_views} stroke="#5f4dee" />
-      <CartesianGrid stroke="#e1e4e5" strokeDasharray="5 5" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-    </LineChart>
+      <LineChart width={700} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+        <Line type="monotone" dataKey={_views} stroke="#5f4dee" />
+        <CartesianGrid stroke="#e1e4e5" strokeDasharray="5 5" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+      </LineChart>
     </ResponsiveContainer>
   </div>;
 }
