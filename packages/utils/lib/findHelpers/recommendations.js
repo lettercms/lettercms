@@ -148,7 +148,6 @@ export const findSimilars = async (model, query) => {
     return e;
   });
 
-  console.log(query.limit - ordered.length)
   //If do not has similar posts returns differ posts
   if (ordered?.length < query.limit) {
     let ids = ordered.map(e => ({_id: e._id}));

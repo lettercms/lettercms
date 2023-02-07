@@ -29,8 +29,6 @@ const generateCursorPagination = async (model, filter, opts) => {
   if (before)
     paging.cursors.after = data[0]._id.toString();
 
-  console.log(data)
-
   return {
     data,
     paging
