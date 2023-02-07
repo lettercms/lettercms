@@ -82,7 +82,7 @@ export default function Config({tab}) {
             width: 100%;
             position: absolute;
             right: 0;
-            padding: 0 20%;
+            max-width: 600px;
           }
           ul.config-opts li {
             display: flex;
@@ -93,6 +93,13 @@ export default function Config({tab}) {
           ul.config-opts li span,
           ul.config-opts li button {
             margin: 15px 0;
+          }
+          @media (max-width: 480px) {
+            .chart-container,
+            .load-container {
+              width: 95% !important;
+              margin: .5rem auto !important;
+            }
           }
         `}</style>
       </div>

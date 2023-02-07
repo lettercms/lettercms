@@ -44,6 +44,7 @@ export default function Top(props) {
           width: 85%;
           left: 15%;
           position: fixed;
+          top: 0;
         }
         .top {
           display: flex;
@@ -68,6 +69,12 @@ export default function Top(props) {
           position: relative !important;
           left: 0 !important;
           width: 150px !important;
+        }
+        @media (max-width: 480px) {
+          .top-fixed {
+            width: 100% !important;
+            left: 0 !important;
+          }
         }
       `}</style>
     </div>;

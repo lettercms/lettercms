@@ -65,5 +65,13 @@ export default function Charts({limits}) {
         testText.replace('{tests}', limits.ab.tests.available)
       ]}/>
     </Base>
+    <style jsx global>{`
+      @media (max-width: 480px) {
+        .stat-rows-1 {
+          flex-direction: column !important;
+          height: 620px !important;
+        }
+      }
+    `}</style>
   </>;
 };
