@@ -17,19 +17,19 @@ const generateCursorPagination = async (model, filter, opts) => {
   };
 
   const hasMore = data.length === options.limit;
-
-  if (data.length > 10)
-    data.pop();
   
   if (hasMore) {    
+    data.pop();
+
     const beforeCursor = data[data.length - 1]._id;
       
     paging.cursors.before = beforeCursor.toString();
   }
 
-  if (before) {
+  if (before)
     paging.cursors.after = data[0]._id.toString();
-  }
+
+  console.log(data)
 
   return {
     data,
@@ -176,7 +176,7 @@ export async function find(model, filter, opts = {limit: 10}) {
 
   const data = await model.find(filter, projection, options);
   const total = await model.countDocuments(filter);
-  
+
   const paging = {
     page: +page,
     total: Math.ceil(total / limit)

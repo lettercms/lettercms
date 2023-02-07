@@ -126,6 +126,7 @@ export const findSimilars = async (model, query) => {
     query.fields = splitted.join(',');
   }
 
+
   const similars = await findPosts(model, similarOpts, query);
 
   //Order per Commons Similar tags
@@ -147,6 +148,7 @@ export const findSimilars = async (model, query) => {
     return e;
   });
 
+  console.log(query.limit - ordered.length)
   //If do not has similar posts returns differ posts
   if (ordered?.length < query.limit) {
     let ids = ordered.map(e => ({_id: e._id}));
@@ -157,9 +159,10 @@ export const findSimilars = async (model, query) => {
       $nor: [{_id}].concat(ids),
     },
     {
-      limit: query.limit - ordered.length,
-      ...query
+      ...query,
+      limit: query.limit - ordered.length
     });
+
 
     ordered = ordered.concat(rest.data);
   }
