@@ -78,12 +78,12 @@ export default function Nav () {
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <Link href='/'>
-              <a className="nav-link page-scroll">HOME</a>
+              <a className="nav-link page-scroll">Home</a>
             </Link>
           </li>
           <li className="nav-item">
             <Link href='/blog'>
-              <a className="nav-link page-scroll">BLOG</a>
+              <a className="nav-link page-scroll">Blog</a>
             </Link>
           </li>
         </ul>

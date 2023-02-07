@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import {FormattedMessage} from 'react-intl';
 import {useRouter} from 'next/router';
 import Search from '@/components/svg/search';
 import Github from '@/components/svg/github';
@@ -10,12 +11,19 @@ export default function MobileNav({open}) {
     <ul className="navbar-nav ml-auto">
       <li>
         <Link href='/'>
-          <a className="nav-link page-scroll">HOME</a>
+          <a className="nav-link page-scroll">Home</a>
         </Link>
       </li>
       <li>
         <Link href='/blog'>
-          <a className="nav-link page-scroll">BLOG</a>
+          <a className="nav-link page-scroll">Blog</a>
+        </Link>
+      </li>
+      <li>
+        <Link href='/login'>
+          <a className="nav-link page-scroll">
+            <FormattedMessage id='Log In'/>
+          </a>
         </Link>
       </li>
     </ul>
