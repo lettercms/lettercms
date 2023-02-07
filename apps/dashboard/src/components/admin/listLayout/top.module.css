@@ -46,3 +46,18 @@
   transition: ease .3s;
   z-index: 2;
 }
+
+@media (max-width: 480px) {
+  .top {
+    left: 0 !important;
+    width: 100% !important;
+    overflow-x: auto;
+  }
+  .textContainer {
+    margin-top: 3rem;
+  }
+  .adminTop svg {
+    width: 100%;
+    height: max-content;
+  }
+}

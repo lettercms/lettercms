@@ -17,7 +17,8 @@ export default function NoImages({images, isUploading}) {
         justify-content: center;
       }
       img {
-        width: 20rem;
+        max-width: 20rem;
+        width: 80%;
       }
     `}</style>
   </div>;

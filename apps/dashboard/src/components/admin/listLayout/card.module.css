@@ -105,3 +105,10 @@ button.tag {
 .buttons > div {
   display: flex;
 }
+
+
+@media (max-width: 480px) {
+  .post {
+    width: 100%;
+  }
+}

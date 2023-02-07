@@ -4,6 +4,11 @@
 }
 .tagUl {
   display: flex;
+  flex-wrap: wrap;
+}
+.tagUl li {
+  margin-top: .25rem;
+  margin-bottom: .25rem;
 }
 .tagList {
   border: 1px solid var(--main);

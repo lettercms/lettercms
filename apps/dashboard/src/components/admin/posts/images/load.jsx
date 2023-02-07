@@ -19,6 +19,11 @@ export default function ImageList({images, isUploading}) {
         border-radius: 5px;
         animation: bounce linear infinite 2s;
       }
+      @media (max-width: 480px) {
+        ul li {
+          width: 45%;
+        }
+      }
     `}</style>
   </ul>;
 }
