@@ -25,7 +25,8 @@
     border-radius: 0 1rem 1rem 0;
     border: none;
     box-shadow: 1px 1px 5px lightgrey;
-    bottom: 15%;
+    bottom: 50%;
+    margin-bottom: -26px;
     z-index: 1;
   }
 }

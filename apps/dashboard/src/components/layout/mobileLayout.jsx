@@ -2,14 +2,11 @@ import {useState, useRef, useEffect} from 'react';
 import {shadow, openButton} from './mobileLayout.module.css';
 import AngleRight from '@lettercms/icons/angleRight';
 
-export default function MobileLayout({children, onOpen, onClose}) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function MobileLayout({children, isOpen, onOpen, onClose}) {
   const shadowRef = useRef(null);
 
   useEffect(() => {
     if (isOpen) {
-      onOpen();
-
       shadowRef.current.style.display='block';
 
       setTimeout(() => {
@@ -17,8 +14,6 @@ export default function MobileLayout({children, onOpen, onClose}) {
       }, 0);
 
     } else {
-      onClose();
-
       shadowRef.current.style.opacity = 0;
 
       setTimeout(() => {
@@ -26,11 +21,11 @@ export default function MobileLayout({children, onOpen, onClose}) {
       }, 300);
 
     }
-  }, [isOpen, onOpen, onClose]);
+  }, [isOpen]);
 
   return <>
-    <div className={shadow} onClick={() => setIsOpen(false)} ref={shadowRef} />
-    <button onClick={() => setIsOpen(true)} className={openButton}>
+    <div className={shadow} onClick={() => onClose()} ref={shadowRef} />
+    <button onClick={() => onOpen()} className={openButton}>
       <AngleRight height='36' fill='var(--main)'/>
     </button>
     {children}

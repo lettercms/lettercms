@@ -61,9 +61,12 @@ export function useUser() {
   return value;
 }
 
-const initLoader = setLoad => {
+const initLoader = (setLoad, setIsMenuOpen) => {
   Router.events.on('routeChangeStart', () => setLoad(true));
-  Router.events.on('routeChangeComplete', () => setLoad(false));
+  Router.events.on('routeChangeComplete', () => {
+    setLoad(false);
+    setIsMenuOpen(false);
+  });
 };
 
 export function DashboardProvider({userID, children, hideMenu}) {
@@ -115,7 +118,7 @@ export function DashboardProvider({userID, children, hideMenu}) {
 
   useEffect(() => {
     if (!ctx && status === 'authenticated') {
-      initLoader(setLoad);
+      initLoader(setLoad, setIsMenuOpen);
 
       window.setLoad = setLoad;
 
@@ -163,7 +166,7 @@ export function DashboardProvider({userID, children, hideMenu}) {
 
   return <DashboardContext.Provider value={value}>
     <div>
-      <MobileLayout onOpen={() => setIsMenuOpen(true)} onClose={() => setIsMenuOpen(false)}>
+      <MobileLayout isOpen={isMenuOpen} onOpen={() => setIsMenuOpen(true)} onClose={() => setIsMenuOpen(false)}>
         <aside className={menuAside} ref={asideRef}>
           {
             load &&

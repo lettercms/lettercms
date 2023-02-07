@@ -1,7 +1,7 @@
 import {FormattedMessage} from 'react-intl';
 import Link from 'next/link';
 import Image from 'next/image';
-import {useRouter} from 'next/router';
+import Router from 'next/router';
 import {useState, useEffect, useRef} from 'react';
 import {useSession} from 'next-auth/react';
 import Search from '@/components/svg/search';
@@ -19,9 +19,13 @@ export default function Nav () {
   const [profilePicture, setProfilePicture] = useState(null);
   const [load, setLoad] = useState(true);
 
-  const router = useRouter();
+  const router = Router.useRouter();
 
   const {status, data} = useSession();
+
+  useEffect(() => {
+    Router.events.on('routeChangeComplete', () => setMobileOpen(false));
+  }, []);
 
   useEffect(() => {
     if (status === 'authenticated' && !profilePicture && data.user) {
@@ -37,7 +41,6 @@ export default function Nav () {
     } else {
       setLoad(false);
     }
-
   }, [status, router.pathname, data?.user, profilePicture]);
   
   useEffect(() => {
