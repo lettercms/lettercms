@@ -56,7 +56,7 @@ const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days,
   referrers = Object.entries(referrers);
   urls = Object.entries(urls);
 
-  return <div>
+  return <div style={{width: '100%'}}>
     <Top
       ico={<StatsIco/>}
       topText={
@@ -138,36 +138,42 @@ const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days,
       >
         <GeneralPanel value={general.subscriptors}/>
       </Base>
-      <Base
-        rows={1}
-        title={
-          intl.formatMessage({
-            id: 'Views'
-          })
-        }
-      >
-        <LineChart data={dates}/>
-      </Base>
-      <Base
-        rows={1}
-        title={
-          intl.formatMessage({
-            id: 'Hours'
-          })
-        }
-      >
-        <BarChart data={hours} dataKey="hora"/>
-      </Base>
-      <Base
-        rows={1}
-        title={
-          intl.formatMessage({
-            id: 'Days'
-          })
-        }
-      >
-        <BarChart data={days} dataKey="día" translate/>
-      </Base>
+      <div className='stat-scroll'>
+        <Base
+          rows={1}
+          title={
+            intl.formatMessage({
+              id: 'Views'
+            })
+          }
+        >
+          <LineChart data={dates}/>
+        </Base>
+      </div>
+      <div className='stat-scroll'>
+        <Base
+          rows={1}
+          title={
+            intl.formatMessage({
+              id: 'Hours'
+            })
+          }
+        >
+          <BarChart data={hours} dataKey="hora"/>
+        </Base>
+      </div>
+      <div className='stat-scroll'>
+        <Base
+          rows={1}
+          title={
+            intl.formatMessage({
+              id: 'Days'
+            })
+          }
+        >
+          <BarChart data={days} dataKey="día" translate/>
+        </Base>
+      </div>
       <Base
         rows={3}
         title={
@@ -209,23 +215,27 @@ const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days,
     <Card {...general.mostCommented} subdomain={general.subdomain}/>
     {
       urls.length > 0 &&
-      <Base rows={1} title={
-        intl.formatMessage({
-          id: 'Posts'
-        })
-      }>
-        <BarChart data={urls} sort={true} layout='vertical'/>
-      </Base>
+      <div className='stat-scroll'>
+        <Base rows={1} title={
+          intl.formatMessage({
+            id: 'Posts'
+          })
+        }>
+          <BarChart data={urls} sort={true} layout='vertical'/>
+        </Base>
+      </div>
     }
     {
       referrers.length > 0 &&
-      <Base rows={1} title={
-        intl.formatMessage({
-          id: 'Referrers'
-        })
-      }>
-        <BarChart data={referrers} sort={true} layout='vertical'/>
-      </Base>
+      <div className='stat-scroll'>
+        <Base rows={1} title={
+          intl.formatMessage({
+            id: 'Referrers'
+          })
+        }>
+          <BarChart data={referrers} sort={true} layout='vertical'/>
+        </Base>
+      </div>
     }
     <style jsx>{`
       .range-container {
@@ -247,6 +257,23 @@ const StatsDashboard = ({data: {referrers, urls, oss, browsers, countries, days,
       }
       #select-container select {
         width: 200px;
+      }
+      .stat-scroll {
+        width: 100%;
+      }
+      @media (max-width: 480px) {
+        #stats-dashboard {
+          display: block;
+        }
+        .stat-scroll {
+          overflow-x: scroll;
+        }
+        :global(.chart-container) {
+          width: 90% !important;
+        }
+        :global(.stat-rows-1) {
+          width: 1200px !important;
+        }
       }
     `}</style>
   </div>;

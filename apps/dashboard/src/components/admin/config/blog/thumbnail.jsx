@@ -68,8 +68,8 @@ export default function Thumbnail({url = 'https://cdn.jsdelivr.net/gh/davidsdeve
       }
       #thumbnail-container {
         position: relative;
-        width: calc(100% - 50px);
-        margin: 0 25px 15px;
+        width: 95%;
+        margin: 3.5rem 2.5% 1rem;
       }
       #thumbnail-container #thumbnail-img {
         border-radius: 15px;

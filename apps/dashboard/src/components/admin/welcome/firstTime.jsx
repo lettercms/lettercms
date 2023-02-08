@@ -11,9 +11,11 @@ const FirstTime = ({name, id}) =>  {
 
   return <div id='first-time-main'>
     <div id='welcome-title'>
-      <span>
-        <FormattedMessage id='Welcome '/>
-        <span>{name}</span>
+      <span className='title-name'>
+        <span>
+          <FormattedMessage id='Welcome '/>
+        </span>
+        <span className='user-name'>{name}</span>
       </span>
       <p>
         <FormattedMessage id='We are happy that you have chosen us'/>
@@ -69,7 +71,7 @@ const FirstTime = ({name, id}) =>  {
         font-size: 54px;
         color: #888;
       }
-      #welcome-title span span {
+      #welcome-title span span.user-name {
         color: #31446c;
       }
       #welcome-links {
@@ -85,6 +87,27 @@ const FirstTime = ({name, id}) =>  {
       }
       #welcome-links div span {
         margin: 0 0 10px 0;
+      }
+      @media (max-width: 480px) {
+        .title-name {
+          display: flex;
+          flex-direction: column;
+        }
+        .title-name span {
+          margin: 1rem 0;
+        }
+        img {
+          width: 100%;
+          margin: auto !important;
+        }
+        #welcome-links {
+          flex-direction: column;
+          width: 90%;
+          margin: auto;
+        }
+        #welcome-links div {
+          margin: .5rem 0;
+        }
       }
     `}</style>
   </div>;

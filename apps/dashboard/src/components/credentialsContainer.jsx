@@ -1,17 +1,8 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import NotSupported from '@/components/mobileNotSupported';
 import styles from './credentialsContainer.module.css';
 
-export default function Credentials({title, children, isMobile, cta}) {
-  if (isMobile)
-    return <>
-      <Head>
-        <title>{`${title} - LetterCMS`}</title>
-      </Head>
-      <NotSupported/>
-    </>;
-
+export default function Credentials({title, children, cta}) {
   return <div className={styles.container}>
     <Head>
       <title>{`${title} - LetterCMS`}</title>

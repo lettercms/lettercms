@@ -38,6 +38,12 @@
   height: 120px !important;
 }
 
+@media (max-width: 480px) {
+  .main {
+    width: 100%;
+  }
+}
+
 @keyframes bounce {
   0% {
     opacity: 1;
@@ -49,3 +55,4 @@
     opacity: 1;
   }
 }
+

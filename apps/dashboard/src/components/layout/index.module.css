@@ -95,6 +95,7 @@
 }
 
 .languageBox {
+  box-shadow: 1px 1px 5px lightgrey;
   position: absolute;
   left: 110%;
   background: #f7f7f7;
@@ -119,4 +120,28 @@
 .languageBox li button span {
   margin-left: .5rem;
   color: var(--main);
+}
+
+@media (max-width: 480px) {
+  .content {
+    width: 100%;
+    left: 0;
+    position: relative;
+    padding: 1rem 0 0;
+  }
+  .menuAside {
+    width: 80%;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    transition: ease .3s;
+    max-width: 260px;
+    height: max-content;
+    overflow-y: auto;
+    min-height: 100%;
+  }
+  .languageBox {
+    left: auto;
+    right: 0;
+  }
 }

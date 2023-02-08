@@ -10,14 +10,12 @@ import styles from '@/styles/login.module.css';
 
 export async function getServerSideProps({req, res, query}) {
   const {page, hl = 'en'} = query;
-  const isMobile = /Android|iPhone|iPad/.test(req?.headers['user-agent'] || navigator.userAgent);
 
   const lang = await import(`@/translations/login/${hl}.json`);
   const messages = Object.assign({}, lang.default);
 
   return {
     props: {
-      isMobile,
       messages
     }
   };
@@ -36,7 +34,7 @@ function CTA() {
   </div>;
 }
 
-export default function Login({isMobile}) {
+export default function Login() {
   const [isLoad, setIsLoad] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -79,7 +77,7 @@ export default function Login({isMobile}) {
   };
 
   return <div>
-    <Container isMobile={isMobile} title='Login' cta={<CTA/>}>
+    <Container title='Login' cta={<CTA/>}>
       <form onSubmit={login}>
         <Input
           disabled={isLoad}

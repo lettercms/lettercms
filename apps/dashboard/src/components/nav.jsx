@@ -1,7 +1,7 @@
 import {FormattedMessage} from 'react-intl';
 import Link from 'next/link';
 import Image from 'next/image';
-import {useRouter} from 'next/router';
+import Router from 'next/router';
 import {useState, useEffect, useRef} from 'react';
 import {useSession} from 'next-auth/react';
 import Search from '@/components/svg/search';
@@ -19,9 +19,13 @@ export default function Nav () {
   const [profilePicture, setProfilePicture] = useState(null);
   const [load, setLoad] = useState(true);
 
-  const router = useRouter();
+  const router = Router.useRouter();
 
   const {status, data} = useSession();
+
+  useEffect(() => {
+    Router.events.on('routeChangeComplete', () => setMobileOpen(false));
+  }, []);
 
   useEffect(() => {
     if (status === 'authenticated' && !profilePicture && data.user) {
@@ -37,7 +41,6 @@ export default function Nav () {
     } else {
       setLoad(false);
     }
-
   }, [status, router.pathname, data?.user, profilePicture]);
   
   useEffect(() => {
@@ -78,12 +81,12 @@ export default function Nav () {
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <Link href='/'>
-              <a className="nav-link page-scroll">HOME</a>
+              <a className="nav-link page-scroll">Home</a>
             </Link>
           </li>
           <li className="nav-item">
             <Link href='/blog'>
-              <a className="nav-link page-scroll">BLOG</a>
+              <a className="nav-link page-scroll">Blog</a>
             </Link>
           </li>
         </ul>
@@ -110,9 +113,7 @@ export default function Nav () {
           }
           {
             !load && !profilePicture &&
-            <Button type='outline' alt onClick={() => router.push('/login')}>
-              <FormattedMessage id='Log In'/>
-            </Button>
+            <Button type='outline' alt onClick={() => router.push('/login')}>Login</Button>
           }
 
           {

@@ -173,6 +173,11 @@ const ApiKey = () => {
       #credentials-top button {
         width: max-content;
       } 
+      @media (max-width: 480px) {
+        #credentials-top {
+          flex-direction: column !important;
+        }
+      }
     `}</style>
   </div>;
 };

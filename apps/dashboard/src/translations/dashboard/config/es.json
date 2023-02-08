@@ -51,7 +51,7 @@
   "/:title": "/:título",
   "/:category/:title": "/:categoría/:título",
   "/:year/:month/:title": "/:año/:mes/:título",
-  "/:year/:month/:day/:title": "/:año/:mes/:día/:título",
+  "/:year/:month/:date/:title": "/:año/:mes/:día/:título",
   "Categories": "Categorías",
   "Posts route": "Ruta de las entradas",
   "Data": "Datos",

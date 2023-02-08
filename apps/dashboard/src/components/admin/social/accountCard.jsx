@@ -76,6 +76,11 @@ const AccountCard = ({cover, name, username, picture, type, show}) => <li>
       width: 25px;
       height: 25px;
     }
+    @media (max-width: 480px) {
+      li {
+        width: 100%; !important;
+      } 
+    }
   `}</style>
 </li>;
 

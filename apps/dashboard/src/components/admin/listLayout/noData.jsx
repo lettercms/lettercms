@@ -11,6 +11,7 @@ const NoData = ({action, picture = `${process.env.ASSETS_BASE}/assets/posts.svg`
   <style jsx>{`
     .data-text {
       padding: 5rem 0 7rem;
+      text-align: center;
     }
     .data-text span {
       font-size: 2rem;

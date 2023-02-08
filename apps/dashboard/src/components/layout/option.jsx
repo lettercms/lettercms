@@ -40,20 +40,16 @@ export default function Option({role, title, sub, icon, href}) {
           </li>
         </a>
       </Link>
-      <hr/>
       {
         sub?.filter(e => !e.admin || role === 'admin')
         .map((e, i) =>
-            <Fragment key={e.href + e.label}>
-            {i !== 0 && <hr  className={subHr}/>}
-            <Link href={e.href}>
-              <a onClick={() => setFocus(false)}>
-                <li>
-                  <FormattedMessage id={e.label}/>
-                </li>
-              </a>
-            </Link>
-          </Fragment>
+          <Link href={e.href} key={e.href}>
+            <a onClick={() => setFocus(false)}>
+              <li>
+                <FormattedMessage id={e.label}/>
+              </li>
+            </a>
+          </Link>
         )
       }
     </ul>

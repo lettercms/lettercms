@@ -134,6 +134,11 @@ export default function ImageList({images, isUploading, onLoadMore, isLoadingMor
           width: 2.75rem;
           animation: rotation infinite .6s linear;
         }
+        @media (max-width: 480px) {
+          ul li {
+            width: 45%;
+          }
+        }
     `}</style>
   </ul>;
 }
