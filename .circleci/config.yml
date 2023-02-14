@@ -42,7 +42,10 @@ jobs:
 workflows:
   always-run:
     jobs:
+      - approval:
+          type: approval
       - filter:
+          requires:
+            - approval
           context:
             - LetterCMS
-          
