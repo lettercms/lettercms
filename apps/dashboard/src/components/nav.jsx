@@ -61,7 +61,10 @@ export default function Nav () {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isOpen]);
 
-  return <nav className={'navbar navbar-expand-lg navbar-dark navbar-custom fixed-top' + (isOpen ? ' top-nav-collapse' : '')}>
+  return <nav className={'navbar flex flex-column navbar-expand-lg navbar-dark navbar-custom fixed-top' + (isOpen ? ' top-nav-collapse' : '')}>
+      <div style={{display:'block', width: '100%', background: 'white', textAlign: 'center', padding: '.5rem .25rem', borderRadius: '.5rem', marginBottom: 8}}>
+        <span>Project still in development. You can collaborate on <a style={{color: 'var(--main)'}} target='_blank' href='https://github.com/lettercms/lettercms' rel="noreferrer">GitHub</a> or support us on <a style={{color: 'var(--main)'}} target='_blank' href='https://opencollective.com/lettercms' rel="noreferrer">Open Collective</a></span>
+      </div>
     <div className="container">
       <Link href='/'>
         <a className="navbar-brand logo-image">
