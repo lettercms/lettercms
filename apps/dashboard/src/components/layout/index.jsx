@@ -36,7 +36,15 @@ const Nav = dynamic(() => import('./nav'), {
   ssr: false
 });
 
-const logout = () => signOut({redirect: false}).then(_ => Router.push('/login'));
+const logout = async () => {
+  const app = createFirebaseApp();
+  const auth = getAuth(app);
+
+  await app.signOut();
+  await signOut({redirect: false});
+  
+  Router.push('/login');
+};
 const setLanguage = hl => {
   Cookie.set('__lcms-hl', hl);
 
