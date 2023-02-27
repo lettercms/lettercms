@@ -13,13 +13,18 @@ export const createFirebaseApp = () => {
     measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
   };
 
-  if (getApps().length <= 0) {
+  const apps = getApps();
+
+  if (apps.length <= 0) {
     const app = initializeApp(clientCredentials);
     if (typeof window !== 'undefined') {
       if ('measurementId' in clientCredentials) {
-        getAnalytics();
+        getAnalytics(app);
       }
     }
+
     return app;
   }
+
+  return apps[0];
 };

@@ -8,7 +8,7 @@ import sdk from '@lettercms/sdk';
 import Cookie from 'js-cookie'; 
 import {option} from './option.module.css';
 import {useSession} from 'next-auth/react';
-import {createFirebaseApp } from '@/firebase/client';
+import {createFirebaseApp} from '@/firebase/client';
 import {getAuth, signInWithCustomToken} from 'firebase/auth';
 import {
   dashboardSpinner,
