@@ -1,4 +1,5 @@
 import {useState, useMemo, useEffect} from 'react';
+import Script from 'next/script';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import Facebook from '../lib/client/FacebookSDK';
@@ -8,6 +9,8 @@ import Load from '../components/loadBar';
 import {ClientProvider} from '@/lib/userContext'; 
 import {IntlProvider} from 'react-intl';
 import '@/styles/global.scss';
+
+const MEASUREMENT_ID= process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID;
 
 //Dynamics
 const Nav = dynamic(() => import('../components/nav'));
@@ -26,6 +29,10 @@ const initApp = setLoad => {
 
     window.scrollTo(0, 0);
     html.style.scrollBehavior = 'smooth';
+
+    window.gtag('config', MEASUREMENT_ID, {
+      page_path: window.location.pathname
+    });
 
     setLoad(false);
   });
@@ -59,6 +66,23 @@ export default function App({Component, pageProps: { messages, session, ...pageP
         >
           <ClientProvider accessToken={pageProps.accessToken}>
             <SessionProvider session={session}>
+            <Script
+              id='google-analytics'
+              strategy='afterInteractive'
+              dangerouslySetInnerHTML={{
+                __html: `
+
+                G-6VNC38JNFC
+
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${MEASUREMENT_ID}' , {
+                    page_path: window.location.pathname
+                  });
+                `
+              }}
+            />
               {
                 (
                   showLoad &&
