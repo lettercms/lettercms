@@ -1,4 +1,4 @@
-import Copy from '@/components/svg/copy';
+import Copy from '@lettercms/icons/copy';
 
 export default function CopyField({text}) {
   const copy = () => {
@@ -23,4 +23,4 @@ export default function CopyField({text}) {
       }
     `}</style>
   </div>;  
-}
+} 

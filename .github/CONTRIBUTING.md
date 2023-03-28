@@ -75,13 +75,13 @@ $ yarn dev
 
 This starts 4 development servers
 
-- `3000` for dashboard
-- `3002` for blog UI
+- `3000` for Dashboard
+- `3002` for Blog UI
 - `3003` for serve CDN content
 - `3009` for API
 
-Blog UI receive a subdomain to render blog content. `subdomain.localhost:3002`.
-Create an account, then add your subdomain on `LETTERCMS_SUBDOMAIN` env to render blog on `http://localhost:3000/blog`
+Blog UI receive a subdomain to render blog content. `http://subdomain.localhost:3002`.
+Create an account on `http://localhost:3000/signin`, then add your subdomain on the `LETTERCMS_SUBDOMAIN` env var to render blog page on `http://localhost:3000/blog`
 
 ### Committing Changes
 

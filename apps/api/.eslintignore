@@ -1,5 +1,0 @@
-**/node_modules/**
-*.css
-*.html
-testing
-lib/brain.js

@@ -4,12 +4,14 @@
   "private": true,
   "license": "Apache-2.0",
   "workspaces": [
-    "apps/*",
+    "apps/dashboard",
+    "apps/cdn",
     "packages/*"
   ],
   "scripts": {
     "dev": "node ./scripts/run-dev",
     "lint": "node ./scripts/run-lint",
+    "setup": "node ./scripts/setup",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {

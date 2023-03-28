@@ -18,6 +18,10 @@ MONGO_URL=
 ## Pregenerated JWT verify signature
 JWT_AUTH=${preGeneratedJWTKey}
 
+##Facebook App Credentials
+FB_APP_ID=
+FB_APP_SECRET=
+
 ## Firebase Admin Credentials. See https://firebase.google.com/docs/admin/setup
 FIREBASE_CLIENT_EMAIL=
 FIREBASE_PRIVATE_KEY=

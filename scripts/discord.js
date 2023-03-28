@@ -10,6 +10,8 @@ const isFail = status === 'failed';
   let colorCode = 6245870;
   let description = '';
 
+  const username = process.env.CIRCLE_PR_USERNAME || process.env.CIRCLE_PROJECT_USERNAME || process.env.CIRCLE_USERNAME;
+
   let fields = [];
 
   if (status === 'fail' || status === 'success') {
@@ -36,7 +38,7 @@ const isFail = status === 'failed';
     description = `Successfully deployed **${env}** app on **${process.env.CIRCLE_BRANCH}** branch!`;
     colorCode = 3394662;
   } else if (status === 'info') {
-    description = `Starting Deployment of **${process.env.CIRCLE_BRANCH}** branch by [@${process.env.CIRCLE_USERNAME}](https://github.com/${process.env.CIRCLE_USERNAME})`;
+    description = `Starting Deployment of **${process.env.CIRCLE_BRANCH}** branch by [@${username}](https://github.com/${username})`;
     colorCode = 16250871;
 
     fields = [

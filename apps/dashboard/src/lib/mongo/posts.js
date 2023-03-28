@@ -36,12 +36,12 @@ export async function getPost(url, userID) {
 
   const _sdk = new sdk.Letter(token);
  
-  const recommendation = await _sdk.users.recommendationForPost(userID, url, fields.split(','));
+  //const recommendation = await _sdk.users.recommendationForPost(userID, url, fields.split(','));
 
   return {
     post,
     user,
-    recommendation
+    recommendation: {}
   };
 }
 

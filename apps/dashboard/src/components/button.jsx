@@ -1,18 +1,53 @@
-import Spinner from '@/components/svg/spinner';
-import style from './button.module.css';
+import {FaSpinner} from 'react-icons/fa';
+
+const colors = {
+  default: '',
+  solid: 'bg-main-500',
+  outline: 'bg-white',
+  'outline-alt': 'bg-white',
+  'solid-alt': 'bg-white text-main-500'
+};
+
+const text = {
+  default: '',
+  solid: 'text-white',
+  outline: 'bg-none border-white border text-white',
+  'outline-alt': 'bg-white border-main-500 border text-main-500 border-solid disabled:bg-main-500 disabled:text-white',
+  'solid-alt': 'bg-white'
+};
 
 export default function Button({loading, className = '', alt, type, children, ...props}) {
 
-  let _className = `${className} ${style.btn} `;
+  let backgroundColor = '';
+  let textColor = '';
 
-  if (alt)
-    _className += style[`${type}-alt`];
-  else
-    _className += style[type];
+  if (alt) {
+    backgroundColor = colors[`${type}-alt`];
+    textColor = text[`${type}-alt`];
+  }
+  else {
+    backgroundColor = colors[type];
+    textColor = text[type];
+  }
+
+  let _className = `${className} inline-block 
+    ${backgroundColor}
+    ${textColor}
+    rounded-full
+    pointer
+    transition-all
+    duration-300
+    ease
+    px-8
+    py-3
+    w-max
+    text-decoration: none;
+  `;
+
 
   if (loading)
-    return <div className={'rotate ' + style.spinner}>
-      <Spinner/>
+    return <div className='animate-spin w-24 h-24 relative m-auto'>
+      <FaSpinner/>
     </div>;
 
   return <button className={_className} {...props}>{children}</button>;

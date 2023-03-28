@@ -9,7 +9,7 @@ const stagingEndpoint = `https://lettercms-api-${process.env.BRANCH || 'main'}.v
 async function default_1(path, conditions) {
     const query = (0, objectToQueryString_1.default)(conditions);
     const host = process.env.NODE_ENV !== "production"
-        ? `http://localhost:3009/api/${path}`
+        ? `http://api.localhost:3000/${path}`
         : `${stagingEndpoint}/api/${path}`; //`https://davidsdevel-${path}.lettercms.vercel.app`;
     const res = await (0, isomorphic_fetch_1.default)(`${host}/exists${query}`);
     const {exists} = await res.json();

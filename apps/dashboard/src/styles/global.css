@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --main: #5f4dee;
+  --load-main: #ccd7ec;
+  --main-alt: #362e6f;
+}
+
+.ck.ck-content a {
+  color: var(--main) !important;
+}
+.ck.ck-content b,
+.ck.ck-content strong {
+  color: var(--main-alt) !important;
+}
+.ck.ck-content li {
+  list-style: auto !important;
+}
+.ck.ck-content li::marker {
+  font-weight: bold !important;
+  color: var(--main-alt) !important;
+}
+.ck.ck-content p {
+  margin: 1rem 0 !important;
+}
+.ck.ck-content img {
+  border-radius: .15rem;
+}

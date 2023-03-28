@@ -1,0 +1,40 @@
+- Email Tracking
+- Email Marketing
+- A/B Testing
+- Add Twitter Publish on Social Media
+- Add data export button
+- Add Posts Versioning
+- Stats Monthly report
+- Añadir soporte para grupos de Facebook
+- Añadir soporte de Usuarios de Facebook
+- Add AccessToken rotation
+
+- Add Ebook Support
+
+- Añadir Feed parsing con el siguiente script
+
+const got = require("got");
+const parser = require("fast-xml-parser");
+
+(async function main() {
+  const buffer = await got("https://hacks.mozilla.org/feed/", {
+    responseType: "buffer",
+    resolveBodyOnly: true,
+    timeout: 5000,
+    retry: 5,
+  });
+  var feed = parser.parse(buffer.toString());
+  for (const item of feed.rss.channel.item) {
+    console.log({ title: item.title, url: item.link });
+    break;
+  }
+})();
+
+
+- Migrate XML2JS to fast-xml-parser
+- Create XML API to import XML
+- Add Unsplash search filters
+
+
+- Add custom timezone config, and retrieve views hours with these timezone
+- Add Menu tabs configuration 
