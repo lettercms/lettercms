@@ -27,7 +27,7 @@ const ImageList = ({images, onAdd, onDelete}) => {
           </div>)
         }
         <div className='no-images images-block' onClick={onAdd}>
-          <Plus width='48' fill='#ccd7ec'/>
+          <FaPlus width='48' fill='#ccd7ec'/>
         </div>
       </div>
     </div>
