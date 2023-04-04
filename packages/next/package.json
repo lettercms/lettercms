@@ -9,7 +9,7 @@
     "node": ">=16"
   },
   "scripts": {
-    "lint": "eslint *.ts*"
+    "lint": "eslint . --ext js,jsx"
   },
   "dependencies": {
     "@lettercms/sdk": "*"

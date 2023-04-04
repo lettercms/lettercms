@@ -15,6 +15,7 @@
   },
   "scripts": {
     "build": "tsc --outDir ./cjs -m commonjs -t ES2017",
+    "lint": "echo done",
     "deploy:canary": "node ../../scripts/release-canary && npm publish --tag canary",
     "build-dist": "webpack",
     "build-cjs": "rimraf ./cjs && tsc --outDir ./cjs -m commonjs -t ES2017",
