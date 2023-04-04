@@ -91,11 +91,11 @@ workflows:
   checks:
     jobs:
       - lint:
-        <<: *job
+          <<: *job
       #- unit-test:
       #  <<: *job
       - build:
-        <<: *job
-        requires:
-          - lint
+          <<: *job
+          requires:
+            - lint
           #- unit-test
