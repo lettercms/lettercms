@@ -4,7 +4,7 @@ import Router from 'next/router';
 import { Toaster } from 'react-hot-toast';
 import {IntlProvider} from 'react-intl';
 import {createFirebaseApp} from '@/firebase/client';
-import '@/styles/global.scss';
+import '@/styles/global.css';
 
 export default function App({Component, pageProps: { messages, session, ...pageProps }}) {
   const [showLoad, setLoad] = useState(false);
