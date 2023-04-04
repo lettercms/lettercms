@@ -1,51 +1,101 @@
 version: 2.1
 
-setup: true
-
 orbs:
   node: circleci/node@4.1
-  path-filtering: circleci/path-filtering@0.1.3
-  continuation: circleci/continuation@0.3.1
 
 jobs:
-  filter:
+  lint:
+    #Run ESLint to check Code Quality
     docker:
       - image: cimg/node:16.18.0
-    executor: path-filtering/default
-    resource_class: small
+
     steps:
       - checkout
-      - run:
-          name: Deploy info
-          command: node scripts/discord info
-      - path-filtering/set-parameters:
-          mapping: |
-            packages/models/.* run-dashboard true
-            apps/dashboard/.* run-dashboard true
-            packages/admin/.* run-dashboard true
-            packages/utils/.* run-dashboard true
-            packages/models/.* run-client true
-            packages/sdk/.* run-dashboard true
-            packages/ui/.* run-dashboard true
-            packages/models/.* run-api true
-            packages/sdk/.* run-client true
-            packages/utils/.* run-api true
-            apps/client/.* run-client true
-            packages/ui/.* run-client true
-            packages/ui/.* run-api true
-            apps/api/.* run-api true
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: true
 
-          base-revision: main
-      - continuation/continue:
-          configuration_path: .circleci/continue_config.yml
+      - restore_cache:
+          keys:
+            - dashboard-build-{{ checksum "apps/dashboard/package.json" }}
+            - dashboard-build-
+
+      - run:
+          name: Lint
+          command: yarn workspaces run lint
+
+  unit-testing:
+    #Run ESLint to check Code Quality
+    docker:
+      - image: cimg/node:16.18.0
+      #- image: circleci/mongo:4.4
+
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: true
+      - restore_cache:
+          keys:
+            - dashboard-build-{{ checksum "apps/dashboard/package.json" }}
+            - dashboard-build-
+      - run:
+          name: Unit Testing
+          command: yarn test
+
+
+  #TODO: Add Code Quality Analisys Job
+  #TODO: Add Testing and coverage Job
+  
+  build:
+    docker:
+      - image: cimg/node:16.18.0
+
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: true
+      - restore_cache:
+          keys:
+            - dashboard-build-{{ checksum "apps/dashboard/package.json" }}
+            - dashboard-build-
+      - run:
+          name: Build
+          command: yarn workspace @lettercms/dashboard build
+      - save_cache:
+          key: dashboard-build-{{ checksum "apps/dashboard/package.json" }}
+          paths:
+            - apps/dashboard/.next/cache
+
+      #- run:
+      #    name: Notify error on deploy
+      #    command: node scripts/discord fail dashboard
+      #    when: on_fail
+
+      #- run:
+      #    name: Notify deploy
+      #    command: node scripts/discord success dashboard
+      #    when: on_success
+
+job: &job
+  context:
+    - LetterCMS
+  filters:
+    branches:
+      ignore:
+        - main
+        - production
 
 workflows:
-  always-run:
+  checks:
     jobs:
-      - approval:
-          type: approval
-      - filter:
-          requires:
-            - approval
-          context:
-            - LetterCMS
+      - lint:
+        <<: *job
+      #- unit-test:
+      #  <<: *job
+      - build:
+        <<: *job
+        requires:
+          - lint
+          #- unit-test

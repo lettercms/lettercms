@@ -1,11 +1,13 @@
-const { spawn, execSync } = require('child_process')
+//TODO: Remove possibility
+
+const { spawn, execSync } = require('child_process');
+const {argv} = require('yargs');
 const { readFileSync } = require('fs');
 const { join } = require('path');
 const dotenv = require('dotenv');
 
+const {fix} = argv;
 const repos = [
-  'client',
-  'api',
   'dashboard',
   'utils',
   'admin',
@@ -28,10 +30,15 @@ const logger = async (workspace, text) => debug(workspace)(text.toString().repla
 
 (async function() {
   const yarnPath = join(__dirname, 'yarn.cmd');
-  console.log(yarnPath)
+  console.log(yarnPath);
+
+  const execArgs = ['workspace', `@lettercms/${e}`, 'lint'];
+
+  if (fix)
+    execArgs.push('--fix');
 
   repos.forEach(e => {
-    const _child = spawn(yarnPath, ['workspace', `@lettercms/${e}`, 'lint', '--fix'], {
+    const _child = spawn(yarnPath, execArgs, {
       env: {
         ...process.env,
         ...envParsed,

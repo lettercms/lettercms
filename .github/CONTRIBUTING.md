@@ -17,29 +17,26 @@ Before submitting your contribution, please make sure to take a moment and read 
 
 ## Pull Request Guidelines
 
-- `main` and `production` are protected branches. All development should be done in dedicated branches. **Do not submit PRs against the `main` or `production` branches.**
+- `main` and `production` are protected branches. All development should be done in dedicated branches. **Do not submit PRs against the `production` branch.**
 
 - `production` branch is latest stable deploymet.
 
-- `main` branch is the staging branch. All changes introduced here, will be used to tests new changes in an production env with real users.
+- `main` branch is the staging branch. All changes introduced here, will be used to tests new changes in an production env with real users and split testing.
 
-- Checkout a topic branch from `main`, and merge back against that branch.
-
-- Don't use `/` i branch names, because CI system will create preview deployments with branch name. Example: `feat-split-testing`
+- Create a new branch out of the `main` branch. We follow the convention `[type/scope]`. For example `fix/accordion-hook` or `docs/menu-typo`. `type` can be either `docs`, `fix`, `feat`, `build`, or any other conventional commit type. `scope` is just a short id that describes the scope of work.
 
 - It's OK to have multiple small commits as you work on the PR - GitHub will automatically squash it before merging.
 
 - If adding a new feature:
-
   - Add accompanying test case.
   - Provide a convincing reason to add this feature. Ideally, you should open a suggestion issue first and have it approved before working on it.
+  - Provide a live preview demo URL to helps with the review process.
 
 - If fixing bug:
   - If you are resolving a special issue, add `(fix #xxxx[,#xxxx])` (#xxxx is the issue id) in your PR title for a better release log, e.g. `update entities encoding/decoding (fix #3899)`.
   - Provide a detailed description of the bug in the PR. Live demo preferred.
   - Add appropriate test coverage if applicable.
 
-**Note:** Every pull request will create a preview deployment with the estructure `lettercms-<env name>-<branch name>.vercel.app`. For example, the `main` branch will be deployed on `lettercms-dashboard-main.vercel.app`, `lettercms-client-main.vercel.app` and `lettercms-api-main.vercel.app`
 
 ## Development Setup
 
@@ -53,7 +50,8 @@ First, you will need create:
   - An [Upstash](https://upstash.com/) account
   - A [Sendinblue](https://sendinblue.com/) account
 
-After cloning the repo, run:
+
+Fork of the LetterCMS repository and clone your fork
 
 ```bash
 $ yarn # install the dependencies of the project
@@ -73,15 +71,14 @@ Then run:
 $ yarn dev
 ```
 
-This starts 4 development servers
+This starts a development server on port `3000` and the CDN server on port `3003`.
 
-- `3000` for Dashboard
-- `3002` for Blog UI
-- `3003` for serve CDN content
-- `3009` for API
+You will have folowing subdomains.
 
-Blog UI receive a subdomain to render blog content. `http://subdomain.localhost:3002`.
-Create an account on `http://localhost:3000/signin`, then add your subdomain on the `LETTERCMS_SUBDOMAIN` env var to render blog page on `http://localhost:3000/blog`
+- `localhost:3000` - Project landing page
+- `api.localhost:3000` - Public API
+- `dashboard.localhost:3000` - Project Dashboard
+- `usercontent.localhost:3000` - Usercontent images
 
 ### Committing Changes
 
@@ -93,21 +90,15 @@ When you create a commit we kindly ask you to follow the convention
 the following categories:
 
 - `feat`: all changes that introduce completely new code or new features
-- `fix`: changes that fix a bug (ideally you will additionally reference an
-  issue if present)
+- `fix`: changes that fix a bug (ideally you will additionally reference an issue if present)
 - `refactor`: any code related change that is not a fix nor a feature
-- `docs`: changing existing or creating new documentation (i.e. README, docs for
-  usage of a lib or cli usage)
-- `build`: all changes regarding the build of the software, changes to
-  dependencies or the addition of new dependencies
-- `ci`: all changes regarding the configuration of continuous integration (i.e.
-  github actions, ci system)
-- `chore`: all changes to the repository that do not fit into any of the above
-  categories
+- `docs`: changing existing or creating new documentation (i.e. README, docs for usage of a lib or cli usage)
+- `build`: all changes regarding the build of the software, changes to dependencies or the addition of new dependencies
+- `ci`: all changes regarding the configuration of continuous integration (i.e. github actions, ci system)
+- `chore`: all changes to the repository that do not fit into any of the above categories
 
 If you are interested in the detailed specification you can visit
-https://www.conventionalcommits.org/ or check out the
-[Angular Commit Message Guidelines](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines).
+https://www.conventionalcommits.org/ or check out the [Angular Commit Message Guidelines](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines).
 
 ### Commonly used NPM scripts
 
@@ -128,15 +119,10 @@ $ yarn test
 ## Project Structure
 
 - **`apps`**: contains main projects which are deployed on vercel:
-
-  - `apps/api`: API server.
   - `apps/cdn`: CDN files.
-  - `apps/client`: User blog renderer
   - `apps/dashboard`: Main UI to interact with API
-  - `apps/usercontent`: Usercontent proxy to serve files from Firebase Storage
 
 - **`scripts`**: contains build-related scripts and configuration files. Usually, you don't need to touch them. However, it would be helpful to familiarize yourself with the following files:
-
   - `scripts/discord.js`: send deployment status to Discord.
   - `scripts/run-dev.js`: start development servers.
   - `scripts/run-test.js`: run unit testing
@@ -155,4 +141,4 @@ $ yarn test
 
 ## Financial Contribution
 
-As a pure community-driven project without major corporate backing, we also welcome financial contributions via [Patreon](https:/www.patreon.com/lettercms) and [OpenCollective](https://www.opencollective.com/lettercms).
+As a pure community-driven project without major corporate backing, we also welcome financial contributions via [OpenCollective](https://www.opencollective.com/lettercms).
