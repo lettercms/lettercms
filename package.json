@@ -24,7 +24,7 @@
     "vercel": "^28.4.5"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": "^16"
   },
   "dependencies": {},
   "packageManager": "yarn@1.22.19"
