@@ -55,7 +55,7 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: yarn
-          with-cache: true
+          with-cache: false
       - restore_cache:
           keys:
             - dashboard-build-{{ checksum "apps/dashboard/package.json" }}
