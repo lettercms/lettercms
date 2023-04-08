@@ -49,14 +49,13 @@ jobs:
   
   build:
     docker:
-      - image: cimg/node:16.18.0
+      - image: cimg/node:16
 
     steps:
       - checkout
-      #- node/install-packages:
-      #    pkg-manager: yarn
-      #    with-cache: false
-      - yarn
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: false
       - restore_cache:
           keys:
             - dashboard-build-{{ checksum "apps/dashboard/package.json" }}
