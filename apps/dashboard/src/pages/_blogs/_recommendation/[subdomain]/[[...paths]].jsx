@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 import Fallback from '@/components/client/fallback';
 import {captureException} from '@sentry/nextjs';
 
-const Post = dynamic(() => import('@/components/article'), {
+const Post = dynamic(() => import('@/components/client/article'), {
   ssr: true,
   loading: () => <Fallback/>
 });
@@ -12,7 +12,7 @@ const NotFound = dynamic(() => import('@/pages/404'), {
   loading: () => <Fallback/>
 });
 
-const Home = dynamic(() => import('@/components/home'), {
+const Home = dynamic(() => import('@/components/client/home'), {
   ssr: true,
   loading: () => <Fallback/>
 });
