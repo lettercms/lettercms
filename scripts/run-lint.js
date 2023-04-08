@@ -1,6 +1,7 @@
 //TODO: Remove possibility
 
 const { spawn, execSync } = require('child_process');
+const os = require('os');
 const {argv} = require('yargs');
 const { readFileSync } = require('fs');
 const { join } = require('path');
@@ -29,16 +30,19 @@ const logger = async (workspace, text) => debug(workspace)(text.toString().repla
 
 
 (async function() {
-  const yarnPath = join(__dirname, 'yarn.cmd');
-  console.log(yarnPath);
+  const yarnPath = join(__dirname, os.platform() === 'win32' ? 'yarn.cmd' : 'yarn.sh');
 
-  const execArgs = ['workspace', `@lettercms/${e}`, 'lint'];
+  const execArgs = e => {
+    const args = ['workspace', `@lettercms/${e}`, 'lint'];
+    
+    if (fix)
+      args.push('--fix');
 
-  if (fix)
-    execArgs.push('--fix');
+    return args;
+  };
 
   repos.forEach(e => {
-    const _child = spawn(yarnPath, execArgs, {
+    const _child = spawn(yarnPath, execArgs(e), {
       env: {
         ...process.env,
         ...envParsed,

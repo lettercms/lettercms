@@ -13,7 +13,7 @@ import Facebook from '@/lib/client/FacebookSDK';
 import Load from '@/components/loadBar';
 */
 
-const CustomApp = ({pageProps, Component}) => {
+export default function CustomApp(){
   //const router = useRouter();
 /*
   const [showLoad, setLoad] = useState(false);
@@ -57,7 +57,5 @@ const CustomApp = ({pageProps, Component}) => {
   </>;
   */
 
-  return <Component/>;
+  return <div/>;
 };
-
-export default CustomApp;

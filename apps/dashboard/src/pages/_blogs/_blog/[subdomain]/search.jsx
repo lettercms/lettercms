@@ -5,6 +5,7 @@ import Router from 'next/router';
 //import Input from '@/components/input';
 //import Card from '@/components/index/card';
 import Head from 'next/head';
+import jwt from 'jsonwebtoken';
 
 const Search = ({q, accessToken}) => {
   const [query, setQuery] = useState(q);
@@ -106,9 +107,14 @@ const Search = ({q, accessToken}) => {
 };
 
 export async function getServerSideProps(ctx) {
-  const searchData = await getSearch(ctx);
 
-  return searchData;
+  //TODO: Add method to check if subdomainexists
+  return {
+    props: {
+      q,
+      accessToken: jwt.sign({subdomain}, process.env.JWT_AUTH)
+    }
+  };
 }
 
 export default Search;

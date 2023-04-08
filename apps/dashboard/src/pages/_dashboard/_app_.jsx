@@ -31,7 +31,7 @@ const initApp = setLoad => {
   });
 };
 */
-export default function App({Component, pageProps: { messages, session, ...pageProps }}) {
+export default function App({Component, pageProps}) {
   /*const [showLoad, setLoad] = useState(false);
   const router = Router.useRouter();
 
@@ -81,5 +81,5 @@ export default function App({Component, pageProps: { messages, session, ...pageP
       </div>
     );
     */
-    return <Component {...pageProps} />;
+    return <div/>;
 }
