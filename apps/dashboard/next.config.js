@@ -67,7 +67,7 @@ const sentryWebpackPluginOptions = {
   silent: true
 }
 
-if (isDev)
+if (isDev || process.env.CIRCLECI)
   module.exports = appConfig;
 else
   module.exports = withSentryConfig({
