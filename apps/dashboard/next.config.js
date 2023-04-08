@@ -67,9 +67,7 @@ const sentryWebpackPluginOptions = {
   silent: true
 }
 
-if (isDev || process.env.CIRCLECI)
-  module.exports = appConfig;
-else
+if (!isDev && !process.env.CIRCLECI)
   module.exports = withSentryConfig({
     ...appConfig,
     sentry: {
@@ -77,3 +75,5 @@ else
       widenClientFileUpload: true
     },
   }, sentryWebpackPluginOptions);
+else
+  module.exports = appConfig;
