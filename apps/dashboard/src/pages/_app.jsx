@@ -1,5 +1,5 @@
 import { SessionProvider } from 'next-auth/react';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Router from 'next/router';
 import { Toaster } from 'react-hot-toast';
 import {IntlProvider} from 'react-intl';

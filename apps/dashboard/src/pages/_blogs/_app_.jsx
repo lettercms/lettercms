@@ -57,7 +57,7 @@ const CustomApp = ({pageProps, Component}) => {
   </>;
   */
 
-  return <Component/>
+  return <Component/>;
 };
 
 export default CustomApp;

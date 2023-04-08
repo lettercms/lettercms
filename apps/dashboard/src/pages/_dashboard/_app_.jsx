@@ -81,5 +81,5 @@ export default function App({Component, pageProps: { messages, session, ...pageP
       </div>
     );
     */
-    return <Component {...pageProps} />
+    return <Component {...pageProps} />;
 }
