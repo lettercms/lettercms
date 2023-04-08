@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {getSearch} from '@/lib/mongo/search';
+import {getSearch} from '@/lib/mongo/client/search';
 import sdk from '@lettercms/sdk';
 import Router from 'next/router';
 //import Input from '@/components/input';
