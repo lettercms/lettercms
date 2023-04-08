@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import Fallback from '@/components/fallback';
+import Fallback from '@/components/client/fallback';
 import {captureException} from '@sentry/nextjs';
 
 const Post = dynamic(() => import('@/components/article'), {

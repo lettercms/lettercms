@@ -1,6 +1,5 @@
 import {useEffect} from 'react';
-import PageHead from '../components/pageHead';
-import {getOrigin, getSubdomain} from '../lib/utils';
+import PageHead from '@/components/client/pageHead';
 import sdk from '@lettercms/sdk';
 import Router from 'next/router';
 import jwt from 'jsonwebtoken';
