@@ -50,9 +50,10 @@ jobs:
   build:
     docker:
       - image: cimg/node:16.20.0
+    working_directory: ~/lettercms/apps/dashboard
     steps:
-      - checkout
-      - cd apps/dashboard
+      - checkout:
+          path: ~/lettercms
       - node/install-packages:
           pkg-manager: yarn
           with-cache: false
@@ -62,7 +63,7 @@ jobs:
             - dashboard-build-
       - run:
           name: Build
-          command: yarn workspace @lettercms/dashboard build
+          command: yarn build
       - save_cache:
           key: dashboard-build-{{ checksum "package.json" }}
           paths:
