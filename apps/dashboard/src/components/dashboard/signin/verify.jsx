@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-import Input from '../input';
+import Input from '@/components/input';
 import {createAccount, createCollaborator} from '@lettercms/admin';
 import Button from '@/components/button';
 

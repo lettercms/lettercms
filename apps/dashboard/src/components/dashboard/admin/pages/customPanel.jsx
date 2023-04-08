@@ -1,4 +1,4 @@
-import Input from '../../input';
+import Input from '@/components/input';
 import {useState} from 'react';
 
 const filterUrl = value => value.toLowerCase()
