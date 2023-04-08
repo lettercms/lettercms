@@ -49,7 +49,7 @@ jobs:
   
   build:
     docker:
-      - image: cimg/node:16
+      - image: cimg/node:16.20.0
 
     steps:
       - checkout
