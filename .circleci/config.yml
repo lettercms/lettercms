@@ -7,7 +7,7 @@ jobs:
   lint:
     #Run ESLint to check Code Quality
     docker:
-      - image: cimg/node:16.18.0
+      - image: cimg/node:18.15.0
 
     steps:
       - checkout
@@ -27,7 +27,7 @@ jobs:
   unit-testing:
     #Run ESLint to check Code Quality
     docker:
-      - image: cimg/node:16.18.0
+      - image: cimg/node:18.15.0
       #- image: circleci/mongo:4.4
 
     steps:
@@ -49,7 +49,7 @@ jobs:
   
   build:
     docker:
-      - image: cimg/node:16.20.0
+      - image: cimg/node:18.15.0
     working_directory: ~/lettercms/apps/dashboard
     steps:
       - checkout:
