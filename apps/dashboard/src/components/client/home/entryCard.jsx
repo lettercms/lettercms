@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import Router from 'next/router';
 import Link from 'next/link';
-import {FaBubbles, FaShare} from 'react-icons/fa';
+import {FaComments, FaShare} from 'react-icons/fa';
 import ShareButtons from '../shareButtons';
 
 export default function EntryCard({title, thumbnail, description, author, tags, comments, url}) {
@@ -26,7 +26,7 @@ export default function EntryCard({title, thumbnail, description, author, tags, 
     <div className='lg:flex lg:flex-col-reverse lg:justify-between lg:w-1/3'>
       <div className='flex justify-between items-end my-4 lg:flex-col lg:m-0'>
         <div className='flex items-center lg:hidden'>
-          <FaBubbles height='20' fill='#362e6f'/>
+          <FaComments height='20' fill='#362e6f'/>
           <span className='ml-2'>{comments}</span>
         </div>
         <div className='flex flex-row-reverse items-end lg:px-4 lg:items-center'>

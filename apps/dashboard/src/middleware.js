@@ -39,10 +39,10 @@ export default function middleware(req) {
 
   const hostname = req.headers.get('host') || 'davidsdevel.lettercms.vercel.app';
   const isLogged = req.cookies.get('next-auth.session-token') || req.cookies.get('__Secure-next-auth.session-token');
-  const hlCookie = req.cookies.get('__lcms-hl');
-  //Check if has hl query on searchParams
-  if (hlCookie)
-    language = hlCookie;
+  const languageCookie = req.cookies.get('__lcms-hl');
+
+  if (languageCookie)
+    language = languageCookie;
   else
     language = req.headers.get('accept-language')?.split(',')?.[0].split('-')?.[0].toLowerCase() || 'en';
 
@@ -55,14 +55,12 @@ export default function middleware(req) {
       ? hostname.replace('.lettercms.vercel.app', '')
       : hostname.replace('.localhost:3000', '');
 
-  
   url.searchParams.set('hl', language);
-  
 
-  // Commented for debug porpouse
-  //TODO: Remove on production envs
+  if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'prouction')
+    return NextResponse.rewrite(url);
 
-  /*if (currentHost == 'dashboard') {
+  if (currentHost == 'dashboard') {
     if (isLogged && (url.pathname === '/login' || url.pathname === '/signup')) {
       url.pathname = '/';
       return NextResponse.redirect(url);
@@ -75,7 +73,6 @@ export default function middleware(req) {
     return NextResponse.rewrite(url);
   }
 
-
   //Assign subdomain to public API
   if (currentHost === 'api') {
     url.pathname = `/api/_public${url.pathname}`;
@@ -87,7 +84,7 @@ export default function middleware(req) {
     return NextResponse.rewrite(url);
   }
 
-  if (hostname === 'localhost:3000' || hostname === 'lettercms.vercel.app' || hostname.includes('.ngrok.io') || hostname.startsWith('192.168.100.')) {
+  if (hostname === 'localhost:3000' || hostname === 'lettercms.vercel.app') {
     if (url.pathname === '/login') {
       url.host = hostname;
       return NextResponse.redirect(url);
@@ -101,6 +98,5 @@ export default function middleware(req) {
   /*url.pathname = `/_blogs/${currentHost}${url.pathname}`;
   return NextResponse.rewrite(url);*/
 
-  //return NextResponse.next();
-  return NextResponse.rewrite(url)
+  return NextResponse.next();
 }

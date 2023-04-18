@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useUser} from '@/components/dashboard/layout';
-import {FaEye, FaTrash, FaLinkExternal, FaBubbles, FaEdit} from 'react-icons/fa';
+import {FaEye, FaTrash, FaExternalLinkAlt, FaComments, FaEdit} from 'react-icons/fa';
 import {MdPreview} from 'react-icons/md';
 import styles from './card.module.css';
 import TagList from './tagList';
@@ -60,7 +60,7 @@ const Card = ({
           {
             !pageStatus &&
             <div className={styles.align}>
-              <FaBubbles height='22'/>
+              <FaComments height='22'/>
               <span>{comments}</span>
             </div>
           }
@@ -74,7 +74,7 @@ const Card = ({
           {
             (postStatus === 'published' || pageStatus === 'published') &&
             <div className={styles.cardIcon} onClick={() => window.open(`https://${blog.domain}${fullUrl}`, '_blank')}>
-              <FaLinkExternal height='22'/>
+              <FaExternalLinkAlt height='22'/>
             </div>
           }
           {

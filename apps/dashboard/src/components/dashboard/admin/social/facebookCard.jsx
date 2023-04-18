@@ -1,5 +1,5 @@
 import HandleDate from '@/lib/handleDate';
-import {FaBubbles, FaAngleDown, FaShare, FaEllipsisH} from 'react-icons/fa';
+import {FaComments, FaAngleDown, FaShare, FaEllipsisH} from 'react-icons/fa';
 import {BiLike} from 'react-icons/bi';
 import {ImEarth} from 'react-icons/im';
 
@@ -54,7 +54,7 @@ const FacebookCard = ({ content, pageName, pageImage, created, images}) =>
       </div>
       <div className="comment">
         <div>
-          <FaBubbles height='18'/>
+          <FaComments height='18'/>
         </div>
         Comentar
       </div>

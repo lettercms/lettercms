@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import Router from 'next/router';
 import Link from 'next/link';
-import {FaBubbles, FaShare} from 'react-icons/fa';
+import {FaComments, FaShare} from 'react-icons/fa';
 import ShareButtons from '../shareButtons';
 
 export default function RecommendCard({title, description, thumbnail, url, author, tags, comments}) {
@@ -23,7 +23,7 @@ export default function RecommendCard({title, description, thumbnail, url, autho
       </ul>
       <div className='flex justify-between mt-2'>
         <div className='flex items-center'>
-          <FaBubbles height='24' fill='#362e6f'/>
+          <FaComments height='24' fill='#362e6f'/>
           <span className='ml-2'>{comments}</span>
         </div>
         <div className='flex items-center'>

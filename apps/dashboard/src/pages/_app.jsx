@@ -8,7 +8,8 @@ import {createFirebaseApp} from '@/firebase/client';
 import Facebook from '@/lib/client/FacebookSDK';
 import '@/styles/global.css';
 
-sdk.endpoint = 'http://192.168.100.41:3000/api/_public';
+if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production')
+  sdk.endpoint = 'http://192.168.100.41:3000/api/_public';
 
 export default function App({Component, pageProps: { messages, session, ...pageProps }}) {
   const [showLoad, setLoad] = useState(false);
