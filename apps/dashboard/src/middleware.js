@@ -101,5 +101,6 @@ export default function middleware(req) {
   /*url.pathname = `/_blogs/${currentHost}${url.pathname}`;
   return NextResponse.rewrite(url);*/
 
-  return NextResponse.next();
+  //return NextResponse.next();
+  return NextResponse.rewrite(url)
 }
