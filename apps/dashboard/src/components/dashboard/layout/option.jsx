@@ -34,21 +34,17 @@ export default function Option({role, title, sub, icon, href}) {
     </button>
     <ul className={subTab} ref={tabRef}>
       <Link href={href}>
-        <a>
-          <li className={subHeader}>
-            <FormattedMessage id={title}/>
-          </li>
-        </a>
+        <li className={subHeader}>
+          <FormattedMessage id={title}/>
+        </li>
       </Link>
       {
         sub?.filter(e => !e.admin || role === 'admin')
         .map((e, i) =>
-          <Link href={e.href} key={e.href}>
-            <a onClick={() => setFocus(false)}>
-              <li>
-                <FormattedMessage id={e.label}/>
-              </li>
-            </a>
+          <Link href={e.href} key={e.href} onClick={() => setFocus(false)}>
+            <li>
+              <FormattedMessage id={e.label}/>
+            </li>
           </Link>
         )
       }

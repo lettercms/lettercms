@@ -1,4 +1,4 @@
-import Copy from '@lettercms/icons/copy';
+import {FaCopy} from 'react-icons/fa';
 
 export default function CopyField({text}) {
   const copy = () => {
@@ -8,7 +8,7 @@ export default function CopyField({text}) {
 
   return <div className='copy-field flex flex-row'>
     <span>{text}</span>
-    <Copy height='24' onClick={copy}/>
+    <FaCopy height='24' onClick={copy}/>
     <style jsx>{`
       .copy-field {
         width: max-content;

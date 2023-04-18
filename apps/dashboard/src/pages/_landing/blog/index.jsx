@@ -10,13 +10,13 @@ import Card from '@/components/landing/blog/card';
 import Paging from '@/components/landing/blog/paging';
 
 function Blog({posts, blog, paging, mostViewed}) {
-
-  return <div>
-    <Head ogImage={'blog.thumbnail'}/>
+  return <div className='flex flex-col w-full'>
+    <Head ogImage={blog.thumbnail}/>
     <Header/>
-    <div className='flex flex-col mx-2 max-w-8xl m-auto md:flex-row'>
-      <div className='md:w-2/3'>
-        {posts.map(e => <Card
+    <div className='flex flex-col w-full md:flex-row'>
+      <div className='w-full md:w-2/3'>
+        {
+          posts.map(e => <Card
             key={`blog-index-${e._id}`}
             title={e.title}
             content={e.description}
@@ -24,8 +24,8 @@ function Blog({posts, blog, paging, mostViewed}) {
             thumbnail={e.thumbnail}
             comments={e.comments}
             ID={e._id}
-          />
-        )}
+          />)
+        }
         <Paging {...paging}/>
       </div>
       <Aside mostViewed={mostViewed} owner={blog.owner}/>

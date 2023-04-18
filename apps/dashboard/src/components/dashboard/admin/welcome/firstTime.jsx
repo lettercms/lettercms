@@ -36,9 +36,7 @@ const FirstTime = ({name, id}) =>  {
           <FormattedMessage id='Read our'/>
         </span>
         <Link href='/terms'>
-          <a>
-            <FormattedMessage id='Terms and Conditions'/>
-          </a>
+          <FormattedMessage id='Terms and Conditions'/>
         </Link>
       </div>
       <div>

@@ -4,7 +4,7 @@ import ImageUploader from '@/lib/ImageHandler';
 import BlogImages from './images/blogImages';
 import BlogSearch from './images/search';
 import ModalTabs from './images/tabs';
-import Cross from '@lettercms/icons/cross';
+import {FaTimes} from 'react-icons/fa';
 
 const generateUnsplashSrc = (raw, width, height) => {
   return {
@@ -72,7 +72,7 @@ export default function ImagesModal({onClose, show}) {
   return <div style={{ display, opacity, transition: 'ease .6s' }}>
     <div id="shadow">
       <div id="images-main">
-        <Cross
+        <FaTimes
           id="cross"
           width='20'
           fill='white'

@@ -36,15 +36,11 @@ export default function Newsletter() {
               <span>      
                 <FormattedMessage id={'I\'ve read and accept the '}/>
                 <Link href='/privacy'>
-                  <a>
-                    <FormattedMessage id='Privacy policies'/>
-                  </a>
+                  <FormattedMessage id='Privacy policies'/>
                 </Link>
                 <FormattedMessage id=' and the '/>
                 <Link href='/conditions'>
-                  <a>
-                    <FormattedMessage id='Terms and Conditions'/>
-                  </a>
+                  <FormattedMessage id='Terms and Conditions'/>
                 </Link>
                 <FormattedMessage id=' of LetterCMS'/>
               </span>

@@ -27,9 +27,7 @@ function CTA() {
       <FormattedMessage id={'Don\'t you have an account yet? '}/>
     </span>
     <Link href='/signin'>
-      <a>
-        <FormattedMessage id='Register'/>
-      </a>
+      <FormattedMessage id='Register'/>
     </Link>
   </div>;
 }
@@ -80,6 +78,7 @@ export default function Login() {
     <Container title='Login' cta={<CTA/>}>
       <form onSubmit={login}>
         <Input
+          className='mb-4'
           disabled={isLoad}
           value={email}
           id='email'
@@ -92,6 +91,7 @@ export default function Login() {
           }
         />
         <Input
+          className='mb-4'
           disabled={isLoad}
           value={password}
           id='password'

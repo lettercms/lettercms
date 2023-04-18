@@ -4,11 +4,8 @@ import Image from 'next/image';
 import Router from 'next/router';
 import {useState, useEffect, useRef} from 'react';
 import {useSession} from 'next-auth/react';
-import Search from '@lettercms/icons/search';
-import Github from '@lettercms/icons/github';
 import Button from '@/components/button';
-import Times from '@lettercms/icons/times';
-import Bars from '@lettercms/icons/bars';
+import {FaBars, FaTimes, FaGithub, FaSearch} from 'react-icons/fa';
 import sdk from '@lettercms/sdk';
 
 export default function Nav () {
@@ -60,78 +57,72 @@ export default function Nav () {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isOpen]);
 
-  return <nav className={`z-10 left-0 top-0 fixed transition-all duration-300 ease w-full bg-white px-4 ${isOpen ? 'py-2' : 'py-4'}`}>
-    <div style={{display:'block', width: '100%', background: 'white', textAlign: 'center', padding: '.5rem .25rem', borderRadius: '.5rem', marginBottom: 8}}>
-      <span>Project still in development. You can collaborate on <a style={{color: 'var(--main)'}} target='_blank' href='https://github.com/lettercms/lettercms' rel="noreferrer">GitHub</a> or support us on <a style={{color: 'var(--main)'}} target='_blank' href='https://opencollective.com/lettercms' rel="noreferrer">Open Collective</a></span>
-    </div>
-    <div className="flex w-full justify-between">
-      <Link href='/'>
-        <a>
-          <img src={`${process.env.ASSETS_BASE}/assets/lettercms-logo.svg`} alt="LetterCMS Logo White" className={isOpen ? 'h-8' : 'h-12'}/>
-        </a> 
-      </Link>
-      <button onClick={() => setMobileOpen(!mobileOpen)} className="z-20" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-label="Toggle navigation">
-        {
-          mobileOpen
-            ? <Times height='28' fill='#5f4dee'/>
-            : <Bars height='28' fill='#5f4dee'/>
-        }
-      </button>
-      <div className={`fixed transition-all duration-300 ease w-full h-full bg-white top-0 flex flex-col justify-center items-center text-main-500 ${mobileOpen ? 'left-0' : '-left-full'}`}>
-        <img src={`${process.env.ASSETS_BASE}/assets/lettercms-logo.svg`} alt="LetterCMS Logo White" className='h-12 mb-8'/>
-        <div className='flex flex-col text-xl items-center'>
-          <span className='my-4'>
-            <Link href='/'>
-              <a>Inicio</a>
-            </Link>
-          </span>
-          <span className='my-4'>
-            <Link href='/blog'>
-              <a>Blog</a>
-            </Link>
-          </span>
-        </div>
-        <div className='flex my-4 w-32 justify-between'>
-          <span>
-            <Link href='/blog/search'>
-              <a>
+  return <>
+    <nav className={`z-20 left-0 top-0 fixed transition-all duration-300 ease w-full bg-white px-4 ${isOpen ? 'py-2' : 'py-4'}`}>
+      <div className="flex w-full justify-between">
+        <Link href='/'>
+          <img src={`${process.env.ASSETS_BASE}/assets/lettercms-logo.svg`} alt="LetterCMS Logo White" className={isOpen ? 'h-8' : 'h-12'}/> 
+        </Link>
+        <button onClick={() => setMobileOpen(!mobileOpen)} className="z-20" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-label="Toggle navigation">
+          {
+            mobileOpen
+              ? <FaTimes height='28' fill='#5f4dee'/>
+              : <FaBars height='28' fill='#5f4dee'/>
+          }
+        </button>
+        <div className={`fixed transition-all duration-300 ease w-full h-full bg-white top-0 flex flex-col justify-center items-center text-main-500 ${mobileOpen ? 'left-0' : '-left-full'}`}>
+          <img src={`${process.env.ASSETS_BASE}/assets/lettercms-logo.svg`} alt="LetterCMS Logo White" className='h-12 mb-8'/>
+          <div className='flex flex-col text-xl items-center'>
+            <span className='my-4'>
+              <Link href='/'>
+                Inicio
+              </Link>
+            </span>
+            <span className='my-4'>
+              <Link href='/blog'>
+                Blog
+              </Link>
+            </span>
+          </div>
+          <div className='flex my-4 w-32 justify-between'>
+            <span>
+              <Link href='/blog/search'>
                 <img width='1' height='1' src='/pixel.png' alt='LetterCMS Search'/>
-                <Search width='28' height='28' fill='#5f4dee'/>
-              </a>
-            </Link>
-          </span>
-          <span>
-            <Link href='https://github.com/lettercms/lettercms'>
-              <a target='_blank'>
+                <FaSearch width='28' height='28' fill='#5f4dee'/>
+              </Link>
+            </span>
+            <span>
+              <Link target='_blank' href='https://github.com/lettercms/lettercms'>
                 <img width='1' height='1' src='/pixel.png' alt='LetterCMS Github'/>
-                <Github width='32' height='32' fill='#5f4dee'/>
-              </a>
-            </Link>
-          </span>
-        </div>
-        <span>
-          {
-            load &&
-            <div className='img-load picture'/>
-          }
-          {
-            !load && !profilePicture &&
-            <Button type='outline' alt className='my-4' onClick={() => {
-              router.push('/login');
-            }}>Login</Button>
-          }
+                <FaGithub width='32' height='32' fill='#5f4dee'/>
+              </Link>
+            </span>
+          </div>
+          <span>
+            {
+              load &&
+              <div className='img-load picture'/>
+            }
+            {
+              !load && !profilePicture &&
+              <Button type='outline' alt className='my-4' onClick={() => {
+                router.push('/login');
+              }}>Login</Button>
+            }
 
-          {
-            !load && profilePicture &&
-            <Link href='/dashboard'>
-              <a>
+            {
+              !load && profilePicture &&
+              <Link href='/dashboard'>
                 <img className='picture' src={profilePicture + '?w=38&h=38&q=25'} width={32} height={32} alt='Profile picture'/>
                 <span>{`${data.user.name} ${data.user.lastname}`}</span>
-              </a>
-            </Link>
-          }
-        </span>
+              </Link>
+            }
+          </span>
+        </div>
       </div>
+    </nav>
+    <div className='fixed bg-white w-full text-center bottom-0 py-2 px-1 text-sm z-10'>
+      <span>Project still in development. You can collaborate on <a className='text-main-500' target='_blank' href='https://github.com/lettercms/lettercms' rel="noreferrer">GitHub</a> or support us on <a className='text-main-500' target='_blank' href='https://opencollective.com/lettercms' rel="noreferrer">Open Collective</a></span>
     </div>
-  </nav>;
+  </>;
 }

@@ -56,7 +56,7 @@ const PostEditor = ({data, user}) => {
           }
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel= "icon" href="/favicon.ico" />
       </Head>
       <Editor {...data} accessToken={user.accessToken}/>
     </>;

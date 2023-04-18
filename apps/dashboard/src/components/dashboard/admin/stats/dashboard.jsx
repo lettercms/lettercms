@@ -1,18 +1,16 @@
 ﻿import {useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-
 import dynamic from 'next/dynamic';
 import Top from '../listLayout/top';
 import StatsIco from '@/components/dashboard/assets/adminStats';
-
 import Base from './base';
 import GeneralPanel from './general';
 import Card from './statsSingleCard';
-import Spinner from '@lettercms/icons/spinner';
+import {ImSpinner9} from 'react-icons/im';
 
 const Load = () => <div>
   <span>
-    <Spinner/>
+    <ImSpinner9/>
   </span>
 </div>;
 

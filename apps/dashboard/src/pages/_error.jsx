@@ -11,7 +11,7 @@ const CustomErrorComponent = props => {
       <meta charSet="utf-8" />
       <title>Ups. Lo sentimos</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link rel="icon" href="/favicon.ico" />
+      <link rel= "icon" href="/favicon.ico" />
     </Head>
     <div id="container">
       <img alt='LetterCMS Error' src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/error.svg" />
@@ -19,7 +19,7 @@ const CustomErrorComponent = props => {
         <p>Parece que estamos teniendo problemas</p>
         <p>Por suerte nuestro equipo ya esta informado.</p>
         <span>
-          <Link href="/"><a> Inicio</a></Link>
+          <Link href="/"> Inicio</Link>
         </span>
       </div>
     </div>

@@ -40,7 +40,7 @@ export default function Footer() {
           links.map(({pre, link, href}) => {
             return  <li key={link} className='flex items-center'>
               <FaSquare fill='white' style={{width: 8}}/>
-              <div className="ml-2">{pre} <Link href={href}><a target='_blank' className="white">{link}</a></Link></div>
+              <div className="ml-2">{pre} <Link href={href} target='_blank'>{link}</Link></div>
             </li>;
           })
         }
@@ -71,7 +71,7 @@ export default function Footer() {
       </div> 
     </div>
     <div className='pt-12 pb-4'>
-      <p className="p-small"><FormattedMessage id='Developed by '/> <Link href="https://www.facebook.com/davidsdevel"><a>David&apos;s Devel</a></Link></p> 
+      <p className="p-small"><FormattedMessage id='Developed by '/> <Link href="https://www.facebook.com/davidsdevel" target='_blank'>David&apos;s Devel</Link></p> 
     </div>
   </div>;
 };

@@ -9,8 +9,8 @@ import {getSession} from 'next-auth/react';
 import asyncImportScript from '@/lib/asyncImportScript';
 import Editor from '@/components/dashboard/admin/pages/createEditor';
 import Head from 'next/head';
-import Save from '@lettercms/icons/save';
-import Send from '@lettercms/icons/send';
+import {FaSave} from 'react-icons/fa';
+import {MdSend} from 'react-icons/md';
 import Load from '@/components/dashboard/logoLoad';
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -100,7 +100,7 @@ function PageEditor() {
     <Head>
       <title>Editar Página | Dashboard - LetterCMS</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link rel="icon" href="/favicon.ico" />
+      <link rel= "icon" href="/favicon.ico" />
     </Head>
     {
       load &&
@@ -111,10 +111,10 @@ function PageEditor() {
       !load &&
       <div id='buttons' style={{display: preview ? 'none' : 'flex'}}>
         <button className="btn-outline-sm circle save" onClick={editor.save}>
-          <Save fill='#5f4dee'/>
+          <FaSave fill='#5f4dee'/>
         </button>
         <button className="btn-outline-sm circle send" onClick={editor.publish}>
-          <Send fill='#fff'/>
+          <MdSend fill='#fff'/>
         </button>
       </div>
     }

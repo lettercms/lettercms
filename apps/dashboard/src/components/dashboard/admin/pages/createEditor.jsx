@@ -214,7 +214,7 @@ class Editor {
         alert('Error al publcar la entrada');
       }
     });
-  }
+  };
 
   hidePanel = () => {
     const panels = this.editor.Panels;
@@ -225,7 +225,7 @@ class Editor {
       
     if (div)
       div.style.display = 'none';
-  }
+  };
   createView = () => {
 
     const panels = this.editor.Panels;
@@ -241,7 +241,7 @@ class Editor {
     el.appendChild(div);
 
     createRoot(div).render(<CustomPanel {...this.data} onChange={this.handleInput}/>);
-  }
+  };
 
   handleInput = ({ target }, url) => {
     const { name, type } = target;
@@ -252,12 +252,12 @@ class Editor {
 
     if (url && name === 'title')
       this.changes.url = url;
-  }
+  };
   save = () => this.editor.store();
   close = () => {
     this.editor.destroy();
     Router.push('/dashboard/pages');
-  }
+  };
 }
 
 export default Editor;

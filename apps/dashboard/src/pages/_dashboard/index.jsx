@@ -44,7 +44,7 @@ const AdminDashboard = ({tab, user}) => {
           })
         }</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel= "icon" href="/favicon.ico" />
       </Head>
       <Welcome role={user.role} permissions={user.permissions} name={user.name} firstTime={user.firstTime}/>
     </>;

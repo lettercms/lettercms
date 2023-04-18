@@ -1,6 +1,6 @@
 import {FormattedMessage} from 'react-intl';
-import Camera from '@lettercms/icons/camera';
-import Spinner from '@lettercms/icons/spinner';
+import {FaCamera} from 'react-icons/fa';
+import {ImSpinner9} from 'react-icons/im';
 import createUploader from '@/lib/createUploader';
 import {useEffect, useState, useRef} from 'react';
 import {useUser} from '@/components/dashboard/layout';
@@ -45,8 +45,8 @@ export default function Thumbnail({url = 'https://cdn.jsdelivr.net/gh/davidsdeve
       <div id='thumbnail-shadow' className='flex' ref={shadowRef}>
         {
           load
-            ? <Spinner className='rotate' fill='#0009' width='60' height='60'/>
-            : <Camera id='camera-icon' fill='#0009' width='60' height='60'/>
+            ? <ImSpinner9 className='rotate' fill='#0009' width='60' height='60'/>
+            : <FaCamera id='camera-icon' fill='#0009' width='60' height='60'/>
         }
       </div>
     </div>

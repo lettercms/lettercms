@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "engines": {
     "yarn": "^1.22",
-    "node": "^18"
+    "node": "^18 || ^19"
   },
   "scripts": {
     "dev": "next dev  --port 3000",
@@ -48,7 +48,7 @@
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.4",
-    "next": "12.2.5",
+    "next": "^13.3.0",
     "next-auth": "^4.22.0",
     "next-seo": "^5.5.0",
     "next-transpile-modules": "^9.0.0",

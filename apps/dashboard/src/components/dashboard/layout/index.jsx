@@ -1,5 +1,4 @@
 import {useState, useEffect, createContext, useContext, useRef} from 'react';
-import Home from '@lettercms/icons/home';
 import Router from 'next/router';
 import Link from 'next/link';
 import {signOut} from 'next-auth/react';
@@ -26,8 +25,7 @@ import {
   languageBox
 } from './index.module.css';
 import MenuLoad from './menuLoad';
-
-import SignOutIcon from '@lettercms/icons/signOut';
+import {FaHome, FaSignOutAlt} from 'react-icons/fa';
 import languages from './languages';
 import MobileLayout from './mobileLayout';
 
@@ -182,10 +180,8 @@ export function DashboardProvider({userID, children, hideMenu}) {
           }
           {
             !isLoading &&
-            <Link href={`https://${blog?.domain}${blog?.mainUrl}`}>
-              <a target='_blank' className={dashboardHome}>
-                <Home fill='#362e6f' height='20'/>
-              </a>
+            <Link target='_blank' href={`https://${blog?.domain}${blog?.mainUrl}`} className={dashboardHome}>
+              <FaHome fill='#362e6f' height='20'/>
             </Link>
           }
           {
@@ -209,7 +205,7 @@ export function DashboardProvider({userID, children, hideMenu}) {
             <li>
               <div className={bottomButtons}>
                 <button onClick={logout}>
-                  <SignOutIcon fill='#362e6f' height='24'/>
+                  <FaSignOutAlt fill='#362e6f' height='24'/>
                 </button>
                 <button onFocus={() => setIsOpenLanguages(true)} onBlur={() => setIsOpenLanguages(false)}>
                   {
@@ -229,9 +225,7 @@ export function DashboardProvider({userID, children, hideMenu}) {
               </div>
             </li>
             <Link href='/'>
-              <a>
-                <img src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt='LetterCMS linear Logo' className={footerImg}/> 
-              </a>
+              <img src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt='LetterCMS linear Logo' className={footerImg}/> 
             </Link>
           </div>
         </aside>

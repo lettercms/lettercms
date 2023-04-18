@@ -58,9 +58,7 @@ class InvitationPage extends Component {
       </Head>
       <div id='logo'>
         <Link href='/'>
-          <a>
-            <Image layout='fill' objectFit='contain' src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt="LetterCMS Logo Linear"/>
-          </a>
+          <Image layout='fill' objectFit='contain' src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt="LetterCMS Logo Linear"/>
         </Link>
       </div>
       <div id='wrapper-container'>

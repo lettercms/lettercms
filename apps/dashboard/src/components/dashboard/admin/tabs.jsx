@@ -14,7 +14,7 @@ export default class Tab extends Component {
     });
 
     this.props.onChange(tab);
-  }
+  };
   render() {
     const {tabs, onChange} = this.props;
     const {active} = this.state;

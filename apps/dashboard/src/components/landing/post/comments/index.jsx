@@ -4,7 +4,7 @@ import Input from '@/components/input';
 import Base from '@/components/dashboard/admin/stats/base';
 import HandleDate from '@/lib/handleDate';
 import Cookie from 'js-cookie';
-import Spinner from '@lettercms/icons/spinner';
+import {ImSpinner9} from 'react-icons/im';
 import {useToken} from '@/lib/userContext';
 import CommentForm from './form';
 import CommentData from './content';
@@ -56,7 +56,7 @@ export default function Comments({id, numPosts = 10, user}) {
        {
          isLoad
           ? <div className='flex-center' style={{height: '100%'}}>
-              <Spinner width='64' fill='#fff' className='rotate'/>
+              <ImSpinner9 width='64' fill='#fff' className='rotate'/>
             </div>
           : <CommentData postID={id} data={data} user={user} onPublish={onPublish}/>
        }

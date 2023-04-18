@@ -1,8 +1,6 @@
-import Cross from '@lettercms/icons/cross';
-import Website from '@lettercms/icons/website';
-import Chart from '@lettercms/icons/charPie';
-import User from '@lettercms/icons/userCircle';
-import Cog from '@lettercms/icons/cog';
+import {TiDocumentText} from 'react-icons/ti';
+import {ImEarth} from 'react-icons/im';
+import {FaChartPie, FaUserCircle, FaCog} from 'react-icons/fa';
 
 const iconColor = '#362e6f';
 
@@ -10,7 +8,7 @@ const menu = [
   {
     name: 'posts',
     title: 'Posts',
-    icon: <Cross fill={iconColor} height='12' width='32'/>,
+    icon: <TiDocumentText fill={iconColor} height='12' width='32'/>,
     href: '/posts',
     /*sub: [
       {
@@ -28,26 +26,26 @@ const menu = [
   {
     name: 'stats',
     title: 'Analytics',
-    icon: <Chart fill={iconColor} height='12' width='32'/>,
+    icon: <FaChartPie fill={iconColor} height='12' width='32'/>,
     href: '/stats'
   },
   {
     name: 'social',
     title: 'Social Media',
-    icon: <Website fill={iconColor} height='12' width='32'/>,
+    icon: <ImEarth fill={iconColor} height='12' width='32'/>,
     href: '/social'
   },
   {
     name: 'collaborators',
     admin: true,
     title: 'Collaborators',
-    icon: <User fill={iconColor} height='12' width='32'/>,
+    icon: <FaUserCircle fill={iconColor} height='12' width='32'/>,
     href: '/collaborators'
   },
   {
     name: 'config',
     title: 'Config',
-    icon: <Cog fill={iconColor} height='12' width='32'/>,
+    icon: <FaCog fill={iconColor} height='12' width='32'/>,
     href: '/config/account',
     sub: [
       {

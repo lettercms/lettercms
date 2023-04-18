@@ -7,7 +7,7 @@ import Input from '@/components/input';
 import Button from '@/components/button';
 import Card from '@/components/landing/blog/card';
 import Head from 'next/head';
-import Spinner from '@lettercms/icons/spinner';
+import {ImSpinner9} from 'react-icons/im';
 import {Layout} from '@/components/landing/layout';
 import {captureException} from '@sentry/nextjs';
 
@@ -84,7 +84,7 @@ const Search = ({q}) => {
       {
         isLoading &&
         <div className='w-full flex justify-center'>
-          <Spinner className='animate-spin' width='80'/>
+          <ImSpinner9 className='animate-spin' width='80'/>
         </div>
       }
     </div>

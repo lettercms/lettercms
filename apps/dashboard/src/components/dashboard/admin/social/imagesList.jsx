@@ -1,7 +1,6 @@
 import {FormattedMessage} from 'react-intl';
 import sdk from '@lettercms/sdk';
-import Cross from '@lettercms/icons/cross';
-import {FaPlus} from 'react-icons/fa';
+import {FaPlus, FaTimes} from 'react-icons/fa';
 import {useUser} from '@/components/dashboard/layout';
 
 async function deleteImage(url, cb) {
@@ -22,7 +21,7 @@ const ImageList = ({images, onAdd, onDelete}) => {
         {
           images.map((e, i) => <div key={`social-image-${i}`} className='images-block' style={{backgroundImage: `url(${e})`}}>
             <div className='delete-shadow' onClick={() => deleteImage(e).then(({id}) => onDelete(`https://usercontent-davidsdevel-lettercms.vercel.app/${blog.subdomain}/${id}.webp`))}>
-              <Cross width='48'/>
+              <FaTimes width='48'/>
             </div>
           </div>)
         }

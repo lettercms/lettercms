@@ -1,10 +1,7 @@
 import HandleDate from '@/lib/handleDate';
-import Like from '@lettercms/icons/like';
-import Bubbles from '@lettercms/icons/bubbles';
-import Share from '@lettercms/icons/share';
-import Website from '@lettercms/icons/website';
-import AngleDown from '@lettercms/icons/angleDown';
-import EllipsisH from '@lettercms/icons/ellipsisH';
+import {FaBubbles, FaAngleDown, FaShare, FaEllipsisH} from 'react-icons/fa';
+import {BiLike} from 'react-icons/bi';
+import {ImEarth} from 'react-icons/im';
 
 const FacebookCard = ({ content, pageName, pageImage, created, images}) =>
   <div className="card">
@@ -23,7 +20,7 @@ const FacebookCard = ({ content, pageName, pageImage, created, images}) =>
           <span>{HandleDate.getGMTDate(created)}</span>
           <span> . </span>
           <span>
-            <Website height='18'/>
+            <ImEarth height='18'/>
           </span>
         </div>
       </div>
@@ -34,7 +31,7 @@ const FacebookCard = ({ content, pageName, pageImage, created, images}) =>
         alignSelf: 'flex-start',
         height: 20 
       }}>
-        <EllipsisH width='20'/>
+        <FaEllipsisH width='20'/>
       </div>
     </div>
   </div>
@@ -51,25 +48,25 @@ const FacebookCard = ({ content, pageName, pageImage, created, images}) =>
     <div>
       <div>
         <div>
-          <Like height='18'/>
+          <BiLike height='18'/>
         </div>
         Me Gusta
       </div>
       <div className="comment">
         <div>
-          <Bubbles height='18'/>
+          <FaBubbles height='18'/>
         </div>
         Comentar
       </div>
       <div>
         <div>
-          <Share height='18'/>
+          <FaShare height='18'/>
         </div>
         Compartir
       </div>
       <button>
         <img alt='Asset' style={{ borderRadius: '50%', margin: '0 5px 0 0' }} height={20} src={`${pageImage}?width=20`} width={20} />
-        <AngleDown width='12'/>
+        <FaAngleDown width='12'/>
       </button>
     </div>
   </div>

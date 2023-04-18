@@ -1,12 +1,8 @@
 import {useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useUser} from '@/components/dashboard/layout';
-import Eye from '@lettercms/icons/eye';
-import Preview from '@lettercms/icons/preview';
-import Edit from '@lettercms/icons/edit';
-import Bubbles from '@lettercms/icons/bubbles';
-import Trash from '@lettercms/icons/trash';
-import LinkSvg from '@lettercms/icons/link';
+import {FaEye, FaTrash, FaLinkExternal, FaBubbles, FaEdit} from 'react-icons/fa';
+import {MdPreview} from 'react-icons/md';
 import styles from './card.module.css';
 import TagList from './tagList';
 
@@ -64,12 +60,12 @@ const Card = ({
           {
             !pageStatus &&
             <div className={styles.align}>
-              <Bubbles height='22'/>
+              <FaBubbles height='22'/>
               <span>{comments}</span>
             </div>
           }
           <div className={styles.align}>
-            <Eye height='22'/>
+            <FaEye height='22'/>
             <span>{views}</span>
           </div>
         </div>
@@ -78,26 +74,26 @@ const Card = ({
           {
             (postStatus === 'published' || pageStatus === 'published') &&
             <div className={styles.cardIcon} onClick={() => window.open(`https://${blog.domain}${fullUrl}`, '_blank')}>
-              <LinkSvg height='22'/>
+              <FaLinkExternal height='22'/>
             </div>
           }
           {
             postStatus === 'draft' &&
 
             <div className={styles.cardIcon} onClick={() => window.open(`https://${blog.domain}/api/preview?id=${_id}`, '_blank')}>
-              <Preview height='22'/>
+              <MdPreview height='22'/>
             </div>
           }
           {
             canEdit &&
             <div className={styles.cardIcon} onClick={() => edit(_id)}>
-              <Edit height='22'/>
+              <FaEdit height='22'/>
             </div> 
           }
           {
             canDelete &&
             <div className={styles.cardIcon} onClick={() => del(_id)}>
-              <Trash height='22'/>
+              <FaTrash height='22'/>
             </div>
           }
         </div>

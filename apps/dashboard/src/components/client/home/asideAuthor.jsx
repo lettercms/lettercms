@@ -1,11 +1,8 @@
-import Facebook from '@lettercms/icons/facebook';
-import Twitter from '@lettercms/icons/twitter';
-import Instagram from '@lettercms/icons/instagram';
-import Linkedin from '@lettercms/icons/linkedin';
+import {FaFacebook, FaTwitter, FaInstagram, FaLinkedin} from 'react-icons/fa';
 import Link from 'next/link';
 
 export default function Author({name, lastname, photo, ocupation, description, facebook, twitter, linkedin, instagram, website}) {
-  return<>
+  return <>
     <hr className='w-3/4 my-8'/>
     <div
       className='
@@ -24,37 +21,28 @@ export default function Author({name, lastname, photo, ocupation, description, f
       <div className='flex margin-auto justify-between w-2/3 mt-8'>
         {
           facebook && 
-          <Link href={facebook}>
-            <a target='_blank'>
-              <Facebook height='28'/>
-            </a>
+          <Link target='_blank' href={facebook}>
+            <FaFacebook height='28'/>
           </Link>
         }
         {
           twitter && 
-          <Link href={twitter}>
-            <a target='_blank'>
-              <Twitter height='28'/>
-            </a>
+          <Link target='_blank' href={twitter}>
+            <FaTwitter height='28'/>
           </Link>
         }
         {
           instagram && 
-          <Link href={instagram}>
-            <a target='_blank'>
-              <Instagram height='28'/>
-            </a>
+          <Link target='_blank' href={instagram}>
+            <FaInstagram height='28'/>
           </Link>
         }
         {
           linkedin && 
-          <Link href={linkedin}>
-            <a target='_blank'>
-              <Linkedin height='28'/>
-            </a>
+          <Link target='_blank' href={linkedin}>
+            <FaLinkedin height='28'/>
           </Link>
         }
-
       </div>
     </div>
   </>;

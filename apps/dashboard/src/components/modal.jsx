@@ -1,4 +1,4 @@
-import Cross from '@lettercms/icons/cross';
+import {FaTimes} from 'react-icons/fa';
 import {Component} from 'react';
 
 export default class ModalBase extends Component {
@@ -40,7 +40,7 @@ export default class ModalBase extends Component {
         <div id="subscription-main" style={{width, height}}>
           <div id='modal-top'>
             <div id='close-image-container' onClick={this.props.close}>
-              <Cross fill='#fff' height='30'/>
+              <FaTimes fill='#fff' height='30'/>
             </div>
           </div>
           {children}

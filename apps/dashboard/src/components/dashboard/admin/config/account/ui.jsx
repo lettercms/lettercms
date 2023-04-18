@@ -3,8 +3,7 @@ import Input from '@/components/input';
 import Image from 'next/image';
 import Container from '../../stats/base';
 import Social from './social';
-
-import Camera from '@lettercms/icons/camera';
+import {FaCamera} from 'react-icons/fa';
 
 const AccountUI = ({
   photo,
@@ -42,7 +41,7 @@ const AccountUI = ({
     <div id='photo-container' onClick={changePicture}>
       <img alt={`${name} ${lastname} picture`} id='account-photo' src={photo || `https://avatar.tobi.sh/${name}-${lastname}?&size=250`}/>
       <div id='photo-shadow' className='flex'>
-        <Camera id='camera-icon' fill='#0009' width='60' height='60'/>
+        <FaCamera id='camera-icon' fill='#0009' width='60' height='60'/>
       </div>
     </div>
     <Container rows={1} title={intl.formatMessage({id: 'Information'})}>

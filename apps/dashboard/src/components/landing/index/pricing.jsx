@@ -32,7 +32,7 @@ const Pricing = () => <div id="pricing" className="cards-2">
               </ul>
               <div className="button-wrapper">
                 <Link href='/signin'>
-                  <a className="btn-solid-reg page-scroll">REGISTRARSE</a>
+                  REGISTRARSE
                 </Link>
               </div>
             </div>

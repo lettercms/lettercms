@@ -57,7 +57,7 @@ export default class Signin extends Component {
       this.setState({
         tab: 'blog'
       });
-  }
+  };
   onUserCreate = () => {
     this.setState({
       tab: 'verify'

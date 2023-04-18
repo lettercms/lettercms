@@ -1,6 +1,5 @@
-import Trash from '@lettercms/icons/trash';
 import {useRouter} from 'next/router';
-import Eye from '@lettercms/icons/eye';
+import {FaEye, FaTrash} from 'react-icons/fa';
 import styles from './card.module.css';
 
 const Card = ({
@@ -28,10 +27,10 @@ const Card = ({
         <div/>
         <div>
           <div className={styles.cardIcon} onClick={() => router.push(`/dashboard/collaborators/${_id}`)}>
-            <Eye height='22'/>
+            <FaEye height='22'/>
           </div>
           <div className={styles.cardIcon} onClick={() => del(_id)}>
-            <Trash height='22'/>
+            <FaTrash height='22'/>
           </div>
         </div>
       </div>

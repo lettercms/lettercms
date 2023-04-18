@@ -10,8 +10,7 @@ import ImageSelector from './imageSelector';
 import ImageList from './imagesList';
 import sdk from '@lettercms/sdk';
 import Button from '@/components/button';
-import FBIco from '@lettercms/icons/facebook';
-import IGIco from '@lettercms/icons/instagram';
+import {FaFacebook, FaInstagram} from 'react-icons/fa';
 import 'react-datetime/css/react-datetime.css';
 
 const Load = () => <img alt='' src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/spinner.svg' style={{animation: 'rotation linear .3s infinite', width: 5}}/>;
@@ -233,7 +232,7 @@ const Publish = ({accounts}) => {
         hasFacebook &&
         <>
           <div className='social-title'>
-            <FBIco height='32'/>
+            <FaFacebook height='32'/>
             <span>Facebook</span>
           </div>
           <Facebook content={content} images={images} pageImage={accounts.facebook.picture} pageName={accounts.facebook.name}/>
@@ -243,7 +242,7 @@ const Publish = ({accounts}) => {
         hasInstagram &&
         <>
           <div className='social-title'>
-            <IGIco height='32'/>
+            <FaInstagram height='32'/>
             <span>Instagram</span>
           </div>
           <Instagram content={content} images={images} pageImage={accounts.instagram.picture} pageName={accounts.instagram.name}/>

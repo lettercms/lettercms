@@ -12,11 +12,11 @@ export default function Home({blog, posts, popular, pagination}) {
       <Head>
       {
         pagination.page < pagination.total
-        && <link rel="next" />
+        && <link rel= "next" />
       }
       {
         pagination.page > 1
-        && <link rel="prev" />
+        && <link rel= "prev" />
       }
     </Head>
     <NextSeo

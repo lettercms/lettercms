@@ -58,7 +58,11 @@ export default function middleware(req) {
   
   url.searchParams.set('hl', language);
   
-  if (currentHost == 'dashboard') {
+
+  // Commented for debug porpouse
+  //TODO: Remove on production envs
+
+  /*if (currentHost == 'dashboard') {
     if (isLogged && (url.pathname === '/login' || url.pathname === '/signup')) {
       url.pathname = '/';
       return NextResponse.redirect(url);
@@ -83,8 +87,7 @@ export default function middleware(req) {
     return NextResponse.rewrite(url);
   }
 
-  if (hostname === 'localhost:3000' || hostname === 'lettercms.vercel.app' || hostname.includes('.ngrok.io')) {
-
+  if (hostname === 'localhost:3000' || hostname === 'lettercms.vercel.app' || hostname.includes('.ngrok.io') || hostname.startsWith('192.168.100.')) {
     if (url.pathname === '/login') {
       url.host = hostname;
       return NextResponse.redirect(url);

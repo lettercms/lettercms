@@ -3,7 +3,7 @@ import List from './list';
 import Load from './load';
 import NoImage from './blogNoImages';
 import sdk from '@lettercms/sdk';
-import Upload from '@lettercms/icons/upload';
+import {FaUpload} from 'react-icons/fa';
 import createUploader from '@/lib/createUploader';
 import {useUser} from '@/components/dashboard/layout';
 import {useIntl} from 'react-intl';
@@ -59,7 +59,7 @@ export default function BlogImages({onSelect, isHidden}) {
   return <>
     {ui}
     <button className='upload' onClick={upload}>
-      <Upload style={{width: '1.25rem'}}/>
+      <FaUpload style={{width: '1.25rem'}}/>
     </button>
     <style jsx>{`
       button {

@@ -12,11 +12,11 @@ const Head = props => {
     <meta property="og:type" content="blog"/>
     {
       props.next &&
-      <link rel="next" />
+      <link rel= "next" />
     }
     {
       props.prev
-      && <link rel="prev" />
+      && <link rel= "prev" />
     }
   </BaseHead>;
 };

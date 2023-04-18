@@ -1,10 +1,14 @@
 import { SessionProvider } from 'next-auth/react';
 import {useState, useEffect} from 'react';
 import Router from 'next/router';
+import sdk from '@lettercms/sdk';
 import { Toaster } from 'react-hot-toast';
 import {IntlProvider} from 'react-intl';
 import {createFirebaseApp} from '@/firebase/client';
+import Facebook from '@/lib/client/FacebookSDK';
 import '@/styles/global.css';
+
+sdk.endpoint = 'http://192.168.100.41:3000/api/_public';
 
 export default function App({Component, pageProps: { messages, session, ...pageProps }}) {
   const [showLoad, setLoad] = useState(false);

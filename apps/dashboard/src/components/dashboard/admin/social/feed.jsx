@@ -39,7 +39,7 @@ export default class Feed extends Component {
       alert('Error al obtener las entradas');
       throw err;
     }
-  }
+  };
 
   render() {
     const {type} = this.props;

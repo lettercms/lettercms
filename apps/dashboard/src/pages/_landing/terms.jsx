@@ -48,7 +48,7 @@ export default function Terms({session, accessToken, referrer}) {
       {/*<Landing title="Porque también pensamos en tu privacidad" image='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/images/privacidad.jpg' />*/}
       <div>
         <Container className='bg-white m-auto max-w-5xl'>
-          <div className='text-justify px-12'>
+          <div className='text-justify px-2 md:px-8 lg:px-12'>
             <h2 style={{ textAlign: 'center' }}><strong>Términos y Condiciones de Uso</strong></h2>
             <p>&nbsp;</p>
             <p><strong>INFORMACIÓN RELEVANTE</strong></p>

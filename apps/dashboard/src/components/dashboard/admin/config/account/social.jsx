@@ -21,7 +21,7 @@ export default class Social extends Component {
     } catch(err) {
       throw err;
     }
-  }
+  };
   login = async type => {
     try {
       if (type === 'facebook') {
@@ -58,7 +58,7 @@ export default class Social extends Component {
       alert('Error al Iniciar Sesión');
       throw err;
     }
-  }
+  };
   selectAccount = async (type, id, token) => {
     try {
       const {subdomain} = await sdk.blogs.single(['subdomain']);
@@ -86,7 +86,7 @@ export default class Social extends Component {
         accounts: []
       });
     }
-  }
+  };
   render() {
     const {instagram, facebook, accounts, showModal, type} = this.state;
 

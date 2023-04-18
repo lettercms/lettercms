@@ -16,7 +16,7 @@ export default function Head(props) {
       content={props.description || defaultDescription}
     />
 
-    <link rel="canonical" href={props.url ? `${props.origin}${props.url}` : defaultOGURL} />
+    <link rel= "canonical" href={props.url ? `${props.origin}${props.url}` : defaultOGURL} />
 
     <meta property="og:site_name" content={siteName} />
     <meta content="website" property="og:type" />
@@ -33,7 +33,7 @@ export default function Head(props) {
     <meta content={props.description || defaultDescription} itemProp="description" name="twitter:description" property="og:description" />
     <meta content={props.url ? `${props.origin}${props.url}` : defaultOGURL} name="twitter:url" property="og:url" itemProp="url" />
 
-    <link rel="manifest" href="/manifest.json" />
+    <link rel= "manifest" href="/manifest.json" />
     <script type="application/ld+json" dangerouslySetInnerHTML={{
       __html: `{
         "@context":"https://schema.org",

@@ -7,7 +7,7 @@ import {findOne as findPost} from '@lettercms/utils/lib/findHelpers/posts';
 import {find as findRecommendations} from '@lettercms/utils/lib/findHelpers/recommendations';
 import sdk from '@lettercms/sdk';
 
-const subdomain = process.env.LETTERCMS_SUBDOMAIN; //'davidsdevel';
+const subdomain = 'davidsdevel';
 
 export async function getPost(url, userID) {
   await connect();

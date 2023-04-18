@@ -10,7 +10,7 @@ import sdk from '@lettercms/sdk';
 class BlogTab extends Component {
   state = {
     isLoad: false
-  }
+  };
   handleInput = ({target: {name, value}}) => this.setState({
     [name]: name === 'subdomain'
       ? value.toLowerCase()
@@ -42,7 +42,7 @@ class BlogTab extends Component {
     this.setState({
       existsSubdomain: exists
     });
-  }
+  };
   createBlog = async e => {
     const {
       intl
@@ -99,7 +99,7 @@ class BlogTab extends Component {
       );
       throw err;
     }
-  }
+  };
   render() {
     const {intl} = this.props;
     const {isLoad, subdomain, title, description, existsSubdomain} = this.state;

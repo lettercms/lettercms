@@ -29,8 +29,6 @@ export async function getServerSideProps({params: {subdomain, paths}}) {
     const dataRes = await fetch(apiPath);
     const data = await dataRes.json();
 
-    console.log(data);
-
     if (data.type === 'no-blog')
       return {
         redirect: {
