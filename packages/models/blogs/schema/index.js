@@ -25,7 +25,7 @@ Schema.methods.deleteCategory = async (subdomain, name) => {
     try {
       const rows = await this.findOne({ subdomain });
 
-      for (category of rows.categories) {
+      for (let category of rows.categories) {
           if (category.name === name) {
             rows.categories[rows.categories.indexOf(category)].remove();
             break;
