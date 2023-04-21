@@ -28,7 +28,7 @@ const ClearDate = () => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448
 const renderInput =  (isOpen, date, clearDate) => {
   return function Time (props, openCalendar, closeCalendar){
     return <div id='date-container'>
-      <button id='date-button' disabled={!date} onClick={e => {
+      <button id='date-button' disabled={!date} onClick={() => {
         if (date) {
           clearDate();
           closeCalendar();
@@ -164,7 +164,7 @@ const Publish = ({accounts}) => {
   useEffect(() => {
     if (hl !== 'en')
       import(`moment/locale/${hl}`)
-        .then(e => setLocaleLoaded(true));
+        .then(() => setLocaleLoaded(true));
   }, [hl]);
 
   return <div className='publish-container flex'>

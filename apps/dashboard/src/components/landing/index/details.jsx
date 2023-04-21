@@ -1,6 +1,4 @@
 import {FormattedMessage} from 'react-intl';
-import Link from 'next/link';
-import Image from 'next/image';
 import Button from '@/components/button';
 import {useRouter} from 'next/router';
 import {FaSquare} from 'react-icons/fa';

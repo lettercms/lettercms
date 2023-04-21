@@ -4,8 +4,6 @@ import {getSession} from 'next-auth/react';
 import Container from '@/components/container';
 import jwt from 'jsonwebtoken';
 
-
-
 export default function Privacy({session, accessToken, referrer}) {
   return <Layout session={session} accessToken={accessToken} referrer={referrer}>
     <div className='bg-main-500 overflow-hidden'>
@@ -63,7 +61,7 @@ export default function Privacy({session, accessToken, referrer}) {
   </Layout>;
 }
 
-export async function getServerSideProps({req, res, query}) {
+export async function getServerSideProps({req, query}) {
   const session = await getSession({req});
   const {hl = 'en'} = query;
 

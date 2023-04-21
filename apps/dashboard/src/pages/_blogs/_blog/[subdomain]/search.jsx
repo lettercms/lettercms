@@ -10,7 +10,7 @@ const Search = ({q, accessToken}) => {
   const [query, setQuery] = useState(q);
   const [data, setData] = useState([]);
   const [isLoading, setLoad] = useState(!!q);
-  const [hasMore, setHasMore] = useState(false);
+  //const [hasMore, setHasMore] = useState(false);
 
   const _sdk = new sdk.Letter(accessToken);
 
@@ -19,7 +19,7 @@ const Search = ({q, accessToken}) => {
       setLoad(true);
       setData([]);
 
-      const {data, paging} = await _sdk.posts.search(q, {
+      const {data/*, paging*/} = await _sdk.posts.search(q, {
         fields: [
           'url',
           'description',
@@ -30,10 +30,10 @@ const Search = ({q, accessToken}) => {
         ]
       });
 
-      if (paging.cursors.before)
+      /*if (paging.cursors.before)
         setHasMore(true);
       else
-        setHasMore(false);
+        setHasMore(false);*/
 
       setData(data);
     } catch(err) {
@@ -105,7 +105,7 @@ const Search = ({q, accessToken}) => {
   </div>;
 };
 
-export async function getServerSideProps(ctx) {
+export async function getServerSideProps() {
 
   //TODO: Add method to check if subdomainexists
   return {

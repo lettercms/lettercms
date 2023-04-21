@@ -1,5 +1,5 @@
 import {useIntl, FormattedMessage} from 'react-intl';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import sdk from '@lettercms/sdk';
 import ModalUser from './modalUser';
 import Base from '@/components/modal';

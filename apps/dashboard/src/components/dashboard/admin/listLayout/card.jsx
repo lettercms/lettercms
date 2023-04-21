@@ -15,7 +15,6 @@ const Card = ({
   views,
   postStatus,
   pageStatus,
-  url,
   fullUrl,
   isProtected,
   author,

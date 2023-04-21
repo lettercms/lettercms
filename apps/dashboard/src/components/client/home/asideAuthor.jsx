@@ -1,4 +1,4 @@
-import {FaFacebook, FaTwitter, FaInstagram, FaLinkedin} from 'react-icons/fa';
+import {FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaEarth} from 'react-icons/fa';
 import Link from 'next/link';
 
 export default function Author({name, lastname, photo, ocupation, description, facebook, twitter, linkedin, instagram, website}) {
@@ -19,6 +19,12 @@ export default function Author({name, lastname, photo, ocupation, description, f
       </div>
       <p className='mt-4 px-8 text-center'>{description}</p>
       <div className='flex margin-auto justify-between w-2/3 mt-8'>
+        {
+          website && 
+          <Link target='_blank' href={website}>
+            <FaEarth height='28'/>
+          </Link>
+        }
         {
           facebook && 
           <Link target='_blank' href={facebook}>

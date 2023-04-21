@@ -3,7 +3,7 @@ import sdk from '@lettercms/sdk';
 import {FaPlus, FaTimes} from 'react-icons/fa';
 import {useUser} from '@/components/dashboard/layout';
 
-async function deleteImage(url, cb) {
+async function deleteImage(url) {
   const name = url.split('/').pop().replace('.webp', '');
 
   return sdk.createRequest(`/image/${name}`, 'DELETE');

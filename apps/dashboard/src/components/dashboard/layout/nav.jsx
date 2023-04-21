@@ -1,14 +1,9 @@
-import {FormattedMessage} from 'react-intl';
 import {Fragment} from 'react';
-import {option} from './option.module.css';
 import Option from './option';
-import Link from 'next/link';
 import menu from './menu';
 import {asideHr} from './index.module.css';
-import Router from 'next/router';
 
-
-export default function Nav({role, blog}) {
+export default function Nav({role}) {
   return <>
     {
       menu

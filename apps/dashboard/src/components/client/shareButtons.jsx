@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react';
-import Router from 'next/router';
 import {FaFacebook, FaLinkedin, FaTwitter} from 'react-icons/fa';
 
 export default function ShareButton({url, show, title}) {

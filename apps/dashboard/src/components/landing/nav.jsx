@@ -1,6 +1,5 @@
-import {FormattedMessage} from 'react-intl';
+//import {FormattedMessage} from 'react-intl';
 import Link from 'next/link';
-import Image from 'next/image';
 import Router from 'next/router';
 import {useState, useEffect, useRef} from 'react';
 import {useSession} from 'next-auth/react';

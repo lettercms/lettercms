@@ -2,8 +2,6 @@ import {useState, useEffect} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import Template from '../config/selectAccountTemplate';
 import ModalBase from '@/components/modal';
-import Input from '@/components/input';
-
 import sdk from '@lettercms/sdk';
 import * as admin from '@lettercms/admin';
 import Button from '@/components/button';

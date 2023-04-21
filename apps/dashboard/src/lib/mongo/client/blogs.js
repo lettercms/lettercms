@@ -1,7 +1,6 @@
 import connect from '@lettercms/utils/lib/connection';
 import blogs from '@lettercms/models/blogs';
 import posts from '@lettercms/models/posts';
-import * as accounts from '@lettercms/models/accounts';
 import {find as findPosts} from '@lettercms/utils/lib/findHelpers/posts';
 //import {findOne as findBlog} from '@lettercms/utils/lib/findUtils';
 

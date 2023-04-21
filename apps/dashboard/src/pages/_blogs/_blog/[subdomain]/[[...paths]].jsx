@@ -18,10 +18,12 @@ const Home = dynamic(() => import('@/components/client/home'), {
 });
 
 const isDev = process.env.NODE_ENV !== 'production';
+const endpoint = isDev ? 'http://192.168.100.41:3000' : `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+
 
 export async function getServerSideProps({query: {subdomain, paths, page = '1'}}) {
   try {
-    let apiPath =  `${isDev ? 'http://localhost:3002' : `https://${subdomain}.lettercms.vercel.app`}/api/data/blog?subdomain=${subdomain}&page=${page}`;
+    let apiPath =  `${endpoint}/api/_client/data/blog?subdomain=${subdomain}&page=${page}`;
 
     if (paths?.length > 0)
       apiPath += `&paths=${paths.join(',')}`;

@@ -1,7 +1,6 @@
 import {useIntl} from 'react-intl';
 import {
     Legend,
-    LabelList,
     ResponsiveContainer,
     Pie,
     PieChart,

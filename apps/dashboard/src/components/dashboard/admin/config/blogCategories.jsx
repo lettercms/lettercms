@@ -1,4 +1,3 @@
-import sdk from '@lettercms/sdk';
 import {FaTrash} from 'react-icons/fa';
 
 const Categories = ({categories, onDelete}) => <ul id="categories">

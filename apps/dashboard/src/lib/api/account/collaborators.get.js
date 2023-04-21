@@ -4,10 +4,12 @@ import {find} from '@lettercms/utils/lib/findHelpers/accounts';
 export default async function GetCollabs() {
   const {
     res,
-    req
+    req: {
+      subdomain,
+      account,
+      query
+    }
   } = this;
-
-  const {subdomain, account, path} = req;
 
   const conditions = {
     subdomain,
@@ -16,7 +18,7 @@ export default async function GetCollabs() {
     }
   };
 
-  const data = await find(Accounts, conditions, req.query);
+  const data = await find(Accounts, conditions, query);
 
   res.json(data);
 };

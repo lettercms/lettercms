@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import Input from '@/components/input';
-import {createAccount, createCollaborator} from '@lettercms/admin';
+import {createAccount} from '@lettercms/admin';
 import Button from '@/components/button';
 
 const resendEmail = async intl => {
@@ -47,7 +47,7 @@ export default function Verify({onVerify}) {
     setIsLoad(true);
     setIsInvalidCode(false);
 
-    const email = localStorage.getItem('userEmail');
+    //const email = localStorage.getItem('userEmail');
     const token = localStorage.getItem('userToken');
 
     const data = JSON.parse(Buffer.from(token, 'hex').toString('utf-8'));

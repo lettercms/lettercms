@@ -1,6 +1,5 @@
-import {useIntl, FormattedMessage} from 'react-intl';
+import {useIntl} from 'react-intl';
 import Input from '@/components/input';
-import Image from 'next/image';
 import Container from '../../stats/base';
 import Social from './social';
 import {FaCamera} from 'react-icons/fa';

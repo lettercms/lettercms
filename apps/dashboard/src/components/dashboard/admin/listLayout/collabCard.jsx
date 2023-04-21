@@ -7,8 +7,6 @@ const Card = ({
   photo,
   name,
   lastname,
-  url,
-  fullUrl,
   del
 }) => {
   const router = useRouter();

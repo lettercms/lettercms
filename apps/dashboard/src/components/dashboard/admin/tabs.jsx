@@ -16,13 +16,13 @@ export default class Tab extends Component {
     this.props.onChange(tab);
   };
   render() {
-    const {tabs, onChange} = this.props;
+    const {tabs} = this.props;
     const {active} = this.state;
 
     return <div className='tabs-container'>
       <ul>
       {
-        tabs.map((e, i) => {
+        tabs.map(e => {
           const name = e[0].toUpperCase() + e.slice(1);
           const isActive = active === e;
 

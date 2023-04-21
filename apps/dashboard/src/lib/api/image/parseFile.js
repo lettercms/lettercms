@@ -1,7 +1,7 @@
 //import generateSVG from './generateSVG';
 //import generateHash from './generateHash';
 
-const parseFile = ({name, metadata}, fields) => {
+const parseFile = ({name}) => {
 
   const url = `https://lettercms-usercontent.vercel.app/${name}?q=75`;
   

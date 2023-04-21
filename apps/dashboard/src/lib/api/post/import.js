@@ -22,7 +22,7 @@ export default async function importData() {
     })
     .on('end', async () => {
       try {
-        const r = await processBlogger(data, subdomain, account);
+        await processBlogger(data, subdomain, account);
         await bucket.file(`${subdomain}/${type}.xml`).delete();
 
         res.json({

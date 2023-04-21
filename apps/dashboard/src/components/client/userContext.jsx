@@ -27,23 +27,6 @@ const renovateToken = async () => {
   }
 };
 
-const initRouterEvents = setLoad => {
-  const html = document.getElementsByTagName('html')[0];
-
-  Router.events.on('routeChangeStart', () => {
-    html.style.scrollBehavior = '';
-
-    setLoad(true);
-  });
-
-  Router.events.on('routeChangeComplete', () => {
-    window.scrollTo(0, 0);
-    html.style.scrollBehavior = 'smooth';
-
-    setLoad(false);
-  });
-};
-
 const ClientContext = createContext();
 
 export function getContext() {
@@ -63,10 +46,13 @@ export function useToken() {
 }
 
 export function ClientProvider({children}) {
-  const [loading, setLoading] = useState(true);
+  //TODO: Handle user loading
+  const [loading, setLoading] = useState(true); //eslint-disable-line
   const [ready, setReady] = useState(false);
   const [showConsent, setShowConsent] = useState(false);
-  const [consent, setConsent] = useState(null);
+
+  //TODO: Handle cookie consent checking
+  const [consent, setConsent] = useState(null); //eslint-disable-line
   const router = Router.useRouter();
   
   useEffect(() => {

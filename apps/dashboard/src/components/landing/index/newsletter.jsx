@@ -2,14 +2,13 @@ import {FormattedMessage} from 'react-intl';
 import Link from 'next/link';
 import {useState} from 'react';
 import Input from '@/components/input';
-import * as admin from '@lettercms/admin';
 import Button from '@/components/button';
 import Container from '@/components/container';
 
 
 export default function Newsletter() {
   const [email, setEmail] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); //eslint-disable-line
 
   return <div className="py-8">
       <Container className='bg-white m-auto max-w-2xl'>

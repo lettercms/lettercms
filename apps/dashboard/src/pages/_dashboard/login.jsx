@@ -8,8 +8,8 @@ import {signIn} from 'next-auth/react';
 import Container from '@/components/dashboard/credentialsContainer';
 import styles from '@/styles/login.module.css';
 
-export async function getServerSideProps({req, res, query}) {
-  const {page, hl = 'en'} = query;
+export async function getServerSideProps({query}) {
+  const {hl = 'en'} = query;
 
   const lang = await import(`@/translations/login/${hl}.json`);
   const messages = Object.assign({}, lang.default);

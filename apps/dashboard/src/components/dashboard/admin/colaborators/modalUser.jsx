@@ -1,7 +1,7 @@
 import {useIntl} from 'react-intl';
 import Input from '@/components/input';
 
-export default function ModalUser({onChange, role, email, name, lastname}) {
+export default function ModalUser({onChange, email, name, lastname}) {
   const intl = useIntl();
 
   return <div id='user-modal'>

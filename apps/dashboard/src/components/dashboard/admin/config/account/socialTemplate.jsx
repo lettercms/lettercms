@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 const AccountTemplate = ({name, username, cover, picture, onSelect}) => <div className='account-template'>
   <div className='fb-cover' style={{backgroundImage: `url(${cover.source})`}}>
     <div className='social-shadow'>

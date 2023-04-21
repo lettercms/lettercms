@@ -3,7 +3,7 @@ export default async function revalidate(req, res) {
   if (req.method !== 'POST')
     return res.status(405).end();
 
-  const { path, token } = req.body;
+  const {path} = req.body;
 
   try {
     await res.revalidate(path);

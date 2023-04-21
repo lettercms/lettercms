@@ -1,9 +1,9 @@
 import {useIntl} from 'react-intl';
 import Button from '@/components/button';
-import {top, focus, selector} from './filters.module.css'; 
+import {top, focus} from './filters.module.css'; 
 
 export default function Top(props) {
-  const {active, countTabs, data, create, loading, count, buttonText, onChangeTab, tabs, disabled, buttonRef} = props;
+  const {active, countTabs, data, create, loading, count, buttonText, disabled, buttonRef} = props;
 
   const intl = useIntl();
 
@@ -12,10 +12,6 @@ export default function Top(props) {
   if (loading)
     counts = <span style={{width: 70}}/>;
   else if (data && countTabs && !loading) {
-
-    const totalTabs = count.all;
-    const totalIsActive = count.all > 0;
-
     counts = <>
       <Button
         className={active === '*' ? focus : ''}
@@ -29,7 +25,6 @@ export default function Top(props) {
       {
         countTabs.map(e => {
           let tabCount = count[e.name];
-          let isActive = tabCount > 0;
 
           return <Button
             className={active === e.name ? focus : ''}

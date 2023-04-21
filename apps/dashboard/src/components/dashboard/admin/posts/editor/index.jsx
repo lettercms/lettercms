@@ -59,7 +59,7 @@ const draft = async (id, {clearTimeout, setLoading, setData}) => {
   setLoading(false);
 };
 
-const publish = async (id, {clearTimeout, setLoading, setData, status}, intl) => {
+const publish = async (id, {clearTimeout, setLoading, status}, intl) => {
   clearTimeout();
     
   setLoading(true);

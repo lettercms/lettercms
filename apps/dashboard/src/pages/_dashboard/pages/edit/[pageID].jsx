@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 import connect from '@lettercms/utils/lib/connection';
 import pages from '@lettercms/models/pages';
-import Script from 'next/script';
-import sdk from '@lettercms/sdk';
 import {DashboardProvider, useUser} from '@/components/dashboard/layout';
 import {getSession} from 'next-auth/react';
 import asyncImportScript from '@/lib/asyncImportScript';
@@ -12,9 +10,6 @@ import Head from 'next/head';
 import {FaSave} from 'react-icons/fa';
 import {MdSend} from 'react-icons/md';
 import Load from '@/components/dashboard/logoLoad';
-
-const isDev = process.env.NODE_ENV !== 'production';
-const endpoint = isDev ? 'http://localhost:3009' : 'https://lettercms-api-staging.herokuapp.com';
 
 const editor = new Editor();
 
@@ -31,7 +26,7 @@ const scripts = [
   'grapesjs-tui-image-editor@0.1.3/dist/grapesjs-tui-image-editor.min.js'
 ];
 
-export async function getServerSideProps({ req, res, query}) {
+export async function getServerSideProps({req, query}) {
   const session = await getSession({req});
 
   if (!session)
@@ -64,7 +59,7 @@ export async function getServerSideProps({ req, res, query}) {
 function PageEditor() {
   const [load, setLoad] = useState(true);
   const [preview, setPreview] = useState(false);
-  const [isGrapesReady, setGrapesStatus] = useState(false);
+  //const [isGrapesReady, setGrapesStatus] = useState(false);
   const {status} = useUser();
   
   const {query: {pageID}} = useRouter();

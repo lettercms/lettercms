@@ -1,6 +1,5 @@
 import {Letter} from '@lettercms/sdk';
 import jwt from 'jsonwebtoken';
-import {getSubdomain} from './utils';
 import {Feed} from 'feed';
 
 export default async function feed(req, res) {
@@ -70,7 +69,7 @@ export default async function feed(req, res) {
       });
 
       posts.forEach(({
-        title, url, description, content, updated, thumbnail, author
+        title, url, description, content, updated, thumbnail
       }) => {
         feed.addItem({
           title,

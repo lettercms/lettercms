@@ -1,5 +1,4 @@
-import {useState, useEffect, createContext, useContext, memo} from 'react';
-import {useRouter} from 'next/router';
+import {useState, useEffect, createContext, useContext} from 'react';
 import sdk from '@lettercms/sdk';
 import Cookie from 'js-cookie'; 
 
@@ -66,7 +65,6 @@ export function useRecommendations(url) {
 }
 
 export function UserProvider({children, ready}) {
-  const router = useRouter();
   const [user, setUser] = useState(null);
   const [userID, setUserID] = useState(null);
 

@@ -10,7 +10,7 @@ const Welcome = dynamic(() => import('@/components/dashboard/admin/welcome'), {
   loading:LogoLoad
 });
 
-export async function getServerSideProps({req, res, query}) {
+export async function getServerSideProps({req, query}) {
   const {hl} = query;
   const session = await getSession({req});
 
@@ -33,7 +33,7 @@ export async function getServerSideProps({req, res, query}) {
   };
 }
 
-const AdminDashboard = ({tab, user}) => {
+function AdminDashboard({user}) {
   const intl = useIntl();
 
   return <>
@@ -49,8 +49,10 @@ const AdminDashboard = ({tab, user}) => {
       <Welcome role={user.role} permissions={user.permissions} name={user.name} firstTime={user.firstTime}/>
     </>;
 };
+
 AdminDashboard.getLayout = function getLayout(page, user) {
   return <DashboardProvider accessToken={user.accessToken} userID={user.id}>{page}</DashboardProvider>;
 };
+
 export default AdminDashboard;
 

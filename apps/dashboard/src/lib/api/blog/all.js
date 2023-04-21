@@ -3,7 +3,10 @@ import {find} from '@lettercms/utils/lib/findUtils';
 
 export default async function GetBlogs() {
   const {
-    req: {isAdmin, query, path},
+    req: {
+      isAdmin,
+      query
+    },
     res
   } = this;
 

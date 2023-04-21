@@ -1,6 +1,6 @@
 import {FormattedMessage} from 'react-intl';
 
-export default function NoImages({images, isUploading}) {
+export default function NoImages() {
   return <div id='no-image-container'>
     <img src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/no-images.svg' alt='' />
     <span>

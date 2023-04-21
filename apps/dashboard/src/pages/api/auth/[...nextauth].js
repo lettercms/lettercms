@@ -2,7 +2,6 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import connect from '@lettercms/utils/lib/connection';
 import {Accounts} from '@lettercms/models/accounts';
-import admin from '@lettercms/admin';
 import app from '@/firebase/server';
 import {getAuth} from 'firebase-admin/auth';
 
@@ -33,7 +32,7 @@ export const authOptions = {
     strategy: 'jwt'
   },
   callbacks: {
-    async jwt({token, user, account}) {
+    async jwt({token, user}) {
         
       if (token.user) {
         // Renew Firebase token on expiration 
@@ -49,7 +48,7 @@ export const authOptions = {
         user: {sub: token.sub, ...user}
       };
     },
-    async session({session, token, user}) {
+    async session({session, token}) {
       session.user = token.user;
 
       return session;
@@ -62,7 +61,7 @@ export const authOptions = {
         email: { label: 'Email', type: 'email', placeholder: 'email@email.com' },
         password: {  label: 'Password', type: 'password' }
       },
-      authorize: async ({email, password}, req) => {
+      authorize: async ({email, password}) => {
         try {
           await connect();
 

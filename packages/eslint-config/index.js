@@ -1,3 +1,5 @@
+const base = require('./base');
+
 module.exports = {
   extends: ["next", "turbo", "prettier"],
   settings: {
@@ -6,16 +8,8 @@ module.exports = {
     },
   },
   rules: {
-    "semi": ["warn", "always"],
-    "quotes": ["warn", "single"],
-    "array-bracket-spacing": "error",
-    "arrow-spacing": "error",
-    "complexity": "off",
-    "curly": "off",
+    ...base.rules,
     "@next/next/no-img-element": "off",
-    "no-buffer-constructor": "error",
-    "no-var": "error",
-    "no-console": "warn",
     "turbo/no-undeclared-env-vars": "off"
   }
 };

@@ -1,6 +1,5 @@
 import {useEffect} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {useUser} from '@/components/dashboard/layout';
 import sdk from '@lettercms/sdk';
 import Link from 'next/link';
 

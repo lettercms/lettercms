@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-module.exports.getOrigin = req => {
+export const getOrigin = req => {
 	if (req) {
 		return req.protocol + '://' + req.host;
 	}
@@ -8,7 +8,7 @@ module.exports.getOrigin = req => {
 	return location.origin;
 };
 
-module.exports.getSubdomain = (req, query) => {
+export const getSubdomain = (req) => {
   const hostname = req.headers.get('host');
 
   const subdomain =
@@ -19,4 +19,4 @@ module.exports.getSubdomain = (req, query) => {
   return subdomain;
 };
 
-module.exports.generateToken = subdomain => jwt.sign({subdomain}, process.env.JWT_AUTH);
+export const generateToken = subdomain => jwt.sign({subdomain}, process.env.JWT_AUTH);

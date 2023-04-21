@@ -15,7 +15,7 @@ export default function Select({options, ...e}) {
           value = e.value;
         }
 
-        return <option key={e + i} value={e}>{e}</option>;
+        return <option key={e + i} value={value}>{name}</option>;
       })
     }
   </select>;

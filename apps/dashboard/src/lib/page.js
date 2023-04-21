@@ -1,5 +1,3 @@
-import {getBlog} from './mongo/blogs';
-
 export async function getPost(subdomain, paths) {
    try {
     const res = await fetch(`https://${subdomain}.lettercms.vercel.app/api/blog/post?paths=${paths.join(',')}`);

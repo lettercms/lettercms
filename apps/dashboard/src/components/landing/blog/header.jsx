@@ -1,6 +1,6 @@
 import {FormattedMessage} from 'react-intl';
 
-const Header =({title, description, thumbnail}) =>  {
+export default function Header() {
   return <header className='py-24 w-full md:max-w-7xl'>
     <div className='flex flex-col md:flex-row md:items-center'>
       <div className='w-80 flex flex-col items-center m-auto mb-12 md:mb-auto md:w-3/4'>
@@ -15,5 +15,3 @@ const Header =({title, description, thumbnail}) =>  {
     </div>
   </header>;
 };
-
-export default Header;

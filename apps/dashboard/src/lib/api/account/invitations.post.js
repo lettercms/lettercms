@@ -1,7 +1,6 @@
 import blogs from '@lettercms/models/blogs';
 import {Accounts, Invitations} from '@lettercms/models/accounts';
 import sendMail from '@lettercms/utils/lib/sendMail';
-import jwt from 'jsonwebtoken';
 
 export default async function PostInvitations() {
   const {
@@ -43,7 +42,7 @@ export default async function PostInvitations() {
     expiresAt: Date.now() + (60 * 60 * 24 * 1000)
   });
 
-  const r = await sendMail(body.email, `Has sido invitado a colaborar en ${blog.title} - LetterCMS`, {
+  await sendMail(body.email, `Has sido invitado a colaborar en ${blog.title} - LetterCMS`, {
     type: 'invitation',
     name: body.name,
     lastname: body.lastname,

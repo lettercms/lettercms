@@ -26,7 +26,7 @@ export default async function createCollab(req, res) {
 
   const password = await bcrypt.hash(body.password, 10);
 
-  const id = await accounts.Accounts.create({
+  await accounts.Accounts.create({
     name: body.name,
     lastname: body.lastname,
     email: body.email,

@@ -50,7 +50,7 @@ export default async function createBlog(req, res) {
    */
 
   //Publish post
-  const {_id} = await posts.createPost(subdomain, {
+  await posts.createPost(subdomain, {
     subdomain,
     created: date,
     title: 'Yay! My firts post',

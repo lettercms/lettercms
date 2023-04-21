@@ -18,7 +18,7 @@ const Search = ({q}) => {
   const prevSearch = useRef(null);
 
   const [isLoading, setLoad] = useState(!!q);
-  const [hasMore, setHasMore] = useState(false);
+  //const [hasMore, setHasMore] = useState(false);
   const router = useRouter();
 
   const doSearch = query !== prevSearch.current;
@@ -38,11 +38,11 @@ const Search = ({q}) => {
             'comments'
           ]
         })
-        .then(({data, paging}) => {
-          if (paging.cursors.before)
+        .then(({data/*, paging*/}) => {
+          /*if (paging.cursors.before)
             setHasMore(true);
           else
-            setHasMore(false);
+            setHasMore(false);*/
 
           setData(data);
 
@@ -91,7 +91,7 @@ const Search = ({q}) => {
   </div>;
 };
 
-export const getServerSideProps = async ({req, res, query}) => {
+export const getServerSideProps = async ({req, query}) => {
   try {
     const {hl = 'en', q} = query;
     const session = await getSession({req});

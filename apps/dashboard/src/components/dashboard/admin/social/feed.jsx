@@ -1,5 +1,4 @@
 import {Component} from 'react';
-import sdk from '@lettercms/sdk';
 import FacebookCard from './facebookCard';
 import InstagramCard from './instagramCard';
 import Load from '../../logoLoad';

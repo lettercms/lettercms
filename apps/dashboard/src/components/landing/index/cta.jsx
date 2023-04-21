@@ -1,5 +1,4 @@
 import {FormattedMessage} from 'react-intl';
-import Link from 'next/link';
 import Button from '@/components/button';
 import {useRouter} from 'next/router';
 

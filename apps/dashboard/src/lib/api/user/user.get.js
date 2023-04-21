@@ -5,7 +5,6 @@ export default async function GetUser() {
   const {req, res} = this;
 
   const {id} = req.query;
-  const {subdomain} = req;
 
   const data = await findOne(Users, {_id: id}, req.query);
 

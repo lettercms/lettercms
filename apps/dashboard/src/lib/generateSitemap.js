@@ -1,6 +1,5 @@
 import {Letter} from '@lettercms/sdk';
 import jwt from 'jsonwebtoken';
-import {getSubdomain} from './utils';
 
 export default async function sitemap(req, res) {
     try {

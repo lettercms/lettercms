@@ -1,5 +1,3 @@
-import blogs from '@lettercms/models/blogs';
-
 export default function parseTags(arr) {
   let _parsed = {};
 

@@ -1,7 +1,5 @@
-import {useEffect, useState} from 'react';
 import {useIntl} from 'react-intl';
 import Head from 'next/head';
-import sdk from '@lettercms/sdk';
 import {getSession} from 'next-auth/react';
 import {DashboardProvider} from '@/components/dashboard/layout';
 import PageLoad from '@/components/dashboard/logoLoad';
@@ -11,7 +9,7 @@ const Collabs = dynamic(() => import('@/components/dashboard/admin/colaborators'
   loading: PageLoad
 });
 
-export async function getServerSideProps({ req, res, query}) {
+export async function getServerSideProps({req, query}) {
   const {hl} = query;
   const session = await getSession({req});
 
@@ -34,7 +32,7 @@ export async function getServerSideProps({ req, res, query}) {
   };
 }
 
-const AdminDashboard = ({tab, user}) => {
+function AdminDashboard() {
   const intl = useIntl();
 
   return <>
@@ -50,8 +48,9 @@ const AdminDashboard = ({tab, user}) => {
       <Collabs />
     </>;
 };
+
 AdminDashboard.getLayout = function getLayout(page, user) {
   return <DashboardProvider accessToken={user.accessToken} userID={user.id}>{page}</DashboardProvider>;
 };
-export default AdminDashboard;
 
+export default AdminDashboard;

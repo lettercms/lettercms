@@ -1,4 +1,4 @@
-import {useMemo, Fragment} from 'react';
+import {Fragment} from 'react';
 
 export default function AsideCategories({categories}) {
   return <div className='flex flex-col items-center w-4/5'>

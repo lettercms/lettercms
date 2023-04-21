@@ -1,10 +1,8 @@
 import Router from 'next/router';
 import sdk from '@lettercms/sdk';
-import ImageUploader from '@/lib/ImageHandler';
 import {createRoot} from 'react-dom/client';
 import CustomPanel from './customPanel';
 import pluginsOpts from './plugins.config';
-import {EventEmitter} from 'events';
 
 /*
 import grapesjs from 'grapesjs';
@@ -32,9 +30,6 @@ class Editor {
   }
   async init(id) {
     try {
-
-      const emitter = window.editorEventEmitter = new EventEmitter();
-
       this.data = await sdk.pages.single(id, ['title', 'url', 'description']);
 
       window._editor = this.editor = grapesjs.init({
@@ -56,7 +51,7 @@ class Editor {
         showOffsets: 1,
         pluginsOpts,
         height: '100%',
-        assetManager: {
+        /*assetManager: {
           custom: {
             open(props) {
               //console.log(props);
@@ -66,7 +61,7 @@ class Editor {
               // Close the external Asset Manager
             },
           },
-        },
+        },*/
         selectorManager: { componentFirst: true },
         styleManager: { sectors: [] },
         storageManager: {
@@ -134,12 +129,11 @@ class Editor {
       });
 
       let pn = this.editor.Panels;
-      let modal = this.editor.Modal;
       let cmdm = this.editor.Commands;
       cmdm.add('canvas-clear', function() {
         if(confirm('Are you sure to clean the canvas?')) {
-          let comps = editor.DomComponents.clear();
-          setTimeout(function(){ localStorage.clear();}, 0);
+          editor.DomComponents.clear();
+          setTimeout(() => localStorage.clear(), 0);
         }
       });
       cmdm.add('set-device-desktop', {
@@ -170,7 +164,7 @@ class Editor {
         title: 'Back'
       });
 
-      cmdm.add('open-config', e => {
+      cmdm.add('open-config', () => {
         const el = pn.getPanel('views-container').view.el;
 
         const div = el.querySelector('div#custom-panel');

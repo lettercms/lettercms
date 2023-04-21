@@ -1,5 +1,5 @@
 import { SessionProvider } from 'next-auth/react';
-import {useState, useEffect} from 'react';
+import {/*useState, */useEffect} from 'react';
 import Router from 'next/router';
 import sdk from '@lettercms/sdk';
 import { Toaster } from 'react-hot-toast';
@@ -12,7 +12,8 @@ if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production')
   sdk.endpoint = 'http://192.168.100.41:3000/api/_public';
 
 export default function App({Component, pageProps: { messages, session, ...pageProps }}) {
-  const [showLoad, setLoad] = useState(false);
+  //TODO: Add load on page change
+  //const [showLoad, setLoad] = useState(false);
   const router = Router.useRouter();
 
   const {hl} = router.query;

@@ -56,8 +56,6 @@ const fetchData = start => {
 export default function Stats() {
   const [hasData, setHasData] = useState(false);
   const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [isReload, setReload] = useState(false);
 
   const {status} = useUser();
 
@@ -67,10 +65,8 @@ export default function Stats() {
         .then(e => {
           if (e.general.totalViews === 0 && e.general.totalComments === 0) {
             setHasData(false);
-            setLoading(false);
           } else {
             setHasData(true);
-            setLoading(false); 
             setData(e); 
           }
         });
@@ -82,12 +78,10 @@ export default function Stats() {
     
     fetchData(start)
       .then(e => {
-        setLoading(false); 
         window.setLoad(false);
-        setData(e); 
+        setData(e);
       });
   };
-
 
   if (hasData)
     return <Dashboard {...data} onChange={reload}/>;

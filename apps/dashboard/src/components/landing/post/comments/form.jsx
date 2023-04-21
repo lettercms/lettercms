@@ -25,7 +25,7 @@ const publish = async (comment, {user, postID, replyTo}, cb, accessToken) => {
 };
 
 
-export default function CommentForm({user, isReply, postID, inline, replyTo, onPublish}) {
+export default function CommentForm({user, postID, inline, replyTo, onPublish}) {
   const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(false);
   const {accessToken} = useToken();

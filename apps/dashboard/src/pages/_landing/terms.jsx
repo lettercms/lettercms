@@ -4,7 +4,7 @@ import {getSession} from 'next-auth/react';
 import Container from '@/components/container';
 import jwt from 'jsonwebtoken';
 
-export async function getServerSideProps({req, res, query}) {
+export async function getServerSideProps({req, query}) {
   const session = await getSession({req});
   const {hl = 'en'} = query;
 

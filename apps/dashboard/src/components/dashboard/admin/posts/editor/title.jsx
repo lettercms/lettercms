@@ -1,4 +1,3 @@
-import {useEffect, useState} from 'react';
 import {useIntl} from 'react-intl';
 import Input from '@/components/input';
 import {useData} from './index';

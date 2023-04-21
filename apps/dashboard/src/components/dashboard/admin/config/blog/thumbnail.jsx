@@ -1,8 +1,8 @@
+import {useState, useRef} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {FaCamera} from 'react-icons/fa';
 import {ImSpinner9} from 'react-icons/im';
 import createUploader from '@/lib/createUploader';
-import {useEffect, useState, useRef} from 'react';
 import {useUser} from '@/components/dashboard/layout';
 import sdk from '@lettercms/sdk';
 
@@ -10,7 +10,7 @@ export default function Thumbnail({url = 'https://cdn.jsdelivr.net/gh/davidsdeve
   const [load, setLoadState] = useState(false);
   const [img, setImg] = useState(url);
   const shadowRef = useRef(null);
-  const {status, blog} = useUser();
+  const {blog} = useUser();
 
   const upload = () => createUploader({
     name: 'og',
@@ -26,11 +26,8 @@ export default function Thumbnail({url = 'https://cdn.jsdelivr.net/gh/davidsdeve
       setLoadState(false);
       setImg(_url);
 
-      sdk.blogs.update({
-        thumbnail: _url
-      }).then(e => {
-        onChangePicture(_url);
-      });
+      sdk.blogs.update({thumbnail: _url})
+        .then(() => onChangePicture(_url));
 
     },
     onError(err) {

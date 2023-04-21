@@ -1,23 +1,18 @@
 import {useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
-
 import Header from './header';
-import Layout from '@/components/landing/layout';
 import initLazyLoad from '@/lib/initLazyLoad';
 import Breadcrumbs from './breadcrumbs';
 import Container from '@/components/container';
 import HandleDate from '@/lib/handleDate';
 import Tags from './tags';
 import Card from '@/components/landing/blog/card';
-
-/*
 import Head from '@/components/landing/headPost';
+import Base from '@/components/dashboard/admin/stats/base';
 import Comments from './comments/index';
 import Subscription from './subscription';
 
-import Base from '@/components/dashboard/admin/stats/base';
-*/
-export default function BlogPost({isAdmin, isPreview, user, recommendation: {recommended, similar}, post: {_id, content, title, url, published, updated, thumbnail, tags, description}, referrer, notFound}) {
+export default function BlogPost({isPreview, user, recommendation: {recommended, similar}, post: {_id, content, title, url, published, updated, thumbnail, tags, description}, notFound}) {
   const [stateUser, setUser] = useState(user);
   const intl = useIntl();
 
@@ -29,17 +24,15 @@ export default function BlogPost({isAdmin, isPreview, user, recommendation: {rec
   }, [url, notFound, isPreview]);
 
   return <div>
-    {
-      /*<Head
-          title={`${title} | LetterCMS`}
-          description={description}
-          url={url}
-          ogImage={thumbnail}
-          published={published}
-          updated={updated}
-          tags={tags}
-        />*/
-    }
+    <Head
+      title={`${title} | LetterCMS`}
+      description={description}
+      url={url}
+      ogImage={thumbnail}
+      published={published}
+      updated={updated}
+      tags={tags}
+    />
     <Header title={title} thumbnail={thumbnail}/>
     <Breadcrumbs title={title}/>
     <div className='flex flex-col'>
@@ -56,12 +49,10 @@ export default function BlogPost({isAdmin, isPreview, user, recommendation: {rec
           <Tags tags={tags}/>
         </Container>
         {
-          /*
-                  !stateUser?.email &&
-                  <Base principal rows={1} style={{height: 'auto', justifyContent: 'center', alignItems: 'center' }}>
-                    <Subscription onSubscribe={setUser} user={stateUser}/>
-                  </Base>
-                */
+         !stateUser?.email &&
+          <Base principal rows={1} style={{height: 'auto', justifyContent: 'center', alignItems: 'center' }}>
+            <Subscription onSubscribe={setUser} user={stateUser}/>
+          </Base>
         }
       </div>
     </div>
@@ -93,7 +84,7 @@ export default function BlogPost({isAdmin, isPreview, user, recommendation: {rec
           />
         </>
       }
-      {/*<Comments id={_id} user={stateUser}/>*/}
+      <Comments id={_id} user={stateUser}/>
     </Container>
     <style jsx global>{`
       main img {

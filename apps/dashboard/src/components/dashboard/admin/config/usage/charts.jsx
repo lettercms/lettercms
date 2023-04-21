@@ -1,4 +1,4 @@
-import {useIntl, FormattedMessage} from 'react-intl';
+import {useIntl} from 'react-intl';
 import Base from '../../stats/base';
 import dynamic from 'next/dynamic';
 import {ImSpinner9} from 'react-icons/im';

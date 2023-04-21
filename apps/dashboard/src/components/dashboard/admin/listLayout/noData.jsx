@@ -1,7 +1,7 @@
 import {FormattedMessage} from 'react-intl';
 import Button from '@/components/button';
 
-const NoData = ({action, picture = `${process.env.ASSETS_BASE}/assets/posts.svg`, buttonText = 'Crear'}) => <div className="center">
+const NoData = ({action, /*picture = `${process.env.ASSETS_BASE}/assets/posts.svg`, */buttonText = 'Crear'}) => <div className="center">
   <div className='data-text'>
     <span>
       <FormattedMessage id='Oops, we have nothing here yet'/>

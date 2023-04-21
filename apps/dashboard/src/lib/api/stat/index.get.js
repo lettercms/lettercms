@@ -18,16 +18,6 @@ const parseFields = fields => {
   return fieldsObj;
 };
 
-const days = [
-  'sunday',
-  'monday',
-  'tuesday',
-  'wednesday',
-  'thursday',
-  'friday',
-  'saturday'
-];
-
 const generateDates = (daysCount, dateEnd) => {
   const dates = [];
 
@@ -80,10 +70,6 @@ export default async function GetStats() {
   }  = this;
 
   const {
-    url,
-    os,
-    browser,
-    country,
     end
   } = query;
 
@@ -105,7 +91,6 @@ export default async function GetStats() {
       message: 'Stats does not exists'
     });
 
-  const hasData =           fields.all || fields.data || query.fields?.includes('data.');
   const hasDataViews =      fields.all || fields.data || fields['data.views'];
   const hasGeneral =        fields.all || fields.general || query.fields?.includes('general.');
   const hasMostCommented =  fields.all || fields.general || fields['general.mostCommented'];

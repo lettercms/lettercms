@@ -2,8 +2,6 @@ import Document, {
   Html, Head, Main, NextScript,
 } from 'next/document';
 
-const isDev = process.env.NODE_ENV !== 'production';
-
 export default class CustomDocument extends Document {
   static async getInitialProps(ctx) {
     const path = ctx.asPath;

@@ -33,7 +33,7 @@ function Blog({posts, blog, paging, mostViewed}) {
   </div>;
 };
 
-export async function getServerSideProps({req, res, query}) {
+export async function getServerSideProps({req, query}) {
   try {
     const {page, hl = 'en'} = query;
     const referrer = req?.headers.referrer || null;

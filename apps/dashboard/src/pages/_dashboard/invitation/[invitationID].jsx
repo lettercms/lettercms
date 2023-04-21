@@ -1,9 +1,6 @@
 import {Component} from 'react';
-import dynamic from 'next/dynamic';
 import Head from'next/head';
 import Link from 'next/link';
-import asyncImport from '@/lib/asyncImportScript';
-import {getSession} from 'next-auth/react';
 import Image from 'next/image';
 import Invitation from '@/components/dashboard/signin/invitation';
 import Footer from '@/components/dashboard/miniFooter';
@@ -50,7 +47,7 @@ class InvitationPage extends Component {
   };
   
   render() {
-    const {blog, blogOwner, expiresAt, id, email} = this.props;
+    const {blog, blogOwner, expiresAt, email} = this.props;
 
     return <div id='register-main'>
       <Head>

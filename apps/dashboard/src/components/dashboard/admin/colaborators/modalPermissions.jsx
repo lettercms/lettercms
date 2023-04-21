@@ -1,5 +1,3 @@
-import Input from '@/components/input';
-
 const inputs = [
   {
     id: 'posts',

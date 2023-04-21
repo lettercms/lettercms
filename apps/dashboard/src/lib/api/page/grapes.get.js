@@ -2,7 +2,7 @@ import pages from '@lettercms/models/pages';
 import {findOne}  from '@lettercms/utils/lib/findUtils';
 
 export default async function GetGrapesJS() {
-  const {req, res, findSingle} = this;
+  const {req, res} = this;
 
   const {_id} = req.query;
 

@@ -1,6 +1,5 @@
-﻿import {FormattedMessage, useIntl} from 'react-intl';
+﻿import {useIntl} from 'react-intl';
 import {useState, useEffect} from 'react';
-import Categories from './blogCategories';
 import Container from '../stats/base';
 import BlogTitle from './blog/title';
 import BlogCategory from './blog/categories';

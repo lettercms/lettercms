@@ -1,13 +1,11 @@
 import React from 'react';
 import NextHead from 'next/head';
-import { string } from 'prop-types';
 
 export default function Head(props) {
 
   const siteName = '';
   const defaultDescription = 'Just another site created with love with LetterCMS';
   const defaultOGURL = props.origin;
-  const defaultOGImage = props.origin + '/images/og.jpg';
 
   return <NextHead>
     <title>{props.title}</title>

@@ -3,7 +3,6 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {useUser} from '@/components/dashboard/layout';
 import Modal from '@/components/modal';
 import ImageUploader from '@/lib/ImageHandler';
-import Image from 'next/image';
 import sdk from '@lettercms/sdk';
 
 let cropper = null;

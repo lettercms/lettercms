@@ -8,8 +8,7 @@ const Card = ({
   tags,
   comments,
   views,
-  url,
-  subdomain
+  url
 }) => {
   const {blog} = useUser();
 

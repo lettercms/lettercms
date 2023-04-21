@@ -1,7 +1,7 @@
 import {figureToImageBlock, imageToDataFigure, imageToEditFigure, imageDimensionsToDataFigure} from './converters';
 import {EventEmitter} from 'events';
 
-const  EditorPlugin = (closeModal, data, setData) => editor => {
+const  EditorPlugin = closeModal => editor => {
   
   window.editorEventEmitter = new EventEmitter();
 

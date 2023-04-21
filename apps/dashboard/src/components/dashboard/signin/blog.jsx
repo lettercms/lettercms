@@ -4,7 +4,6 @@ import {createBlog} from '@lettercms/admin';
 import Router from 'next/router';
 import Input from '@/components/input';
 import Button from '@/components/button';
-import Image from 'next/image';
 import sdk from '@lettercms/sdk';
 
 class BlogTab extends Component {
@@ -29,7 +28,7 @@ class BlogTab extends Component {
       : value
   });
   existsSubdomain = async e => {
-    const {target: {name, value}} = e;
+    const {target: {value}} = e;
 
     this.setState({
       existsSubdomain: null
@@ -48,7 +47,7 @@ class BlogTab extends Component {
       intl
     } = this.props;
 
-    const {isLoad, subdomain, title, description, existsSubdomain} = this.state;
+    const {subdomain, title, description, existsSubdomain} = this.state;
     
     if (existsSubdomain)
       return;

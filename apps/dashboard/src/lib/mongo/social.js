@@ -18,7 +18,7 @@ export async function getAccounts() {
   }, 'token userId');
 
   if (fb) {
-    const {cover, name, username, error} = await Base.api(`/${fb.pageId}`, {
+    const {name, error} = await Base.api(`/${fb.pageId}`, {
       access_token: fb.token,
       fields: 'name'
     });

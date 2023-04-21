@@ -1,4 +1,4 @@
-import {useState, useEffect, forwardRef} from 'react';
+import {useState, useEffect} from 'react';
 import {useIntl} from 'react-intl';
 import sdk from '@lettercms/sdk';
 import AccountLoad from './load';

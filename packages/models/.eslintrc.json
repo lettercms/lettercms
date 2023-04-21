@@ -1,4 +1,4 @@
 {
   "root": true,
-  "extends": ["@lettercms/eslint-config"]
+  "extends": ["@lettercms/eslint-config/javascript"]
 }

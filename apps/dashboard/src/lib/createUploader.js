@@ -2,7 +2,7 @@ import ImageHandler from './ImageHandler';
 
 const imageUploader = new ImageHandler();
 
-export default function createUploader({name, subdomain, onLoadStart, onLoadEnd, onData, onError}) {
+export default function createUploader({name, subdomain, onLoadStart, onLoadEnd, onError}) {
   let fileInput = document.querySelector('input.davidsdevel-image[type=file]');
 
   if (fileInput === null) {

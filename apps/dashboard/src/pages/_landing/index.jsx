@@ -1,8 +1,6 @@
-import {useEffect} from 'react';
 import Head from '@/components/landing/head';
 import {getSession} from 'next-auth/react';
 import {Layout} from '@/components/landing/layout';
-import sdk from '@lettercms/sdk';
 import jwt from 'jsonwebtoken';
 import Header from '@/components/landing/index/header';
 import Description from '@/components/landing/index/description';
@@ -29,7 +27,7 @@ export default function HomeLayout({session, accessToken, referrer}) {
   </Layout>;
 }
 
-export async function getServerSideProps({req, res, query}) {
+export async function getServerSideProps({req, query}) {
   const session = await getSession({req});
   const {hl = 'en'} = query;
 

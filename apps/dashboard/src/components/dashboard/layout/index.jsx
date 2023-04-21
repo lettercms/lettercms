@@ -5,7 +5,6 @@ import {signOut} from 'next-auth/react';
 import dynamic from 'next/dynamic';
 import sdk from '@lettercms/sdk';
 import Cookie from 'js-cookie'; 
-import {option} from './option.module.css';
 import {useSession} from 'next-auth/react';
 import {createFirebaseApp } from '@/firebase/client';
 import {getAuth, signInWithCustomToken} from 'firebase/auth';
@@ -14,7 +13,6 @@ import {
   navBar,
   menuAside,
   content,
-  asideHr,
   asideImg,
   asideFooter,
   footerImg,
@@ -38,7 +36,7 @@ const logout = async () => {
   const app = createFirebaseApp();
   const auth = getAuth(app);
 
-  await app.signOut();
+  await auth.signOut();
   await signOut({redirect: false});
   
   Router.push('/login');
@@ -76,7 +74,7 @@ const initLoader = (setLoad, setIsMenuOpen) => {
   });
 };
 
-export function DashboardProvider({userID, children, hideMenu}) {
+export function DashboardProvider({userID, children}) {
   const {status, data} = useSession();
 
   const [blog, setBlog] = useState(null);
@@ -133,10 +131,10 @@ export function DashboardProvider({userID, children, hideMenu}) {
 
       const {user: {firebaseToken, accessToken}} = data;
 
-      //const app = createFirebaseApp();
-      //const auth = getAuth(app);
+      const app = createFirebaseApp();
+      const auth = getAuth(app);
 
-      //signInWithCustomToken(auth, firebaseToken);
+      signInWithCustomToken(auth, firebaseToken);
       
       sdk.setAccessToken(accessToken);
       

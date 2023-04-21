@@ -22,7 +22,7 @@ export default class ModalBase extends Component {
 
     setTimeout(() => this.setState({ display: 'none' }), 610);
   };
-  componentDidUpdate = (props, state) =>  {
+  componentDidUpdate = (props) =>  {
     const isDifferent = props.show !== this.props.show;
 
     if (this.props.show === true && isDifferent) {

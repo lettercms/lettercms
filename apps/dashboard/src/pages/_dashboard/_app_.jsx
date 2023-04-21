@@ -31,7 +31,7 @@ const initApp = setLoad => {
   });
 };
 */
-export default function App({Component, pageProps}) {
+export default function App() {
   /*const [showLoad, setLoad] = useState(false);
   const router = Router.useRouter();
 

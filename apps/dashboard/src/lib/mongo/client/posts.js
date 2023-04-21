@@ -5,7 +5,7 @@ import {findOne as findPost, find as findAll} from '@lettercms/utils/lib/findHel
 import {findSimilars} from '@lettercms/utils/lib/findHelpers/recommendations';
 import '@lettercms/models/accounts';
 
-export async function getPost(subdomain, url, userID) {
+export async function getPost(subdomain, url) {
   await connect();
 
   const fields = 'subdomain,title,description,thumbnail,content,url,published,updated,tags,postStatus,author.*';

@@ -1,10 +1,10 @@
 import {FormattedMessage, useIntl} from 'react-intl';
-import {useState} from 'react';
+//import {useState} from 'react';
 import Input from '@/components/input';
 import Button from '@/components/button';
 
 export default function InvitationCard({onAccept, email}) {
-  const [isLoading, setIsLoading] = useState(false);
+  //const [isLoading, setIsLoading] = useState(false);
 
   const intl = useIntl();
 

@@ -5,22 +5,6 @@ const supportedLanguages = [
   'en'
 ];
 
-function parseQuery(search) {
-  if (!search)
-    return null;
-
-  const query = {};
-
-  const q = search.slice(1);
-  q.split('&').forEach(e => {
-    const [key, value] = e.split('=');
-
-    query[key] = value;
-  });
-
-  return query;
-}
-
 export const config = {
   matcher: [
     '/([^/.]*)',
@@ -46,19 +30,18 @@ export default function middleware(req) {
   else
     language = req.headers.get('accept-language')?.split(',')?.[0].split('-')?.[0].toLowerCase() || 'en';
 
-  //If language is not supported, set to english
   if (!supportedLanguages.includes(language))
     language = 'en';
-
-  const currentHost =
-    process.env.NODE_ENV === 'production' && process.env.VERCEL === '1'
-      ? hostname.replace('.lettercms.vercel.app', '')
-      : hostname.replace('.localhost:3000', '');
 
   url.searchParams.set('hl', language);
 
   if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'prouction')
     return NextResponse.rewrite(url);
+
+  const currentHost =
+    process.env.NODE_ENV === 'production' && process.env.VERCEL === '1'
+      ? hostname.replace('.lettercms.vercel.app', '')
+      : hostname.replace('.localhost:3000', '');
 
   if (currentHost == 'dashboard') {
     if (isLogged && (url.pathname === '/login' || url.pathname === '/signup')) {

@@ -36,21 +36,15 @@ class Card extends Component {
 
   render() {
     const {
-      image,
       content,
       title,
       url,
-      fullUrl,
       comments,
-      ID,
       thumbnail,
-      size,
-      description
+      size
     } = this.props;
 
     const {
-      savedPostsIDs,
-      isSaving,
       shareOpacity,
       shareDisplay
     } = this.state;
