@@ -21,7 +21,6 @@
     "@lettercms/admin": "*",
     "@lettercms/models": "*",
     "@lettercms/sdk": "*",
-    "@lettercms/ui": "*",
     "@lettercms/utils": "*",
     "@sentry/nextjs": "^7.48.0",
     "@upstash/qstash": "^0.3.4",
