@@ -63,7 +63,6 @@ if (!isDev && !process.env.CIRCLECI)
   module.exports = withSentryConfig({
     ...appConfig,
     sentry: {
-      hideSourceMaps: true,
       widenClientFileUpload: true
     },
   }, sentryWebpackPluginOptions);
