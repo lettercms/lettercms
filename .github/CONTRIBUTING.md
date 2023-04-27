@@ -23,7 +23,7 @@ Before submitting your contribution, please make sure to take a moment and read 
 
 - `main` branch is the staging branch. All changes introduced here, will be used to tests new changes in an production env with real users and split testing.
 
-- Create a new branch out of the `main` branch. We follow the convention `[type/scope]`. For example `fix/accordion-hook` or `docs/menu-typo`. `type` can be either `docs`, `fix`, `feat`, `build`, or any other conventional commit type. `scope` is just a short id that describes the scope of work.
+- Create a new branch out of the `main` branch. We follow the convention `[type-scope]`. For example `fix-accordion-hook` or `docs-menu-typo`. `type` can be either `docs`, `fix`, `feat`, `build`, or any other conventional commit type. `scope` is just a short id that describes the scope of work.
 
 - It's OK to have multiple small commits as you work on the PR - GitHub will automatically squash it before merging.
 
@@ -36,6 +36,8 @@ Before submitting your contribution, please make sure to take a moment and read 
   - If you are resolving a special issue, add `(fix #xxxx[,#xxxx])` (#xxxx is the issue id) in your PR title for a better release log, e.g. `update entities encoding/decoding (fix #3899)`.
   - Provide a detailed description of the bug in the PR. Live demo preferred.
   - Add appropriate test coverage if applicable.
+
+- Every Pull Request automatically create a preview deployment and the deployment link will be linked on PR comments. This is handled by Vercel
 
 
 ## Development Setup
