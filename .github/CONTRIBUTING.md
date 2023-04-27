@@ -122,7 +122,6 @@ $ yarn build
 # run the full test suites
 $ yarn test
 
-
 # format MD files
 $ yarn format
 ```
