@@ -22,7 +22,7 @@ jobs:
 
       - run:
           name: Lint
-          command: yarn workspaces run lint
+          command: yarn lint
 
   unit-testing:
     #Run ESLint to check Code Quality
