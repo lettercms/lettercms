@@ -95,12 +95,17 @@ class UserTab extends Component {
         email
       });
 
-      if (status !== 'OK')
+      if (status !== 'OK') {
+
+        localStorage.removeIten('userToken');
+        localStorage.removeIten('userEmail');
+
         return alert(
           intl.formatMessage({
             id: 'Error sending the data'
           })
         );
+      }
 
       this.setState({
         isLoad: false,
@@ -114,6 +119,10 @@ class UserTab extends Component {
           id: 'Error registering user'
         })
       );
+
+      localStorage.removeIten('userToken');
+      localStorage.removeIten('userEmail');
+
       throw err;
     }
   };
