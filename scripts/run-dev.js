@@ -9,9 +9,7 @@ const debug = require('debug');
 const base = process.cwd();
 const envPath = join(base, '.env.local');
 
-
 (async function() {
-
   // Init CDN server
   spawn('node', [join(base, 'scripts', 'serve-files')]);
 
@@ -26,7 +24,7 @@ const envPath = join(base, '.env.local');
       envVars = dotenv.parse(env);
   }
 
-  spawn(join(base, 'node_modules', '.bin', 'next.cmd'), ['dev', join(base, 'apps', 'dashboard')], {
+  spawn(join(base, 'node_modules', '.bin', 'next'), ['dev', join(base, 'apps', 'dashboard')], {
     env: {
       ...process.env,
       ...envVars,

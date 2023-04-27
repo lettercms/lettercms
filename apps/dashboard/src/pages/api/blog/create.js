@@ -25,6 +25,8 @@ export default async function createBlog(req, res) {
 
   const account = await Accounts.findOne({email: ownerEmail}, '_id', {lean: true});
 
+  delete req.body.ownerEmail;
+
   //Create Blog
   const blog = await blogs.create({
     ...req.body,

@@ -43,10 +43,6 @@ const blog = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'BlogAccount'
   },
-  ownerEmail: {
-    type: String,
-    required: true
-  },
   url: {
     type: String,
     default: '1',

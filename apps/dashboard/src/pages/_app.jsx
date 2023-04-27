@@ -8,8 +8,10 @@ import {createFirebaseApp} from '@/firebase/client';
 import Facebook from '@/lib/client/FacebookSDK';
 import '@/styles/global.css';
 
+const isDev = process.env.NODE_ENV !== 'production';
+
 if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production')
-  sdk.endpoint = 'http://192.168.100.41:3000/api/_public';
+  sdk.endpoint = `http${isDev ? '' : 's'}://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/_public`;
 
 export default function App({Component, pageProps: { messages, session, ...pageProps }}) {
   //TODO: Add load on page change
