@@ -63,7 +63,9 @@ Then run:
 $ yarn setup # setup .env template
 ```
 
-Check `.env.local` template and fill with your own credentials
+And fill with your data to setup admin account and database config. Ensure your have defined database path in your MongoDB URI `mongo://localhost/dbpath`
+
+Check `apps/dashboard/.env` template and fill with your own credentials
 
 Then run:
 
@@ -109,10 +111,13 @@ $ yarn dev
 # run code linting
 $ yarn lint
 
+#Fix code Linting
+$ yarn lint:fix
+
 # build all dist files
 $ yarn build
 
-# run the full test suite
+# run the full test suites
 $ yarn test
 ```
 
@@ -124,19 +129,14 @@ $ yarn test
 
 - **`scripts`**: contains build-related scripts and configuration files. Usually, you don't need to touch them. However, it would be helpful to familiarize yourself with the following files:
   - `scripts/discord.js`: send deployment status to Discord.
-  - `scripts/run-dev.js`: start development servers.
-  - `scripts/run-test.js`: run unit testing
   - `scripts/serve-files.js`: serve CDN files
-  - `scripts/setup.js`: setup `.env.local` file template
+  - `scripts/run-setup.js`: setup database and create `.env` file template
 
 - **`packages`**: contains modules which are distributed as separate NPM packages.
   - `packages/admin`: Admin utils
   - `packages/eslint-cofig`: ESLint config
-  - `packages/icons`: SVG icons as JSX
   - `packages/models`: Mongoose models
-  - `packages/next`: NextJS utilities
   - `packages/sdk`: SDK Base (Moved to [SDK](https://github.com/lettercms/sdk) repo)
-  - `packages/ui`: UI commons
   - `packages/utils`: Project Utilities
 
 ## Financial Contribution
