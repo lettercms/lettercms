@@ -1,6 +1,6 @@
-import {useState, useRef, useEffect} from 'react';
+import {useRef, useEffect} from 'react';
 import {shadow, openButton} from './mobileLayout.module.css';
-import AngleRight from '@lettercms/icons/angleRight';
+import {FaAngleRight} from 'react-icons/fa';
 
 export default function MobileLayout({children, isOpen, onOpen, onClose}) {
   const shadowRef = useRef(null);
@@ -26,7 +26,7 @@ export default function MobileLayout({children, isOpen, onOpen, onClose}) {
   return <>
     <div className={shadow} onClick={() => onClose()} ref={shadowRef} />
     <button onClick={() => onOpen()} className={openButton}>
-      <AngleRight height='36' fill='var(--main)'/>
+      <FaAngleRight height='36' fill='var(--main)'/>
     </button>
     {children}
   </>;

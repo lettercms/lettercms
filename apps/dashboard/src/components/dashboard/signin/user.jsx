@@ -4,7 +4,7 @@ import Router from 'next/router';
 import sdk from '@lettercms/sdk';
 import {createAccount, createCollaborator} from '@lettercms/admin';
 import Input from '@/components/input';
-import {FaSpinner} from 'react-icons/fa';
+import {ImSpinner9} from 'react-icons/im';
 import {signIn} from 'next-auth/react';
 import Button from '@/components/button';
 
@@ -153,7 +153,7 @@ class UserTab extends Component {
 
     if (user.ok)
       Router.push('/dashboard');
-  }
+  };
   render() {
     const {isCollab, intl} = this.props;
     const {name, lastname, password, email, existsEmail, isLoad, emailLoad} = this.state;
@@ -167,8 +167,7 @@ class UserTab extends Component {
       emailStatus = 'loading';
 
     return <form className='form' onSubmit={!isCollab ? this.register : this.createCollab}>
-      <div className='username'>
-        
+      <div id='username' className='flex mb-4'>
         <Input
           disabled={isLoad}
           value={name}
@@ -196,8 +195,9 @@ class UserTab extends Component {
       </div>
         {
           !isCollab &&
-          <div id='emailLoad'>
+          <div id='emailLoad' className='flex relative'>
             <Input
+              className='mb-4'
               status={emailStatus}
               disabled={isLoad}
               value={email}
@@ -212,10 +212,7 @@ class UserTab extends Component {
               autoComplete='false'
             />
             {
-              emailLoad &&
-              <div className='load-container'>
-                <FaSpinner width='50' height='50' style={{animation: 'rotation linear 1s infinite'}}/>
-              </div>
+              emailLoad && <ImSpinner9 className='w-6 h-6 animate-spin absolute right-4 top-[.9rem]'/>
             }
             {
               existsEmail === true &&
@@ -228,6 +225,7 @@ class UserTab extends Component {
           </div>
         }
         <Input
+          className='mb-4'
           disabled={isLoad}
           value={password}
           id='password'
@@ -244,20 +242,6 @@ class UserTab extends Component {
           <FormattedMessage id='Register'/>
         </Button>
       <style jsx>{`
-        .username {
-          display: flex;
-          justify-content: space-between;
-        }
-        .load-container {
-          width: 50px;
-          height: 50px;
-          position: absolute;
-          top: 0;
-          right: 0;
-        }
-        #emailLoad {
-          position: relative;
-        }
         .tooltip {
           margin-top: -1rem;
           margin-bottom: 1rem;

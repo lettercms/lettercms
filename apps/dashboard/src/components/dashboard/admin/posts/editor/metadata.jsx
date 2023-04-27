@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import MetaInputs from './metaInputs';
-import SlidersH from '@lettercms/icons/slidersH';
+import {FaSlidersH} from 'react-icons/fa';
 import {useData} from './index';
 
 let timeout = null;
@@ -21,7 +21,7 @@ export default function Metadata({categories}) {
 
   return <div style={{position: 'relative'}}>
     <button onClick={() => setFocus(!focus)} onBlur={() => setFocus(false)} disabled={data.loading}>
-      <SlidersH className='ck ck-icon'/>
+      <FaSlidersH className='ck ck-icon'/>
     </button>
     {
       showMeta &&

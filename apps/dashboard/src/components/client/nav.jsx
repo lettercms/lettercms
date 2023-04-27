@@ -1,6 +1,6 @@
 import {useRef, useState, useEffect} from 'react';
 import Link from 'next/link';
-import Bars from '@lettercms/icons/bars';
+import {FaBars} from 'react-icons/fa';
 
 export default function Nav() {
   const prevScrollY = useRef(0);
@@ -52,7 +52,7 @@ export default function Nav() {
       <img className='h-12' src={`${process.env.ASSETS_BASE}/assets/lettercms-logo.svg`}/>
     </div>
     <button onFocus={() => setViewMenu(true)} onBlur={() => setViewMenu(false)}>
-      <Bars height='32' fill='#362e6f'/>
+      <FaBars height='32' fill='#362e6f'/>
     </button>
   </>;
 
@@ -69,8 +69,8 @@ export default function Nav() {
         <img className='h-20 mt-12 mb-8' src={`${process.env.ASSETS_BASE}/assets/lettercms-logo.svg`}/>
         <ul className='mx-12'>
           <li className='text-center bg-slate-50 rounded-lg text-main-500 my-1 cursor-pointer hover:bg-main-500 hover:text-white transition-all duration-150 ease-in'>
-            <Link href='/'>
-              <a className='h-full w-full block py-4'>Inicio</a>
+            <Link href='/' className='h-full w-full block py-4'>
+              Inicio
             </Link>
           </li>
         </ul>

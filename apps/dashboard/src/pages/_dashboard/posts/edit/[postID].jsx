@@ -1,7 +1,5 @@
-import {useEffect, useState} from 'react';
 import {useIntl} from 'react-intl';
 import Head from 'next/head';
-import sdk from '@lettercms/sdk';
 import {getSession} from 'next-auth/react';
 import {DashboardProvider} from '@/components/dashboard/layout';
 import {getPostData} from '@/lib/mongo/postEdit';
@@ -12,7 +10,7 @@ const Editor = dynamic(() => import('@/components/dashboard/admin/posts/editor')
   loading: PageLoad
 });
 
-export async function getServerSideProps({ req, res, query}) {
+export async function getServerSideProps({req, query}) {
   const {hl} = query;
   const session = await getSession({req});
 
@@ -56,7 +54,7 @@ const PostEditor = ({data, user}) => {
           }
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel= "icon" href="/favicon.ico" />
       </Head>
       <Editor {...data} accessToken={user.accessToken}/>
     </>;

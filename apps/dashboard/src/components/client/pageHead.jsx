@@ -1,4 +1,3 @@
-import React from 'react';
 import NextHead from 'next/head';
 
 const PageHead = (props) => {
@@ -13,13 +12,13 @@ const PageHead = (props) => {
       content={props.description || defaultDescription}
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" sizes="192x192" href="/touch-icon.png" />
-    <link rel="apple-touch-icon" href="/touch-icon.png" />
-    <link rel="mask-icon" href="/favicon-mask.svg" color="#49B882" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel= "icon" sizes="192x192" href="/touch-icon.png" />
+    <link rel= "apple-touch-icon" href="/touch-icon.png" />
+    <link rel= "mask-icon" href="/favicon-mask.svg" color="#49B882" />
+    <link rel= "icon" href="/favicon.ico" />
 
     <link href={props.image || defaultOGImage} rel="image_src" />
-    <link rel="canonical" href={props.url ? `${props.origin}${props.url}` : defaultOGURL} />
+    <link rel= "canonical" href={props.url ? `${props.origin}${props.url}` : defaultOGURL} />
 
     <meta property="og:site_name" content="David's Devel - Blog" />
     <meta content="website" property="og:type" />
@@ -50,7 +49,7 @@ const PageHead = (props) => {
 
     <meta href={props.ogImage || defaultOGImage} content={props.ogImage || defaultOGImage} property='og:image' name='twitter:image' itemProp='image' rel="image_src"/>
 
-    <link rel="manifest" href="/manifest.json" />
+    <link rel= "manifest" href="/manifest.json" />
     <script type="application/ld+json" dangerouslySetInnerHTML={{
       __html: `{
         "@context":"https://schema.org",

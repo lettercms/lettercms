@@ -1,12 +1,8 @@
 import Base from '../../stats/base';
 import Image from 'next/image';
-import {useState, useEffect, useRef} from 'react';
-import BaseLoad from '../../stats/baseLoad';
+import {useState, useEffect} from 'react';
 import ModalBase from '@/components/modal';
 import sdk from '@lettercms/sdk';
-import Input from '@/components/input';
-
-let amount = '2.00';
 
 const paypalOpts = {
   client: {
@@ -24,7 +20,7 @@ const paypalOpts = {
   }
 };
 
-const onApprove = (type, cb) => async function({orderID}, actions) {
+const onApprove = (type, cb) => async function({orderID}) {
   const {status} = await sdk.createRequest('/payment/verify', 'POST', {
     orderID,
     type
@@ -39,12 +35,6 @@ const onApprove = (type, cb) => async function({orderID}, actions) {
 };
 
 const createOrder = purchase_units => (data, actions) => actions.order.create({purchase_units});
-
-const CardLoad = () => <>
-  <BaseLoad rows={2}/>
-  <BaseLoad rows={2}/>
-  <BaseLoad rows={1}/>
-</>;
 
 const generatePrice = (price, data, multiplier) => {
   let used = 0;
@@ -123,9 +113,9 @@ const InvoiceField = ({label, used, total, units, price}) => <>
   `}</style>
 </>;
 
-const Faturation = ({data, lastPayment}) => {
+const Faturation = ({data}) => {
   const {values, total} = generateTotals(data);
-  /*const opts = {...paypalOpts, layout: 'horizontal'};
+  const opts = {...paypalOpts, layout: 'horizontal'};
 
   opts.onApprove = onApprove('payment', () => alert('Pago efectuado con exito'));
   opts.createOrder = async () => {
@@ -144,7 +134,7 @@ const Faturation = ({data, lastPayment}) => {
 
   useEffect(() => {
     window.p = paypal.Buttons(opts).render('#payment-button');
-  }, [opts]);*/
+  }, [opts]);
 
   return <div style={{width: '100%'}}>
     <ul>
@@ -178,7 +168,7 @@ const Faturation = ({data, lastPayment}) => {
 const BalanceModal = ({addFunds}) => {
   const [amount, setAmount] = useState('2.00');
 
-  /*const opts = {...paypalOpts};
+  const opts = {...paypalOpts};
   
   opts.onApprove = onApprove('funds', () => addFunds(parseInt(amount)));
   opts.createOrder = createOrder([
@@ -187,7 +177,7 @@ const BalanceModal = ({addFunds}) => {
 
   useEffect(() => {
     window.p2 = paypal.Buttons(opts).render('#paypalCheckoutContainer');
-  }, [opts]);*/
+  }, [opts]);
 
   return <div className='modal-funding'>
     <div className='modal-prices'>

@@ -1,12 +1,11 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {useRouter} from 'next/router';
 import sdk from '@lettercms/sdk';
-import Router from 'next/router';
 import Cookies from 'js-cookie';
 import {useToken} from '@/lib/userContext';
 
 
-const Layout = ({children, userID}) => {
+export default function Layout({children}) {
   const {accessToken} = useToken();
   const {query: {url}} = useRouter();
 
@@ -45,5 +44,3 @@ const Layout = ({children, userID}) => {
 
   return children;
 };
-
-export default Layout;

@@ -7,7 +7,7 @@ import Input from '@/components/input';
 import Button from '@/components/button';
 import Card from '@/components/landing/blog/card';
 import Head from 'next/head';
-import Spinner from '@lettercms/icons/spinner';
+import {ImSpinner9} from 'react-icons/im';
 import {Layout} from '@/components/landing/layout';
 import {captureException} from '@sentry/nextjs';
 
@@ -18,7 +18,7 @@ const Search = ({q}) => {
   const prevSearch = useRef(null);
 
   const [isLoading, setLoad] = useState(!!q);
-  const [hasMore, setHasMore] = useState(false);
+  //const [hasMore, setHasMore] = useState(false);
   const router = useRouter();
 
   const doSearch = query !== prevSearch.current;
@@ -38,11 +38,11 @@ const Search = ({q}) => {
             'comments'
           ]
         })
-        .then(({data, paging}) => {
-          if (paging.cursors.before)
+        .then(({data/*, paging*/}) => {
+          /*if (paging.cursors.before)
             setHasMore(true);
           else
-            setHasMore(false);
+            setHasMore(false);*/
 
           setData(data);
 
@@ -84,14 +84,14 @@ const Search = ({q}) => {
       {
         isLoading &&
         <div className='w-full flex justify-center'>
-          <Spinner className='animate-spin' width='80'/>
+          <ImSpinner9 className='animate-spin' width='80'/>
         </div>
       }
     </div>
   </div>;
 };
 
-export const getServerSideProps = async ({req, res, query}) => {
+export const getServerSideProps = async ({req, query}) => {
   try {
     const {hl = 'en', q} = query;
     const session = await getSession({req});

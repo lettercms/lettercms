@@ -15,9 +15,7 @@ if (!cached)
 const opts = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useFindAndModify: false,
   //bufferCommands: false,
-  useCreateIndex: true
 };
 
 export default async function dbConnect() {

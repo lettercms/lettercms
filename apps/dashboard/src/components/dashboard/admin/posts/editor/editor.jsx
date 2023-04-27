@@ -64,9 +64,9 @@ export default function Editor({onOpenModal}) {
 
             if (images?.length > 0) {
 
-              const im = Array.from(images).map(e => e.dataset.src ? e.dataset.src : e.src);
+              const allImages = Array.from(images).map(e => e.dataset.src ? e.dataset.src : e.src);
 
-              setData('images', im);
+              setData('images', allImages);
             }
           }
         }}
@@ -78,9 +78,9 @@ export default function Editor({onOpenModal}) {
           const images = ck.getElementsByTagName('img');
 
           if (images?.length > 0) {
-            const im = Array.from(images).map(e => e.dataset.src ? e.dataset.src : e.src);
+            const allImages = Array.from(images).map(e => e.dataset.src ? e.dataset.src : e.src);
 
-            setData('images', im);
+            setData('images', allImages);
           }
 
           setData('content', content);

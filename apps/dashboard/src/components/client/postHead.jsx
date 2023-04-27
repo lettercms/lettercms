@@ -1,4 +1,3 @@
-import React from 'react';
 import NextHead from './_headBase';
 
 const Head = (props) => {

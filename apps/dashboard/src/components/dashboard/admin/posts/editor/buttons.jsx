@@ -2,9 +2,8 @@ import {useIntl} from 'react-intl';
 import {buttons, send, save} from './buttons.module.css';
 import {useData} from './index';
 
-import Eye from '@lettercms/icons/preview';
-import Save from '@lettercms/icons/save';
-import Send from '@lettercms/icons/send';
+import {FaEye, FaSave} from 'react-icons/fa';
+import {MdSend}  from 'react-icons/md';
 
 export default function Buttons({postStatus, onPreview, onSave, onPublish, isSaved}) {
   const [data] = useData();
@@ -21,7 +20,7 @@ export default function Buttons({postStatus, onPreview, onSave, onPublish, isSav
       }
       onClick={onPreview}
     >
-      <Eye fill='#5f4dee'/>
+      <FaEye fill='#5f4dee'/>
     </button>
     <button
       className={save}
@@ -37,7 +36,7 @@ export default function Buttons({postStatus, onPreview, onSave, onPublish, isSav
         }
       onClick={onSave}
     >
-      <Save fill='#5f4dee'/>
+      <FaSave fill='#5f4dee'/>
     </button>
     <button
       className={send}
@@ -53,7 +52,7 @@ export default function Buttons({postStatus, onPreview, onSave, onPublish, isSav
       }
       onClick={onPublish}
     >
-      <Send fill='#fff'/>
+      <MdSend fill='#fff'/>
     </button>
   </div>;
 }

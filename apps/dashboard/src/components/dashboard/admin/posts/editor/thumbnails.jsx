@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import List from './thumbnailList';
-import ImageIcon from '@lettercms/icons/image';
+import {FaImage} from 'react-icons/fa';
 import {useData} from './index';
 
 let timeout = null;
@@ -22,7 +22,7 @@ export default function Metadata() {
 
   return <div style={{position: 'relative'}}>
     <button onClick={() => setFocus(!focus)} onBlur={() => setFocus(false)} dislabled={data.loading}>
-      <ImageIcon className='ck ck-icon'/>
+      <FaImage className='ck ck-icon'/>
     </button>
     {
       showList &&

@@ -1,9 +1,8 @@
 import Post from '@/components/landing/post';
-import {getSession} from 'next-auth/react';
 import {getPreview} from '@/lib/mongo/posts';
 import jwt from 'jsonwebtoken';
 
-export const getServerSideProps = async ({req, res, query}) => {  
+export const getServerSideProps = async ({query}) => {  
   const {id, hl = 'en'} = query;
   const {notFound, post} = await getPreview(id);
 

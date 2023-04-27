@@ -4,14 +4,13 @@ import dynamic from 'next/dynamic';
 import Router from 'next/router';
 import Datetime from 'react-datetime';
 import moment from 'moment';
-import Input from '../../input';
-import ModalBase from '../../modalBase';
+import Input from '@/components/input';
+import ModalBase from '@/components/modal';
 import ImageSelector from './imageSelector';
 import ImageList from './imagesList';
 import sdk from '@lettercms/sdk';
 import Button from '@/components/button';
-import FBIco from '@lettercms/icons/facebook';
-import IGIco from '@lettercms/icons/instagram';
+import {FaFacebook, FaInstagram} from 'react-icons/fa';
 import 'react-datetime/css/react-datetime.css';
 
 const Load = () => <img alt='' src='https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/spinner.svg' style={{animation: 'rotation linear .3s infinite', width: 5}}/>;
@@ -29,7 +28,7 @@ const ClearDate = () => <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448
 const renderInput =  (isOpen, date, clearDate) => {
   return function Time (props, openCalendar, closeCalendar){
     return <div id='date-container'>
-      <button id='date-button' disabled={!date} onClick={e => {
+      <button id='date-button' disabled={!date} onClick={() => {
         if (date) {
           clearDate();
           closeCalendar();
@@ -165,7 +164,7 @@ const Publish = ({accounts}) => {
   useEffect(() => {
     if (hl !== 'en')
       import(`moment/locale/${hl}`)
-        .then(e => setLocaleLoaded(true));
+        .then(() => setLocaleLoaded(true));
   }, [hl]);
 
   return <div className='publish-container flex'>
@@ -233,7 +232,7 @@ const Publish = ({accounts}) => {
         hasFacebook &&
         <>
           <div className='social-title'>
-            <FBIco height='32'/>
+            <FaFacebook height='32'/>
             <span>Facebook</span>
           </div>
           <Facebook content={content} images={images} pageImage={accounts.facebook.picture} pageName={accounts.facebook.name}/>
@@ -243,7 +242,7 @@ const Publish = ({accounts}) => {
         hasInstagram &&
         <>
           <div className='social-title'>
-            <IGIco height='32'/>
+            <FaInstagram height='32'/>
             <span>Instagram</span>
           </div>
           <Instagram content={content} images={images} pageImage={accounts.instagram.picture} pageName={accounts.instagram.name}/>

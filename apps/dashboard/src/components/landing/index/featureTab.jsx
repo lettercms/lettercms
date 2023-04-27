@@ -1,9 +1,8 @@
+import {useEffect, useRef} from 'react';
 import {FaCircle} from 'react-icons/fa';
 import {FormattedMessage, useIntl} from 'react-intl';
 import Button from '@/components/button';
 import {useRouter} from 'next/router';
-import {useState, useEffect, useRef} from 'react';
-
 
 export default function FeaturesTab({tab, index, title, img, description, feats}) {
   const ref = useRef(null);

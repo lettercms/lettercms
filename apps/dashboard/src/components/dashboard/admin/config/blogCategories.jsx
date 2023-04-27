@@ -1,12 +1,10 @@
-import sdk from '@lettercms/sdk';
-import Image from 'next/image';
-import Trash from '@lettercms/icons/trash';
+import {FaTrash} from 'react-icons/fa';
 
 const Categories = ({categories, onDelete}) => <ul id="categories">
   {categories.map((name) => (
     <li key={name}>
       <span className="name">{name}</span>
-      <Trash style={{cursor: 'pointer'}} width='20' height='20' fill='#999' onClick={() => onDelete(name)}/>
+      <FaTrash style={{cursor: 'pointer'}} width='20' height='20' fill='#999' onClick={() => onDelete(name)}/>
     </li>
   ))}
   <style jsx>{`

@@ -26,7 +26,7 @@ export default function ImageList({images, isUploading, onLoadMore, isLoadingMor
       </li>)
     */}
     {
-      images.map((e, i) => <li key={e.url} onClick={() => {
+      images.map(e => <li key={e.url} onClick={() => {
         setMeta({
           raw: e.raw || e.url,
           user: e.user?.name,

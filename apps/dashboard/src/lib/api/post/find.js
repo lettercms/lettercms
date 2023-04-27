@@ -22,7 +22,7 @@ const generateConditions = query => {
 };
 
 export default async function GetPost() {
-  const {req: {subdomain, query}, res, findSingle} = this;
+  const {req: {subdomain, query}, res} = this;
 
   const {
     url

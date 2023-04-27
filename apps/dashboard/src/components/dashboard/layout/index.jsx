@@ -1,12 +1,10 @@
 import {useState, useEffect, createContext, useContext, useRef} from 'react';
-import Home from '@lettercms/icons/home';
 import Router from 'next/router';
 import Link from 'next/link';
 import {signOut} from 'next-auth/react';
 import dynamic from 'next/dynamic';
 import sdk from '@lettercms/sdk';
 import Cookie from 'js-cookie'; 
-import {option} from './option.module.css';
 import {useSession} from 'next-auth/react';
 import {createFirebaseApp } from '@/firebase/client';
 import {getAuth, signInWithCustomToken} from 'firebase/auth';
@@ -15,7 +13,6 @@ import {
   navBar,
   menuAside,
   content,
-  asideHr,
   asideImg,
   asideFooter,
   footerImg,
@@ -26,8 +23,7 @@ import {
   languageBox
 } from './index.module.css';
 import MenuLoad from './menuLoad';
-
-import SignOutIcon from '@lettercms/icons/signOut';
+import {FaHome, FaSignOutAlt} from 'react-icons/fa';
 import languages from './languages';
 import MobileLayout from './mobileLayout';
 
@@ -40,7 +36,7 @@ const logout = async () => {
   const app = createFirebaseApp();
   const auth = getAuth(app);
 
-  await app.signOut();
+  await auth.signOut();
   await signOut({redirect: false});
   
   Router.push('/login');
@@ -78,7 +74,7 @@ const initLoader = (setLoad, setIsMenuOpen) => {
   });
 };
 
-export function DashboardProvider({userID, children, hideMenu}) {
+export function DashboardProvider({userID, children}) {
   const {status, data} = useSession();
 
   const [blog, setBlog] = useState(null);
@@ -135,10 +131,10 @@ export function DashboardProvider({userID, children, hideMenu}) {
 
       const {user: {firebaseToken, accessToken}} = data;
 
-      //const app = createFirebaseApp();
-      //const auth = getAuth(app);
+      const app = createFirebaseApp();
+      const auth = getAuth(app);
 
-      //signInWithCustomToken(auth, firebaseToken);
+      signInWithCustomToken(auth, firebaseToken);
       
       sdk.setAccessToken(accessToken);
       
@@ -182,10 +178,8 @@ export function DashboardProvider({userID, children, hideMenu}) {
           }
           {
             !isLoading &&
-            <Link href={`https://${blog?.domain}${blog?.mainUrl}`}>
-              <a target='_blank' className={dashboardHome}>
-                <Home fill='#362e6f' height='20'/>
-              </a>
+            <Link target='_blank' href={`https://${blog?.domain}${blog?.mainUrl}`} className={dashboardHome}>
+              <FaHome fill='#362e6f' height='20'/>
             </Link>
           }
           {
@@ -209,7 +203,7 @@ export function DashboardProvider({userID, children, hideMenu}) {
             <li>
               <div className={bottomButtons}>
                 <button onClick={logout}>
-                  <SignOutIcon fill='#362e6f' height='24'/>
+                  <FaSignOutAlt fill='#362e6f' height='24'/>
                 </button>
                 <button onFocus={() => setIsOpenLanguages(true)} onBlur={() => setIsOpenLanguages(false)}>
                   {
@@ -229,9 +223,7 @@ export function DashboardProvider({userID, children, hideMenu}) {
               </div>
             </li>
             <Link href='/'>
-              <a>
-                <img src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt='LetterCMS linear Logo' className={footerImg}/> 
-              </a>
+              <img src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt='LetterCMS linear Logo' className={footerImg}/> 
             </Link>
           </div>
         </aside>

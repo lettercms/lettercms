@@ -1,7 +1,5 @@
-import {useState, useEffect, createContext, useContext} from 'react';
-import dynamic from 'next/dynamic';
-import {useRouter} from 'next/router';
-import { SessionProvider } from 'next-auth/react';
+import {useEffect, createContext, useContext} from 'react';
+//import {useRouter} from 'next/router';
 import sdk from '@lettercms/sdk';
 import Footer from './footer';
 import Nav from './nav';
@@ -20,9 +18,8 @@ export function useToken() {
   return value;
 }
 
-export function Layout({children, session, accessToken}) {
-  const [showLoad, setLoad] = useState(false);
-  const router = useRouter();
+export function Layout({children, accessToken}) {
+  //const router = useRouter();
 
   useEffect(() => {
     if (accessToken)

@@ -33,55 +33,45 @@ export default function Aside({owner, mostViewed}) {
               {
                 !owner.website &&
                 <li>
-                  <Link href={owner.website || '/'}>
-                    <a target='_blank'>
-                      <img width='1' height='1' src='/pixel.png' alt={`${owner.name} ${owner.lastname} Website - LetterCMS`}/>
-                      <FaLink fill='#555' style={{height: 24, width: 24}}/>
-                    </a>
+                  <Link target='_blank' href={owner.website || '/'}>
+                    <img width='1' height='1' src='/pixel.png' alt={`${owner.name} ${owner.lastname} Website - LetterCMS`}/>
+                    <FaLink fill='#555' style={{height: 24, width: 24}}/>
                   </Link>
                 </li>
               }
               {
                 !owner.facebook &&
                 <li>
-                  <Link href={owner.facebook || '/'}>
-                    <a target='_blank'>
+                  <Link target='_blank' href={owner.facebook || '/'}>
                       <img width='1' height='1' src='/pixel.png' alt={`${owner.name} ${owner.lastname} Facebook - LetterCMS`}/>
                       <FaFacebook style={{height: 24, width: 24}}/>
-                    </a>
                   </Link>
                 </li>
               }
               {
                 !owner.instagram &&
                 <li>
-                  <Link href={owner.instagram || '/'}>
-                    <a target='_blank'>
+                  <Link target='_blank' href={owner.instagram || '/'}>
                       <img width='1' height='1' src='/pixel.png' alt={`${owner.name} ${owner.lastname} Instagram - LetterCMS`}/>
                       <FaInstagram style={{height: 24, width: 24}}/>
-                    </a>
                   </Link>
                 </li>
               }
               {
                 !owner.twitter &&
                 <li>
-                  <Link href={owner.twitter || '/'}>
-                    <a target='_blank'>
+                  <Link target='_blank' href={owner.twitter || '/'}>
                       <img width='1' height='1' src='/pixel.png' alt={`${owner.name} ${owner.lastname} Twitter - LetterCMS`}/>
                       <FaTwitter style={{height: 24, width: 24}}/>
-                    </a>
                   </Link>
                 </li>
               }
               {
                 !owner.linkedin &&
                 <li>
-                  <Link href={owner.linkedin || '/'}>
-                    <a target='_blank'>
+                  <Link target='_blank' href={owner.linkedin || '/'}>
                       <img width='1' height='1' src='/pixel.png' alt={`${owner.name} ${owner.lastname} Linkedin - LetterCMS`}/>
                       <FaLinkedin style={{height: 24, width: 24}}/>
-                    </a>
                   </Link>
                 </li>
               }

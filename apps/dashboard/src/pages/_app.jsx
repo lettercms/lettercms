@@ -1,13 +1,21 @@
 import { SessionProvider } from 'next-auth/react';
-import {useState} from 'react';
+import {/*useState, */useEffect} from 'react';
 import Router from 'next/router';
+import sdk from '@lettercms/sdk';
 import { Toaster } from 'react-hot-toast';
 import {IntlProvider} from 'react-intl';
 import {createFirebaseApp} from '@/firebase/client';
+import Facebook from '@/lib/client/FacebookSDK';
 import '@/styles/global.css';
 
+const isDev = process.env.NODE_ENV !== 'production';
+
+if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production')
+  sdk.endpoint = `http${isDev ? '' : 's'}://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/_public`;
+
 export default function App({Component, pageProps: { messages, session, ...pageProps }}) {
-  const [showLoad, setLoad] = useState(false);
+  //TODO: Add load on page change
+  //const [showLoad, setLoad] = useState(false);
   const router = Router.useRouter();
 
   const {hl} = router.query;

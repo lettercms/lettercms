@@ -4,13 +4,12 @@ import {createBlog} from '@lettercms/admin';
 import Router from 'next/router';
 import Input from '@/components/input';
 import Button from '@/components/button';
-import Image from 'next/image';
 import sdk from '@lettercms/sdk';
 
 class BlogTab extends Component {
   state = {
     isLoad: false
-  }
+  };
   handleInput = ({target: {name, value}}) => this.setState({
     [name]: name === 'subdomain'
       ? value.toLowerCase()
@@ -29,7 +28,7 @@ class BlogTab extends Component {
       : value
   });
   existsSubdomain = async e => {
-    const {target: {name, value}} = e;
+    const {target: {value}} = e;
 
     this.setState({
       existsSubdomain: null
@@ -42,13 +41,13 @@ class BlogTab extends Component {
     this.setState({
       existsSubdomain: exists
     });
-  }
+  };
   createBlog = async e => {
     const {
       intl
     } = this.props;
 
-    const {isLoad, subdomain, title, description, existsSubdomain} = this.state;
+    const {subdomain, title, description, existsSubdomain} = this.state;
     
     if (existsSubdomain)
       return;
@@ -99,7 +98,7 @@ class BlogTab extends Component {
       );
       throw err;
     }
-  }
+  };
   render() {
     const {intl} = this.props;
     const {isLoad, subdomain, title, description, existsSubdomain} = this.state;

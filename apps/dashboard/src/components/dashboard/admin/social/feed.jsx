@@ -1,5 +1,4 @@
 import {Component} from 'react';
-import sdk from '@lettercms/sdk';
 import FacebookCard from './facebookCard';
 import InstagramCard from './instagramCard';
 import Load from '../../logoLoad';
@@ -39,7 +38,7 @@ export default class Feed extends Component {
       alert('Error al obtener las entradas');
       throw err;
     }
-  }
+  };
 
   render() {
     const {type} = this.props;

@@ -1,5 +1,4 @@
 import Schema from './posts';
-import jwt from 'jsonwebtoken';
 
 /*
 const Notification = require('../SendNotification');
@@ -95,11 +94,9 @@ Schema.statics.setView = async function(url, subdomain) {
  *
  * @return {Promise}
  */
-Schema.statics.setComment = async function(url, subdomain) {
+Schema.statics.setComment = async function(url) {
   try {
-    await this.updateOne({ url }, {comments: {$increment: 1}});
-
-    return Promise.resolve();
+    return this.updateOne({url}, {comments: {$increment: 1}});
   } catch (err) {
     return Promise.reject(err);
   }
@@ -133,13 +130,7 @@ Schema.statics.createPost = async function(subdomain, data) {
  */
 Schema.statics.publishPost = async function(condition, data) {
   try {
-    const {
-      _id,
-      url,
-      subdomain
-    } = condition;
-
-    let existsPost = false;
+    const {subdomain} = condition;
 
     if (data.url) {
       const existsPost = await this.exists({
@@ -194,7 +185,7 @@ Schema.statics.publishPost = async function(condition, data) {
     return Promise.reject(err);
   }
 };
-Schema.statics.draftPost = async function(condition, data) {
+Schema.statics.draftPost = async function(condition) {
   try {
     const {_id} = await this.findOneAndUpdate(condition, {
       postStatus: 'draft'
@@ -220,13 +211,7 @@ Schema.statics.draftPost = async function(condition, data) {
  */
 Schema.statics.updatePost = async function(condition, data) {
   try {
-    const {
-      _id,
-      url,
-      subdomain
-    } = condition;
-
-    let existsPost = false;
+    const {subdomain} = condition;
 
     if (data.url) {
       const existsPost = await this.exists({

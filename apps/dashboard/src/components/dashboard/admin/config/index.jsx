@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useEffect } from 'react';
+﻿import {useEffect} from 'react';
 import BaseLoad from '../stats/baseLoad';
 import AccountLoad from './account/load';
 import dynamic from 'next/dynamic';
@@ -10,6 +10,7 @@ const Blog = dynamic(() => import('./blogConfig'), {
     <BaseLoad rows={1}/>
   </div>
 });
+
 /*const Payment = dynamic(() => import('./payment'), {
   loading: () => <div className='config-opts'>
     <BaseLoad rows={2}/>

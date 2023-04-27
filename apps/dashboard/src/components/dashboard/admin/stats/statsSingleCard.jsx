@@ -1,7 +1,5 @@
 import {useUser} from '@/components/dashboard/layout';
-import Bubbles from '@lettercms/icons/bubbles';
-import Eye from '@lettercms/icons/eye';
-import Link from '@lettercms/icons/link';
+import {FaComments, FaEye, FaLink} from 'react-icons/fa';
 
 const Card = ({
   _id,
@@ -10,8 +8,7 @@ const Card = ({
   tags,
   comments,
   views,
-  url,
-  subdomain
+  url
 }) => {
   const {blog} = useUser();
 
@@ -29,16 +26,16 @@ const Card = ({
           && <span className="tags">{tags.join(', ')}</span>
         }
         <div className="align">
-          <Bubbles height='24'/>
+          <FaComments height='24'/>
           <span>{comments}</span>
         </div>
         <div className="align">
-          <Eye height='24'/>
+          <FaEye height='24'/>
           <span>{views}</span>
         </div>
         <div className="buttons">
           <div className='card-icon' onClick={() => window.open(`https://${blog.domain}/${url}`, '_blank')}>
-            <Link height='24'/>
+            <FaLink height='24'/>
           </div>
         </div>
       </div>

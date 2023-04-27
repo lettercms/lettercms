@@ -5,7 +5,7 @@ import {getPost} from '@/lib/mongo/posts';
 import jwt from 'jsonwebtoken';
 import {captureException} from '@sentry/nextjs';
 
-export const getServerSideProps = async ({req, res, query}) => {
+export const getServerSideProps = async ({req, query}) => {
   try {
     const {url, hl = 'en'} = query;
     const userID = req?.cookies.userID || 'no-user';

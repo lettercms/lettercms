@@ -1,18 +1,10 @@
 const { withSentryConfig } = require('@sentry/nextjs');
 const path = require('path');
-const withTM = require("next-transpile-modules")([
-  "@lettercms/ui",
-  "@lettercms/models",
-  "@lettercms/utils",
-  "@lettercms/admin",
-  "@lettercms/icons",
-  "@lettercms/sdk"
-]);
 
 const isDev = process.env.NODE_ENV !== 'production';
 
-const appConfig = withTM({
-  swcMinify: true,
+const appConfig = {
+  //swcMinify: true,
   compiler: {
     removeConsole: !isDev
   },
@@ -61,19 +53,18 @@ const appConfig = withTM({
       }
     ]
   }
-})
+};
 
 const sentryWebpackPluginOptions = {
   silent: true
 }
 
-if (isDev)
-  module.exports = appConfig;
-else
+if (!isDev && !process.env.CIRCLECI)
   module.exports = withSentryConfig({
     ...appConfig,
     sentry: {
-      hideSourceMaps: true,
       widenClientFileUpload: true
     },
   }, sentryWebpackPluginOptions);
+else
+  module.exports = appConfig;

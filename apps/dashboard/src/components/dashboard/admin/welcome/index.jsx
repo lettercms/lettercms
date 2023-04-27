@@ -1,9 +1,6 @@
-import {useEffect, useState} from'react';
 import FirstTime from'./firstTime';
 import Dashboard from'./dashboard';
-import sdk from '@lettercms/sdk';
 import Load from '../../logoLoad';
-import Router from 'next/router';
 import {useUser} from '@/components/dashboard/layout';
 
 const Welcome = () => {

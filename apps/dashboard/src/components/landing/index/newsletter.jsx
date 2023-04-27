@@ -2,14 +2,13 @@ import {FormattedMessage} from 'react-intl';
 import Link from 'next/link';
 import {useState} from 'react';
 import Input from '@/components/input';
-import * as admin from '@lettercms/admin';
 import Button from '@/components/button';
 import Container from '@/components/container';
 
 
 export default function Newsletter() {
   const [email, setEmail] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); //eslint-disable-line
 
   return <div className="py-8">
       <Container className='bg-white m-auto max-w-2xl'>
@@ -36,15 +35,11 @@ export default function Newsletter() {
               <span>      
                 <FormattedMessage id={'I\'ve read and accept the '}/>
                 <Link href='/privacy'>
-                  <a>
-                    <FormattedMessage id='Privacy policies'/>
-                  </a>
+                  <FormattedMessage id='Privacy policies'/>
                 </Link>
                 <FormattedMessage id=' and the '/>
                 <Link href='/conditions'>
-                  <a>
-                    <FormattedMessage id='Terms and Conditions'/>
-                  </a>
+                  <FormattedMessage id='Terms and Conditions'/>
                 </Link>
                 <FormattedMessage id=' of LetterCMS'/>
               </span>

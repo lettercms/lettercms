@@ -41,12 +41,12 @@ const Head = props => {
     <meta itemProp="description" content={props.description} />
     <meta itemProp="image" content={props.ogImage || defaultOGImage}  />
 
-    <link rel="image_src" href={props.ogImage || defaultOGImage} />
-    <link rel="canonical" href={props.url} />
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="alternate" type="application/rss+xml" href="//www.lettercms.com/feed"/>
-    <link rel="alternate" href={props.url} hrefLang="x-default"/>
-    <link rel="alternate" href={props.url} hrefLang="es"/>
+    <link rel= "image_src" href={props.ogImage || defaultOGImage} />
+    <link rel= "canonical" href={props.url} />
+    <link rel= "icon" href="/favicon.ico" />
+    <link rel= "alternate" type="application/rss+xml" href="//www.lettercms.com/feed"/>
+    <link rel= "alternate" href={props.url} hrefLang="x-default"/>
+    <link rel= "alternate" href={props.url} hrefLang="es"/>
     {props.children}
   </NextHead>;
 };

@@ -1,6 +1,5 @@
-import {getPathType, getBlog} from '@/lib/mongo/blogs';
-import {getPost} from '@/lib/mongo/posts';
-import {captureException} from '@sentry/nextjs';
+import {getPathType, getBlog} from '@/lib/mongo/client/blogs';
+import {getPost} from '@/lib/mongo/client/posts';
 
 export default async function getData(req, res) {
   if (req.method !== 'GET')

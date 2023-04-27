@@ -3,7 +3,7 @@ import Input from '@/components/input';
 import {metaInputs} from './metaInputs.module.css';
 import {useData} from './index';
 
-export default function MetaInputs({categories, onFocus, onBlur, onChange}) {
+export default function MetaInputs({categories, onFocus, onBlur}) {
   const [data, setData] = useData();
   const intl = useIntl();
 

@@ -1,6 +1,5 @@
 import {useEffect} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {useUser} from '@/components/dashboard/layout';
 import sdk from '@lettercms/sdk';
 import Link from 'next/link';
 
@@ -36,9 +35,7 @@ const FirstTime = ({name, id}) =>  {
           <FormattedMessage id='Read our'/>
         </span>
         <Link href='/terms'>
-          <a>
-            <FormattedMessage id='Terms and Conditions'/>
-          </a>
+          <FormattedMessage id='Terms and Conditions'/>
         </Link>
       </div>
       <div>

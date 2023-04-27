@@ -11,8 +11,6 @@ async function POST() {
   if (isAdmin) {
     const {template, name, email} = data;
 
-    let {role} = data;
-
     if (template === 'verify') {
        //delete expired codes
       await Codes.deleteMany({email});

@@ -1,7 +1,7 @@
 import { NextSeo } from 'next-seo';
-import Header from '@/components/home/header';
-import Recommended from '@/components/home/recommended';
-import Aside from '@/components/home/aside';
+import Header from '@/components/client/home/header';
+//import Recommended from '@/components/client/home/recommended';
+import Aside from '@/components/client/home/aside';
 import Content from './content';
 import Card from './recommendCard';
 

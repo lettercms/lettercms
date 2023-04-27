@@ -5,7 +5,6 @@ export default async function updateCategories(subdomain, newCategories) {
 
   const {categories} = await blogs.findOne({subdomain}, 'categories');
 
-  const data = {};
   const diff = getDiff(categories, newCategories);
 
   if (diff.toAdd?.length > 0 || diff.toDelete?.length > 0) {

@@ -5,7 +5,7 @@ const Input = ({className, id, status, value = '', type = 'text', label, ...opts
 
   const isTextarea = type === 'textarea';
   const isRadio = type === 'radio';
-  const isCheckbox = type === 'checkbox';
+  //const isCheckbox = type === 'checkbox';
   const isInput = !isRadio && !isTextarea;
   const isEmpty = !value;
 

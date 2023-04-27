@@ -1,11 +1,11 @@
-import {useIntl, FormattedMessage} from 'react-intl';
+import {useIntl} from 'react-intl';
 import Base from '../../stats/base';
 import dynamic from 'next/dynamic';
-import Spinner from '@lettercms/icons/spinner';
+import {ImSpinner9} from 'react-icons/im';
 
 const loading = () => <div style={{display: 'flex', justifyContent: 'center'}}>
   <span>
-    <Spinner fill='#000'/>
+    <ImSpinner9 fill='#000'/>
   </span>
 </div>;
 

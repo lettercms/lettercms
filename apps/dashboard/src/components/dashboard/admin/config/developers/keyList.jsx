@@ -1,5 +1,5 @@
 import {FormattedMessage, useIntl} from 'react-intl';
-import Trash from '@lettercms/icons/trash';
+import {FaTrash} from 'react-icons/fa';
 import sdk from '@lettercms/sdk';
 
 //TODO: add confirmation modal to delete
@@ -63,7 +63,7 @@ export default function KeyList({apiKeys, onDelete}) {
             </div>
             <div>
               <div>
-                <Trash onClick={() => deleteKey(e._id)} width='24' height='24'/>
+                <FaTrash onClick={() => deleteKey(e._id)} width='24' height='24'/>
               </div>
             </div>
           </li>;

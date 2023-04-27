@@ -1,4 +1,3 @@
-import _sdk from '@lettercms/sdk';
 import connect from '@lettercms/utils/lib/connection';
 import posts from '@lettercms/models/posts';
 

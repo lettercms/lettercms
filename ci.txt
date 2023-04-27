@@ -1,0 +1,21 @@
+Branch
+
+[features branch] - Active development
+main - Staging
+production - Production
+
+workflow
+[feature or fix] -> main -> production
+
+Main is for test ideas in a production env. Can create split testing between production.
+
+
+CI functions
+
+CircleCI is for build and testing
+VercelCI for deployment
+Github Actions for manage pull request and code review
+
+When create a PR notify to discord (Private channel to mantainers), then quality, build, testing, coverage.
+
+Once is approved, merge with main to test the idea on real env with split testing to check errors on production.

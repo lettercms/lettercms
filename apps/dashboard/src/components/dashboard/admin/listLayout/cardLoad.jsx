@@ -1,4 +1,4 @@
-import {load, main, image, text, contentLoad} from './cardLoad.module.css';
+import {main, image, text, contentLoad} from './cardLoad.module.css';
 
 export default function CardLoad() {
   return <li className={main}>

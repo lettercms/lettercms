@@ -1,6 +1,4 @@
-import {useEffect, useState} from 'react';
 import Head from 'next/head';
-import sdk from '@lettercms/sdk';
 import {getSession} from 'next-auth/react';
 import {DashboardProvider} from '@/components/dashboard/layout';
 import dynamic from 'next/dynamic';
@@ -10,7 +8,7 @@ const Comments = dynamic(() => import('@/components/dashboard/admin/comments'), 
   loading: PageLoad
 });
 
-export async function getServerSideProps({ req, res, query}) {
+export async function getServerSideProps({req}) {
   const session = await getSession({req});
 
   if (!session)
@@ -30,12 +28,12 @@ export async function getServerSideProps({ req, res, query}) {
   };
 }
 
-const AdminDashboard = ({tab, user}) => {
+function AdminDashboard() {
   return <>
       <Head>
         <title>Comentarios | Dashboard - LetterCMS</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel= "icon" href="/favicon.ico" />
       </Head>
       <Comments/>
     </>;

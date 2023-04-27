@@ -1,4 +1,4 @@
-import * as socials from '@lettercms/models/socials';
+import * as stats from '@lettercms/models/stats';
 import getEntry from './generateEntryChannel';
 
 export default async function Session() {

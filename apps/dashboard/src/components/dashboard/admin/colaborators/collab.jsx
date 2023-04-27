@@ -4,16 +4,15 @@ import Details from './details';
 import Base from '@/components/modal';
 
 export default function Collab({id, onClose}) {
-  const [loading, setLoad] = useState(true);
   const [user, setUser] = useState({});
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    if (!showModal && !loading) {
+    if (!showModal) {
       setShowModal(false);
       setTimeout(onClose, 600);
     }
-  }, [showModal, loading, onClose]);
+  }, [showModal, onClose]);
 
   useEffect(() => {
     if (id) {

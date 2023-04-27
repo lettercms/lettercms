@@ -1,17 +1,14 @@
-import {useEffect, useState, useMemo} from 'react';
+import {useEffect, useState} from 'react';
 import {useIntl} from 'react-intl';
-import {useRouter} from 'next/router';
 import Top from './top';
 import ListContainer from './listContainer';
 import sdk from '@lettercms/sdk';
 import NoData from './noData';
 import {useUser} from '@/components/dashboard/layout';
-import Button from '@/components/button';
 import {layoutContainer} from './index.module.css';
 import CardLoad from './cardLoad';
 import Filter from './filters';
 
-let actual = {};
 let cursor = '';
 
 const fetchInit = async ({type, fields, status}) => {
@@ -101,7 +98,6 @@ function Layout(props) {
   const [status, setStatus] = useState('*');
 
   const user = useUser();
-  const router = useRouter();
   const intl = useIntl();
 
   useEffect(() => {

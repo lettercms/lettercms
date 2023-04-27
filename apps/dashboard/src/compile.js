@@ -1,6 +1,5 @@
 const { resolve } = require('path');
 const { writeFile, readdirSync } = require('fs');
-const {app} = require('../config');
 const babel = require('@babel/core');
 const Terser = require('terser');
 
@@ -63,7 +62,7 @@ async function compile(entry, output) {
     return resolve(res.code);  
   }));
 
-  const minified = Terser.minify(res.code, terserOpts);
+  const minified = Terser.minify(code, terserOpts);
 
   if (minified.error)
     return Promise.reject(minified.error);

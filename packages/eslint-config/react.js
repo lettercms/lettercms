@@ -1,3 +1,5 @@
+const base = require('./base');
+
 module.exports = {
   env: {
     'browser': true,
@@ -22,16 +24,8 @@ module.exports = {
     'prettier'
   ],
   rules: {
-    'semi': ['warn', 'always'],
-    'quotes': ['warn', 'single'],
-    'array-bracket-spacing': 'error',
-    'arrow-spacing': 'error',
-    'complexity': 'off',
-    'curly': 'off',
-    'no-buffer-constructor': 'error',
-    'no-var': 'error',
+    ...base.rules,
     'react/react-in-jsx-scope': 'off',
-    'react/prop-types': 'off',
-    "no-console": "warn"
+    'react/prop-types': 'off'
   }
 };

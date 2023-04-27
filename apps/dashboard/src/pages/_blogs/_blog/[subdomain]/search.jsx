@@ -1,16 +1,16 @@
 import {useState, useEffect} from 'react';
-import {getSearch} from '@/lib/mongo/search';
 import sdk from '@lettercms/sdk';
 import Router from 'next/router';
 //import Input from '@/components/input';
 //import Card from '@/components/index/card';
 import Head from 'next/head';
+import jwt from 'jsonwebtoken';
 
 const Search = ({q, accessToken}) => {
   const [query, setQuery] = useState(q);
   const [data, setData] = useState([]);
   const [isLoading, setLoad] = useState(!!q);
-  const [hasMore, setHasMore] = useState(false);
+  //const [hasMore, setHasMore] = useState(false);
 
   const _sdk = new sdk.Letter(accessToken);
 
@@ -19,7 +19,7 @@ const Search = ({q, accessToken}) => {
       setLoad(true);
       setData([]);
 
-      const {data, paging} = await _sdk.posts.search(q, {
+      const {data/*, paging*/} = await _sdk.posts.search(q, {
         fields: [
           'url',
           'description',
@@ -30,10 +30,10 @@ const Search = ({q, accessToken}) => {
         ]
       });
 
-      if (paging.cursors.before)
+      /*if (paging.cursors.before)
         setHasMore(true);
       else
-        setHasMore(false);
+        setHasMore(false);*/
 
       setData(data);
     } catch(err) {
@@ -105,10 +105,15 @@ const Search = ({q, accessToken}) => {
   </div>;
 };
 
-export async function getServerSideProps(ctx) {
-  const searchData = await getSearch(ctx);
+export async function getServerSideProps() {
 
-  return searchData;
+  //TODO: Add method to check if subdomainexists
+  return {
+    props: {
+      q,
+      accessToken: jwt.sign({subdomain}, process.env.JWT_AUTH)
+    }
+  };
 }
 
 export default Search;

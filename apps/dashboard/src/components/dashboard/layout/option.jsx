@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import {FormattedMessage} from 'react-intl';
-import {useRef, useEffect, useState, Fragment} from 'react';
-import {option, subTab, subHeader, subHr} from './option.module.css';
+import {useRef, useEffect, useState} from 'react';
+import {option, subTab, subHeader} from './option.module.css';
 
 export default function Option({role, title, sub, icon, href}) {
 
@@ -34,21 +34,17 @@ export default function Option({role, title, sub, icon, href}) {
     </button>
     <ul className={subTab} ref={tabRef}>
       <Link href={href}>
-        <a>
-          <li className={subHeader}>
-            <FormattedMessage id={title}/>
-          </li>
-        </a>
+        <li className={subHeader}>
+          <FormattedMessage id={title}/>
+        </li>
       </Link>
       {
         sub?.filter(e => !e.admin || role === 'admin')
-        .map((e, i) =>
-          <Link href={e.href} key={e.href}>
-            <a onClick={() => setFocus(false)}>
-              <li>
-                <FormattedMessage id={e.label}/>
-              </li>
-            </a>
+        .map((e) =>
+          <Link href={e.href} key={e.href} onClick={() => setFocus(false)}>
+            <li>
+              <FormattedMessage id={e.label}/>
+            </li>
           </Link>
         )
       }

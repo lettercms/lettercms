@@ -1,11 +1,10 @@
 import {useEffect} from 'react';
-import PageHead from '../components/pageHead';
-import {getOrigin, getSubdomain} from '../lib/utils';
+import PageHead from '@/components/client/pageHead';
 import sdk from '@lettercms/sdk';
 import Router from 'next/router';
 import jwt from 'jsonwebtoken';
 
-export async function getServerSideProps({req, query: {subdomain, paths}, asPath}) {
+export async function getServerSideProps({query: {subdomain}}) {
   const token = jwt.sign({subdomain}, process.env.JWT_AUTH);
 
   const subSDK = new sdk.Letter(token);

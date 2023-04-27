@@ -23,20 +23,23 @@ Before submitting your contribution, please make sure to take a moment and read 
 
 - `main` branch is the staging branch. All changes introduced here, will be used to tests new changes in an production env with real users and split testing.
 
-- Create a new branch out of the `main` branch. We follow the convention `[type/scope]`. For example `fix/accordion-hook` or `docs/menu-typo`. `type` can be either `docs`, `fix`, `feat`, `build`, or any other conventional commit type. `scope` is just a short id that describes the scope of work.
+- Create a new branch out of the `main` branch. We follow the convention `[type-scope]`. For example `fix-accordion-hook` or `docs-menu-typo`. `type` can be either `docs`, `fix`, `feat`, `build`, or any other conventional commit type. `scope` is just a short id that describes the scope of work.
 
 - It's OK to have multiple small commits as you work on the PR - GitHub will automatically squash it before merging.
 
 - If adding a new feature:
+
   - Add accompanying test case.
   - Provide a convincing reason to add this feature. Ideally, you should open a suggestion issue first and have it approved before working on it.
   - Provide a live preview demo URL to helps with the review process.
 
 - If fixing bug:
+
   - If you are resolving a special issue, add `(fix #xxxx[,#xxxx])` (#xxxx is the issue id) in your PR title for a better release log, e.g. `update entities encoding/decoding (fix #3899)`.
   - Provide a detailed description of the bug in the PR. Live demo preferred.
   - Add appropriate test coverage if applicable.
 
+- Every Pull Request automatically create a preview deployment and the deployment link will be linked on PR comments. This is handled by Vercel
 
 ## Development Setup
 
@@ -50,7 +53,6 @@ First, you will need create:
   - An [Upstash](https://upstash.com/) account
   - A [Sendinblue](https://sendinblue.com/) account
 
-
 Fork of the LetterCMS repository and clone your fork
 
 ```bash
@@ -63,7 +65,9 @@ Then run:
 $ yarn setup # setup .env template
 ```
 
-Check `.env.local` template and fill with your own credentials
+And fill with your data to setup admin account and database config. Ensure your have defined database path in your MongoDB URI `mongo://localhost/dbpath`
+
+Check `apps/dashboard/.env` template and fill with your own credentials
 
 Then run:
 
@@ -109,34 +113,37 @@ $ yarn dev
 # run code linting
 $ yarn lint
 
+#Fix code Linting
+$ yarn lint:fix
+
 # build all dist files
 $ yarn build
 
-# run the full test suite
+# run the full test suites
 $ yarn test
+
+# format MD files
+$ yarn format
 ```
 
 ## Project Structure
 
 - **`apps`**: contains main projects which are deployed on vercel:
+
   - `apps/cdn`: CDN files.
   - `apps/dashboard`: Main UI to interact with API
 
 - **`scripts`**: contains build-related scripts and configuration files. Usually, you don't need to touch them. However, it would be helpful to familiarize yourself with the following files:
+
   - `scripts/discord.js`: send deployment status to Discord.
-  - `scripts/run-dev.js`: start development servers.
-  - `scripts/run-test.js`: run unit testing
   - `scripts/serve-files.js`: serve CDN files
-  - `scripts/setup.js`: setup `.env.local` file template
+  - `scripts/run-setup.js`: setup database and create `.env` file template
 
 - **`packages`**: contains modules which are distributed as separate NPM packages.
   - `packages/admin`: Admin utils
   - `packages/eslint-cofig`: ESLint config
-  - `packages/icons`: SVG icons as JSX
   - `packages/models`: Mongoose models
-  - `packages/next`: NextJS utilities
   - `packages/sdk`: SDK Base (Moved to [SDK](https://github.com/lettercms/sdk) repo)
-  - `packages/ui`: UI commons
   - `packages/utils`: Project Utilities
 
 ## Financial Contribution

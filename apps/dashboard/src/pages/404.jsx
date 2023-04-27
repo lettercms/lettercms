@@ -10,7 +10,7 @@ export default function ErrorPage(props) {
       <meta charSet="utf-8" />
       <title>{title}</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link rel="icon" href="/favicon.ico" />
+      <link rel= "icon" href="/favicon.ico" />
     </Head>
     <div id="container">
       <img alt='' src="https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/404.svg" />
@@ -18,7 +18,7 @@ export default function ErrorPage(props) {
         <p>Ups. No hay nada por aqui</p>
         <span>
           ¿Te perdiste? Bueno dejame llevarte hasta el
-          <Link href={href}><a> Inicio</a></Link>
+          <Link href={href}> Inicio</Link>
         </span>
       </div>
     </div>

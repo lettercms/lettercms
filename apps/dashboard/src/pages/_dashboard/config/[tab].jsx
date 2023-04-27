@@ -1,4 +1,3 @@
-import {useEffect, useState} from 'react';
 import {useIntl} from 'react-intl';
 import Head from 'next/head';
 import {getSession} from 'next-auth/react';
@@ -17,7 +16,7 @@ const tabs = [
   'developers'
 ];
 
-export async function getServerSideProps({ req, res, query }) {
+export async function getServerSideProps({req, query }) {
   const {tab, hl} = query;
 
   if (!tabs.includes(tab))
@@ -47,7 +46,7 @@ export async function getServerSideProps({ req, res, query }) {
   };
 }
 
-const AdminDashboard = ({tab, user}) => {
+function AdminDashboard({tab}) {
   const intl = useIntl();
 
   return <>
@@ -58,7 +57,7 @@ const AdminDashboard = ({tab, user}) => {
           })
         }</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel= "icon" href="/favicon.ico" />
       </Head>
       <Config tab={tab}/>
     </>;

@@ -1,4 +1,4 @@
-export default function ImageList({images, isUploading}) {
+export default function ImageList() {
   return <ul>
     <li/>
     <style jsx>{`

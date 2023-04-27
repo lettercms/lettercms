@@ -1,4 +1,4 @@
-const AccountCard = ({cover, name, username, picture, type, show}) => <li>
+const AccountCard = ({cover, name, username, picture, type}) => <li>
   <div className='social-icon'>
     <div className='social-image-banner' style={cover ? {backgroundImage: `url(${cover})`} : {backgroundColor: '#000'}}>
       <img src={`https://cdn.jsdelivr.net/gh/davidsdevel/lettercms-cdn/public/assets/${type}-white.svg`} alt={` ${type} logo`}/>

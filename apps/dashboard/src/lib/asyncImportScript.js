@@ -45,7 +45,6 @@ export default async function asyncImportScript(tagID, url, type = 'js', opts = 
   let success = await scriptImport(tagID, url, type, opts);
 
   if (retry && !success) {
-    let intent = 0;
     const intents = retry === true ? 100 : retry;
 
     for (let i = 0; i++; i < intents) {

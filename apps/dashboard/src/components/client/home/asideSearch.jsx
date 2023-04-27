@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import Router from 'next/router';
-import Search from '@lettercms/icons/search';
+import {FaSearch} from 'react-icons/fa';
 
 function doSearch(q) {
   if (!q)
@@ -44,7 +44,7 @@ export default function AsideSearch() {
         }}
         placeholder='Algo interesante'
       />
-      <Search
+      <FaSearch
         className='absolute right-2 top-2 pointer'
         height='20'
         fill='#362e6f'

@@ -9,7 +9,7 @@ const Stats = dynamic(() => import('@/components/dashboard/admin/stats'), {
   loading: PageLoad
 });
 
-export async function getServerSideProps({ req, res, query}) {
+export async function getServerSideProps({req, query}) {
   const {hl} = query;
   const session = await getSession({req});
 
@@ -32,7 +32,7 @@ export async function getServerSideProps({ req, res, query}) {
   };
 }
 
-const AdminDashboard = ({tab, user}) => {
+function AdminDashboard() {
   const intl = useIntl();
 
   return <>

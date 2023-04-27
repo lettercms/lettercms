@@ -1,20 +1,15 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import {useRouter} from 'next/router';
 import connect from '@lettercms/utils/lib/connection';
 import pages from '@lettercms/models/pages';
-import Script from 'next/script';
-import sdk from '@lettercms/sdk';
 import {DashboardProvider, useUser} from '@/components/dashboard/layout';
 import {getSession} from 'next-auth/react';
 import asyncImportScript from '@/lib/asyncImportScript';
 import Editor from '@/components/dashboard/admin/pages/createEditor';
 import Head from 'next/head';
-import Save from '@lettercms/icons/save';
-import Send from '@lettercms/icons/send';
+import {FaSave} from 'react-icons/fa';
+import {MdSend} from 'react-icons/md';
 import Load from '@/components/dashboard/logoLoad';
-
-const isDev = process.env.NODE_ENV !== 'production';
-const endpoint = isDev ? 'http://localhost:3009' : 'https://lettercms-api-staging.herokuapp.com';
 
 const editor = new Editor();
 
@@ -31,7 +26,7 @@ const scripts = [
   'grapesjs-tui-image-editor@0.1.3/dist/grapesjs-tui-image-editor.min.js'
 ];
 
-export async function getServerSideProps({ req, res, query}) {
+export async function getServerSideProps({req, query}) {
   const session = await getSession({req});
 
   if (!session)
@@ -64,7 +59,7 @@ export async function getServerSideProps({ req, res, query}) {
 function PageEditor() {
   const [load, setLoad] = useState(true);
   const [preview, setPreview] = useState(false);
-  const [isGrapesReady, setGrapesStatus] = useState(false);
+  //const [isGrapesReady, setGrapesStatus] = useState(false);
   const {status} = useUser();
   
   const {query: {pageID}} = useRouter();
@@ -100,7 +95,7 @@ function PageEditor() {
     <Head>
       <title>Editar Página | Dashboard - LetterCMS</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link rel="icon" href="/favicon.ico" />
+      <link rel= "icon" href="/favicon.ico" />
     </Head>
     {
       load &&
@@ -111,10 +106,10 @@ function PageEditor() {
       !load &&
       <div id='buttons' style={{display: preview ? 'none' : 'flex'}}>
         <button className="btn-outline-sm circle save" onClick={editor.save}>
-          <Save fill='#5f4dee'/>
+          <FaSave fill='#5f4dee'/>
         </button>
         <button className="btn-outline-sm circle send" onClick={editor.publish}>
-          <Send fill='#fff'/>
+          <MdSend fill='#fff'/>
         </button>
       </div>
     }

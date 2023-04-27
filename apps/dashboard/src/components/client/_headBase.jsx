@@ -1,13 +1,11 @@
 import React from 'react';
 import NextHead from 'next/head';
-import { string } from 'prop-types';
 
 export default function Head(props) {
 
   const siteName = '';
   const defaultDescription = 'Just another site created with love with LetterCMS';
   const defaultOGURL = props.origin;
-  const defaultOGImage = props.origin + '/images/og.jpg';
 
   return <NextHead>
     <title>{props.title}</title>
@@ -16,7 +14,7 @@ export default function Head(props) {
       content={props.description || defaultDescription}
     />
 
-    <link rel="canonical" href={props.url ? `${props.origin}${props.url}` : defaultOGURL} />
+    <link rel= "canonical" href={props.url ? `${props.origin}${props.url}` : defaultOGURL} />
 
     <meta property="og:site_name" content={siteName} />
     <meta content="website" property="og:type" />
@@ -33,7 +31,7 @@ export default function Head(props) {
     <meta content={props.description || defaultDescription} itemProp="description" name="twitter:description" property="og:description" />
     <meta content={props.url ? `${props.origin}${props.url}` : defaultOGURL} name="twitter:url" property="og:url" itemProp="url" />
 
-    <link rel="manifest" href="/manifest.json" />
+    <link rel= "manifest" href="/manifest.json" />
     <script type="application/ld+json" dangerouslySetInnerHTML={{
       __html: `{
         "@context":"https://schema.org",

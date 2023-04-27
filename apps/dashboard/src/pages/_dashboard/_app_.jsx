@@ -1,4 +1,4 @@
-import {useState, useMemo, useEffect} from 'react';
+/*import {useState, useMemo, useEffect} from 'react';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import Facebook from '../lib/client/FacebookSDK';
@@ -30,9 +30,9 @@ const initApp = setLoad => {
     setLoad(false);
   });
 };
-
-export default function App({Component, pageProps: { messages, session, ...pageProps }}) {
-  const [showLoad, setLoad] = useState(false);
+*/
+export default function App() {
+  /*const [showLoad, setLoad] = useState(false);
   const router = Router.useRouter();
 
   const {hl} = router.query;
@@ -80,4 +80,6 @@ export default function App({Component, pageProps: { messages, session, ...pageP
         </IntlProvider>
       </div>
     );
+    */
+    return <div/>;
 }

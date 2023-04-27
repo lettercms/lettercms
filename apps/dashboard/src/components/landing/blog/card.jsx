@@ -32,25 +32,19 @@ class Card extends Component {
         shareOpacity: 1,
       }), 10);
     }
-  }
+  };
 
   render() {
     const {
-      image,
       content,
       title,
       url,
-      fullUrl,
       comments,
-      ID,
       thumbnail,
-      size,
-      description
+      size
     } = this.props;
 
     const {
-      savedPostsIDs,
-      isSaving,
       shareOpacity,
       shareDisplay
     } = this.state;
@@ -58,16 +52,14 @@ class Card extends Component {
     return (
       <div className="blog-card">
         <Link href={`/blog/${url}`}>
-          <a>
-            <img width='1' height='1' src='/pixel.png' style={{position: 'absolute'}} alt={title}/>
-            {
-              !!thumbnail
-              ? <div className="card-header-image" style={{ backgroundImage: `url(${thumbnail}&w=500&q=50)` }} />
-              : <div className="card-header-title">
-                <h3>{size === 'big'  ? title[0].toUpperCase() : title}</h3>
-              </div>
-            }
-          </a>
+          <img width='1' height='1' src='/pixel.png' style={{position: 'absolute'}} alt={title}/>
+          {
+            !!thumbnail
+            ? <div className="card-header-image" style={{ backgroundImage: `url(${thumbnail}&w=500&q=50)` }} />
+            : <div className="card-header-title">
+              <h3>{size === 'big'  ? title[0].toUpperCase() : title}</h3>
+           </div>
+          }
         </Link>
         <div className="data-cont">
           {(!!thumbnail || size === 'big') && 

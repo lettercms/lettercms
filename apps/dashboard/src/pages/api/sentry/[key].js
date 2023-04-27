@@ -26,10 +26,8 @@ export default async function SentryProxy(req, res) {
     title,
     message,
     request,
-    environment,
     exception,
     tags,
-    contexts,
     received
   } = event;
 
@@ -111,7 +109,7 @@ export default async function SentryProxy(req, res) {
     },
     body: JSON.stringify(payload)
   })
-  .then(e => res.json({}))
+  .then(() => res.json({}))
   .catch(e => {
     throw e;
   });

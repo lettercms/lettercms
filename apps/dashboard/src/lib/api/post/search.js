@@ -4,7 +4,7 @@ import blogs from '@lettercms/models/blogs';
 import {find} from '@lettercms/utils/lib/findHelpers/posts';
 
 export default async function SearchPosts() {
-  const {req: {subdomain, query, path}, res} = this;
+  const {req: {subdomain, query}, res} = this;
 
   const {
     q,

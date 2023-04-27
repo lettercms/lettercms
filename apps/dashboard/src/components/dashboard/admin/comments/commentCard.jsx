@@ -1,3 +1,3 @@
-export default function CommentCard({thumbnail, }) {
+export default function CommentCard() {
   return <div></div>;
 }

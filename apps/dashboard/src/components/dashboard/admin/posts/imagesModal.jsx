@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-import sdk from '@lettercms/sdk';
-import ImageUploader from '@/lib/ImageHandler';
 import BlogImages from './images/blogImages';
 import BlogSearch from './images/search';
 import ModalTabs from './images/tabs';
-import Cross from '@lettercms/icons/cross';
+import {FaTimes} from 'react-icons/fa';
 
-const generateUnsplashSrc = (raw, width, height) => {
+const generateUnsplashSrc = (raw, width) => {
   return {
     width,
     class: 'image',
@@ -16,7 +14,7 @@ const generateUnsplashSrc = (raw, width, height) => {
   };
 };
 
-const generateLetterSrc = (raw, width, height) => {
+const generateLetterSrc = (raw, width) => {
   return {
     width,
     class: 'image',
@@ -30,14 +28,6 @@ export default function ImagesModal({onClose, show}) {
   const [display, setDisplay] = useState('none');
   const [opacity, setOpacity] = useState('0');
   const [tab, setTab] = useState('photos');
-
-  function close() {
-    setOpacity('0');
-    setTimeout(() => {
-      setDisplay('none');
-      onClose();
-    }, 610);
-  };
 
   const appendUnsplash = ({raw, user, href, download, width, height}) => {
     const src = generateUnsplashSrc(raw, width, height);
@@ -72,7 +62,7 @@ export default function ImagesModal({onClose, show}) {
   return <div style={{ display, opacity, transition: 'ease .6s' }}>
     <div id="shadow">
       <div id="images-main">
-        <Cross
+        <FaTimes
           id="cross"
           width='20'
           fill='white'

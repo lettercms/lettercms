@@ -16,10 +16,9 @@ export default async function Manifest(req, res) {
 
   await connect();
 
-  const {title, description, customDomain} = await blogs.findOne({subdomain}, 'description title customDomain', {lean: true});
+  const {title, description} = await blogs.findOne({subdomain}, 'description title customDomain', {lean: true});
 
   res.json({
-    //start_url: customDomain || `https://${subdomain}.lettercms.vercel.app`,
     start_url: '/',
     description,
     icons: [

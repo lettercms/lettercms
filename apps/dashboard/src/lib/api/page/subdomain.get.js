@@ -4,7 +4,7 @@ import {find} from '@lettercms/utils/lib/findHelpers/pages';
 export default async function GetPages() {
   const {req, res} = this;
 
-  const {subdomain, path} = req;
+  const {subdomain} = req;
   const {status} = req.query;
 
   const condition = {

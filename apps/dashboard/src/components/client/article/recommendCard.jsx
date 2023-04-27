@@ -1,8 +1,7 @@
 import {useState} from 'react';
 import Router from 'next/router';
-import Bubbles from '@lettercms/icons/bubbles';
 import Link from 'next/link';
-import Share from '@lettercms/icons/share';
+import {FaComments, FaShare} from 'react-icons/fa';
 import ShareButtons from '../shareButtons';
 
 export default function RecommendCard({title, description, thumbnail, url, author, tags, comments}) {
@@ -10,9 +9,7 @@ export default function RecommendCard({title, description, thumbnail, url, autho
 
   return <div className='my-8 w-full lg:w-2/5 relative h-fit'>
     <Link href={`/${url}`}>
-      <a>
-        <div className='rounded-lg w-full h-48 bg-cover bg-center' style={{backgroundImage: `url(${thumbnail}&w=550&q=75)`}}/>
-      </a>
+      <div className='rounded-lg w-full h-48 bg-cover bg-center' style={{backgroundImage: `url(${thumbnail}&w=550&q=75)`}}/>
     </Link>
     <div>
       <h5 className='font-bold my-8 text-center text-main-700'>{title}</h5>
@@ -26,7 +23,7 @@ export default function RecommendCard({title, description, thumbnail, url, autho
       </ul>
       <div className='flex justify-between mt-2'>
         <div className='flex items-center'>
-          <Bubbles height='24' fill='#362e6f'/>
+          <FaComments height='24' fill='#362e6f'/>
           <span className='ml-2'>{comments}</span>
         </div>
         <div className='flex items-center'>
@@ -37,7 +34,7 @@ export default function RecommendCard({title, description, thumbnail, url, autho
       <div className='flex items-center mt-4'>
         <button className='cursor-pointer w-full mr-8 border border-solid border-main-500 py-2 text-main-500 rounded-full hover:text-white hover:bg-main-500' onClick={() => Router.push('/' + url)}>Ver Más</button>
         <button onFocus={() => setShowShare(true)} onBlur={() => setShowShare(false)}>
-          <Share height='28' fill='#362e6f'/>
+          <FaShare height='28' fill='#362e6f'/>
         </button>
       </div>
     </div>

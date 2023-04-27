@@ -1,13 +1,10 @@
 import {Component} from 'react';
-import dynamic from 'next/dynamic';
 import Head from'next/head';
 import Link from 'next/link';
-import asyncImport from '@/lib/asyncImportScript';
 import Image from 'next/image';
-import {getSession} from 'next-auth/react';
-import Invitation from '@/components/signin/invitation';
-import Footer from '@/components/miniFooter';
-import dateHandler from '@/lib/handleDate';
+import Invitation from '@/components/dashboard/signin/invitation';
+import Footer from '@/components/dashboard/miniFooter';
+import {getGMTDate} from '@lettercms/utils/lib/handleDate';
 import getInvitation from '@/lib/mongo/getInvitation';
 
 class InvitationPage extends Component {
@@ -50,7 +47,7 @@ class InvitationPage extends Component {
   };
   
   render() {
-    const {blog, blogOwner, expiresAt, id, email} = this.props;
+    const {blog, blogOwner, expiresAt, email} = this.props;
 
     return <div id='register-main'>
       <Head>
@@ -58,9 +55,7 @@ class InvitationPage extends Component {
       </Head>
       <div id='logo'>
         <Link href='/'>
-          <a>
-            <Image layout='fill' objectFit='contain' src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt="LetterCMS Logo Linear"/>
-          </a>
+          <Image layout='fill' objectFit='contain' src={`${process.env.ASSETS_BASE}/images/lettercms-logo-linear.png`} alt="LetterCMS Logo Linear"/>
         </Link>
       </div>
       <div id='wrapper-container'>
@@ -78,7 +73,7 @@ class InvitationPage extends Component {
             <Invitation email={email}/>
           </div>
           <div id='invitation-notice'>
-            <span>Esta invitación caduca el: {dateHandler.getGMTDate(expiresAt)}</span>
+            <span>Esta invitación caduca el: {getGMTDate(expiresAt)}</span>
           </div>
         </div>
       </div>

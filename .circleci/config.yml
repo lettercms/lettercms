@@ -7,7 +7,7 @@ jobs:
   lint:
     #Run ESLint to check Code Quality
     docker:
-      - image: cimg/node:16.18.0
+      - image: cimg/node:18.15.0
 
     steps:
       - checkout
@@ -22,12 +22,12 @@ jobs:
 
       - run:
           name: Lint
-          command: yarn workspaces run lint
+          command: yarn lint
 
   unit-testing:
     #Run ESLint to check Code Quality
     docker:
-      - image: cimg/node:16.18.0
+      - image: cimg/node:18.15.0
       #- image: circleci/mongo:4.4
 
     steps:
@@ -49,22 +49,23 @@ jobs:
   
   build:
     docker:
-      - image: cimg/node:16.18.0
-
+      - image: cimg/node:18.15.0
+    working_directory: ~/lettercms/apps/dashboard
     steps:
-      - checkout
+      - checkout:
+          path: ~/lettercms
       - node/install-packages:
           pkg-manager: yarn
-          with-cache: true
+          with-cache: false
       - restore_cache:
           keys:
-            - dashboard-build-{{ checksum "apps/dashboard/package.json" }}
+            - dashboard-build-{{ checksum "package.json" }}
             - dashboard-build-
       - run:
           name: Build
-          command: yarn workspace @lettercms/dashboard build
+          command: yarn build
       - save_cache:
-          key: dashboard-build-{{ checksum "apps/dashboard/package.json" }}
+          key: dashboard-build-{{ checksum "package.json" }}
           paths:
             - apps/dashboard/.next/cache
 
@@ -80,7 +81,7 @@ jobs:
 
 job: &job
   context:
-    - LetterCMS
+    - lettercms-pr
   filters:
     branches:
       ignore:
@@ -98,4 +99,4 @@ workflows:
           <<: *job
           requires:
             - lint
-            #- unit-test
+          #- unit-test

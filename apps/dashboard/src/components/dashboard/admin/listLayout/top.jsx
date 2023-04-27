@@ -2,7 +2,7 @@ import {adminTop, textContainer, topButton, top, topOpen} from './top.module.css
 import {useRef, useState, useEffect} from 'react';
 import Button from '@/components/button';
 
-export default function Top({disableTopButton, topImg, topText, ico, children, loading, create, disabled, buttonText, buttonRef}) { 
+export default function Top({disableTopButton, topText, ico, children, loading, create, disabled, buttonText, buttonRef}) { 
   const prevScrollY = useRef(0);
   const [isOpen, setOpen] = useState(false);
   

@@ -8,11 +8,10 @@ import {isValidObjectId} from 'mongoose';
 export default async function GetRecommendation() {
   const {
     req,
-    res,
-    find
+    res
   } = this;
 
-  const {subdomain, path} = req;
+  const {subdomain} = req;
   const {id} = req.query;
   
   const {url: urlID, mainUrl} = await blogs.findOne({subdomain}, 'url mainUrl');

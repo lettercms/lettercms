@@ -45,7 +45,7 @@ const Footer = ({isPost}) => {
                 links.map(({pre, link, href}) => {
                   return  <li key={link} className="media">
                     <i className="fas fa-square"></i>
-                    <div className="media-body">{pre} <Link href={href}><a target='_blank' className="white">{link}</a></Link></div>
+                    <div className="media-body">{pre} <Link href={href}>{link}</Link></div>
                   </li>;
                 })
               }
@@ -76,7 +76,7 @@ const Footer = ({isPost}) => {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <p className="p-small"><FormattedMessage id='Developed by '/> <Link href="https://www.facebook.com/davidsdevel"><a>David&apos;s Devel</a></Link></p>
+            <p className="p-small"><FormattedMessage id='Developed by '/> <Link href="https://www.facebook.com/davidsdevel">David&apos;s Devel</Link></p>
           </div> 
         </div> 
       </div> 

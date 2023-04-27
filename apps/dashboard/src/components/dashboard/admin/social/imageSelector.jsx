@@ -4,7 +4,7 @@ import {useState, useEffect, useRef} from 'react';
 import asyncImport from '@/lib/asyncImportScript';
 import sdk from '@lettercms/sdk';
 import Button from '@/components/button';
-import {getStorage, ref, uploadBytes, getMetadata} from 'firebase/storage';
+import {getStorage, ref, uploadBytes} from 'firebase/storage';
 import {useUser} from '@/components/dashboard/layout';
 
 let canvas = null;
@@ -30,7 +30,6 @@ const uploadImage = (subdomain, onUnload, intl) => {
   try {
     canvas.toBlob(async file => {
       //Generate Random temp name
-      const random = parseInt(Math.random() * 10e10);
       const tempName = a.toString(16);
 
       const storage = getStorage();
@@ -138,41 +137,47 @@ const changePicture = (ratio, cb) => {
 };
 
 
-const SelectRatio = ({onClick, onChange, image}) => <div id='aspect-main'>
-  <span>
-    <FormattedMessage id='Select aspect ratio'/>
-  </span>
-  <div id='aspect-container'>
-    <div className='aspect' onClick={() => {image ? onClickUrl(5/4, onChange) : onClick(5/4, onChange);}} style={{width: '10rem', height: '8rem'}}>4:5</div>  
-    <div className='aspect' onClick={() => {image ? onClickUrl(1/1.91, onChange) : onClick(1/1.91, onChange);}} style={{width: '4.2rem', height: '8rem'}}>1:1.91</div>
-  </div>
-  <style jsx>{`
-    #aspect-main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    #aspect-container {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
-    .aspect {
-      cursor: pointer;
-      background: #ccd7ec;
-      opacity: .5;
-      border-radius: .5rem;
-      margin: 0 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: ease .3s;
-    }
-    .aspect:hover {
-      opacity: 1;
-    }
-  `}</style>
-</div>;
+const SelectRatio = ({onClick, onChange, image}) => {
+
+  const selectAspect45 = () => image ? onClickUrl(5/4, onChange) : onClick(5/4, onChange);
+  const selectAspect1191 = () => image ? onClickUrl(1/1.91, onChange) : onClick(1/1.91, onChange);
+
+  return <div id='aspect-main'>
+    <span>
+      <FormattedMessage id='Select aspect ratio'/>
+    </span>
+    <div id='aspect-container'>
+      <div className='aspect' onClick={selectAspect45} style={{width: '10rem', height: '8rem'}}>4:5</div>  
+      <div className='aspect' onClick={selectAspect1191} style={{width: '4.2rem', height: '8rem'}}>1:1.91</div>
+    </div>
+    <style jsx>{`
+      #aspect-main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #aspect-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+      .aspect {
+        cursor: pointer;
+        background: #ccd7ec;
+        opacity: .5;
+        border-radius: .5rem;
+        margin: 0 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: ease .3s;
+      }
+      .aspect:hover {
+        opacity: 1;
+      }
+    `}</style>
+  </div>;
+};
 
 const UploadMethod = ({onClickUpload}) => {
   const [url, setUrl] = useState('');

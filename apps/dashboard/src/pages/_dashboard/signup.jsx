@@ -1,9 +1,6 @@
 import {Component} from 'react';
 import dynamic from 'next/dynamic';
-import Head from'next/head';
-import Image from 'next/image';
 import {getSession} from 'next-auth/react';
-import Cookie from 'js-cookie';
 import Container from '@/components/dashboard/credentialsContainer';
 
 const BlogTab = dynamic(import('@/components/dashboard/signin/blog'));
@@ -12,7 +9,7 @@ const UserTab = dynamic(import('@/components/dashboard/signin/user'), {
 });
 const Verify = dynamic(import('@/components/dashboard/signin/verify'));
 
-export async function getServerSideProps({req, res, query}) {
+export async function getServerSideProps({req, query}) {
   const {invitationID, token, hl = 'en'} = query;
 
   if (invitationID) {
@@ -57,7 +54,7 @@ export default class Signin extends Component {
       this.setState({
         tab: 'blog'
       });
-  }
+  };
   onUserCreate = () => {
     this.setState({
       tab: 'verify'

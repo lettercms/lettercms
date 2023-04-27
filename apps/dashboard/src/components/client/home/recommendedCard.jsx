@@ -11,8 +11,7 @@ export default function RecommendedCard({title, thumbnail, author, url}) {
     md:w-1/2
     lg:w-1/3
   '>
-    <Link href={`/${url}`}>
-      <a className='w-full md:w-5/6'>
+    <Link href={`/${url}`} className='w-full md:w-5/6'>
         <div className='
           flex
           flex-row
@@ -38,7 +37,6 @@ export default function RecommendedCard({title, thumbnail, author, url}) {
             </div>
           </div>
         </div>
-      </a>
     </Link>
   </div>;
 }

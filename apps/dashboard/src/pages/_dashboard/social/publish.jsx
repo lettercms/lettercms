@@ -1,7 +1,5 @@
-import {useEffect, useState} from 'react';
 import {useIntl} from 'react-intl';
 import Head from 'next/head';
-import sdk from '@lettercms/sdk';
 import {getSession} from 'next-auth/react';
 import {DashboardProvider} from '@/components/dashboard/layout';
 import {getAccounts} from '@/lib/mongo/social';
@@ -12,7 +10,7 @@ const Social = dynamic(() => import('@/components/dashboard/admin/social'), {
   loading: PageLoad
 });
 
-export async function getServerSideProps({ req, res, query}) {
+export async function getServerSideProps({req, query}) {
   const {hl} = query;
   const session = await getSession({req});
 

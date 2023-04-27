@@ -2,7 +2,7 @@ import connect from '@lettercms/utils/lib/connection';
 import * as socialModel from '@lettercms/models/socials';
 import Base from '@lettercms/utils/lib/social/base';
 
-const subdomain = process.env.LETTERCMS_SUBDOMAIN; //'davidsdevel';
+const subdomain = 'davidsdevel';
 
 export async function getAccounts() {
   await connect();
@@ -18,7 +18,7 @@ export async function getAccounts() {
   }, 'token userId');
 
   if (fb) {
-    const {cover, name, username, error} = await Base.api(`/${fb.pageId}`, {
+    const {name, error} = await Base.api(`/${fb.pageId}`, {
       access_token: fb.token,
       fields: 'name'
     });
