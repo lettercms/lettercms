@@ -5,11 +5,13 @@
   "license": "Apache-2.0",
   "workspaces": [
     "apps/dashboard",
+    "apps/cdn",
     "packages/*"
   ],
   "scripts": {
-    "dev": "node ./scripts/run-dev",
-    "lint": "node ./scripts/run-lint",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint -- --fix",
     "setup": "node ./scripts/run-setup",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
