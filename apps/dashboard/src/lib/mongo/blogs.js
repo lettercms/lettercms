@@ -4,6 +4,7 @@ import posts from '@lettercms/models/posts';
 import {Ratings} from '@lettercms/models/users';
 import {find as findPosts} from '@lettercms/utils/lib/findHelpers/posts';
 import {find as findRecommendations} from '@lettercms/utils/lib/findHelpers/recommendations';
+import '@lettercms/models/accounts';
 
 const subdomain = 'davidsdevel';
 
