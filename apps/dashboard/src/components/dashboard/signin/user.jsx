@@ -1,69 +1,63 @@
-import {FormattedMessage, injectIntl} from 'react-intl';
-import {Component} from 'react';
+import {useState} from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
 import Router from 'next/router';
 import sdk from '@lettercms/sdk';
 import {createAccount, createCollaborator} from '@lettercms/admin';
 import Input from '@/components/input';
+import {useData} from '@/components/dashboard/credentialsContainer';
 import {ImSpinner9} from 'react-icons/im';
 import {signIn} from 'next-auth/react';
 import Button from '@/components/button';
 
-class UserTab extends Component {
-  state = {
-    name: '',
-    lastname: '',
-    email: '',
-    password: '',
-    existsEmail: null,
-    emailLoad: false,
-    isLoad: false
-  };
-  validityEmail = email => {
+export default function UserTab({onRegister, email: emailProp, isCollab}) {
+  const [name, setName] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [email, setEmail] = useState(emailProp || '');
+  const [password, setPassword] = useState('');
+  const [existsEmail, setExistsEmail] = useState(null);
+  const [emailLoad, setEmailLoad] = useState(false);
+  const [isLoad, setIsLoad] = useState(false);
+
+  const {setUser} = useData();
+
+  const intl = useIntl();
+
+  const validityEmail = async email => {
     const isValid = /\w*@[a-z]{1,10}\.[a-z]{2}/.test(email);
 
     if (isValid) {
-      this.setState({
-        emailLoad: true
-      });
+      setEmailLoad(true);
 
-      sdk.Letter.existsAccount({email})
-        .then(exists => {
-
-          this.setState({
-            existsEmail: exists,
-            emailLoad: false
-          });
-        });
+      const exists = await sdk.Letter.existsAccount({email});
+      
+      setExistsEmail(exists);
+      setEmailLoad(false);
     }
   };
-  handleInput = ({target: {name, value, type}}) => {
-    this.setState({
-      existsEmail: null
-    });
 
-    this.setState({
-      [name]: value
-    });
+  const handleInput = ({target: {name, value}}) => {
+    setExistsEmail(null);
 
-    if (type === 'email')
-      this.validityEmail(value);
+    if (name === 'name')
+      setName(value);
+
+    else if (name === 'lastname')
+      setLastname(value);
+
+    else if (name === 'email') {
+      validityEmail(value);
+      setEmail(value);
+    }
+
+    else if (name === 'password')
+      setPassword(value);
   };
-  register = async e => {
+
+  const register = async e => {
 
     e.preventDefault();
 
-    const {
-      intl
-    } = this.props;
-
     try {
-      const {
-        name,
-        lastname,
-        password,
-        email
-      } = this.state;
-
       if (!name || !lastname || !password || !email)
         return alert(
           intl.formatMessage({
@@ -71,10 +65,7 @@ class UserTab extends Component {
           })
         );
 
-      this.setState({
-        isLoad: true
-      });
-
+      setIsLoad(true);
       const opts = {
         name,
         lastname,
@@ -82,24 +73,12 @@ class UserTab extends Component {
         email
       };
 
-      //Create Temp Hex String with user data, this will be deleted on success verification
-      //This will be used to resend verification email
-      const userData = JSON.stringify(opts);
-      const userToken = Buffer.from(userData).toString('hex');
-
-      localStorage.setItem('userToken', userToken);
-      localStorage.setItem('userEmail', email);
-
       const {status} = await createAccount({
         name,
         email
       });
 
       if (status !== 'OK') {
-
-        localStorage.removeIten('userToken');
-        localStorage.removeIten('userEmail');
-
         return alert(
           intl.formatMessage({
             id: 'Error sending the data'
@@ -107,12 +86,10 @@ class UserTab extends Component {
         );
       }
 
-      this.setState({
-        isLoad: false,
-        tab: 'verify'
-      });
+      setUser(opts);
 
-      this.props.onRegister(email);
+      setIsLoad(false);
+      onRegister(email);
     } catch(err) {
       alert(
         intl.formatMessage({
@@ -120,28 +97,13 @@ class UserTab extends Component {
         })
       );
 
-      localStorage.removeIten('userToken');
-      localStorage.removeIten('userEmail');
-
       throw err;
     }
   };
-  createCollab = async e => {
-    this.setState({
-      isLoad: true
-    });
-
+  const createCollab = async e => {
     e.preventDefault();
-
-    const {
-      email
-    } = this.props;
-
-    const {
-      name,
-      lastname,
-      password
-    } = this.state;
+    
+    setIsLoad(true);
 
     await createCollaborator({
       name,
@@ -150,117 +112,109 @@ class UserTab extends Component {
       password
     });
 
-    this.setState({
-      isLoad: false
-    });
-
     const user = await signIn('credentials', {
       redirect: false,
       email,
       password
     });
 
+    setIsLoad(false);
+
     if (user.ok)
       Router.push('/dashboard');
   };
-  render() {
-    const {isCollab, intl} = this.props;
-    const {name, lastname, password, email, existsEmail, isLoad, emailLoad} = this.state;
-    let emailStatus = '';
+  
+  let emailStatus = '';
 
-    if (existsEmail === true)
-      emailStatus = 'invalid';
-    else if (existsEmail === false)
-      emailStatus = 'valid' ;
-    else
-      emailStatus = 'loading';
+  if (existsEmail === true)
+    emailStatus = 'invalid';
+  else if (existsEmail === false)
+    emailStatus = 'valid' ;
+  else
+    emailStatus = 'loading';
 
-    return <form className='form' onSubmit={!isCollab ? this.register : this.createCollab}>
-      <div id='username' className='flex mb-4'>
-        <Input
-          disabled={isLoad}
-          value={name}
-          id='name'
-          onInput={this.handleInput}
-          label={
-            intl.formatMessage({
-              id: 'Name'
-            })
-          }
-          autoComplete='false'
-        />
-        <Input
-          disabled={isLoad}
-          value={lastname}
-          id='lastname'
-          onInput={this.handleInput}
-          label={
-            intl.formatMessage({
-              id: 'Lastname'
-            })
-          }
-          autoComplete='false'
-        />
-      </div>
-        {
-          !isCollab &&
-          <div id='emailLoad' className='flex relative'>
-            <Input
-              className='mb-4'
-              status={emailStatus}
-              disabled={isLoad}
-              value={email}
-              id='email'
-              type='email'
-              onInput={this.handleInput}
-              label={
-                intl.formatMessage({
-                  id: 'Email'
-                })
-              }
-              autoComplete='false'
-            />
-            {
-              emailLoad && <ImSpinner9 className='w-6 h-6 animate-spin absolute right-4 top-[.9rem]'/>
-            }
-            {
-              existsEmail === true &&
-              <div className='tooltip'>
-                <span>
-                  <FormattedMessage id='An account with that email already exists'/>
-                </span>
-              </div>
-            }
-          </div>
+  return <form className='form' onSubmit={!isCollab ? register : createCollab}>
+    <div id='username' className='flex mb-4'>
+      <Input
+        disabled={isLoad}
+        value={name}
+        id='name'
+        onInput={handleInput}
+        label={
+          intl.formatMessage({
+            id: 'Name'
+          })
         }
-        <Input
-          className='mb-4'
-          disabled={isLoad}
-          value={password}
-          id='password'
-          onInput={this.handleInput}
-          label={
-            intl.formatMessage({
-              id: 'Password'
-            })
-          }
-          type='password'
-          autoComplete='false'
-        />
-        <Button type='solid' style={{width: '100%'}}  loading={isLoad}>
-          <FormattedMessage id='Register'/>
-        </Button>
-      <style jsx>{`
-        .tooltip {
-          margin-top: -1rem;
-          margin-bottom: 1rem;
-          display: flex;
-          justify-content: center;
+        autoComplete='false'
+      />
+      <Input
+        disabled={isLoad}
+        value={lastname}
+        id='lastname'
+        onInput={handleInput}
+        label={
+          intl.formatMessage({
+            id: 'Lastname'
+          })
         }
-      `}</style>
-    </form>;
-  }
+        autoComplete='false'
+      />
+    </div>
+      {
+        !isCollab &&
+        <div id='emailLoad' className='flex flex-col relative'>
+          <Input
+            className='mb-4'
+            status={emailStatus}
+            disabled={isLoad}
+            value={email}
+            id='email'
+            type='email'
+            onInput={handleInput}
+            label={
+              intl.formatMessage({
+                id: 'Email'
+              })
+            }
+            autoComplete='false'
+          />
+          {
+            emailLoad && <ImSpinner9 className='w-6 h-6 animate-spin absolute right-4 top-[.9rem]'/>
+          }
+          {
+            existsEmail === true &&
+            <div className='tooltip'>
+              <span>
+                <FormattedMessage id='An account with that email already exists'/>
+              </span>
+            </div>
+          }
+        </div>
+      }
+      <Input
+        className='mb-4'
+        disabled={isLoad}
+        value={password}
+        id='password'
+        onInput={handleInput}
+        label={
+          intl.formatMessage({
+            id: 'Password'
+          })
+        }
+        type='password'
+        autoComplete='false'
+      />
+      <Button type='solid' style={{width: '100%'}}  loading={isLoad}>
+        <FormattedMessage id='Register'/>
+      </Button>
+    <style jsx>{`
+      .tooltip {
+        margin-top: -1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+      }
+    `}</style>
+  </form>;
 }
-
-
-export default injectIntl(UserTab);

@@ -1,53 +1,50 @@
-import {Component} from 'react';
-import {FormattedMessage, injectIntl} from 'react-intl';
+import {useState} from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {createBlog} from '@lettercms/admin';
 import Router from 'next/router';
 import Input from '@/components/input';
 import Button from '@/components/button';
 import sdk from '@lettercms/sdk';
+import {useData} from '@/components/dashboard/credentialsContainer';
+import sanitize from '@/lib/sanitizeUrl';
 
-class BlogTab extends Component {
-  state = {
-    isLoad: false
+export default function BlogTab() {
+  const [existsSubdomain, setExistsSubdomain] = useState(null);
+  const [description, setDescription] = useState('');
+  const [subdomain, setSubdomain] = useState('');
+  const [isLoad, setIsLoad] = useState(false);
+  const [title, setTitle] = useState('');
+
+  const {user} = useData();
+  const intl = useIntl();
+
+  const handleInput = ({target: {name, value}}) => {
+    switch(name) {
+      case 'subdomain':
+        return setSubdomain(sanitize(value));
+      case 'description':
+        return setDescription(value);
+      case 'title':
+        return setTitle(value);
+      default:
+        break;
+    }
   };
-  handleInput = ({target: {name, value}}) => this.setState({
-    [name]: name === 'subdomain'
-      ? value.toLowerCase()
-        .split(' ')
-        .slice(0, 8)
-        .join('-')
-        .replace(/ñ/g, 'n')
-        .replace(/\./g, '-')
-        .replace(/á|à|â|ä/g, 'a')
-        .replace(/é|è|ê|ë/g, 'e')
-        .replace(/í|ì|î|ï/g, 'i')
-        .replace(/ó|ò|ô|ö/g, 'o')
-        .replace(/ú|ù|ü|û/g, 'u')
-        .replace(/ñ/g, 'n')
-        .replace(/"|'/g, '')
-      : value
-  });
-  existsSubdomain = async e => {
+
+  const checkSubdomain = async e => {
     const {target: {value}} = e;
 
-    this.setState({
-      existsSubdomain: null
-    });
+    setExistsSubdomain(null);
 
-    this.handleInput(e);
+    handleInput(e);
 
     const exists = await sdk.Letter.existsSubdomain(value);
 
-    this.setState({
-      existsSubdomain: exists
-    });
+    setExistsSubdomain(exists);
   };
-  createBlog = async e => {
-    const {
-      intl
-    } = this.props;
 
-    const {subdomain, title, description, existsSubdomain} = this.state;
+  const hadleCreateBlog = async e => {
+    e.preventDefault();
     
     if (existsSubdomain)
       return;
@@ -59,20 +56,10 @@ class BlogTab extends Component {
         })
       );
 
-    this.setState({
-      isLoad: true
-    });
+    setIsLoad(true);
 
-    e.preventDefault();
-
-    try {
-      const {
-        title,
-        description,
-        subdomain
-      } = this.state;
-      
-      const ownerEmail = localStorage.getItem('userEmail');
+    try {      
+      const ownerEmail = user.email || localStorage.getItem('_email');
 
       await createBlog({
         subdomain,
@@ -81,13 +68,8 @@ class BlogTab extends Component {
         ownerEmail
       });
 
-      this.setState({
-        isLoad: false
-      });
-
-      localStorage.removeItem('userEmail');
       localStorage.removeItem('_step');
-      localStorage.removeItem('userToken');
+      localStorage.removeItem('_email');
 
       Router.push('/login');
     } catch(err) {
@@ -96,103 +78,93 @@ class BlogTab extends Component {
           id: 'Error creating the blog'
         })
       );
+
       throw err;
+    } finally {
+      setIsLoad(false);
     }
   };
-  render() {
-    const {intl} = this.props;
-    const {isLoad, subdomain, title, description, existsSubdomain} = this.state;
 
-    let subdomainStatus = '';
+  let subdomainStatus = '';
 
-    if (existsSubdomain === true)
-      subdomainStatus = 'invalid';
-    else if (existsSubdomain === false)
-      subdomainStatus = 'valid' ;
-    else
-      subdomainStatus = 'loading';
+  if (existsSubdomain === true)
+    subdomainStatus = 'invalid';
+  else if (existsSubdomain === false)
+    subdomainStatus = 'valid' ;
+  else
+    subdomainStatus = 'loading';
 
-    return <form className='form' onSubmit={this.createBlog}>
-      <div id='direction'>
-        <Input
-          status={subdomainStatus}
-          disabled={isLoad}
-          id='subdomain'
-          value={subdomain}
-          onChange={this.existsSubdomain}
-          label={
-            intl.formatMessage({
-              id: 'Address'
-            })
-          }
-        />
-        <div>
-          <span>.lettercms.vercel.app</span>
-        </div>
+  return <form className='form' onSubmit={hadleCreateBlog}>
+    <div id='direction'>
+      <Input
+        status={subdomainStatus}
+        disabled={isLoad}
+        id='subdomain'
+        value={subdomain}
+        onChange={checkSubdomain}
+        label={
+          intl.formatMessage({
+            id: 'Address'
+          })
+        }
+      />
+      <div className='py-2'>
+        <span>.lettercms.vercel.app</span>
       </div>
-      {
-        existsSubdomain === true &&
-        <div className='tooltip'>
-          <span>
-            <FormattedMessage id='A blog with that subdomain already exists'/>
-          </span>
-        </div>
+    </div>
+    {
+      existsSubdomain === true &&
+      <div className='text-center pt-1 pb-4'>
+        <span>
+          <FormattedMessage id='A blog with that subdomain already exists'/>
+        </span>
+      </div>
+    }
+    <Input
+      disabled={isLoad}
+      id='title'
+      value={title}
+      onChange={handleInput}
+      label={
+        intl.formatMessage({
+          id: 'Blog\'s title'
+        })
       }
-      <Input
-        disabled={isLoad}
-        id='title'
-        value={title}
-        onChange={this.handleInput}
-        label={
-          intl.formatMessage({
-            id: 'Blog\'s title'
-          })
-        }
-      />
-      <Input
-        disabled={isLoad}
-        id='description'
-        type='textarea'
-        value={description}
-        onChange={this.handleInput}
-        label={
-          intl.formatMessage({
-            id: 'Description'
-          })
-        }
-      />
-      <Button type='solid' style={{width: '100%'}}  loading={isLoad}>
-        <FormattedMessage id='Register'/>
-      </Button>
-      <style jsx>{`
-        #direction {
-          display: flex;
-        }
-        #direction div {
-          border: 1px solid #c4d8dc;
-          border-left: none;
-          margin-bottom: 1.25rem;
-          border-radius: 0 .25rem .25rem 0;
-          font: 400 0.875rem/1.875rem "Open Sans", sans-serif;
-          display: flex;
-          align-items: center;
-          padding-right: 1.25rem;
-        }
-        :global(#direction .form-group) {
-          flex-grow: 1;
-        }
-        :global(#subdomain) {
-          border-radius: .25rem 0 0 .25rem;
-        }
-        .tooltip {
-          margin-top: -1rem;
-          margin-bottom: 1rem;
-          display: flex;
-          justify-content: center;
-        }
-      `}</style>
-    </form>;
-  }
+    />
+    <Input
+      disabled={isLoad}
+      id='description'
+      type='textarea'
+      value={description}
+      onChange={handleInput}
+      label={
+        intl.formatMessage({
+          id: 'Description'
+        })
+      }
+    />
+    <Button type='solid' style={{width: '100%'}}  loading={isLoad} disabled={existsSubdomain}>
+      <FormattedMessage id='Register'/>
+    </Button>
+    <style jsx>{`
+      #direction {
+        display: flex;
+      }
+      #direction div {
+        border: 1px solid #c4d8dc;
+        border-left: none;
+        border-radius: 0 .25rem .25rem 0;
+        font: 400 0.875rem/1.875rem "Open Sans", sans-serif;
+        display: flex;
+        align-items: center;
+        padding-right: 1.25rem;
+      }
+      :global(#direction .form-group) {
+        flex-grow: 1;
+      }
+      :global(#subdomain) {
+        border-radius: .25rem 0 0 .25rem;
+      }
+    `}</style>
+  </form>;
 }
-
-export default injectIntl(BlogTab);

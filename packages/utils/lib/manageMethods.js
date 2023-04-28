@@ -107,7 +107,7 @@ export default function manageMethods(methods) {
           message: 'Invalid API credentials'
         });
 
-      if (!pass)
+      if (!pass && !req.headers['x-invoke-path'].endsWith('/exists'))
         return res.status(401).json({
           message: 'Unauthorized'
         });

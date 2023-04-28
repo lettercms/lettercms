@@ -10,7 +10,22 @@
         "!.next/cache/**"
       ]
     },
-    "lint": {},
+    "lint": {
+      "inputs": [
+        "src/**",
+        "lib/**",
+        "acccounts/**",
+        "blogs/**",
+        "comments/**",
+        "pages/**",
+        "payments/**",
+        "posts/**",
+        "socials/**",
+        "stats/**",
+        "usages/**",
+        "users/**"
+      ]
+    },
     "dev": {
       "cache": false,
       "persistent": true

@@ -26,7 +26,6 @@ export default async function create(req, res) {
       message: 'Email already exists'
     });
 
-
   if (isSubscribeToNewsletter) {
     try {
       await Accounts.create({

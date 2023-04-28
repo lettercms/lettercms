@@ -2,7 +2,7 @@ import { SessionProvider } from 'next-auth/react';
 import {/*useState, */useEffect} from 'react';
 import Router from 'next/router';
 import sdk from '@lettercms/sdk';
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import {IntlProvider} from 'react-intl';
 import {createFirebaseApp} from '@/firebase/client';
 import Facebook from '@/lib/client/FacebookSDK';

@@ -27,32 +27,17 @@ export default async function createBlog(req, res) {
 
   delete req.body.ownerEmail;
 
-  //Create Blog
-  const blog = await blogs.create({
-    ...req.body,
-    owner: account._id
-  });
-
-  //Initialize Blog Data
-  await Stats.create({subdomain});
-  await usage.create({subdomain});
-
   const date = new Date();
-  /*await Payment.create({
-    subdomain,
-    //nextPayment: date.setMonth(date.getMonth() + 1)
-  });*/
 
-  //Link subdomain to account 
-  await Accounts.updateOne({email: ownerEmail}, {subdomain});
+  const blogOptions = {
+    ...req.body,
+    owner: account._id,
+    tags: {
+      example: 1
+    }
+  };
 
-  /**
-   * TODO: Create Example Page
-   * const pageID = await pages.create();
-   */
-
-  //Publish post
-  await posts.createPost(subdomain, {
+  const postOptions = {
     subdomain,
     created: date,
     title: 'Yay! My firts post',
@@ -63,7 +48,29 @@ export default async function createBlog(req, res) {
     author: account._id,
     postStatus: 'published',
     published: date
-  });
+  };
+
+  const [blog] = await Promise.all([
+    blogs.create(blogOptions),
+    Stats.create({subdomain}),
+    usage.create({subdomain}),
+    Accounts.updateOne({email: ownerEmail}, {subdomain}),
+    posts.createPost(subdomain, postOptions)
+  ]);
+
+  /**
+   * Possible implementation of payment system for donations or thru Open Collective API
+   * 
+   * await Payment.create({
+   *   subdomain,
+   *   //nextPayment: date.setMonth(date.getMonth() + 1)
+   * });
+   */
+
+  /**
+   * TODO: Create Example Page
+   * const pageID = await pages.create();
+   */
 
   return res.json({
     id: blog._id,

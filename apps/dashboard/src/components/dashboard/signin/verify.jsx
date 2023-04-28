@@ -3,6 +3,7 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import Input from '@/components/input';
 import {createAccount} from '@lettercms/admin';
 import Button from '@/components/button';
+import {useData} from '@/components/dashboard/credentialsContainer';
 
 const resendEmail = async intl => {
   const token = localStorage.getItem('userToken');
@@ -37,20 +38,16 @@ const resendEmail = async intl => {
 };
 
 export default function Verify({onVerify}) {
-  const [code, setCode] = useState('');
-  const [isLoad, setIsLoad] = useState(false);
   const [isInvalidCode, setIsInvalidCode] = useState(false);
+  const [isLoad, setIsLoad] = useState(false);
+  const [code, setCode] = useState('');
 
+  const {user} = useData();
   const intl = useIntl();
 
   const verify = async () => {
     setIsLoad(true);
     setIsInvalidCode(false);
-
-    //const email = localStorage.getItem('userEmail');
-    const token = localStorage.getItem('userToken');
-
-    const data = JSON.parse(Buffer.from(token, 'hex').toString('utf-8'));
 
     const res = await fetch('/api/account/verify', {
       credentials: 'include',
@@ -59,7 +56,7 @@ export default function Verify({onVerify}) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        ...data,
+        ...user,
         code
       })
     });
@@ -67,9 +64,9 @@ export default function Verify({onVerify}) {
     const {status} = await res.json();
 
     if (status === 'OK') {
-      localStorage.removeItem('userToken');
       localStorage.setItem('_step', 'blog');
-      
+      localStorage.setItem('_email', user.email);
+
       onVerify();
     } else {
       setIsInvalidCode(true);

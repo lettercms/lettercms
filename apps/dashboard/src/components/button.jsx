@@ -46,8 +46,8 @@ export default function Button({loading, className = '', alt, type, children, ..
 
 
   if (loading)
-    return <div className='animate-spin w-24 h-24 relative m-auto'>
-      <FaSpinner/>
+    return <div className='py-2'>
+      <FaSpinner className='animate-spin w-8 h-8 relative m-auto'/>
     </div>;
 
   return <button className={_className} {...props}>{children}</button>;

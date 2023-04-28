@@ -32,20 +32,20 @@ export default async function verify(req, res) {
       message: `Account with email "${email}" already exists`
     });
 
-  await Accounts.createAccount({
-    photo: `https://avatar.tobi.sh/${Buffer.from(email).toString('hex')}.svg?text=${name[0]+lastname[0]}&size=250`,
-    name,
-    lastname,
-    password,
-    email,
-    role: 'admin'
-  });
-  
-  //Delete authorized code
-  await Codes.deleteOne({email, code: req.body.code});
+  await Promise.all([
+    Accounts.createAccount({
+      photo: `https://avatar.tobi.sh/${Buffer.from(email).toString('hex')}.svg?text=${name[0]+lastname[0]}&size=250`,
+      name,
+      lastname,
+      password,
+      email,
+      role: 'admin'
+    }),
+
+    Codes.deleteOne({email, code: req.body.code})
+  ]);
 
   res.json({
-    status: 'OK',
-    password
+    status: 'OK'
   });
 };

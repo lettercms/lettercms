@@ -4,7 +4,6 @@ import sdk from '@lettercms/sdk';
 import Cookies from 'js-cookie';
 import {useToken} from '@/lib/userContext';
 
-
 export default function Layout({children}) {
   const {accessToken} = useToken();
   const {query: {url}} = useRouter();
