@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "next dev  --port 3000",
+    "test": "jest --detectOpenHandles",
     "start": "set NODE_ENV=production&& next start --port 3000",
     "start:dev": "set NODE_ENV=development&& next dev  --port $PORT",
     "compile": "set NODE_ENV=production&& node src/compile && next build",

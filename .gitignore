@@ -41,3 +41,4 @@ packages/sdk/types
 
 .vercel
 .turbo
+.swc

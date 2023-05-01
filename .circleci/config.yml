@@ -28,10 +28,14 @@ jobs:
     #Run ESLint to check Code Quality
     docker:
       - image: cimg/node:18.15.0
-      #- image: circleci/mongo:4.4
+      - image: mongo:latest
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: password
 
     steps:
       - checkout
+      - setup_remote_docker
       - node/install-packages:
           pkg-manager: yarn
           with-cache: true
@@ -39,9 +43,10 @@ jobs:
           keys:
             - dashboard-build-{{ checksum "apps/dashboard/package.json" }}
             - dashboard-build-
+      - run: echo 'export MONGO_URL="mongodb://root:password@mongo:27017/test?retryWrites=true&w=majority"' >> "$BASH_ENV"
       - run:
           name: Unit Testing
-          command: yarn test
+          command: yarn workspace @lettercms/dashboard test
 
 
   #TODO: Add Code Quality Analisys Job
@@ -93,10 +98,10 @@ workflows:
     jobs:
       - lint:
           <<: *job
-      #- unit-test:
-      #    <<: *job
+      - unit-test:
+          <<: *job
       - build:
           <<: *job
           requires:
             - lint
-          #- unit-test
+            - unit-test

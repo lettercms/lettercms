@@ -49,6 +49,7 @@ export default function manageMethods(methods) {
       const blogId = req.headers['x-lettercms-id'];
       const blogSecret = req.headers['x-lettercms-secret'];
       const accessToken = req.headers['authorization'];
+      const vercelPath = req.headers['x-invoke-path'];
 
       //Check API credentials
       if ((blogId && !blogSecret) || (!blogId && blogSecret))
@@ -107,7 +108,7 @@ export default function manageMethods(methods) {
           message: 'Invalid API credentials'
         });
 
-      if (!pass && !req.headers['x-invoke-path'].endsWith('/exists'))
+      if (!pass && !vercelPath?.endsWith('/exists'))
         return res.status(401).json({
           message: 'Unauthorized'
         });
@@ -125,7 +126,7 @@ export default function manageMethods(methods) {
       //Execute method handler
       await methodFn();
     } catch(err) {
-      res.status(500).send({
+      res.status(500).json({
         status: 'server-error'
       });
 

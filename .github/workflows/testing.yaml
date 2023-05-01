@@ -1,0 +1,18 @@
+name: "Run Test Suites"
+
+on:
+  push:
+    branches: [main, production]
+
+jobs:
+  test:
+    name: Testing
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '18'
+    - run: yarn
+    - run: yarn workspace @lettercms/dashboard test
