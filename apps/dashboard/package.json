@@ -28,7 +28,7 @@
     "bcrypt": "^5.1.0",
     "browser-image-compression": "^2.0.0",
     "cropperjs": "^1.5.12",
-    "fast-xml-parser": "^4.0.11",
+    "fast-xml-parser": "^4.2.4",
     "feed": "^4.2.2",
     "firebase": "^9.10.0",
     "firebase-admin": "^11.0.1",
