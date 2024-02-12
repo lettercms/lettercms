@@ -22,7 +22,7 @@
   "homepage": "https://github.com/lettercms/lettercms#readme",
   "dependencies": {
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.3.3",
+    "mongoose": "^8.1.2",
     "xml-js": "^1.6.11"
   },
   "peerDependencies": {
