@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "engines": {
     "yarn": ">= 1.22",
-    "node": ">=16"
+    "node": ">=18"
   },
   "dependencies": {
     "eslint-config-next": "^13.3.0",

@@ -32,7 +32,7 @@
   },
   "engines": {
     "yarn": "^1.22",
-    "node": "^18 || ^19"
+    "node": ">=18"
   },
   "dependencies": {},
   "packageManager": "yarn@1.22.19"
