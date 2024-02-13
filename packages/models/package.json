@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/lettercms/lettercms#readme",
   "dependencies": {
-    "jsonwebtoken": "^9.0.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.2",
     "xml-js": "^1.6.11"
   },
@@ -30,6 +30,6 @@
   },
   "devDependencies": {
     "@lettercms/eslint-config": "*",
-    "eslint": "^8.22.0"
+    "eslint": "^8.56.0"
   }
 }

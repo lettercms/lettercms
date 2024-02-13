@@ -7,17 +7,16 @@
   "scripts": {
     "deploy-canary": "prerelease && npm publish --tag canary",
     "lint": "eslint ."
-
   },
   "dependencies": {
-    "jsonwebtoken": "^9.0.0",
     "@lettercms/models": "*",
-    "@sentry/nextjs": "^7.11.1"
+    "@sentry/nextjs": "^7.101.0",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
     "@lettercms/eslint-config": "*",
-    "dotenv": "^16.0.0",
-    "eslint": "^8.22.0"
+    "dotenv": "^16.4.3",
+    "eslint": "^8.56.0"
   },
   "repository": {
     "type": "git",

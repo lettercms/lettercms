@@ -20,7 +20,7 @@
     "build-esm": "rimraf ./esm && tsc --outDir ./esm -m ESNext -t ESNEXT"
   },
   "dependencies": {
-    "form-data": "^3.0.0",
-    "isomorphic-fetch": "^3.0.0"
+    "form-data": "^4.0.0",
+    "isomorphic-unfetch": "^4.0.2"
   }
 }
