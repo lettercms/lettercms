@@ -1,6 +1,5 @@
 const { resolve } = require('path');
 const { writeFile, readdirSync } = require('fs');
-const {app} = require('../config');
 const babel = require('@babel/core');
 const Terser = require('terser');
 
@@ -54,7 +53,7 @@ const terserOpts = {
 async function compile(entry, output) {
   const name = entry.match(/\w*(-\w*)*\.js$/)[0];
 
-  console.log('> Compiling - ', name);
+  console.log('> Compiling - ', name); //eslint-disable-line
 
   const code = await new Promise((resolve, reject) => babel.transformFile(entry, babelOpts, (err, res) => {
     if (err)
@@ -63,7 +62,7 @@ async function compile(entry, output) {
     return resolve(res.code);  
   }));
 
-  const minified = Terser.minify(res.code, terserOpts);
+  const minified = Terser.minify(code, terserOpts);
 
   if (minified.error)
     return Promise.reject(minified.error);
@@ -74,7 +73,7 @@ async function compile(entry, output) {
 
   return new Promise(resolve => {
     writeFile(output, parsed, () => {
-      console.log('> Compiled - ', name);
+      console.log('> Compiled - ', name); //eslint-disable-line
       resolve();
     });
   });
@@ -86,8 +85,7 @@ async function main() {
 }
 
 main()
-  .then(() => console.log('Done.'))
+  .then(() => console.log('Done.')) //eslint-disable-line
   .catch(err => {
-    console.error(err);
-    process.exit(1);
+    throw err;
   });

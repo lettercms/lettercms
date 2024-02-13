@@ -35,7 +35,7 @@ async function createRequest(path, method, data) {
     if (!isGet)
         headers["Content-Type"] = "application/json";
     try {
-        const res = await (0, isomorphic_fetch_1.default)(`${this.endpoint}/api${path}${query}`, {
+        const res = await (0, isomorphic_fetch_1.default)(`${this.endpoint}${path}${query}`, {
             method: methodParam,
             headers,
             mode: "cors",

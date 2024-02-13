@@ -16,15 +16,17 @@ export const find = async (model, filter, opts = {}) => {
 
   const data = await baseFind(model, filter, opts);
 
-  const [collaborator, single] = await Promise.all([
+  const [admin, collaborator, single] = await Promise.all([
+    model.countDocuments({subdomain: filter.subdomain, role: 'admin'}),
     model.countDocuments({subdomain: filter.subdomain, role: 'collaborator'}),
     model.countDocuments({subdomain: filter.subdomain, role: 'single'}),
   ]);
 
   data.total = {
+    admin,
     collaborator,
     single,
-    all: collaborator + single
+    all: collaborator + single + admin
   };
 
   if (hasPassword)
@@ -39,7 +41,7 @@ export const find = async (model, filter, opts = {}) => {
 
 export const findOne = async (model, filter, query) => {
   if (!query.fields) {
-    query.fiels = '-password';
+    query.fields = '-password';
   } else {
     let splitted = query.fields.split(',');
     

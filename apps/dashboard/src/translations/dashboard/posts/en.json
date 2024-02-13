@@ -1,0 +1,25 @@
+{
+  "Posts": "Posts",
+  "Analytics": "Analytics",
+  "Social Media": "Social Media",
+  "Collaborators": "Collaborators",
+  "Config": "Config",
+  "Blog": "Blog",
+  "Usage": "Usage",
+  "Developers": "Developers",
+  "Log out": "Log out",
+
+  "Published": "Published",
+  "Draft": "Draft",
+  "Create": "Create",
+  "Posts": "Posts",
+  "Are you sure to delete it?": "Are you sure to delete it?",
+  "All": "All",
+  "Deleted successfully": "Deleted successfully",
+  "Error on delete": "Error on delete",
+  "Oops, we have nothing here yet": "Oops, we have nothing here yet",
+  "(New Post)": "(New Post)",
+  "(New Page)": "(New Page)",
+  "Load more": "Load more",
+  "Posts | Dashboard - LetterCMS": "Posts | Dashboard - LetterCMS"
+}

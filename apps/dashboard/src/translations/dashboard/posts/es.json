@@ -1,0 +1,25 @@
+{
+  "Posts": "Entradas",
+  "Analytics": "Analítica",
+  "Social Media": "Redes Sociales",
+  "Collaborators": "Colaboradores",
+  "Config": "Configuración",
+  "Blog": "Blog",
+  "Usage": "Úso",
+  "Developers": "Desarrolladores",
+  "Log out": "Cerrar Sesión",
+
+  "Published": "Publicados",
+  "Draft": "Borradores",
+  "Create": "Crear",
+  "Posts": "Entradas",
+  "Are you sure to delete it?": "¿Estas seguro de eliminar?",
+  "All": "Todos",
+  "Deleted successfully": "Eliminado con exito",
+  "Error on delete": "Error al eliminar",
+  "Oops, we have nothing here yet": "Lo sentimos, aún no tenemos nada por aqui",
+  "(New Post)": "(Nueva Entrada)",
+  "(New Page)": "(Nueva Página)",
+  "Load more": "Cargar más",
+  "Posts | Dashboard - LetterCMS": "Entradas | Dashboard - LetterCMS"
+}

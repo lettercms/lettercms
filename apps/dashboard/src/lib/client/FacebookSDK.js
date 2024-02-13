@@ -20,7 +20,6 @@ export default class FacebookSDK {
           autoLogAppEvents: false,
           version: 'v13.0',
         });
-        console.log('Init');
       };
     } else {
       window.FB.XFBML.parse();

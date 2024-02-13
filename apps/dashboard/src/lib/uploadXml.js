@@ -1,5 +1,5 @@
 import sdk from '@lettercms/sdk';
-import {getStorage, ref, uploadBytes, getMetadata} from 'firebase/storage';
+import {getStorage, ref, uploadBytes} from 'firebase/storage';
 
 export default async function uploadXml(file, type, subdomain) {
   try {

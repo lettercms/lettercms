@@ -5,7 +5,7 @@ export default function exists(model) {
     const exists = await model.exists(req.query);
 
     res.json({
-      exists
+      exists: !!exists
     });
   };
 }

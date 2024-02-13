@@ -28,13 +28,7 @@ Schema.statics.createPage = async function(subdomain, data) {
  */
 Schema.statics.publishPage = async function(condition, data) {
   try {
-    const {
-      _id,
-      url,
-      subdomain
-    } = condition;
-
-    let existsPage = false;
+    const {subdomain} = condition;
 
     if (data.url) {
       const existsPage = await this.exists({
@@ -52,7 +46,7 @@ Schema.statics.publishPage = async function(condition, data) {
         url: data.url
       });
 
-      if (existsPage)
+      if (existsPost)
         return Promise.resolve({
           exists: true
         });
@@ -80,7 +74,7 @@ Schema.statics.publishPage = async function(condition, data) {
     return Promise.reject(err);
   }
 };
-Schema.statics.draftPage = async function(condition, data) {
+Schema.statics.draftPage = async function(condition) {
   try {
     await this.updateOne(condition, {
       pageStatus: 'draft'
@@ -104,13 +98,7 @@ Schema.statics.draftPage = async function(condition, data) {
  */
 Schema.statics.updatePage = async function(condition, data) {
   try {
-    const {
-      _id,
-      url,
-      subdomain
-    } = condition;
-
-    let existsPage = false;
+    const {subdomain} = condition;
 
     if (data.url) {
       const existsPage = await this.exists({

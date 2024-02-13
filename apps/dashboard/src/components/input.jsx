@@ -1,26 +1,36 @@
+'use client';
+
+import {useState} from 'react';
+
 const Input = ({className, id, status, value = '', type = 'text', label, ...opts}) => {
-  let customClassName = !!value && 'notEmpty';
+  const [isFocused, setIsFocused] = useState(false);
+
   const isTextarea = type === 'textarea';
   const isRadio = type === 'radio';
-  const isCheckbox = type === 'checkbox';
+  //const isCheckbox = type === 'checkbox';
   const isInput = !isRadio && !isTextarea;
+  const isEmpty = !value;
+
+  let customClassName = `pt-5 border w-full rounded-md pb-2 pl-4 focus:outline-none focus:border focus:border-main-300 ${isEmpty  ? '' : ''} `;
 
   if (className)
-    customClassName = className;
+    customClassName += className;
 
   if (status === 'invalid')
-    customClassName += ' input-invalid';
+    customClassName += ' border-red-500';
   else if (status === 'valid')
-    customClassName += ' input-valid';
+    customClassName += ' border-green-500';
 
   const options = {
     className: customClassName || undefined,
     type: isInput ? type : null,
     name: id,
-    ...opts
+    onFocus: () => setIsFocused(true),
+    onBlur: () => setIsFocused(false),
+    ...opts 
   };
 
-  return <div className='form-group'>
+  return <div className='relative w-full m-auto'>
     {
       isInput &&
       <input {...options} value={value}/>
@@ -30,19 +40,18 @@ const Input = ({className, id, status, value = '', type = 'text', label, ...opts
       <textarea {...options} value={value}/>
 
     }
-    <label className={(isCheckbox || isRadio) ? 'option' : undefined} htmlFor={id}>{label}</label>
-    <style jsx>{`
-      input:disabled,
-      textarea:disabled {
-        background-color: #f5f5f5 !important;
-      }
-      .input-invalid {
-        border-color: red !important;
-      }
-      .input-valid {
-        border-color: #5dbc5d !important;
-      }
-    `}</style>
+    <label className={`
+      transition-all
+      duration-150
+      ease
+      absolute
+      left-3
+      px-1
+      ${isFocused ?  'top-0 text-main-100 text-sm' : ''}
+      ${!isFocused && !isEmpty ? 'top-0 text-gray-200 text-sm': ''}
+      ${!isFocused && isEmpty ? 'top-4': ''}
+    `
+    } htmlFor={id}>{label}</label>
   </div>;
 
 };

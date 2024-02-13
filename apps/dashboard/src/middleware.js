@@ -1,64 +1,85 @@
 import { NextResponse } from 'next/server';
 
+const supportedLanguages = [
+  'es',
+  'en'
+];
+
 export const config = {
   matcher: [
     '/([^/.]*)',
-    '/login',
-    '/blog/:path*',
-    '/_preview/:path*',
-    '/signin',
-    '/dashboard/:path*'
-  ],
+    '/:path*'
+  ]
 };
 
 export default function middleware(req) {
   const url = req.nextUrl;
 
-  if (url.pathname.startsWith('/blog/')) {
-    const isPreview = req.cookies.get('__next_preview_data') || req.cookies.get('__prerender_bypass');
-
-    if (isPreview) {
-      url.pathname = url.pathname.replace('/blog/', '/_preview/');
-      
-      return NextResponse.rewrite(url);  
-    } else {
-      return NextResponse.next();
-    }
+  if (url.pathname.includes('/_next/') || url.pathname.startsWith('/api/')) {
+    return NextResponse.next();
   }
 
-  const isAuth = req.cookies.get('next-auth.session-token') || req.cookies.get('__Secure-next-auth.session-token');
+  let language;
 
-  if (isAuth) {
-    if (url.pathname === '/login' || url.pathname === '/signin') {
-      url.pathname = '/dashboard';
+  const hostname = req.headers.get('host') || 'davidsdevel.lettercms.vercel.app';
+  const isLogged = req.cookies.get('next-auth.session-token') || req.cookies.get('__Secure-next-auth.session-token');
+  const languageCookie = req.cookies.get('__lcms-hl');
 
+  if (languageCookie)
+    language = languageCookie;
+  else
+    language = req.headers.get('accept-language')?.split(',')?.[0].split('-')?.[0].toLowerCase() || 'en';
+
+  if (!supportedLanguages.includes(language))
+    language = 'en';
+
+  url.searchParams.set('hl', language);
+
+  if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production')
+    return NextResponse.rewrite(url);
+
+  const currentHost =
+    process.env.NODE_ENV === 'production' && process.env.VERCEL === '1'
+      ? hostname.replace('.lettercms.vercel.app', '')
+      : hostname.replace('.localhost:3000', '');
+
+  if (currentHost == 'dashboard') {
+    if (isLogged && (url.pathname === '/login' || url.pathname === '/signup')) {
+      url.pathname = '/';
       return NextResponse.redirect(url);
-    }
-  } else {
-    if (url.pathname.startsWith('/dashboard')) {
+    } else if (!isLogged && (url.pathname !== '/login' || url.pathname !== '/signup')) {
       url.pathname = '/login';
-
       return NextResponse.redirect(url);
     }
+
+    url.pathname = `/_dashboard${url.pathname}`;
+    return NextResponse.rewrite(url);
   }
 
-  const _lastLogin = req.cookies.get('__last-login');
+  //Assign subdomain to public API
+  if (currentHost === 'api') {
+    url.pathname = `/api/_public${url.pathname}`;
+    return NextResponse.rewrite(url);
+  }
 
-  if (_lastLogin) {
+  if (currentHost === 'usercontent') {
+    url.pathname = `/api/_usercontent${url.pathname}`;
+    return NextResponse.rewrite(url);
+  }
 
-    const lastLogin = new Date(_lastLogin);
-    const limit = Date.now() - (24*60*60*1000);
-
-    if (lastLogin > limit && url.pathname === '/dashboard') {
-      url.pathname = '/dashboard/posts';
-
-      return NextResponse.redirect(url);
-    } else if (lastLogin < limit &&  /\/dashboard\/\w*$/.test(url.pathname)) {
-      url.pathname = '/dashboard';
-
+  if (hostname === 'localhost:3000' || hostname === 'lettercms.vercel.app') {
+    if (url.pathname === '/login') {
+      url.host = hostname;
       return NextResponse.redirect(url);
     }
+    url.pathname = `/_landing${url.pathname}`;
+
+    return NextResponse.rewrite(url);
   }
+
+  // rewrite everything else to `/_blogs/[site] dynamic route
+  /*url.pathname = `/_blogs/${currentHost}${url.pathname}`;
+  return NextResponse.rewrite(url);*/
 
   return NextResponse.next();
 }

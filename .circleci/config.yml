@@ -1,30 +1,107 @@
 version: 2.1
 
-setup: true
-
 orbs:
-  path-filtering: circleci/path-filtering@0.1.1
+  node: circleci/node@4.1
+
+jobs:
+  lint:
+    #Run ESLint to check Code Quality
+    docker:
+      - image: cimg/node:18.15.0
+
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: true
+
+      - restore_cache:
+          keys:
+            - dashboard-build-{{ checksum "apps/dashboard/package.json" }}
+            - dashboard-build-
+
+      - run:
+          name: Lint
+          command: yarn lint
+
+  unit-test:
+    #Run ESLint to check Code Quality
+    docker:
+      - image: cimg/node:18.15.0
+      - image: mongo:latest
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: password
+
+    steps:
+      - checkout
+      - setup_remote_docker
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: true
+      - restore_cache:
+          keys:
+            - dashboard-build-{{ checksum "apps/dashboard/package.json" }}
+            - dashboard-build-
+      - run: echo 'export MONGO_URL="mongodb://root:password@mongo:27017/test?retryWrites=true&w=majority"' >> "$BASH_ENV"
+      - run:
+          name: Unit Testing
+          command: yarn workspace @lettercms/dashboard test
+
+
+  #TODO: Add Code Quality Analisys Job
+  #TODO: Add Testing and coverage Job
+  
+  build:
+    docker:
+      - image: cimg/node:18.15.0
+    working_directory: ~/lettercms/apps/dashboard
+    steps:
+      - checkout:
+          path: ~/lettercms
+      - node/install-packages:
+          pkg-manager: yarn
+          with-cache: false
+      - restore_cache:
+          keys:
+            - dashboard-build-{{ checksum "package.json" }}
+            - dashboard-build-
+      - run:
+          name: Build
+          command: yarn build
+      - save_cache:
+          key: dashboard-build-{{ checksum "package.json" }}
+          paths:
+            - apps/dashboard/.next/cache
+
+      #- run:
+      #    name: Notify error on deploy
+      #    command: node scripts/discord fail dashboard
+      #    when: on_fail
+
+      #- run:
+      #    name: Notify deploy
+      #    command: node scripts/discord success dashboard
+      #    when: on_success
+
+job: &job
+  context:
+    - lettercms-pr
+  filters:
+    branches:
+      ignore:
+        - main
+        - production
 
 workflows:
-  always-run:
+  checks:
     jobs:
-      - path-filtering/filter:
-          name: check-updated-files
-          mapping: |
-            packages/models/.* run-dashboard true
-            apps/dashboard/.* run-dashboard true
-            packages/admin/.* run-dashboard true
-            packages/utils/.* run-dashboard true
-            packages/models/.* run-client true
-            packages/sdk/.* run-dashboard true
-            packages/ui/.* run-dashboard true
-            packages/models/.* run-api true
-            packages/sdk/.* run-client true
-            packages/utils/.* run-api true
-            apps/client/.* run-client true
-            packages/ui/.* run-client true
-            packages/ui/.* run-api true
-            apps/api/.* run-api true
-
-          base-revision: main
-          config-path: .circleci/continue_config.yml
+      - lint:
+          <<: *job
+      - unit-test:
+          <<: *job
+      - build:
+          <<: *job
+          requires:
+            - lint
+            - unit-test

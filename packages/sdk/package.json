@@ -5,7 +5,7 @@
   "main": "index.js",
   "engines": {
     "yarn": ">= 1.22",
-    "node": ">=16"
+    "node": ">=18"
   },
   "license": "Apache-2.0",
   "types": "types/index.d.ts",
@@ -14,14 +14,13 @@
     "url": "git+https://github.com/lettercms/lettercms.git"
   },
   "scripts": {
-    "build": "tsc --outDir ./cjs -m commonjs -t ES2017",
     "deploy:canary": "node ../../scripts/release-canary && npm publish --tag canary",
     "build-dist": "webpack",
     "build-cjs": "rimraf ./cjs && tsc --outDir ./cjs -m commonjs -t ES2017",
     "build-esm": "rimraf ./esm && tsc --outDir ./esm -m ESNext -t ESNEXT"
   },
   "dependencies": {
-    "form-data": "^3.0.0",
-    "isomorphic-fetch": "^3.0.0"
+    "form-data": "^4.0.0",
+    "isomorphic-unfetch": "^4.0.2"
   }
 }

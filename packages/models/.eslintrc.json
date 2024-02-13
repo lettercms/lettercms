@@ -1,4 +1,7 @@
 {
   "root": true,
-  "extends": ["@lettercms/eslint-config"]
+  "extends": ["@lettercms/eslint-config/javascript"],
+  "rules": {
+    "import/export": "off"
+  }
 }

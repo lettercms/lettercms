@@ -1,71 +1,45 @@
-import {useState, useEffect} from 'react';
-import Router from 'next/router';
-import dynamic from 'next/dynamic';
-import Facebook from '../lib/client/FacebookSDK';
 import { SessionProvider } from 'next-auth/react';
+import {/*useState, */useEffect} from 'react';
+import Router from 'next/router';
+import sdk from '@lettercms/sdk';
 import toast, { Toaster } from 'react-hot-toast';
-import Load from '../components/loadBar';
-import {ClientProvider} from '@/lib/userContext'; 
-import '@/styles/global.scss';
+import {IntlProvider} from 'react-intl';
+import {createFirebaseApp} from '@/firebase/client';
+import Facebook from '@/lib/client/FacebookSDK';
+import '@/styles/global.css';
 
-//Dynamics
-const Nav = dynamic(() => import('../components/nav'));
+const isDev = process.env.NODE_ENV !== 'production';
 
-const initApp = setLoad => {
-  const html = document.getElementsByTagName('html')[0];
+if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production')
+  sdk.endpoint = `http${isDev ? '' : 's'}://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/_public`;
 
-  Router.events.on('routeChangeStart', () => {
-    html.style.scrollBehavior = '';
-
-    setLoad(true);
-  });
-
-  Router.events.on('routeChangeComplete', () => {
-    Facebook.init();
-
-    window.scrollTo(0, 0);
-    html.style.scrollBehavior = 'smooth';
-
-    setLoad(false);
-  });
-};
-
-export default function App({Component, pageProps: { session, ...pageProps }}) {
-  const [showLoad, setLoad] = useState(false);
+export default function App({Component, pageProps: { messages, session, ...pageProps }}) {
+  //TODO: Add load on page change
+  //const [showLoad, setLoad] = useState(false);
   const router = Router.useRouter();
+
+  const {hl} = router.query;
 
   useEffect(() => {
     window.alert = msg => toast(msg);
 
     Facebook.init();
-
-    initApp(setLoad);
+    createFirebaseApp();
   }, []);
 
-  const getLayout = Component.getLayout || ((page) => page);
+  const getLayout = Component.getLayout || (page => page);
 
-    return (
-      <div>
-        <ClientProvider accessToken={pageProps.accessToken}>
-          <SessionProvider session={session}>
-            {
-              (
-                showLoad &&
-                !pageProps.hideLayout
-              ) &&
-              <Load />
-            }
-            {
-              (
-                !router.asPath.startsWith('/dashboard') &&
-                !Component.hideMenu
-              ) &&
-              <Nav />
-            }
-            {getLayout(<Component {...pageProps} />, pageProps.user)}
-          </SessionProvider>
-        </ClientProvider>
-        <Toaster />
-      </div>
-    );
+    return <IntlProvider 
+      locale={hl || 'en'}
+      messages={messages}
+      defaultLocale={hl || 'en'}
+      onError={err => {
+        throw err;
+      }}
+    >
+    <SessionProvider session={session}>
+      {getLayout(<Component {...pageProps} />, pageProps.user)}
+    </SessionProvider>
+    <Toaster />
+  </IntlProvider>;
 }

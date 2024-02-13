@@ -12,13 +12,10 @@ let cached = global.__mongoCache;
 if (!cached)
   cached = global.__mongoCache = { conn: null, promise: null };
 
-
 const opts = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useFindAndModify: false,
   //bufferCommands: false,
-  useCreateIndex: true
 };
 
 export default async function dbConnect() {

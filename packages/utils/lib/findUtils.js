@@ -17,19 +17,17 @@ const generateCursorPagination = async (model, filter, opts) => {
   };
 
   const hasMore = data.length === options.limit;
-
-  if (data.length > 10)
-    data.pop();
   
   if (hasMore) {    
+    data.pop();
+
     const beforeCursor = data[data.length - 1]._id;
       
     paging.cursors.before = beforeCursor.toString();
   }
 
-  if (before) {
+  if (before)
     paging.cursors.after = data[0]._id.toString();
-  }
 
   return {
     data,
@@ -98,22 +96,19 @@ export const parseFields = fields => {
     if (path === '_base' && !populate && !opts.select) 
       return opts.select;
 
-    if (path === '_base' && populate?.select === '*') {
+    if (path === '_base' && populate?.select === '*')
       return {
         populate
       };
-    }
 
-    if (path === '_base' && populate) {
+    if (path === '_base' && populate)
       return {
         populate,
         select: opts.select
       };
-    }
+
     if (path === '_base' && opts.select)
       return opts.select;
-    
-
 
     if (populate)
       opts.populate = populate;
@@ -152,10 +147,14 @@ export const parseQuery = query => {
 
   if (!options.populate)
     options.lean = true;
-  if (sort)
-    options.sort = {
-      [sort]: -1
-    };
+  if (sort) {
+    if (typeof sort === 'string')
+      options.sort = {
+        [sort]: -1
+      };
+    else
+      options.sort = sort;
+  }
 
   if (page)
     options.skip = (page - 1) * limit;
@@ -175,7 +174,7 @@ export async function find(model, filter, opts = {limit: 10}) {
 
   const data = await model.find(filter, projection, options);
   const total = await model.countDocuments(filter);
-  
+
   const paging = {
     page: +page,
     total: Math.ceil(total / limit)

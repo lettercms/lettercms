@@ -1,5 +1,5 @@
 ﻿{
-  "start_url": "https://lettercms-dashboard-staging.herokuapp.com",
+  "start_url": "/dashboard",
   "description": "LetterCMS, gestor de contenidos enfocado en la atraccion y retencion de usuarios",
   "icons": [
     {

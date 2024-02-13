@@ -1,2 +1,5 @@
-export * as Facebook from './Facebook';
-export * as Instagram from './Instagram';
+import FB from './Facebook';
+import IG from './Instagram';
+
+export const Facebook = FB;
+export const Instagram = IG;

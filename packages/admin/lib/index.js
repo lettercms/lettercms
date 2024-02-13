@@ -10,15 +10,11 @@ export const createBlog = data => createRequest('/api/blog/create', 'POST', data
 export const facebookLogin = async scope => {
   const res = await login(scope.join(','));
 
-  console.log(res.authResponse);
-
   return res.authResponse;
 };
 
 export const facebookPages = async fields => {
   const res = await getPages({fields: fields.join(',')});
-
-  console.log(res);
 
   return res.data;
 };

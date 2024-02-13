@@ -2,7 +2,7 @@ import connect from '@lettercms/utils/lib/connection';
 import '@lettercms/models/blogs';
 import {Invitations} from '@lettercms/models/accounts';
 
-export default async function getInivitation(_id, subdomain) {
+export default async function getInivitation(_id) {
   await connect();
 
   await Invitations.deleteMany({expiresAt: {$lt: Date.now()}});

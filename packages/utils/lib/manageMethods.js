@@ -1,6 +1,5 @@
 import cors from './cors';
 import connect from './connection';
-import jobs from '@lettercms/models/jobs';
 import blogs from '@lettercms/models/blogs';
 //import usage from '@lettercms/models/usages';
 import decodeToken from './decodeJwt';
@@ -50,6 +49,7 @@ export default function manageMethods(methods) {
       const blogId = req.headers['x-lettercms-id'];
       const blogSecret = req.headers['x-lettercms-secret'];
       const accessToken = req.headers['authorization'];
+      const vercelPath = req.headers['x-invoke-path'];
 
       //Check API credentials
       if ((blogId && !blogSecret) || (!blogId && blogSecret))
@@ -108,7 +108,7 @@ export default function manageMethods(methods) {
           message: 'Invalid API credentials'
         });
 
-      if (!pass)
+      if (!pass && !vercelPath?.endsWith('/exists'))
         return res.status(401).json({
           message: 'Unauthorized'
         });
@@ -125,30 +125,8 @@ export default function manageMethods(methods) {
 
       //Execute method handler
       await methodFn();
-
-      //Delete QStash schedule if exists
-      const jobId = req.headers['x-job-id'];
-      if (jobId) {
-        const {scheduleId} = await jobs.findOne({jobId});
-
-        const deleteRes = await fetch(`https://qstash.upstash.io/v1/schedules/${scheduleId}`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${process.env.QSTASH_TOKEN}`
-          },
-        });
-
-        if (deleteRes.ok) {
-
-          //Delete Job ID
-          await jobs.deleteOne({jobId});
-
-          // Commented because usage will reset every month, this behaviour can change
-          // await usage.updateOne({subdomain}, {$inc: {socialSchedule: -1}});
-        }
-      }
     } catch(err) {
-      res.status(500).send({
+      res.status(500).json({
         status: 'server-error'
       });
 

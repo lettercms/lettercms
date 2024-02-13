@@ -1,0 +1,25 @@
+{
+  "Posts": "Entradas",
+  "Analytics": "Analítica",
+  "Social Media": "Redes Sociales",
+  "Collaborators": "Colaboradores",
+  "Config": "Configuración",
+  "Blog": "Blog",
+  "Usage": "Úso",
+  "Developers": "Desarrolladores",
+  "Log out": "Cerrar Sesión",
+
+  "Oops, we have nothing here yet": "Lo sentimos, aún no tenemos nada por aqui",
+
+  "Add Facebook account": "Añadir cuenta de Facebook",
+  "Add Instagram account": "Añadir cuenta de Instagram",
+  "Add social media": "Agregar red social",
+  "Update account": "Actualizar cuenta",
+  "Please log in again": "Por favor inicie sesión nuevamente",
+  "Error selecting account": "Error al seleccionar cuenta",
+  "Error on log in": "Error al iniciar sesión",
+
+  "New Post": "Nueva Entrada",
+  "Social media": "Redes sociales",
+  "Social Media | Dashboard - LetterCMS": "Redes Sociales | Dashboard - LetterCMS"
+}
