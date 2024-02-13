@@ -1,6 +1,8 @@
+'use client'
+
 import {createContext, useContext, useEffect, useState} from 'react';
 import sdk from '@lettercms/sdk';
-import Router from 'next/router';
+import Router from 'next/navigation';
 import Consent from '@/components/client/cookieConsent';
 import Cookie from 'js-cookie';
 

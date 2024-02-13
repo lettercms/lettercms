@@ -12,6 +12,7 @@ export async function getBlog(page = '1', userID) {
   await connect();
 
   const blog = await blogs.findOne({subdomain}, 'thumbnail owner url mainUrl', {
+    lean: true,
     populate: {
       path: 'owner',
       select: 'photo name description lastname facebook twitter instagram linkedin website',

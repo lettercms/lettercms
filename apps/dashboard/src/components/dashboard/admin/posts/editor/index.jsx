@@ -1,3 +1,5 @@
+'use client'
+
 import {useState, createContext, useContext, useRef} from 'react';
 import {useIntl} from 'react-intl';
 import dynamic from 'next/dynamic';
@@ -9,7 +11,7 @@ import Thumbnails from './thumbnails';
 import Title from './title';
 import {backButton, configButtons} from './index.module.css';
 import {topButton} from '../../listLayout/top.module.css';
-import Router from 'next/router';
+import Router from 'next/navigation';
 import Tags from './tags';
 import EditorLoad from './editorLoad';
 import ImagesModal from '../imagesModal';

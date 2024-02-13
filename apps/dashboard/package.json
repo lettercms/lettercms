@@ -7,7 +7,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "dev": "next dev  --port 3000",
+    "dev": "next dev  --port 4000",
     "test": "jest --detectOpenHandles",
     "start": "set NODE_ENV=production&& next start --port 3000",
     "start:dev": "set NODE_ENV=development&& next dev  --port $PORT",
@@ -51,7 +51,6 @@
     "next": "^14.1.0",
     "next-auth": "^4.24.5",
     "next-seo": "^5.5.0",
-    "next-transpile-modules": "^9.0.0",
     "react": "^18.2.0",
     "react-datetime": "^3.1.1",
     "react-dom": "^18.2.0",

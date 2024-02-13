@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import dynamic from 'next/dynamic';
-import Router from 'next/router';
+import Router from 'next/navigation';
 import Datetime from 'react-datetime';
 import moment from 'moment';
 import Input from '@/components/input';

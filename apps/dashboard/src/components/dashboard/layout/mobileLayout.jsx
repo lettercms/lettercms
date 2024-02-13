@@ -1,3 +1,5 @@
+'use client'
+
 import {useRef, useEffect} from 'react';
 import {shadow, openButton} from './mobileLayout.module.css';
 import {FaAngleRight} from 'react-icons/fa';

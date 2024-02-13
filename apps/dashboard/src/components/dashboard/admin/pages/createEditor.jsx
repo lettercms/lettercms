@@ -1,4 +1,4 @@
-import Router from 'next/router';
+import Router from 'next/navigation';
 import sdk from '@lettercms/sdk';
 import {createRoot} from 'react-dom/client';
 import CustomPanel from './customPanel';

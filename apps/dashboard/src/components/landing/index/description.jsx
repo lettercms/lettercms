@@ -1,14 +1,13 @@
 import Container from '@/components/container';
-import {FormattedMessage} from 'react-intl';
 
-export default function MainFeature() {
+export default function MainFeature({translation}) {
   return <div className="flex flex-col text-center mt-12">
     <div className='text-white'>
       <div className="text-4xl font-bold">
-        <FormattedMessage id='CREATE'/>
+        {translation['CREATE']}
       </div>
         <h3 className='mt-2 mb-8'>
-          <FormattedMessage id='Create the best content for your users with tools made for you'/>
+          {translation['Create the best content for your users with tools made for you']}
         </h3>
     </div> 
     <div className="flex flex-col my-8 items-center md:flex-row">
@@ -18,10 +17,10 @@ export default function MainFeature() {
         </div>
         <div className="card-body">
           <h4 className="my-8 font-bold text-2xl text-gray-400">
-            <FormattedMessage id='WYSIWYG Editors'/>
+            {translation['WYSIWYG Editors']}
           </h4>
           <p className='mb-8 px-2'>
-            <FormattedMessage id='Create your entries and pages faster with our editors which makes easier this task for you. Drag, drop and create'/>
+            {translation['Create your entries and pages faster with our editors which makes easier this task for you. Drag, drop and create']}
           </p>
         </div>
       </Container>
@@ -31,10 +30,10 @@ export default function MainFeature() {
         </div>
         <div className="card-body">
           <h4 className="my-8 font-bold text-2xl text-gray-400">
-            <FormattedMessage id='Split tests'/>
+            {translation['Split tests']}
           </h4>
           <p className='mb-8 px-2'>
-            <FormattedMessage id='Test and offer the best version of your content in a simple way and without external tools'/>
+            {translation['Test and offer the best version of your content in a simple way and without external tools']}
           </p>
         </div>
       </Container>
@@ -44,10 +43,10 @@ export default function MainFeature() {
         </div>
         <div className="card-body">
           <h4 className="my-8 font-bold text-2xl text-gray-400">
-            <FormattedMessage id='Collaborators'/>
+            {translation['Collaborators']}
           </h4>
           <p className='mb-8 px-2'>
-            <FormattedMessage id='Keep your team united and optimize your content creation. Avoid delayments when delivering your content'/>
+            {translation['Keep your team united and optimize your content creation. Avoid delayments when delivering your content']}
           </p>
         </div>
       </Container>

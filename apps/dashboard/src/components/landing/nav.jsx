@@ -1,6 +1,7 @@
-//import {FormattedMessage} from 'react-intl';
+'use client'
+
 import Link from 'next/link';
-import Router from 'next/router';
+import {useRouter} from 'next/navigation';
 import {useState, useEffect, useRef} from 'react';
 import {useSession} from 'next-auth/react';
 import Button from '@/components/button';
@@ -15,12 +16,12 @@ export default function Nav () {
   
   const prevScrollY = useRef(0);
 
-  const router = Router.useRouter();
+  const router = useRouter();
   const {status, data} = useSession();
 
-  useEffect(() => {
+  /*useEffect(() => {
     Router.events.on('routeChangeComplete', () => setMobileOpen(false));
-  }, []);
+  }, []);*/
 
   useEffect(() => {
     if (status === 'authenticated' && !profilePicture && data.user) {

@@ -1,4 +1,6 @@
-import {useRouter} from 'next/router';
+'use client'
+
+import {useRouter} from 'next/navigation';
 import sdk from '@lettercms/sdk';
 import Layout from '../listLayout';
 import Ico from '@/components/dashboard/assets/adminPost';

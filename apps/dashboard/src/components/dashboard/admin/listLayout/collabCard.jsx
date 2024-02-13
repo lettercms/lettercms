@@ -1,4 +1,6 @@
-import {useRouter} from 'next/router';
+'use client'
+
+import {useRouter} from 'next/navigation';
 import {FaEye, FaTrash} from 'react-icons/fa';
 import styles from './card.module.css';
 

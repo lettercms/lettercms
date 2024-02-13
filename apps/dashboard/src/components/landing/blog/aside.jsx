@@ -1,23 +1,24 @@
-import {FormattedMessage} from 'react-intl';
+'use client'
+
 import {useState} from 'react';
 import Container from '@/components/container';
 import Input from '@/components/input';
 import {FaFacebook, FaInstagram, FaLinkedin, FaTwitter, FaLink} from 'react-icons/fa';
 import Link from 'next/link';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import MostViewed from './mostViewed';
 import Button from '@/components/button';
 
-export default function Aside({owner, mostViewed}) {
+export default function Aside({owner, mostViewed, translation}) {
   const [query, setQuery] = useState('');
   const router = useRouter();
 
   return <aside className='w-full bg-slate-100 flex flex-col items-center md:w-1/3 md:rounded-xl md:h-fit'>
     <Container>
       <div className='flex flex-col items-center'>
-        <Input label={<FormattedMessage id='Term'/>} value={query} onChange={e => setQuery(e.target.value)} className='mb-4'/>
+        <Input label={translation['Term']} value={query} onChange={({target: {value}}) => setQuery(value)} className='mb-4'/>
         <Button type='solid' onClick={() => router.push(`/search?q=${query}`)}>
-          <FormattedMessage id='Search'/>
+          {translation['Search']}
         </Button>
       </div>
     </Container>
@@ -79,7 +80,7 @@ export default function Aside({owner, mostViewed}) {
         </div>
       </div>
     </Container>
-    <Container row={1} title={<FormattedMessage id='Most viewed'/>}>
+    <Container row={1} title={translation['Most viewed']}>
       <div className='flex flex-col'>
         <MostViewed mostViewed={mostViewed}/>
       </div>

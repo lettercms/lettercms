@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import sdk from '@lettercms/sdk';
 import Cookies from 'js-cookie';
 import {useToken} from '@/lib/userContext';

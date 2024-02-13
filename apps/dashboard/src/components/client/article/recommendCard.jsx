@@ -1,11 +1,15 @@
+'use client'
+
 import {useState} from 'react';
-import Router from 'next/router';
+import {useRouter} from 'next/navigation';
 import Link from 'next/link';
 import {FaComments, FaShare} from 'react-icons/fa';
 import ShareButtons from '../shareButtons';
 
 export default function RecommendCard({title, description, thumbnail, url, author, tags, comments}) {
   const [showShare, setShowShare] = useState(false);
+
+  const router = useRouter()
 
   return <div className='my-8 w-full lg:w-2/5 relative h-fit'>
     <Link href={`/${url}`}>
@@ -32,7 +36,7 @@ export default function RecommendCard({title, description, thumbnail, url, autho
         </div>
       </div>
       <div className='flex items-center mt-4'>
-        <button className='cursor-pointer w-full mr-8 border border-solid border-main-500 py-2 text-main-500 rounded-full hover:text-white hover:bg-main-500' onClick={() => Router.push('/' + url)}>Ver Más</button>
+        <button className='cursor-pointer w-full mr-8 border border-solid border-main-500 py-2 text-main-500 rounded-full hover:text-white hover:bg-main-500' onClick={() => router.push('/' + url)}>Ver Más</button>
         <button onFocus={() => setShowShare(true)} onBlur={() => setShowShare(false)}>
           <FaShare height='28' fill='#362e6f'/>
         </button>

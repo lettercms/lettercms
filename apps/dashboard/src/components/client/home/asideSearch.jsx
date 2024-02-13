@@ -1,16 +1,19 @@
+'use client';
+
 import {useState} from 'react';
-import Router from 'next/router';
+import {useRouter} from 'next/navigation';
 import {FaSearch} from 'react-icons/fa';
 
-function doSearch(q) {
+function doSearch(q, router) {
   if (!q)
     return alert('Debe introducir un termino de busqueda');
 
-  Router.push(`/search?q=${q}`);
+  router.push(`/search?q=${q}`);
 }
 
 export default function AsideSearch() {
   const [q, setQ] = useState('');
+  const router = useRouter()
 
   return <div className='
     flex
@@ -40,7 +43,7 @@ export default function AsideSearch() {
         onChange={({target: {value}}) => setQ(value)}
         onKeyUp={({code}) => {
           if (code === 'Enter')
-            doSearch(q);
+            doSearch(q, router);
         }}
         placeholder='Algo interesante'
       />
@@ -48,7 +51,7 @@ export default function AsideSearch() {
         className='absolute right-2 top-2 pointer'
         height='20'
         fill='#362e6f'
-        onClick={() => doSearch(q)}
+        onClick={() => doSearch(q, router)}
       />
     </div>
   </div>;
