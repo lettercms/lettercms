@@ -17,12 +17,12 @@
   },
   "engines": {
     "yarn": ">= 1.22",
-    "node": ">=16"
+    "node": ">=18"
   },
   "homepage": "https://github.com/lettercms/lettercms#readme",
   "dependencies": {
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.0.3",
+    "mongoose": "^8.1.2",
     "xml-js": "^1.6.11"
   },
   "peerDependencies": {

@@ -35,7 +35,7 @@ export default function middleware(req) {
 
   url.searchParams.set('hl', language);
 
-  if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'prouction')
+  if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production')
     return NextResponse.rewrite(url);
 
   const currentHost =

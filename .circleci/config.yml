@@ -24,7 +24,7 @@ jobs:
           name: Lint
           command: yarn lint
 
-  unit-testing:
+  unit-test:
     #Run ESLint to check Code Quality
     docker:
       - image: cimg/node:18.15.0
