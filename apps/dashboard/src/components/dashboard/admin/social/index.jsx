@@ -2,7 +2,7 @@ import {useState} from 'react';
 import Load from '../../logoLoad';
 import dynamic from 'next/dynamic';
 import Dashboard from './dashboard';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 
 const NewPosts = dynamic(() => import('./publish'), {
   ssr: false,

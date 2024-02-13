@@ -1,9 +1,10 @@
-import {FormattedMessage} from 'react-intl';
-import {useRouter} from 'next/router';
+'use client'
+
+import {useRouter} from 'next/navigation';
 import Button from '@/components/button';
 import Select from '@/components/select';
 
-export default function Paging({page, total}) {
+export default function Paging({page, total, translation}) {
   const router = useRouter();
   const pages = new Array(total);
 
@@ -14,15 +15,15 @@ export default function Paging({page, total}) {
       {
         page !== 1
         ? <Button type='outline' onClick={() => router.push(`/blog?page=${page - 1}`)}>
-          <FormattedMessage id='Prev'/>
-        </Button>
+            {translation['Prev']}
+          </Button>
         : <div/>
       }
       {
         page !== total
         ? <Button type='outline' onClick={() => router.push(`/blog?page=${page + 1}`)}>
-          <FormattedMessage id='Next'/>
-        </Button>
+            {translation['Next']}
+          </Button>
         : <div/>
       }
     </div>

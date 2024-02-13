@@ -1,5 +1,7 @@
+'use client';
+
 import {useEffect, createContext, useContext} from 'react';
-//import {useRouter} from 'next/router';
+//import {useRouter} from 'next/navigation';
 import sdk from '@lettercms/sdk';
 import Footer from './footer';
 import Nav from './nav';
@@ -18,7 +20,7 @@ export function useToken() {
   return value;
 }
 
-export function Layout({children, accessToken}) {
+export function Layout({children, accessToken, translation}) {
   //const router = useRouter();
 
   useEffect(() => {
@@ -31,6 +33,6 @@ export function Layout({children, accessToken}) {
   return <ClientContext.Provider value={{accessToken}}>
     <Nav />
     {children}
-    <Footer/>
+    <Footer translation={translation}/>
   </ClientContext.Provider>;
 }

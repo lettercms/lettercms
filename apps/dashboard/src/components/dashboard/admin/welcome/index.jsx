@@ -1,3 +1,5 @@
+'use client'
+
 import FirstTime from'./firstTime';
 import Dashboard from'./dashboard';
 import Load from '../../logoLoad';

@@ -27,12 +27,12 @@
     "node-mocks-http": "^1.12.2",
     "prettier": "^2.7.1",
     "supertest": "^6.3.3",
-    "turbo": "^1.9.3",
-    "vercel": "^28.4.5"
+    "turbo": "^1.11.3",
+    "vercel": "^33.0.2"
   },
   "engines": {
     "yarn": "^1.22",
-    "node": "^18 || ^19"
+    "node": ">=18"
   },
   "dependencies": {},
   "packageManager": "yarn@1.22.19"

@@ -1,3 +1,5 @@
+'use client';
+
 import {useState} from 'react';
 
 const Input = ({className, id, status, value = '', type = 'text', label, ...opts}) => {

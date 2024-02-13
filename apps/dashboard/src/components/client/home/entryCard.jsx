@@ -1,11 +1,14 @@
+'use client'
+
 import {useState} from 'react';
-import Router from 'next/router';
+import {useRouter} from 'next/navigation';
 import Link from 'next/link';
 import {FaComments, FaShare} from 'react-icons/fa';
 import ShareButtons from '../shareButtons';
 
 export default function EntryCard({title, thumbnail, description, author, tags, comments, url}) {
   const [showShare, setShowShare] = useState(false);
+  const router = useRouter();
 
   return <div className='flex flex-col mx-3 my-16 md:w-3/4 lg:w-full lg:flex-row-reverse relative'>
     <div className='lg:w-2/3'>
@@ -17,7 +20,7 @@ export default function EntryCard({title, thumbnail, description, author, tags, 
       </div>
       <p className='py-3 mt-4'>{description}</p>
       <div className='hidden lg:flex items-center mt-4 justify-between'>
-        <button className='w-48 cursor-pointer w-full border border-solid border-main-500 py-2 text-main-500 rounded-full hover:text-white hover:bg-main-500' onClick={() => Router.push('/' + url)}>Ver Más</button>
+        <button className='w-48 cursor-pointer w-full border border-solid border-main-500 py-2 text-main-500 rounded-full hover:text-white hover:bg-main-500' onClick={() => router.push('/' + url)}>Ver Más</button>
         <button className='cursor-pointer' onFocus={() => setShowShare(true)} onBlur={() => setShowShare(false)}>
           <FaShare height='28' fill='#362e6f'/>
         </button>
@@ -40,7 +43,7 @@ export default function EntryCard({title, thumbnail, description, author, tags, 
         }
       </ul>
       <div className='lg:hidden flex items-center mt-4 justify-between'>
-        <button className='cursor-pointer w-full border mr-4 border-solid border-main-500 py-2 text-main-500 rounded-full hover:text-white hover:bg-main-500' onClick={() => Router.push('/' + url)}>Ver Más</button>
+        <button className='cursor-pointer w-full border mr-4 border-solid border-main-500 py-2 text-main-500 rounded-full hover:text-white hover:bg-main-500' onClick={() => router.push('/' + url)}>Ver Más</button>
         <button className='cursor-pointer' onFocus={() => setShowShare(true)} onBlur={() => setShowShare(false)}>
           <FaShare height='28' fill='#362e6f'/>
         </button>

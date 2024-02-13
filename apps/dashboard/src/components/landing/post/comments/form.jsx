@@ -1,7 +1,9 @@
+'use client';
+
 import {useState} from 'react';
 import Input from '@/components/input';
 import Button from '@/components/button';
-import {useToken} from '@/lib/userContext';
+import {useToken} from '@/components/landing/layout';
 import _sdk from '@lettercms/sdk';
 
 const publish = async (comment, {user, postID, replyTo}, cb, accessToken) => {

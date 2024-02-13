@@ -1,9 +1,10 @@
+'use client'
+
 import Link from 'next/link';
-import {FormattedMessage} from 'react-intl';
 import {useRef, useEffect, useState} from 'react';
 import {option, subTab, subHeader} from './option.module.css';
 
-export default function Option({role, title, sub, icon, href}) {
+export default function Option({role, title, sub, icon, href, translation}) {
 
   const tabRef = useRef(null);
   const [focus, setFocus] = useState(false);
@@ -29,13 +30,13 @@ export default function Option({role, title, sub, icon, href}) {
     <button className={`${option} flex items-center`} onClick={() => setFocus(!focus)} onBlur={() => setFocus(false)}>
       <span>{icon}</span>
       <span>
-        <FormattedMessage id={title}/>
+        { /*translation[title]*/ title}
       </span>
     </button>
     <ul className={subTab} ref={tabRef}>
       <Link href={href}>
         <li className={subHeader}>
-          <FormattedMessage id={title}/>
+          { /*translation[title]*/ title}
         </li>
       </Link>
       {
@@ -43,7 +44,7 @@ export default function Option({role, title, sub, icon, href}) {
         .map((e) =>
           <Link href={e.href} key={e.href} onClick={() => setFocus(false)}>
             <li>
-              <FormattedMessage id={e.label}/>
+              { /*translation[e.label]*/ e.label}
             </li>
           </Link>
         )

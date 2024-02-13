@@ -1,8 +1,9 @@
-import {FormattedMessage} from 'react-intl';
-import Button from '@/components/button';
-import {useRouter} from 'next/router';
+'use client'
 
-export default function CTA() {
+import Button from '@/components/button';
+import {useRouter} from 'next/navigation';
+
+export default function CTA({translation}) {
   const router = useRouter();
 
   return <div className="bg-white pt-12">
@@ -11,10 +12,10 @@ export default function CTA() {
         <img className="img-fluid" src={`${process.env.ASSETS_BASE}/illustrations/324.svg`} alt="alternative"/>
       </div>
       <p className="p-heading">
-        <FormattedMessage id='Start from scratch and growth with us.'/>
+        {translation['Start from scratch and growth with us.']}
       </p>
       <Button type='solid' className='my-12' onClick={() => router.push('/signin')}>
-        <FormattedMessage id="REGISTER"/>
+        {translation['REGISTER']}
       </Button>
     </div>
     <svg className="bg-white"  data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 1920 79">

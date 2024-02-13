@@ -1,9 +1,11 @@
+'use client';
+
 import {useState} from 'react';
 import sdk from '@lettercms/sdk';
 import Input from '@/components/input';
 import Button from '@/components/button';
 import Cookie from 'js-cookie';
-import {useToken} from '@/lib/userContext';
+import {useToken} from '@/components/landing/layout';
 
 async function assignName(name, accessToken, cb) {
   try { 

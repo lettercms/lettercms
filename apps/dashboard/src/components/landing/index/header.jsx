@@ -1,8 +1,9 @@
-import {FormattedMessage} from 'react-intl';
-import {useRouter} from 'next/router';
+'use client';
+
+import {useRouter} from 'next/navigation';
 import Button from '@/components/button';
 
-export default function  Header (){
+export default function  Header({translation}){
   const router = useRouter();
 
   return <div>
@@ -15,7 +16,7 @@ export default function  Header (){
             <span>Deleita</span>
           </h1>
           <h2 className='px-4 mt-8 mb-16'>
-            <FormattedMessage id='Use LetterCMS to attract new users and offer them the best content based on their tastes'/>
+            {translation['Use LetterCMS to attract new users and offer them the best content based on their tastes']}
           </h2>
           <Button type='solid' className='w-max' onClick={() => router.push('/signin')}>
             {/*<FormattedMessage id="REGISTER"/>*/}

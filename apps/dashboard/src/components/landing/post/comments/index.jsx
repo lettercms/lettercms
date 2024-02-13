@@ -1,8 +1,10 @@
+'use client';
+
 import {useEffect, useState} from 'react';
 import _sdk from '@lettercms/sdk';
 import Base from '@/components/dashboard/admin/stats/base';
 import {ImSpinner9} from 'react-icons/im';
-import {useToken} from '@/lib/userContext';
+import {useToken} from '@/components/landing/layout';
 import CommentForm from './form';
 import CommentData from './content';
 import UserDataForm from './userData';

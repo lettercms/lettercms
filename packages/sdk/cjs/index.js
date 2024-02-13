@@ -18,7 +18,7 @@ const Reports_1 = __importDefault(require("./lib/Reports"));
 const Social_1 = __importDefault(require("./lib/Social"));
 const Stats_1 = __importDefault(require("./lib/Stats"));
 const Users_1 = __importDefault(require("./lib/Users"));
-const devEndpoint = "http://api.localhost:3000";
+const devEndpoint = "http://192.168.31.124:4000/api/_public";
 const prodEndpoint = `https://lettercms-api-${process.env.BRANCH || 'main'}.vercel.app`;
 const isDev = process.env.NODE_ENV !== "production";
 const endpoint = isDev ? devEndpoint : prodEndpoint;

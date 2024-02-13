@@ -1,5 +1,6 @@
+'use client';
+
 import {useEffect, useState} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
 import Header from './header';
 import initLazyLoad from '@/lib/initLazyLoad';
 import Breadcrumbs from './breadcrumbs';
@@ -7,14 +8,13 @@ import Container from '@/components/container';
 import HandleDate from '@/lib/handleDate';
 import Tags from './tags';
 import Card from '@/components/landing/blog/card';
-import Head from '@/components/landing/headPost';
+//import Head from '@/components/landing/headPost';
 import Base from '@/components/dashboard/admin/stats/base';
 import Comments from './comments/index';
 import Subscription from './subscription';
 
-export default function BlogPost({isPreview, user, recommendation: {recommended, similar}, post: {_id, content, title, url, published, updated, thumbnail, tags, description}, notFound}) {
+export default function BlogPost({translation, isPreview, user, recommendation: {recommended, similar}, post: {_id, content, title, url, published, updated, thumbnail, tags, description}, notFound}) {
   const [stateUser, setUser] = useState(user);
-  const intl = useIntl();
 
   const hasRecommendation = recommended && similar && !isPreview;
 
@@ -24,7 +24,7 @@ export default function BlogPost({isPreview, user, recommendation: {recommended,
   }, [url, notFound, isPreview]);
 
   return <div>
-    <Head
+    {/*<Head
       title={`${title} | LetterCMS`}
       description={description}
       url={url}
@@ -32,7 +32,7 @@ export default function BlogPost({isPreview, user, recommendation: {recommended,
       published={published}
       updated={updated}
       tags={tags}
-    />
+    />*/}
     <Header title={title} thumbnail={thumbnail}/>
     <Breadcrumbs title={title}/>
     <div className='flex flex-col'>
@@ -41,12 +41,12 @@ export default function BlogPost({isPreview, user, recommendation: {recommended,
           <div className='mb-4'>
             <span className='text-main-700 text-sm font-bold'>
               {
-                intl.formatMessage({id: 'Posted on '}) + HandleDate.getGMTDate(published)
+                translation['Posted on '] + HandleDate.getGMTDate(published)
               }
             </span>
           </div>
           <main dangerouslySetInnerHTML={{ __html: content }}/>
-          <Tags tags={tags}/>
+          <Tags tags={tags} translation={translation}/>
         </Container>
         {
          !stateUser?.email &&
@@ -62,7 +62,7 @@ export default function BlogPost({isPreview, user, recommendation: {recommended,
         hasRecommendation &&
         <>
           <span>
-            <FormattedMessage id='Recommended for you'/>
+            {translation['Recommended for you']}
           </span>
           <Card
             title={recommended.title}

@@ -1,5 +1,7 @@
+'use client';
+
 import {useEffect} from 'react';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {content} from './content.module.css';
 import {getGMTDate} from '@lettercms/utils/lib/handleDate';
 

@@ -1,5 +1,6 @@
+'use client';
+
 import {useState, useEffect} from 'react';
-import {useIntl, FormattedMessage} from 'react-intl';
 import Base from '../stats/base';
 import General from '../stats/general';
 import sdk from '@lettercms/sdk';
@@ -7,12 +8,10 @@ import Card from '../stats/statsSingleCard';
 import BaseLoad from '../stats/baseLoad';
 import {useUser} from '@/components/dashboard/layout';
 
-export default function WelcomeDashboard() {
+export default function WelcomeDashboard({translation}) {
   const {status, user} = useUser();
   const [isLoading, setLoad] = useState(true);
   const [stats, setStats] = useState({});
-
-  const intl = useIntl();
 
   useEffect(() => {
     if (status === 'done') {
@@ -49,9 +48,8 @@ export default function WelcomeDashboard() {
       <Base
         rows={3}
         title={
-          intl.formatMessage({
-            id: 'Views'
-          })
+          
+            'Views'
         }
         principal
       >
@@ -59,57 +57,52 @@ export default function WelcomeDashboard() {
           value={stats.general.totalViews || 0}
           growth={stats.views || 0}
           growthText={
-            intl.formatMessage({
-              id: 'since your last login'
-            })
+            
+              'since your last login'
           }
         />
       </Base>
       <Base
         rows={3}
         title={
-          intl.formatMessage({
-            id: 'Comments'
-          })
+          
+            'Comments'
         }
       >
         <General
           value={stats.general.totalComments}
           growth={stats.comments || 0}
           growthText={
-            intl.formatMessage({
-              id: 'since your last login'
-            })
+            
+              'since your last login'
           }
         />
       </Base>
       <Base
         rows={3}
         title={
-          intl.formatMessage({
-            id: 'Subscribers'
-          })
+          
+            'Subscribers'
         }
       >
         <General
           value={stats.general.subscriptors || 0}
           growth={stats.subscriptors}
           growthText={
-            intl.formatMessage({
-              id: 'since your last login'
-            })
+            
+              'since your last login'
           }
         />
       </Base>
       <div id='most-viewed-container'>
         <span className="title">
-          <FormattedMessage id='More seen'/>
+          {'More seen'}
         </span>
           {
             stats.general.mostViewed
             ? <Card {...stats.general.mostViewed} />
             : <div id='not-most-viewed'>
-              <FormattedMessage id='There are no recent views'/>
+              {'There are no recent views'}
             </div>
           }
       </div>
@@ -119,7 +112,7 @@ export default function WelcomeDashboard() {
   return <div>
     <div id='welcome-title'>
       <span>
-        <FormattedMessage id='Summary'/>
+        {'Summary'}
       </span>
     </div>
     <div id='welcome-panels'>

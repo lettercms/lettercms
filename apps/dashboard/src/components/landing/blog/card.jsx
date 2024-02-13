@@ -1,91 +1,66 @@
-import {FormattedMessage} from 'react-intl';
-import { Component } from 'react';
+'use client'
+
+import {useState} from 'react';
 import Link from 'next/link';
-import Router from 'next/router';
+import {useRouter} from 'next/navigation';
 import Share from './shareCard';
 import {FaComments} from 'react-icons/fa';
 
-class Card extends Component {
-  state = {
-    shareDisplay: 'none',
-    shareOpacity: 0,
-    savedPostsIDs: [],
-    isSaving: false,
-  };
+export default function Card({title, content, url, thumbnail, comments, ID, size, translation}) {
+  const [isShareOpened, setIsSharedOpened] = useState(false);
+  const [shareDisplay, setShareDisplay] = useState('none');
+  const [shareOpacity, setShareOpacity] = useState(0);
 
-  toggleShare = () => {
-    this.setState({
-      isShareOpen: !this.state.isShareOpen,
-    });
-    if (this.state.shareDisplay === 'flex') {
-      this.setState({
-        shareOpacity: 0,
-      });
-      setTimeout(() => this.setState({
-        shareDisplay: 'none',
-      }), 310);
+  const router = useRouter();
+
+  const toggleShare = () => {
+    setIsSharedOpened(!isShareOpen);
+
+    if (shareDisplay === 'flex') {
+      setShareOpacity(0);
+      setTimeout(() => setShareDisplay('none'), 310);
     } else {
-      this.setState({
-        shareDisplay: 'flex',
-      });
-      setTimeout(() => this.setState({
-        shareOpacity: 1,
-      }), 10);
+      setShareDisplay('flex');
+      setTimeout(() => setShareOpacity(1), 0);
     }
   };
 
-  render() {
-    const {
-      content,
-      title,
-      url,
-      comments,
-      thumbnail,
-      size
-    } = this.props;
-
-    const {
-      shareOpacity,
-      shareDisplay
-    } = this.state;
-
-    return (
-      <div className="blog-card">
-        <Link href={`/blog/${url}`}>
-          <img width='1' height='1' src='/pixel.png' style={{position: 'absolute'}} alt={title}/>
-          {
-            !!thumbnail
-            ? <div className="card-header-image" style={{ backgroundImage: `url(${thumbnail}&w=500&q=50)` }} />
-            : <div className="card-header-title">
+  return <div className="blog-card">
+    <Link href={`/blog/${url}`}>
+      <img width='1' height='1' src='/pixel.png' style={{position: 'absolute'}} alt={title}/>
+      {
+        !!thumbnail
+          ? <div className="card-header-image" style={{ backgroundImage: `url(${thumbnail}&w=500&q=50)` }} />
+          : <div className="card-header-title">
               <h3>{size === 'big'  ? title[0].toUpperCase() : title}</h3>
-           </div>
-          }
-        </Link>
-        <div className="data-cont">
-          {(!!thumbnail || size === 'big') && 
-            <div className="title-container">
-              <h3>{title.length > 70 ? title.slice(0, 67) + '...' : title}</h3>
             </div>
-          }
-          <p>{content.length > 200 ? `${content.slice(0, 197)}...` : content}</p>
-          <div className="comment-container">
-            <div/>
-            <div>
-              <span>{comments}</span>
-              <FaComments height='18'/>
-            </div>
-          </div>
-          <div>
-            <button className="view-more" onClick={() => { Router.push(`/blog/${url}`);}}>
-              <FormattedMessage id='See more'/>
-            </button>
-            <button className="share" onFocus={this.toggleShare} onBlur={this.toggleShare}>
-              <FormattedMessage id='Share'/>
-            </button>
-          </div>
-          <Share style={{ opacity: shareOpacity, display: shareDisplay }} title={title} url={`https://lettercms.vercel.app/blog/${url}`} />
+      }
+    </Link>
+    <div className="data-cont">
+      {(!!thumbnail || size === 'big') && 
+        <div className="title-container">
+          <h3>{title.length > 70 ? title.slice(0, 67) + '...' : title}</h3>
         </div>
-        <style jsx>
+      }
+      <p>{content.length > 200 ? `${content.slice(0, 197)}...` : content}</p>
+      <div className="comment-container">
+        <div/>
+        <div>
+          <span>{comments}</span>
+          <FaComments height='18'/>
+        </div>
+      </div>
+      <div>
+        <button className="view-more" onClick={() => { router.push(`/blog/${url}`);}}>
+          {translation['See more']}
+        </button>
+        <button className="share" onFocus={toggleShare} onBlur={toggleShare}>
+          {translation['Share']}
+        </button>
+      </div>
+      <Share style={{ opacity: shareOpacity, display: shareDisplay }} title={title} url={`https://lettercms.vercel.app/blog/${url}`} />
+    </div>
+    <style jsx>
           {`
         .comment-container {
           padding: 20px;
@@ -172,14 +147,14 @@ class Card extends Component {
         }
         @media screen and (min-width: 720px) {
           .blog-card {
-            width: ${this.props.size === 'big' ? '65%' : '45%'};
-            margin: 50px ${this.props.size === 'big' ? '0' : '2.5%'};
+            width: ${size === 'big' ? '65%' : '45%'};
+            margin: 50px ${size === 'big' ? '0' : '2.5%'};
             display: inline-block;
             position: relative;
             overflow: hidden;
           }
           .blog-card > a {
-            ${this.props.size === 'big'
+            ${size === 'big'
             ? `display: inline-block;
               width: 35%;
               top: 0;
@@ -190,34 +165,30 @@ class Card extends Component {
           }
           .blog-card .card-header-image,
           .blog-card .card-header-title {
-            ${this.props.size === 'big'
+            ${size === 'big'
               ? `display: inline-block;
               width: 100%;height:100%;` : ''
             }
           }
           .blog-card .data-cont {
-            ${this.props.size === 'big'
+            ${size === 'big'
               ? `display: inline-block;
               width: 65%;margin-left: 35%;` : ''
             }
           }
           .blog-card div .view-more {
-            ${this.props.size === 'big'
+            ${size === 'big'
               ? 'border-radius: 0;' : ''
             }
           }
           .blog-card p {
-            ${this.props.size === 'big'
+            ${size === 'big'
               ? 'height: 60px;' : ''
             }
             
           }
         }
       `}
-        </style>
-      </div>
-    );
-  }
+    </style>
+  </div>
 }
-
-export default Card;

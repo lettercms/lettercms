@@ -1,4 +1,5 @@
-import {FormattedMessage} from 'react-intl';
+'use client'
+
 import {useState} from 'react';
 import FeatureTab from './featureTab';
 
@@ -42,43 +43,43 @@ const changeTab = (e, tab, cb) => {
 
 };
 
-export default function Features() {
+export default function Features({translation}) {
   const [tab, setTab] = useState(0);
 
   return <div id="features" className="bg-white flex items-center flex-col py-8">
     <div className="text-center">
       <div className='my-8'>
         <div className="text-4xl font-bold text-main-700">
-          <FormattedMessage id='FEATURES'/>
+          {translation['FEATURES']}
         </div>
         <h3>
-          <FormattedMessage id='Thinking on you and your readers'/>
+          {translation['Thinking on you and your readers']}
         </h3>
       </div>
       <p className="my-8 px-4 max-w-2xl">
-        <FormattedMessage id={'Take your time, focus on writing, we\'ll take care of deliver your content in all your social media with one click. Once inside we offer the right content to the right person'}/>
+        {translation['Take your time, focus on writing, we\'ll take care of deliver your content in all your social media with one click. Once inside we offer the right content to the right person']}
       </p>
     </div>
     <ul className="flex" id="argoTabs" role="tablist">
       <li className='mx-1 my-8'>
         <button className={`${tab === 0 ? 'bg-white text-main-500' : 'bg-main-500 text-white'} rounded-full py-2 px-4`} onClick={e => changeTab(e, 0, setTab)} data-toggle="tab" role="tab" aria-controls="tab-1" aria-selected={tab === 0 ? 'true' : 'false'}>
-          <FormattedMessage id='Promote'/>
+          {translation['Promote']}
         </button>
       </li>
       <li className='mx-1 my-8'>
         <button className={`${tab === 1 ? 'bg-white text-main-500' : 'bg-main-500 text-white'} rounded-full py-2 px-4`} onClick={e => changeTab(e, 1, setTab)} data-toggle="tab" role="tab" aria-controls="tab-2" aria-selected={tab === 1 ? 'true' : 'false'}>
-          <FormattedMessage id='Delight'/>
+          {translation['Delight']}
         </button>
       </li>
       <li className='mx-1 my-8'>
         <button className={`${tab === 2 ? 'bg-white text-main-500' : 'bg-main-500 text-white'} rounded-full py-2 px-4`} onClick={e => changeTab(e, 2, setTab)} data-toggle="tab" role="tab" aria-controls="tab-3" aria-selected={tab === 2 ? 'true' : 'false'}>
-          <FormattedMessage id='Retain'/>
+          {translation['Retain']}
         </button>
       </li>
     </ul>
     <div className="relative w-full" >
       {
-        features.map((e, i) => <FeatureTab key={e.title + '1'} tab={tab} index={i} {...e}/>)
+        features.map((e, i) => <FeatureTab key={e.title + '1'} translation={translation} tab={tab} index={i} {...e}/>)
        }
     </div>
   </div>;

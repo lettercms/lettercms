@@ -1,5 +1,7 @@
+'use client'
+
 import {useState, useEffect, createContext, useContext, useRef} from 'react';
-import Router from 'next/router';
+import {useRouter} from 'next/navigation';
 import Link from 'next/link';
 import {signOut} from 'next-auth/react';
 import dynamic from 'next/dynamic';
@@ -32,20 +34,20 @@ const Nav = dynamic(() => import('./nav'), {
   ssr: false
 });
 
-const logout = async () => {
+const logout = async router => {
   const app = createFirebaseApp();
   const auth = getAuth(app);
 
   await auth.signOut();
   await signOut({redirect: false});
   
-  Router.push('/login');
+  router.push('/login');
 };
 
-const setLanguage = hl => {
+const setLanguage = (hl, router) => {
   Cookie.set('__lcms-hl', hl);
 
-  Router.reload();
+  router.reload();
 };
 
 const DashboardContext = createContext();
@@ -66,13 +68,13 @@ export function useUser() {
   return value;
 }
 
-const initLoader = (setLoad, setIsMenuOpen) => {
+/*const initLoader = (setLoad, setIsMenuOpen) => {
   Router.events.on('routeChangeStart', () => setLoad(true));
   Router.events.on('routeChangeComplete', () => {
     setLoad(false);
     setIsMenuOpen(false);
   });
-};
+};*/
 
 export function DashboardProvider({userID, children}) {
   const {status, data} = useSession();
@@ -89,7 +91,7 @@ export function DashboardProvider({userID, children}) {
 
   const ctx = useContext(DashboardContext);
 
-  const router = Router.useRouter();
+  const router = useRouter();
 
   const languageArray = Object.entries(languages);
 
@@ -123,7 +125,7 @@ export function DashboardProvider({userID, children}) {
 
   useEffect(() => {
     if (!ctx && status === 'authenticated') {
-      initLoader(setLoad, setIsMenuOpen);
+      //initLoader(setLoad, setIsMenuOpen);
 
       window.setLoad = setLoad;
 

@@ -1,4 +1,5 @@
-import {FormattedMessage} from 'react-intl';
+'use client'
+
 import Link from 'next/link';
 import {useState} from 'react';
 import Input from '@/components/input';
@@ -6,7 +7,7 @@ import Button from '@/components/button';
 import Container from '@/components/container';
 
 
-export default function Newsletter() {
+export default function Newsletter({translation}) {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false); //eslint-disable-line
 
@@ -14,10 +15,10 @@ export default function Newsletter() {
       <Container className='bg-white m-auto max-w-2xl'>
         <div className='text-center'>
           <div className="font-bold text-xl text-main-700 mb-4">
-            <FormattedMessage id='NEWS'/>
+            {translation['NEWS']}
           </div>
           <h2>
-            <FormattedMessage id='Stay tuned of the new things we bring to you'/>
+            {translation['Stay tuned of the new things we bring to you']}
           </h2>
           <form id="newsletterForm"  data-toggle="validator" data-focus="false">
             <div className='mt-12 mb-4 w-4/5 mx-auto'>
@@ -33,19 +34,19 @@ export default function Newsletter() {
             <div className="checkbox">
               <input type="checkbox" id="nterms" value="Agreed-to-Terms" required/>
               <span>      
-                <FormattedMessage id={'I\'ve read and accept the '}/>
+                {translation['I\'ve read and accept the ']}
                 <Link href='/privacy'>
-                  <FormattedMessage id='Privacy policies'/>
+                  {translation['Privacy policies']}
                 </Link>
-                <FormattedMessage id=' and the '/>
+                {translation[' and the ']}
                 <Link href='/conditions'>
-                  <FormattedMessage id='Terms and Conditions'/>
+                  {translation['Terms and Conditions']}
                 </Link>
-                <FormattedMessage id=' of LetterCMS'/>
+                {translation[' of LetterCMS']}
               </span>
             </div>
             <Button type='solid' className='mt-12'>
-              <FormattedMessage id='SUBSCRIBE'/>
+              {translation['SUBSCRIBE']}
             </Button>
           </form>
         </div> 

@@ -1,4 +1,4 @@
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {useIntl} from 'react-intl';
 import sdk from '@lettercms/sdk';
 import Layout from '../listLayout';

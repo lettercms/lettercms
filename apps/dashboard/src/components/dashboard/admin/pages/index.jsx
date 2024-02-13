@@ -1,4 +1,4 @@
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import sdk from '@lettercms/sdk';
 import Layout from '../listLayout';
 import PagesIco from '@/components/dashboard/assets/adminPages';
